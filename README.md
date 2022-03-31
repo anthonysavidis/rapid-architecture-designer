@@ -1,4 +1,4 @@
-# master thesis
+# Rapid architetcure designer
 
 1) Download Visual Studio Code.
 2) Download "Live Server" extension.
