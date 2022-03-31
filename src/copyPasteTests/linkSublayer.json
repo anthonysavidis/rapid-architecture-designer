@@ -1,0 +1,100 @@
+{
+    "0": {
+        "_type": "Component",
+        "class": "component",
+        "_id": "121366",
+        "_name": "New Item",
+        "links": [],
+        "subLayers": {
+            "0": {
+                "_id": "L335166",
+                "parentId": "L221620",
+                "componentId": "121366",
+                "_name": "ty",
+                "setOfItems": {
+                    "idList": " 717940,801415,675813",
+                    "functionCounter": "0",
+                    "0": {
+                        "_type": "Component",
+                        "class": "component",
+                        "_id": "717940",
+                        "_name": "New Item",
+                        "links": [
+                            [
+                                "801415",
+                                "675813"
+                            ]
+                        ],
+                        "subLayers": {},
+                        "linkedItems": "801415",
+                        "_description": "",
+                        "_functions": {},
+                        "boundingRec": {
+                            "x": 317,
+                            "y": 176,
+                            "width": 100,
+                            "height": 50,
+                            "top": 176,
+                            "right": 417,
+                            "bottom": 226,
+                            "left": 317
+                        }
+                    },
+                    "1": {
+                        "_type": "Component",
+                        "class": "component",
+                        "_id": "801415",
+                        "_name": "New Item",
+                        "links": [
+                            [
+                                "717940",
+                                "675813"
+                            ]
+                        ],
+                        "subLayers": {},
+                        "linkedItems": "717940",
+                        "_description": "",
+                        "_functions": {},
+                        "boundingRec": {
+                            "x": 70,
+                            "y": 272,
+                            "width": 100,
+                            "height": 50,
+                            "top": 272,
+                            "right": 170,
+                            "bottom": 322,
+                            "left": 70
+                        }
+                    },
+                    "2": {
+                        "_type": "Link",
+                        "class": "link",
+                        "_id": "675813",
+                        "_name": "New Line",
+                        "_description": "",
+                        "idComponent1": "717940",
+                        "idComponent2": "801415"
+                    }
+                },
+                "treeObj": {
+                    "id": "L335166",
+                    "parent": "L221620",
+                    "text": "ty"
+                }
+            }
+        },
+        "linkedItems": "",
+        "_description": "",
+        "_functions": {},
+        "boundingRec": {
+            "x": 429,
+            "y": 151,
+            "width": 100,
+            "height": 50,
+            "top": 151,
+            "right": 529,
+            "bottom": 201,
+            "left": 429
+        }
+    }
+}

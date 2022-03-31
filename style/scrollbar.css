@@ -1,0 +1,19 @@
+::-webkit-scrollbar {
+    width: 14px;
+}
+
+ ::-webkit-scrollbar-thumb {
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: #AAAAAA;
+}
+
+.rightSideBar {
+    width: 250px;
+    float: left;
+    display: none;
+    z-index: 9999;
+    position: fixed;
+    background-color: #f1f1f1;
+}

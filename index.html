@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html id="html1">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>Software Architecture Design Wizard</title>
+    <!-- <script src="https://unpkg.com/lodash@4.17.20"></script> -->
+    <link rel="stylesheet" href="./style/archs.css">
+    <link rel="stylesheet" href="./style/arrow.css">
+    <link rel="stylesheet" href="./style/boxes.css">
+    <link rel="stylesheet" href="./style/buttonTooltips.css">
+    <link rel="stylesheet" href="./style/form.css">
+    <link rel="stylesheet" href="./style/infoTooltip.css">
+    <link rel="stylesheet" href="./style/menu.css">
+    <link rel="stylesheet" href="./style/scrollbar.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/triangle.css">
+    <link rel="stylesheet" href="./style/trash.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" crossorigin="anonymous" />
+    <script type="module" src="./src/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="dist/jstree.min.js"></script>
+    <script src="./libs/dom-to-image-more.min.js"></script>
+</head>
+
+<body id="body" style="background-color: rgb(210, 212, 236);">
+    <div id="tabArea" class="tab not-target">
+
+    </div>
+    <div id="tabButtons" style="background-color: #f1f1f1;" class="not-target">
+        <div id="File" class="tabcontent">
+        </div>
+        <div id="Edit" class="tabcontent">
+        </div>
+        <div id="Components" class="tabcontent">
+        </div>
+        <div id="Functions" class="tabcontent">
+        </div>
+        <div id="Hierarchy" class="tabcontent">
+        </div>
+    </div>
+
+
+    <div id="main" style="overflow: hidden; float:left;">
+        <!-- <div class="workspace" id="workspace">
+
+      </div> -->
+    </div>
+    <div id="right_tab" class="not-target">
+        <!-- <h2 class="line" style="text-align: center; margin-top:1px;">Functions</h2>
+        <div id="functionArea" class="functionRec">
+        </div> -->
+    </div>
+    <div id="fSidebar" class="rightSideBar">
+        <div id="closeLayersButton" style="margin-right:5px;margin-top:5px;float: right;"><img src="./images/closeInfo.png" /></div>
+        <div style="width:150px; padding-top: 50px; display: none;" id="jstree">
+        </div>
+    </div>
+    <!-- <div id="archsDiv" class="archsSideBar" style=" display: none;">
+        <div id="closeArchsButton" style="margin-right:5px;margin-top:5px;float: right;"><img
+            src="./images/closeInfo.png" /></div>
+        <h2 style="text-align: center; margin-top:5px;">Architecture Designs</h2>
+        <hr style="margin-bottom:14px;" class="solid">
+        <div id="archsContainer" style="display: block;" class="architecturesRec">
+            <div id="testArch" class="archDesign">
+
+            </div>
+            <div id="archLabel" style="margin-left: 25%;">
+                Test Arch
+            </div>
+        </div>
+    </div> -->
+    <input id="file-input" type="file" name="name" style="display: none;" />
+    <div id="jstree_demo_div"></div>
+    <div id="trashBin" class="trashBin"></div>
+</body>
+
+</html>

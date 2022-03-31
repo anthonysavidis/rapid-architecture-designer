@@ -1,0 +1,79 @@
+.tooltip .tooltiptext {
+    /* visibility: hidden; */
+    width: 250px;
+    height: 200px;
+    background-color: #f1f1d2;
+    color: #525252;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 25;
+}
+
+.mainPart {
+    width: 250px;
+    height: 170px;
+    text-align: left;
+    overflow-y: scroll;
+    border-radius: 6px;
+    background-color: #f1f1d2;
+}
+
+
+/* .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -15px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent #F1F1F1 transparent transparent;
+} */
+
+.sublayerImage {
+    margin-left: 10px;
+    margin-top: 30px;
+    border: 1px;
+    width: 215px;
+    height: 97px;
+    background-color: rgb(210, 212, 236);
+    border: 1px solid #909090;
+}
+
+.tooltipTitle {
+    font-weight: bold;
+    color: #525252;
+    font-size: 12pt;
+    margin-left: 6px;
+    float: left;
+    position: static;
+}
+
+.tooltipDesc {
+    width: 200px;
+    color: #525252;
+    font-size: 10pt;
+    margin-left: 10px;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    float: left;
+}
+
+.closeTooltip {
+    background-image: url('../images/closeInfo.png');
+    width: 24px;
+    height: 24px;
+    float: right;
+    margin-right: 5px;
+}
+
+.architectureEditButton {
+    background-image: url('../images/Edit1.png');
+    width: 24px;
+    height: 24px;
+    float: right;
+    margin-top: 72px;
+    display: none;
+}

@@ -1,0 +1,91 @@
+{
+  "_type": "Component",
+  "class": "component",
+  "boundingRec": {
+    "x": 425,
+    "y": 207,
+    "width": 100,
+    "height": 50,
+    "top": 207,
+    "right": 525,
+    "bottom": 257,
+    "left": 425
+  },
+  "_id": "670759",
+  "_name": "New Item",
+  "links": [],
+  "subLayers": {
+    "0": {
+      "_id": "L284343",
+      "parentId": "L216502",
+      "componentId": "670759",
+      "_name": "wef",
+      "setOfItems": {
+        "idList": " 473388",
+        "functionCounter": "0",
+        "0": {
+          "_type": "Component",
+          "class": "component",
+          "boundingRec": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "_id": "473388",
+          "_name": "New Item",
+          "links": [],
+          "subLayers": {
+            "0": {
+              "_id": "L27070",
+              "parentId": "L284343",
+              "componentId": "473388",
+              "_name": "ewfew",
+              "setOfItems": {
+                "idList": " 827238",
+                "functionCounter": "0",
+                "0": {
+                  "_type": "Component",
+                  "class": "component",
+                  "boundingRec": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "height": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 0,
+                    "left": 0
+                  },
+                  "_id": "827238",
+                  "_name": "New Item",
+                  "links": [],
+                  "subLayers": {},
+                  "linkedItems": "",
+                  "_description": "",
+                  "_functions": {}
+                }
+              },
+              "treeObj": {
+                "id": "L27070",
+                "parent": "L284343",
+                "text": "ewfew"
+              }
+            }
+          },
+          "linkedItems": "",
+          "_description": "",
+          "_functions": {}
+        }
+      },
+      "treeObj": { "id": "L284343", "parent": "L216502", "text": "wef" }
+    }
+  },
+  "linkedItems": "",
+  "_description": "",
+  "_functions": {}
+}

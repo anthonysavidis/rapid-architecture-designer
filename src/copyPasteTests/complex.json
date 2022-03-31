@@ -1,0 +1,101 @@
+{
+  "_type": "Component",
+  "_id": "317543",
+  "class": "component",
+  "boundingRec": {
+    "x": 416,
+    "y": 132,
+    "width": 100,
+    "height": 50,
+    "top": 132,
+    "right": 516,
+    "bottom": 182,
+    "left": 416
+  },
+  "_name": "New Item",
+  "links": [],
+  "subLayers": {
+    "0": {
+      "_id": "L570428",
+      "parentId": "L460304",
+      "componentId": "317543",
+      "_name": "qwfwq",
+      "setOfItems": {
+        "idList": " 82846,688003",
+        "functionCounter": "0",
+        "0": {
+          "_type": "Component",
+          "_id": "82846",
+          "class": "component",
+          "boundingRec": {
+            "x": 416,
+            "y": 132,
+            "width": 100,
+            "height": 50,
+            "top": 132,
+            "right": 516,
+            "bottom": 182,
+            "left": 416
+          },
+          "_name": "New Item",
+          "links": [],
+          "subLayers": {
+            "0": {
+              "_id": "L213331",
+              "parentId": "L570428",
+              "componentId": "82846",
+              "_name": "qwfwqf",
+              "setOfItems": { "idList": " ", "functionCounter": "0" },
+              "treeObj": {
+                "id": "L213331",
+                "parent": "L570428",
+                "text": "qwfwqf"
+              }
+            }
+          },
+          "linkedItems": "",
+          "_description": "",
+          "_functions": {}
+        },
+        "1": {
+          "_type": "Component",
+          "_id": "688003",
+          "class": "component",
+          "boundingRec": {
+            "x": 416,
+            "y": 132,
+            "width": 100,
+            "height": 50,
+            "top": 132,
+            "right": 516,
+            "bottom": 182,
+            "left": 416
+          },
+          "_name": "New Item",
+          "links": [],
+          "subLayers": {
+            "0": {
+              "_id": "L25079",
+              "parentId": "L570428",
+              "componentId": "688003",
+              "_name": "qwfqw",
+              "setOfItems": { "idList": " ", "functionCounter": "0" },
+              "treeObj": {
+                "id": "L25079",
+                "parent": "L570428",
+                "text": "qwfqw"
+              }
+            }
+          },
+          "linkedItems": "",
+          "_description": "",
+          "_functions": {}
+        }
+      },
+      "treeObj": { "id": "L570428", "parent": "L460304", "text": "qwfwq" }
+    }
+  },
+  "linkedItems": "",
+  "_description": "",
+  "_functions": {}
+}

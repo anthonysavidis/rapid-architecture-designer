@@ -1,0 +1,40 @@
+.archDesign{
+    margin-left: 3%;
+    width: 194px;
+    height: 90px;
+    border: 1px solid black;
+    background-size: 200px;
+    background-color: rgb(210, 212, 236);
+}
+
+.architecturesRec {
+    width: 100%;
+    margin-left: 0;
+    align-content: center;
+    padding: 15px;
+    display: none;
+    height: 70%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow-y: scroll;
+
+}
+
+.archsSideBar {
+    width: 300px;
+    height: 756px;
+    float: left;
+    z-index: 9999;
+    position: fixed;
+    background-color: #f1f1f1;
+}
+
+.dropArea {
+    background-color: rgba(255,255,255);
+    position: absolute;
+    display: none;
+}

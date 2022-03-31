@@ -1,0 +1,54 @@
+/* Tooltip text */
+
+.menubutton {
+    background-color: white;
+    outline-color: black;
+    /* width: 40px; */
+    width: auto;
+    height: 48.8px;
+    resize: horizontal;
+    display: inline-block;
+    border: 1px solid black;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 2px;
+    margin: 2px 4px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 6px;
+    box-shadow: 4px 6px 3px rgb(0 0 0 / 40%);
+}
+
+.menubutton .tooltipText {
+    visibility: hidden;
+    width: 120px;
+    height: auto;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    z-index: 9999999999999;
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.menubutton:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+}
+
+.buttonName {
+    text-align: center;
+    font-size: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+}

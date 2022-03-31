@@ -1,0 +1,53 @@
+.line {
+    margin-top: 4.67px;
+    width: 105px;
+    background: blue;
+    height: 4px;
+    float: left;
+}
+
+
+/* .line::before {
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border: 6px solid transparent;
+    border-bottom: 8px solid red;
+    content: "";
+    bottom: -50%;
+    z-index: 999999;
+    transform: rotate(90deg);
+} */
+
+.point {
+    width: 10px;
+    height: 10px;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 9.5px solid black;
+    /* position: absolute; */
+    z-index: 14;
+}
+
+.infoArrow {
+    width: 20px;
+    height: 20px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #f1f1d2;
+    /* float: right; */
+    position: absolute;
+    z-index: 25;
+    transform: rotate(180deg);
+}
+
+.fInfoArrow {
+    width: 20px;
+    height: 20px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #f1f1d2;
+    /* float: right; */
+    position: absolute;
+    z-index: 25;
+}

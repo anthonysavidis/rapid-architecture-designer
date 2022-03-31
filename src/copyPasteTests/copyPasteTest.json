@@ -1,0 +1,58 @@
+{
+  "_type": "Component",
+  "_id": "299136",
+  "class": "component",
+  "boundingRec": {
+    "x": 382,
+    "y": 158,
+    "width": 100,
+    "height": 50,
+    "top": 158,
+    "right": 482,
+    "bottom": 208,
+    "left": 382
+  },
+  "_name": "New Item",
+  "links": [],
+  "subLayers": {
+    "0": {
+      "_id": "L913381",
+      "parentId": "L282743",
+      "componentId": "299136",
+      "_name": "ewfwe",
+      "setOfItems": {
+        "idList": " 596676",
+        "functionCounter": "0",
+        "0": {
+          "_type": "Component",
+          "_id": "596676",
+          "class": "component",
+          "boundingRec": {
+            "x": 382,
+            "y": 158,
+            "width": 100,
+            "height": 50,
+            "top": 158,
+            "right": 482,
+            "bottom": 208,
+            "left": 382
+          },
+          "_name": "New Item",
+          "links": [],
+          "subLayers": {},
+          "linkedItems": "",
+          "_description": "",
+          "_functions": {}
+        }
+      },
+      "treeObj": {
+        "id": "L913381",
+        "parent": "L282743",
+        "text": "ewfwe"
+      }
+    }
+  },
+  "linkedItems": "",
+  "_description": "",
+  "_functions": {}
+}

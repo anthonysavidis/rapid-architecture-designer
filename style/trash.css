@@ -1,0 +1,22 @@
+.deletingComponent {
+    width: 0px;
+    height: 0px;
+    text-align: center;
+    position: absolute;
+    color: black;
+    z-index: 9;
+    background: white;
+    outline: 2px auto;
+    box-sizing: border-box;
+    transform: rotate(360deg);
+}
+
+.trashBin {
+    /* url('../images/arrowDown.png') 96% / 8% no-repeat */
+    background-image: url('../images/trashBinStatic.png');
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    left: 930px;
+    top: 453px;
+}

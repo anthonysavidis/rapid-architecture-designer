@@ -1,0 +1,126 @@
+.confirmationBox {
+    margin-top: 2px;
+    padding-bottom: 5px;
+    width: 500px;
+    height: auto;
+    text-align: center;
+    color: #525252;
+    background-color: #e7e5e5;
+    font-family: Arial, Helvetica, sans-serif;
+    left: 32.5%;
+    top: 5%;
+    position: absolute;
+    z-index: 30;
+}
+
+.updatingBox {
+    padding: 1px;
+    width: 400px;
+    height: 80px;
+    text-align: center;
+    color: #525252;
+    background-color: #cedff7;
+    font-family: Arial, Helvetica, sans-serif;
+    left: 32.5%;
+    top: 5%;
+    position: absolute;
+    z-index: 30;
+}
+
+.selectingBox {
+    padding: 1px;
+    padding-bottom: 1%;
+    width: 250px;
+    height: 165px;
+    text-align: center;
+    color: #525252;
+    background-color: #e7e5e5;
+    font-family: Arial, Helvetica, sans-serif;
+    left: 32.5%;
+    top: 5%;
+    position: absolute;
+    z-index: 30;
+}
+
+.inputBox {
+    padding-top: 0.25%;
+    padding-bottom: 1%;
+    width: 500px;
+    height: auto;
+    text-align: center;
+    color: #525252;
+    background-color: #e7e5e5;
+    font-family: Arial, Helvetica, sans-serif;
+    left: 32.5%;
+    top: 5%;
+    position: absolute;
+    z-index: 30;
+}
+
+.cancelButton {
+    width: 75px;
+    height: 35px;
+    background-color: #969696;
+    border: 0px;
+    float: left;
+    border-radius: 10%;
+    margin-left: 25px;
+}
+
+.deleteButton {
+    width: 75px;
+    height: 35px;
+    background-color: #ff6464;
+    border: 0px;
+    float: right;
+    border-radius: 10%;
+    margin-right: 25px;
+}
+
+.okButton {
+    width: 75px;
+    height: 35px;
+    background-color: #1c5299;
+    color: #FFFFFF;
+    border: 0px;
+    float: right;
+    border-radius: 10%;
+    margin-right: 25px;
+}
+
+.closeBoxButton {
+    background-image: url('../images/closeInfo.png');
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+    left: 372px;
+    float: right;
+    margin-right: 5px;
+    z-index: 30;
+}
+
+select {
+    margin: 15px;
+    margin-left: 30px;
+    width: 150px;
+    padding: 5px 35px 5px 5px;
+    font-size: 16px;
+    float: left;
+    border: 1px solid #ccc;
+    height: 44px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('../images/arrowDown.png') 96% / 8% no-repeat #eee;
+}
+
+.buttonTeam {
+    margin-top: 8px;
+    margin-left: 1%;
+    height: 45px;
+}
+
+.boxTitle {
+    margin-bottom: 2px;
+    margin-right: 18px;
+}
