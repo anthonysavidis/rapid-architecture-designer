@@ -3,7 +3,7 @@ const constantNames = {
         "tabName": "File",
         "Save": "Save",
         "Load": "Load"
-   },
+    },
     "editTab": {
         "tabName": "Edit",
         "Grid": "Grid",
@@ -47,7 +47,8 @@ const constantNames = {
         "title": "Operations",
         "filterMsg": "Filter by:",
         "byComponent": "Current",
-        "all": "All"
+        "all": "All",
+        "currentComponents": "Selected Components:"
     },
     "infoTooltip": {
         "imageTitle": "Preview",

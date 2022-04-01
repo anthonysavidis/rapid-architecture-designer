@@ -11,17 +11,70 @@ function insertUpTabs() {
     return;
 }
 
-function insertSideTab() {
-    var sideTabStr = '<h2 style="text-align: center; margin-top:5px;">' + constantNames['operationsArea']['title'] + '</h2>\
-    <hr style="margin-bottom:14px;" class="solid">\
-    <div style="float:left;margin-left:12px;margin-top:-15px"><input type="radio" id="byComponent" value="HTML">\
+function produceOperationsTittle() {
+    var tittle = document.createElement('h2');
+    tittle.innerText = constantNames['operationsArea']['title'];
+    tittle.style.marginTop = 5 + "px";
+    tittle.style.marginBottom = 5 + "px";
+    tittle.style.textAlign = "center";
+    return tittle;
+}
+
+function produceHR() {
+    var hr = document.createElement('div');
+    hr.className = "customHr";
+    return hr;
+}
+
+function produceOperationRadioButtons() {
+    var innerStr = '<div style="float:left;margin-left:12px;"><input type="radio" id="byComponent" value="HTML">\
     <label for="html">' + constantNames["operationsArea"]["byComponent"] + '</label></div> \
-    <div style="float:right; margin-right:4px; margin-top:-15px"><input type="radio" id="all" value="CSS" checked> \
-    <label for="css">' + constantNames["operationsArea"]["all"] + '</label></div><br><hr style="margin-bottom:14px;"  class="solid">    \
-    <div id="functionArea" class="functionRec">\
-    </div>';
-    document.getElementById('right_tab').innerHTML = sideTabStr;
+    <div style="float:right; margin-right:4px;"><input type="radio" id="all" value="CSS" checked> \
+    <label for="css">' + constantNames["operationsArea"]["all"] + '</label></div>';
+    var radioButtons = document.createElement('div');
+    radioButtons.style.height = '24.33px';
+    radioButtons.innerHTML = innerStr;
+    return radioButtons;
+}
+
+function produceCurrentSelectedArea() {
+    const AreaStr = '<div style="height:20px;float:left;margin-left:8%;">' + constantNames["operationsArea"]["currentComponents"] + '</div>\
+    <div id="selectedComponentList" style="height:60px;float:left;margin-top:3px;margin-left:10%;width:78%;overflow-y:scroll;font-size:14px;color:gray;"></div>';
+    var selectedArea = document.createElement('div');
+    selectedArea.id = "currentSelectedArea";
+    selectedArea.style.display = "none";
+    selectedArea.style.height = "100px";
+    selectedArea.innerHTML = '<div class="customHr"></div>' + AreaStr;
+    return selectedArea;
+}
+
+// <hr style="margin-bottom:14px;" class="solid">
+function insertSideTab() {
+    var functionsRec = document.createElement('div');
+    functionsRec.id = "functionArea";
+    functionsRec.className = "functionRec";
+    var restContainer = document.createElement('div');
+    restContainer.appendChild(produceOperationsTittle());
+    restContainer.appendChild(produceHR());
+    restContainer.appendChild(produceOperationRadioButtons());
+    restContainer.appendChild(produceCurrentSelectedArea());
+    restContainer.appendChild(produceHR());
+    document.getElementById('right_tab').appendChild(restContainer);
+    document.getElementById('right_tab').appendChild(functionsRec);
     return;
 }
 
-export { insertUpTabs };
+function toggleSelectedComponents() {
+    if (document.getElementById("currentSelectedArea").style.display === "none") {
+        document.getElementById("currentSelectedArea").style.display = "block";
+        document.getElementById("functionArea").style.height = "57%";
+    } else {
+        document.getElementById("currentSelectedArea").style.display = "none";
+        document.getElementById("functionArea").style.height = "70%";
+
+    }
+    return;
+
+}
+
+export { insertUpTabs, toggleSelectedComponents };

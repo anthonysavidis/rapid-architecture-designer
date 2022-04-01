@@ -1,4 +1,5 @@
 import { items } from "../Classes/ItemArray.js";
+import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 
 var lastSelected = "";
 
@@ -23,6 +24,8 @@ function showByComponent() {
 
 function showOwner(functionItem) {
     const ownerId = functionItem.owners[0];
+    if (!ownerId)
+        return;
     const ownerName = items.itemList[items.itemList.findIndex((el) => el._id === ownerId)]._name;
     const newName = functionItem._name + '  <' + ownerName + '>';
     document.getElementById(functionItem._id + 'name').innerText += '  <' + ownerName + '>';
@@ -71,6 +74,7 @@ function setUpFunctionDisplayListeners() {
         if (document.getElementById("all").checked) {
             document.getElementById("byComponent").checked = false;
             showAll();
+            toggleSelectedComponents();
         }
     });
 
@@ -78,6 +82,7 @@ function setUpFunctionDisplayListeners() {
         if (document.getElementById("byComponent").checked) {
             document.getElementById("all").checked = false;
             showByComponent();
+            toggleSelectedComponents();
         }
     });
     return;

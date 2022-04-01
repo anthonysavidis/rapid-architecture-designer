@@ -6,8 +6,15 @@ const selectAction = function(compId) {
     if (document.getElementById("byComponent").checked) {
         hideCurrentFunctions();
         const componentsIdList = getSelectedIds();
-        for (var x in componentsIdList)
+        const componentItems = getSelectedItems()
+        document.getElementById("selectedComponentList").innerHTML = "";
+        for (var x in componentsIdList) {
             showSpecificFunctions(componentsIdList[x]);
+            if (!document.getElementById("selectedComponentList").innerHTML)
+                document.getElementById("selectedComponentList").innerHTML = componentItems[x]._name;
+            else
+                document.getElementById("selectedComponentList").innerHTML += ", " + componentItems[x]._name;
+        }
     }
     return;
 }

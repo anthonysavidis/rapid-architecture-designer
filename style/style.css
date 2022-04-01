@@ -209,8 +209,9 @@ body {
 }
 
 .functionRec {
-    width: 229.78px;
+    width: 80%;
     height: 70%;
+    /* height: 57%; */
     margin-left: 8.5%;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -294,4 +295,17 @@ hr.solid {
 .subComponent {
     width: auto;
     text-align: center;
+}
+
+.customHr {
+    width: 80%;
+    height: 2px;
+    background-color: gray;
+    margin-left: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0);
 }

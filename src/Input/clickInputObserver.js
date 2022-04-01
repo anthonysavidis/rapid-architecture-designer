@@ -3,7 +3,7 @@ import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { spawnHelper } from "../Item/geometry.js";
-import { cancelSelection } from "../Item/selectComponent.js";
+import { cancelSelection, getSelectedIds } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { cancelSelectedLinks } from "../Item/selectLink.js";
 import { appearComponentButtons, appearFunctionButtons, appearEditButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
@@ -97,16 +97,18 @@ function whichElement(e) {
     const isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, e.clientX, e.clientY);
     if (!isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)) {
         setTimeout(() => {
+            document.getElementById("selectedComponentList").innerHTML = "";
             cancelAll(e);
             appearComponentButtons();
             appearFunctionButtons();
             appearEditButtons();
-        }, 300);
+        }, 100);
     }
     checkToSwitchTabs(e);
     appearComponentButtons();
     appearFunctionButtons();
     appearEditButtons();
+
 }
 
 function initializeObserver() {
