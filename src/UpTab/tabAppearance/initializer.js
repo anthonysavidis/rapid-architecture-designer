@@ -37,14 +37,9 @@ function addAllButtons() {
     addButton(constantNames["editTab"]["Undo"], "undoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Redo"], "redoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Grid"], "gridButton", constantNames["editTab"]["tabName"]);
-    addButton(constantNames["editTab"]["Test"], "commandButton", constantNames["editTab"]["tabName"]);
 
     addButton(constantNames["fileTab"]["Save"], "saveButton", constantNames["fileTab"]["tabName"]);
     addButton(constantNames["fileTab"]["Load"], "loadButton", constantNames["fileTab"]["tabName"]);
-    addButton(constantNames["fileTab"]["Test"], "testButton", constantNames["fileTab"]["tabName"]);
-    addButton(constantNames["fileTab"]["Items"], "itemsButton", constantNames["fileTab"]["tabName"]);
-    addButton(constantNames["fileTab"]["Camera"], "cameraButton", constantNames["fileTab"]["tabName"]);
-
 
     addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
 }

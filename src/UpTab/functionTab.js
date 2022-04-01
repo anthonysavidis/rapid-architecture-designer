@@ -59,7 +59,7 @@ function addFunctionTabListeners() {
         const cid = itemList[1]._id;
         produceBox("confirmation", constantNames["confirmationBox"]["ResetStart"] + itemList[1]._name + constantNames["confirmationBox"]["ResetEnd"] + "@1", () => {
             resetFunctionAction(fid, cid);
-            var updatingMessage = itemList[0]._name + " was resetted from " + itemList[1]._name + ".";
+            var updatingMessage = itemList[0]._name + " detached from " + itemList[1]._name + ".";
             produceBox("updating", updatingMessage, null);
             actions.saveCommand(resetSpecificFunction, setSpecificFunction, str, "");
         });

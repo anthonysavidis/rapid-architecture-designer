@@ -86,15 +86,6 @@ function addFileTabListeners() {
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });
-
-    document.getElementById("testButton").addEventListener("click", () => {
-        console.log(layers);
-    });
-
-    document.getElementById("itemsButton").addEventListener("click", () => {
-        console.log(items);
-    });
-
     document.getElementById("saveButton").addEventListener("click", function() {
         saveAction();
     });

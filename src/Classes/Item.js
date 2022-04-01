@@ -232,7 +232,7 @@ class Item {
         this._functions.push(fid);
         var fIndex = items.itemList.findIndex(((element) => element._id === fid));
         items.itemList[fIndex].owners.push(this._id);
-        var updatingMessage = items.itemList[fIndex]._name + " was setted in " + this._name + ".";
+        var updatingMessage = items.itemList[fIndex]._name + " attached to " + this._name + ".";
         produceBox("updating", updatingMessage, null);
         return;
     }

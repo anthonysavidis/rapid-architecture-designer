@@ -91,7 +91,7 @@ class ItemHolder {
         var exists = this.itemList[itemListIndex]._functions.includes(functionId); //  findIndex((element) => element.id === this.itemList[functionIndex]._id);
         var settedFunction = this.itemList[this.itemList.findIndex(el => el._id === functionId)];
         if (settedFunction.owners[0]) {
-            alert("This function is already setted in a component!");
+            alert("Operation already attached to component!");
             return -1;
         }
         if (!exists) {

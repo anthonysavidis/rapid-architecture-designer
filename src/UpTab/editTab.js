@@ -43,9 +43,6 @@ function addEditTabListeners() {
         if (actions.redoStack.length !== 0)
             actions.redo();
     });
-    document.getElementById("commandButton").addEventListener("click", function() {
-        console.log(actions);
-    });
     initialAppear();
 }
 

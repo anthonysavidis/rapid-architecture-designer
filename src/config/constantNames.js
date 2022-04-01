@@ -2,15 +2,11 @@ const constantNames = {
     "fileTab": {
         "tabName": "File",
         "Save": "Save",
-        "Load": "Load",
-        "Test": "Test",
-        "Items": "Items",
-        "Camera": "Export Image"
-    },
+        "Load": "Load"
+   },
     "editTab": {
         "tabName": "Edit",
         "Grid": "Grid",
-        "Test": "Test",
         "Undo": "Undo",
         "Copy": "Copy",
         "Paste": "Paste",
@@ -38,7 +34,7 @@ const constantNames = {
         "Set": "Set",
         "Split": "Split",
         "Reset": "Reset",
-        "setConfirmation": "The function has been setted successfully to: "
+        "setConfirmation": "Attached to: "
     },
     "layersTab": {
         "tabName": "Hierarchy",
@@ -75,21 +71,21 @@ const constantNames = {
     "inputBox": {
         "msg": "Insert name & description of ",
         "nameLabel": {
-            "Component": "Component Name:",
-            "Link": "Link Name:",
-            "Function": "Function Name:"
+            "Component": "Name:",
+            "Link": "Name:",
+            "Function": "Name:"
         },
         "descriptionLabel": {
-            "Component": "Component Description:",
-            "Link": "Link Description:",
-            "Function": "Function Description:"
+            "Component": "Description:",
+            "Link": "Description:",
+            "Function": "Description:"
         },
     },
     "splittedBox": {
-        "msg": "Splitted Parts",
+        "msg": "Parts split",
         "2nd": "2",
         "3rd": "4",
-        "name": "SplittedComponent"
+        "name": "Component split"
     },
     "emptyNames": {
         "component": "New Component",
@@ -116,27 +112,24 @@ const constantNames = {
 
 const buttonTooltips = {
     "Components": {
-        "New": "Create a new Component.",
-        "Delete": "Delete the selected Component.",
-        "Link": "Link 2 selected Components.",
-        "Unlink": "Unlink 2 selected Components.",
-        "Split": "Split the selected Component.",
-        "Join": "Join the selected Components.",
-        "Subdivide": "Create a new sublayer of the selected Component.",
-        "Unsubdivide": "Delete the sublayer of the selected Component.",
-        "Copy": "Copy selected Component(s) in order to paste it in another editor.",
-        "Paste": "Paste copied Component(s) from another editor.",
+        "New": "Create a new component.",
+        "Delete": "Delete the selected component.",
+        "Link": "Link two selected components.",
+        "Unlink": "Unlink two selected components.",
+        "Split": "Split the selected component.",
+        "Join": "Join the selected components.",
+        "Subdivide": "Create a new sublayer of the selected component.",
+        "Unsubdivide": "Delete the sublayer of the selected component.",
+        "Copy": "Copy selected component(s) to paste it in another editor.",
+        "Paste": "Paste copied component(s) from another editor.",
         "Transfer": "Transfer or copy operations from one component to another."
     },
     "File": {
         "Save": "Save the current architecture.",
-        "Load": "Load an architecture.",
-        "Test": "Print layers.",
-        "Items": "Print items."
+        "Load": "Load an architecture."
     },
     "Edit": {
         "Grid": "Turn on/off the dotted grid.",
-        "Test": "Print undo/redo stack.",
         "Undo": "Undo the latest action.",
         "Redo": "Redo the latest action."
     },
