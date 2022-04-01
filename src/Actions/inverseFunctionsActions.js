@@ -34,7 +34,7 @@ function setSpecificFunction(actionItems) {
     // console.log(itemsObject[1]._id, itemsObject[0]._id); IDS OK
     items.setFunctionToItem(itemsObject[1]._id, itemsObject[0]._id);
     // console.log(items.itemList[0]._functions);
-    console.log('setted');
+    console.log('attached');
     console.log(actionItems.initialItem);
     return;
 }
@@ -44,7 +44,7 @@ function resetSpecificFunction(actionItems) {
     // console.log(itemsObject[1]._id, itemsObject[0]._id); IDS OK.
     items.unlinkOwnerFunction(itemsObject[1]._id, itemsObject[0]._id);
     // console.log(items.itemList[0]._functions);
-    console.log('resetted');
+    console.log('detached');
     console.log(actionItems.initialItem);
     return;
 }
