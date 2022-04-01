@@ -234,10 +234,10 @@ body {
 }
 
 .fName {
-    width: auto;
     text-align: left;
     margin-top: -0.5px;
     margin-left: 40px;
+    white-space: nowrap;
 }
 
 .ficon {
@@ -245,6 +245,7 @@ body {
     margin-right: 12px;
     width: 24px;
     height: 25px;
+    background: no-repeat;
     background-image: url('../images/fIcon.png');
 }
 

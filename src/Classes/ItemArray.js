@@ -4,6 +4,7 @@ import { renderLine } from "../Item/createLine.js";
 import { layers } from "./LayerHolder.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
+import { resetOwner } from "../Workspace/functionAppearance.js";
 class ItemHolder {
 
     constructor(str) {
@@ -49,6 +50,7 @@ class ItemHolder {
                 console.log(ownersDelete + " " + deletingItemId);
                 this.itemList[ownerDeleteIndex].deleteFunction(deletingItemId);
             }
+            this.itemList[itemListIndex].owners = [];
         }
         this.deleteFromLists(deletingItemId);
         document.getElementById(deletingItemId + 'external').remove();
@@ -133,6 +135,7 @@ class ItemHolder {
         return;
     }
     unlinkOwnerFunction(id, fid) {
+        resetOwner(items.itemList[items.itemList.findIndex((el) => el._id === fid)]);
         this.deleteFunctionFromOwner(id, fid);
         this.deleteOwnerFromFunction(id, fid);
         return;

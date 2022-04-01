@@ -21,15 +21,26 @@ function showByComponent() {
     return;
 }
 
+function showOwner(functionItem) {
+    const ownerId = functionItem.owners[0];
+    const ownerName = items.itemList[items.itemList.findIndex((el) => el._id === ownerId)]._name;
+    const newName = functionItem._name + '  <' + ownerName + '>';
+    document.getElementById(functionItem._id + 'name').innerText += '  <' + ownerName + '>';
+    return;
+}
+
+function resetOwner(functionItem) {
+    document.getElementById(functionItem._id + 'name').innerText = functionItem._name;
+    return;
+}
+
+
 function showAll() {
     configAppearance("block");
     const allItemList = items.itemList;
     for (var i in allItemList) {
         if (allItemList[i]._type === "Function") {
-            const ownerId = allItemList[i].owners[0];
-            const ownerName = allItemList[allItemList.findIndex((el) => el._id === ownerId)]._name;
-            const newName = allItemList[i]._name + '  <' + ownerName + '>';
-            document.getElementById(allItemList[i]._id + 'name').innerText = newName;
+            showOwner(allItemList[i]);
         }
     }
     return;
@@ -72,4 +83,4 @@ function setUpFunctionDisplayListeners() {
     return;
 }
 
-export { setUpFunctionDisplayListeners, setLastSelected, hideCurrentFunctions, showSpecificFunctions };
+export { setUpFunctionDisplayListeners, setLastSelected, hideCurrentFunctions, showSpecificFunctions, resetOwner, showOwner };

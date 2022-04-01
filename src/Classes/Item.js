@@ -18,6 +18,7 @@ import { closeTooltip, produceTooltip } from "../HtmlElements/infoTooltip.js";
 import { initializeTab } from "../UpTab/tabAppearance/tabInitializer.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { produceContextMenu } from "../HtmlElements/functionsContextMenu.js";
+import { showOwner } from "../Workspace/functionAppearance.js";
 
 class Item {
 
@@ -234,6 +235,7 @@ class Item {
         items.itemList[fIndex].owners.push(this._id);
         var updatingMessage = items.itemList[fIndex]._name + " attached to " + this._name + ".";
         produceBox("updating", updatingMessage, null);
+        showOwner(items.itemList[fIndex]);
         return;
     }
 

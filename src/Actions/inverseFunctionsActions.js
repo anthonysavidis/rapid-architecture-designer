@@ -1,9 +1,11 @@
 import { spawnSpecificItem, deleteSpecificItems } from "./inverseActions.js";
 import { items } from "../Classes/ItemArray.js";
 import { Item } from "../Classes/Item.js";
+import { showOwner } from "../Workspace/functionAppearance.js";
 
 function createSpecificFunction(actionItems) {
     var it = new Item(actionItems.updatedItem);
+    it.owners[0] ? items.setFunctionToItem(itemsObject[1]._id, itemsObject[0]._id) : 1;
     return;
 }
 
@@ -17,7 +19,13 @@ function createMultipleSpecificFunctions(actionItems) {
     var regeneratedItemsObject = JSON.parse(actionItems.initialItem);
     for (var x in regeneratedItemsObject) {
         var it = new Item(JSON.stringify(regeneratedItemsObject[x]));
+        if (it.owners[0]) {
+            const ownerID = it.owners[0];
+            items.itemList[items.itemList.findIndex(el => el._id === it._id)].owners = [];
+            items.setFunctionToItem(ownerID, it._id);
+        }
     }
+    console.log(items);
     return;
 }
 
