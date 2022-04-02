@@ -111,4 +111,34 @@ function getSubcomponentButton(componentId) {
     return switchButton;
 }
 
-export { turnOnExtension, turnOffExtension, getSubcomponentButton };
+function areAllExtendable(itemsList) {
+    var extentable = true;
+    for (var x in itemsList) {
+        if (itemsList[x].subLayers.length === 0) {
+            var extentable = false;
+        }
+    }
+    return extentable;
+}
+
+function areAllCollapsed(itemsList) {
+    var collapsed = true;
+    for (var x in itemsList) {
+        if (!document.getElementById(itemsList[x]._id + "resizer")) {
+            var collapsed = false;
+        }
+    }
+    return collapsed;
+}
+
+function areAllExtended(itemsList) {
+    var extended = true;
+    for (var x in itemsList) {
+        if (document.getElementById(itemsList[x]._id + "resizer")) {
+            var extended = false;
+        }
+    }
+    return extended;
+}
+
+export { turnOnExtension, turnOffExtension, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };

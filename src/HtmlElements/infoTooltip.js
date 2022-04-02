@@ -123,7 +123,6 @@ function produceMainPart(tooltip, src, id, itemType, description, moreInfo) {
     mainPart.appendChild(descriptionDiv);
     mainPart.appendChild(moreInfoTittle);
     mainPart.appendChild(moreInfoDiv);
-    (itemType === "Component" && src !== './images/noSub.png') ? mainPart.appendChild(getSubcomponentButton(id)): 1;
     tooltip.appendChild(mainPart);
     return;
 }

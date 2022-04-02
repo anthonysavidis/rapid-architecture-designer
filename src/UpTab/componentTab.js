@@ -18,6 +18,8 @@ import { createSpecificFunction, deleteSpecificFunction } from "../Actions/inver
 import { autoResize } from "../Item/resize.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { splitCallBack } from "../Input/contextMenuCallbacks.js";
+import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
+import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actions/inversePropertiesTab.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -101,6 +103,21 @@ function askForDetails(it, extraInfo) {
     });
 }
 
+function collapseButton(extentableItems) {
+    for (var x in extentableItems) {
+        turnOffExtension(extentableItems[x]._id);
+    }
+    actions.saveCommand(collapseSubcomponentsAction, extendSubcomponentsAction, JSON.stringify(extentableItems), "");
+    return;
+}
+
+function extendButton(extentableItems) {
+    for (var x in extentableItems) {
+        turnOnExtension(extentableItems[x]._id);
+    }
+    actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, JSON.stringify(extentableItems), "");
+    return;
+}
 
 function addComponentTabListeners() {
     document.getElementById("newButton").addEventListener("click", function() {
@@ -167,9 +184,19 @@ function addComponentTabListeners() {
         actions.saveCommand(deleteSpecificLayer, createSpecificLayer, "", layerStr);
 
     });
+    document.getElementById("extendButton").addEventListener("click", function() {
+        const extentableItems = getSelectedItems();
+        extendButton(extentableItems);
+    });
+    document.getElementById("collapseButton").addEventListener("click", function() {
+        const extentableItems = getSelectedItems();
+        collapseButton(extentableItems);
+    });
     initialAppear();
     return;
 }
+
+
 
 function initialAppear() {
     document.getElementById("linkButton").style.display = "none";
@@ -179,6 +206,9 @@ function initialAppear() {
     document.getElementById("joinButton").style.display = "none";
     document.getElementById("subdivideButton").style.display = "none";
     document.getElementById("unsubdivideButton").style.display = "none";
+    document.getElementById("collapseButton").style.display = "none";
+    document.getElementById("extendButton").style.display = "none";
+
 }
 
 export { addComponentTabListeners, subdivideAction, askForDetails, produceNewLayer, pasteComponentAction };

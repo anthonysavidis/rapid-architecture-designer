@@ -27,6 +27,8 @@ function addAllButtons() {
     addButton(constantNames["componentsTab"]["Unsubdivide"], "unsubdivideButton", constantNames["componentsTab"]["tabName"]);
     addButton(constantNames["componentsTab"]["Copy"], "copyButton", constantNames["componentsTab"]["tabName"]);
     addButton(constantNames["componentsTab"]["Paste"], "pasteButton", constantNames["componentsTab"]["tabName"]);
+    addButton(constantNames["componentsTab"]["Extend"], "extendButton", constantNames["componentsTab"]["tabName"]);
+    addButton(constantNames["componentsTab"]["Collapse"], "collapseButton", constantNames["componentsTab"]["tabName"]);
 
     addButton(constantNames["functionsTab"]["New"], "newFunctionButton", constantNames["functionsTab"]["tabName"]);
     addButton(constantNames["functionsTab"]["Delete"], "deleteFunctionButton", constantNames["functionsTab"]["tabName"]);

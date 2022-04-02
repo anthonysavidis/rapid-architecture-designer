@@ -38,11 +38,15 @@ function setLastOriginalItem(it) {
 }
 
 function extendSubcomponentsAction(actionItems) {
-    turnOnExtension(actionItems.initialItem);
+    const extendItems = JSON.parse(actionItems.initialItem);
+    for (var x in extendItems)
+        turnOnExtension(extendItems[x]._id);
 }
 
 function collapseSubcomponentsAction(actionItems) {
-    turnOffExtension(actionItems.initialItem);
+    const collapseItems = JSON.parse(actionItems.initialItem);
+    for (var x in collapseItems)
+        turnOffExtension(collapseItems[x]._id);
 }
 
 export { detailDetailChangeListener, inverseItemsDetails, alterItemsDetails, setLastOriginalItem, extendSubcomponentsAction, collapseSubcomponentsAction };

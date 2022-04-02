@@ -81,7 +81,6 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     [x1, x2, y1, y2, degree, lineLength, arrowChange] = calculateStartingPoints(lineId, rec1, rec2);
 
     if (lineLength === 0) {
-        console.log('calc');
         lineLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
     var lineHtml = "<div id=\"" + lineId + "\" style='transform-origin: top left;text-align: center; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: 1px; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;z-index:14;'></div>";

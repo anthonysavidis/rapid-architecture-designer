@@ -25,6 +25,8 @@ const constantNames = {
         "Transfer": "Transfer",
         "Subdivide": "Subdivide",
         "Unsubdivide": "Unsubdivide",
+        "Extend": "Extend",
+        "Collapse": "Collapse",
         "LayerDialog": "Please enter new layer's name:"
     },
     "functionsTab": {

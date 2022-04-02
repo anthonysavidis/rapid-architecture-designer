@@ -2,6 +2,7 @@ import { getSelectedItems, getSelectedIds } from "../../Item/selectComponent.js"
 import { items } from "../../Classes/ItemArray.js";
 import { getSelectedFunctions, getSelectedFunctionIds } from "../../Item/selectFunction.js";
 import { actions } from "../../Classes/Actions.js";
+import { areAllCollapsed, areAllExtendable, areAllExtended } from "../../HtmlElements/extendingComponent.js";
 
 function appearComponentButtons() {
     const selectedItems = getSelectedItems();
@@ -21,6 +22,17 @@ function appearComponentButtons() {
         document.getElementById("deleteButton").style.display = "inline-block";
     } else {
         document.getElementById("deleteButton").style.display = "none";
+    }
+    if (selectedItems.length >= 1 && areAllExtendable(selectedItems) && areAllCollapsed(selectedItems)) {
+        document.getElementById("extendButton").style.display = "inline-block";
+    } else {
+        document.getElementById("extendButton").style.display = "none";
+    }
+
+    if (selectedItems.length >= 1 && areAllExtendable(selectedItems) && areAllExtended(selectedItems)) {
+        document.getElementById("collapseButton").style.display = "inline-block";
+    } else {
+        document.getElementById("collapseButton").style.display = "none";
     }
 
     if (selectedItems.length === 2) {

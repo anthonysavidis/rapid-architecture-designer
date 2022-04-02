@@ -94,6 +94,7 @@
     outline: 2px auto;
     /* outline-color: white; */
     /* border: 2px  solid rgba(0,0,0,0.5);  */
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -110,6 +111,7 @@
     /* background: transparent; */
     outline: 2px auto;
     outline-color: blue;
+    -moz-box-sizing: border-box;
     /* border: 2px  solid rgba(0,0,0,0.5);  */
     box-sizing: border-box;
 }
