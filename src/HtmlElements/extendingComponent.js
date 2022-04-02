@@ -70,7 +70,10 @@ function calculateSubcomponents(id) {
 }
 
 function turnOnExtension(id) {
-    addSubcomponents(id, calculateSubcomponents(id));
+    const subComponentsName = calculateSubcomponents(id);
+    if (subComponentsName.length === 0)
+        return;
+    addSubcomponents(id, subComponentsName);
     closeTooltip(id);
     document.getElementById(id + "resizer").remove();
     if (items.itemList[items.itemList.findIndex(el => el._id === id)].links)
