@@ -46,13 +46,18 @@ function addSubcomponents(id, nameList) {
     }
 }
 
-function collapseSubcomponents(id, numberOfSubcomponets) {
+function collapseSubcomponents(id) {
+    if (!document.getElementById(id + 'l1')) //means isn't extended.
+        return;
     document.getElementById(id + 'l1').remove();
     document.getElementById(id + 'l2').remove();
-    for (let index = 0; index < numberOfSubcomponets; index++) {
+    var index = 0;
+    // for (let index = 0; index < numberOfSubcomponets; index++) {
+    while (document.getElementById(id + 'subComponent' + index)) {
         document.getElementById(id + 'subComponent' + index).remove();
-        if (index !== (numberOfSubcomponets - 1))
+        if (document.getElementById(id + 'subComponent' + index + 'Line'))
             document.getElementById(id + 'subComponent' + index + 'Line').remove();
+        index++;
     }
     document.getElementById(id).style.height = 75 + "px";
     return;
@@ -82,8 +87,10 @@ function turnOnExtension(id) {
 }
 
 function turnOffExtension(id) {
-    collapseSubcomponents(id, calculateSubcomponents(id).length);
-    closeTooltip(id);
+    const subComponentsName = calculateSubcomponents(id);
+
+    collapseSubcomponents(id);
+    // closeTooltip(id);
     addResize(id);
     if (items.itemList[items.itemList.findIndex(el => el._id === id)].links)
         renderLine(id);

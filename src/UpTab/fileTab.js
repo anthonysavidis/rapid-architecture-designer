@@ -62,7 +62,6 @@ function loadAction() {
                 document.getElementById(layers.layerList[x]._id).remove();
                 document.getElementById(layers.layerList[x]._id + "functions").remove();
             }
-            console.log(allText);
             var lh = new LayerHolder(allText);
         };
 

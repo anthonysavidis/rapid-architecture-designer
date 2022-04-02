@@ -4,6 +4,7 @@ import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComp
 function refreshExtendedComponents(layersItems) {
     for (var x in layersItems) {
         if (layersItems[x]._type === "Component" && document.getElementById(layersItems[x]._id + "l1")) {
+            console.log(layersItems[x]._name);
             turnOffExtension(layersItems[x]._id);
             turnOnExtension(layersItems[x]._id);
         }
