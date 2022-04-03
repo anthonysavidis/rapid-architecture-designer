@@ -225,7 +225,6 @@ body {
 }
 
 .function {
-    width: auto;
     height: 29px;
     cursor: grab;
     text-align: right;
@@ -234,6 +233,7 @@ body {
     margin-left: 5px;
     margin-top: 5px;
     z-index: 11;
+    display: inline-block;
 }
 
 .fName {
@@ -253,7 +253,6 @@ body {
 }
 
 .selectedFunction {
-    width: calc( 100% - 20px);
     height: 29px;
     text-align: center;
     cursor: grab;
@@ -264,6 +263,7 @@ body {
     box-sizing: border-box;
     z-index: 11;
     margin-left: 5px;
+    display: inline-block;
     margin-top: 5px;
 }
 

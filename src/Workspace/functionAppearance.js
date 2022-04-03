@@ -29,11 +29,14 @@ function showOwner(functionItem) {
     const ownerName = items.itemList[items.itemList.findIndex((el) => el._id === ownerId)]._name;
     const newName = functionItem._name + '  <' + ownerName + '>';
     document.getElementById(functionItem._id + 'name').innerText += '  <' + ownerName + '>';
+    document.getElementById(functionItem._id).style.backgroundColor = "#99ff00";
     return;
 }
 
 function resetOwner(functionItem) {
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name;
+    document.getElementById(functionItem._id).style.backgroundColor = "";
+
     return;
 }
 
@@ -54,6 +57,7 @@ function hideCurrentFunctions() {
     for (var i in allItemList) {
         if (allItemList[i]._type === "Function") {
             document.getElementById(allItemList[i]._id + 'name').innerText = allItemList[i]._name;
+            document.getElementById(allItemList[i]._id).style.backgroundColor = "";
         }
     }
     configAppearance("none");
@@ -88,4 +92,4 @@ function setUpFunctionDisplayListeners() {
     return;
 }
 
-export { setUpFunctionDisplayListeners, setLastSelected, hideCurrentFunctions, showSpecificFunctions, resetOwner, showOwner };
+export { setUpFunctionDisplayListeners, setLastSelected, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };

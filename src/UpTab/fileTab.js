@@ -6,6 +6,8 @@ import { takeScreenshot } from "../Layers/preview.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { copyComponent } from "../Item/copy.js";
+import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
+import { showAll } from "../Workspace/functionAppearance.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
