@@ -1,7 +1,7 @@
 import { moveItem } from "../Item/edit.js";
 import { items, itemFromListToObject } from "../Classes/ItemArray.js";
 import { getSelectedIds, cancelSelection } from "../Item/selectComponent.js";
-import { cancelFunctionSelection, changeFunctionSelectState } from "../Item/selectFunction.js";
+import { cancelFunctionSelection, changeFunctionSelectState, keepOnlyLastSelectedFunction } from "../Item/selectFunction.js";
 import { linedraw } from "../Item/createLine.js"
 import { layers } from "./LayerHolder.js";
 import { Layer } from "./Layer.js";
@@ -18,7 +18,8 @@ import { closeTooltip, produceTooltip } from "../HtmlElements/infoTooltip.js";
 import { initializeTab } from "../UpTab/tabAppearance/tabInitializer.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { produceContextMenu } from "../HtmlElements/functionsContextMenu.js";
-import { showOwner } from "../Workspace/functionAppearance.js";
+import { showAll, showByComponent, showOwner } from "../Workspace/functionAppearance.js";
+import { moveCallBack } from "../Input/contextMenuCallbacks.js";
 
 class Item {
 
@@ -92,6 +93,10 @@ class Item {
                 var hasError = items.setFunctionToItem(this._id, functionId);
                 if (hasError === -1)
                     return;
+                if (hasError === 2) {
+                    moveCallBack(editId);
+                    return;
+                }
                 var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
 
                 // console.log("setted");
@@ -101,6 +106,7 @@ class Item {
                 var funcComp = [settingFunction, this];
                 var str = itemFromListToObject(funcComp);
                 actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
+
                 // var str = '{"0":"{' + settingFunction.toString() + '}","1":"{' + this.toString() + '}"}'
                 // actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
             } else {
@@ -167,7 +173,7 @@ class Item {
         const curId = this._id;
         this.domElement.ondragstart = (ev) => {
             cancelSelection();
-            cancelFunctionSelection();
+            keepOnlyLastSelectedFunction(curId);
             initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");
             prevColor = document.getElementById(curId).style.backgroundColor;

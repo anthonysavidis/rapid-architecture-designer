@@ -246,7 +246,7 @@ body {
 .ficon {
     float: left;
     margin-right: 14px;
-    margin-top: 1.75px;
+    margin-top: 0.85px;
     margin-left: 3px;
     width: 24px;
     height: 25px;
@@ -256,6 +256,7 @@ body {
 
 .selectedFunction {
     height: 29px;
+    padding-right: 14px;
     text-align: center;
     cursor: grab;
     /* position: absolute; */

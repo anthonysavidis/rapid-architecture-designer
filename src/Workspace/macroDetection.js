@@ -1,4 +1,5 @@
 import { actions } from "../Classes/Actions.js";
+import { items } from "../Classes/ItemArray.js";
 import { copyComponent, pasteComponent } from "../Item/copy.js";
 
 function detectMacros(params) {
@@ -38,6 +39,8 @@ function detectMacros(params) {
             } else if (ctrlDown && (e.keyCode == zKey)) {
                 if (actions.undoStack.length >= 1)
                     actions.undo();
+            } else if (ctrlDown && (e.keyCode == 73)) {
+                console.log(items);
             }
         });
     });

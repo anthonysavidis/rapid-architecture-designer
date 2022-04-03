@@ -98,7 +98,10 @@ function produceBox(type, extraInfo, callBack) {
             closeBox();
         }
         confirmationButton.onclick = function() {
-            callBack(nameFormDiv.firstChild.value, descriptionFormDiv.firstChild.value);
+            if (!nameFormDiv.firstChild.value) {
+                callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
+            } else
+                callBack(nameFormDiv.firstChild.value, descriptionFormDiv.firstChild.value);
             closeBox();
         }
     }

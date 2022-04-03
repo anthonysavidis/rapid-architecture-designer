@@ -9,7 +9,7 @@ import { showInputDialog } from "../Input/inputDialog.js";
 import { Layer } from "../Classes/Layer.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { deleteLatestItem, deleteSpecificItems, respawnDeletedItems, spawnSpecificItem, linkItems, unlinkItems, splitAction, joinAction, deleteSpecificLayer, createSpecificLayer, pasteAction, deletePastedItems } from "../Actions/inverseActions.js";
-import { getAllDeletedItemsStrs } from "../Actions/itemStackFunctions.js";
+import { getAllDeletedItemsStrs, getLinkItems } from "../Actions/itemStackFunctions.js";
 import { actions } from "../Classes/Actions.js";
 import { updateTree } from "../Layers/Tree.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
@@ -153,7 +153,15 @@ function addComponentTabListeners() {
         // actions.saveCommand(splitAction, joinAction, itemToBeSplited, itemParts);
     });
     document.getElementById("joinButton").addEventListener("click", function() {
-        var itemToBeJoined = JSON.parse(itemFromListToObject(getSelectedItems()));
+        const toBeJoined = getSelectedItems();
+        const itemLinks = getLinkItems(toBeJoined);
+        var itemToBeJoined;
+        console.log(itemLinks);
+        if (itemLinks[0]) {
+            const binded = toBeJoined.concat(itemLinks)
+            itemToBeJoined = JSON.parse(itemFromListToObject(binded));
+        } else
+            itemToBeJoined = JSON.parse(itemFromListToObject(toBeJoined));
         var joinedItem = joinComponentAction();
         actions.saveCommand(joinAction, splitAction, joinedItem, itemToBeJoined);
     });

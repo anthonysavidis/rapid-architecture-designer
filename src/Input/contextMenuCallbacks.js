@@ -79,4 +79,4 @@ function addAllPossibleMovingComponents(funcId, parentDiv) {
     }
 }
 
-export { addAllPossibleMovingComponents, splitCallBack, unparentCallBack, deleteCallBack };
+export { addAllPossibleMovingComponents, splitCallBack, unparentCallBack, deleteCallBack, moveCallBack };

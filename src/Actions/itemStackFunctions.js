@@ -60,4 +60,24 @@ function getSingleItemStrs(it) {
 //     }
 // }
 
-export { getAllDeletedItemsStrs, getSingleItemStrs };
+function getLinkItems(joinedItemList) {
+    var defaultLinkList = [];
+    for (var x in joinedItemList) {
+        if (joinedItemList[x].links) {
+            if (joinedItemList[x].links) {
+                Array.from(joinedItemList[x].links.entries()).forEach(function(e) {
+                    defaultLinkList.push(e[1]); // get the value
+                });
+            }
+        }
+    }
+    var linkIdList = defaultLinkList.filter((a, i, aa) => aa.indexOf(a) === i && aa.lastIndexOf(a) !== i);
+    var linkItems = [];
+    for (var x in linkIdList) {
+        linkItems.push(items.itemList[items.itemList.findIndex((el) => el._id === linkIdList[x])]);
+    }
+    return linkItems;
+}
+
+
+export { getAllDeletedItemsStrs, getSingleItemStrs, getLinkItems };

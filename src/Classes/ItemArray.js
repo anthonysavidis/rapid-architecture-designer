@@ -4,7 +4,8 @@ import { renderLine } from "../Item/createLine.js";
 import { layers } from "./LayerHolder.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
-import { resetOwner } from "../Workspace/functionAppearance.js";
+import { resetOwner, showAll } from "../Workspace/functionAppearance.js";
+import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 class ItemHolder {
 
     constructor(str) {
@@ -91,10 +92,19 @@ class ItemHolder {
     setFunctionToItem(itemId, functionId) {
         const itemListIndex = this.itemList.findIndex(((element) => element._id === itemId));
         var exists = this.itemList[itemListIndex]._functions.includes(functionId); //  findIndex((element) => element.id === this.itemList[functionIndex]._id);
-        var settedFunction = this.itemList[this.itemList.findIndex(el => el._id === functionId)];
+        const settedFunction = this.itemList[this.itemList.findIndex(el => el._id === functionId)];
+        var overwrite = 0;
         if (settedFunction.owners[0]) {
-            alert("Operation already attached to component!");
-            return -1;
+            // alert("Operation already attached to component!");
+            return 2;
+            // const selectedFuncs = getSelectedFunctions();
+            // const initialFuncsStr = itemFromListToObject([settedFunction]);
+            // for (var x in selectedFuncs) {
+            // const funcId = selectedFuncs[x]._id;
+            // this.unlinkOwnerFunction(settedFunction.owners[0], settedFunction._id);
+            // }
+            // this.itemList[itemListIndex].setFunction(functionId);
+            // actions.saveCommand(massiveSet, massiveMove1, initialFuncsStr, JSON.stringify(itemId));
         }
         if (!exists) {
             this.itemList[itemListIndex].setFunction(functionId);

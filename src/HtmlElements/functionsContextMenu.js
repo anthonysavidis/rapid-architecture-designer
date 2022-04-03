@@ -41,7 +41,7 @@ function moveContextMenu(funcId, parent) {
     return;
 }
 
-var closeContext;
+var closeContext = () => {};
 
 function produceContextMenu(funcId, x, y) {
     var funcContext = document.createElement('div');

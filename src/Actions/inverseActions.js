@@ -62,10 +62,12 @@ function splitAction(actionItems) {
     items.delete(joinedItem._id);
 
     var splitedParts = actionItems.updatedItem; //ta parts.
+    console.log(splitedParts);
     for (var x in splitedParts) {
         var itStr = JSON.stringify(splitedParts[x]);
-        console.log(itStr);
         var it = new Item(itStr, 0);
+        console.log(it);
+
     }
     return;
 }
@@ -76,6 +78,8 @@ function joinAction(actionItems) {
     var joinedItem = new Item(JSON.stringify(joinedItemObj), 0);
     var splitedParts = actionItems.updatedItem //ta parts.
     for (var x in splitedParts) {
+        if (splitedParts[x]._type === "Link")
+            continue; //already deleted!
         items.delete(splitedParts[x]._id);
     }
     return;

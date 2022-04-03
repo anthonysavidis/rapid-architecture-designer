@@ -29,14 +29,16 @@ function showOwner(functionItem) {
     const ownerName = items.itemList[items.itemList.findIndex((el) => el._id === ownerId)]._name;
     const newName = functionItem._name + '  <' + ownerName + '>';
     document.getElementById(functionItem._id + 'name').innerText += '  <' + ownerName + '>';
-    document.getElementById(functionItem._id).style.backgroundColor = "#99ff00";
+    setTimeout(() => { //due to listeners...
+        document.getElementById(functionItem._id).style.backgroundColor = "#99ff00";
+    }, 50)
+
     return;
 }
 
 function resetOwner(functionItem) {
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name;
     document.getElementById(functionItem._id).style.backgroundColor = "";
-
     return;
 }
 
@@ -92,4 +94,4 @@ function setUpFunctionDisplayListeners() {
     return;
 }
 
-export { setUpFunctionDisplayListeners, setLastSelected, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
+export { setUpFunctionDisplayListeners, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
