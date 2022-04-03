@@ -245,7 +245,9 @@ body {
 
 .ficon {
     float: left;
-    margin-right: 12px;
+    margin-right: 14px;
+    margin-top: 1.75px;
+    margin-left: 3px;
     width: 24px;
     height: 25px;
     background: no-repeat;

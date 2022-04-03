@@ -1,20 +1,25 @@
 import { items } from "../Classes/ItemArray.js";
 import { hideCurrentFunctions, showSpecificFunctions } from "../Workspace/functionAppearance.js";
 
+function handleByComponent() {
+    hideCurrentFunctions();
+    const componentsIdList = getSelectedIds();
+    const componentItems = getSelectedItems()
+    document.getElementById("selectedComponentList").innerHTML = "";
+    for (var x in componentsIdList) {
+        showSpecificFunctions(componentsIdList[x]);
+        if (!document.getElementById("selectedComponentList").innerHTML)
+            document.getElementById("selectedComponentList").innerHTML = componentItems[x]._name;
+        else
+            document.getElementById("selectedComponentList").innerHTML += ", " + componentItems[x]._name;
+    }
+    return;
+}
+
 const selectAction = function(compId) {
     document.getElementById(compId).className = "selected";
     if (document.getElementById("byComponent").checked) {
-        hideCurrentFunctions();
-        const componentsIdList = getSelectedIds();
-        const componentItems = getSelectedItems()
-        document.getElementById("selectedComponentList").innerHTML = "";
-        for (var x in componentsIdList) {
-            showSpecificFunctions(componentsIdList[x]);
-            if (!document.getElementById("selectedComponentList").innerHTML)
-                document.getElementById("selectedComponentList").innerHTML = componentItems[x]._name;
-            else
-                document.getElementById("selectedComponentList").innerHTML += ", " + componentItems[x]._name;
-        }
+        handleByComponent();
     }
     return;
 }
@@ -67,4 +72,16 @@ function cancelSelection() {
     }
 }
 
-export { changeSelectState, cancelSelection, getSelectedIds, getSelectedItems, selectAction };
+function keepOnlyLastSelectedItem(id) {
+    var y = document.getElementsByClassName("selected");
+    var i = 0;
+    while (y.length !== 1) {
+        if (y[i].id === id) {
+            i++;
+            continue;
+        }
+        y[i].className = "component";
+    }
+}
+
+export { changeSelectState, cancelSelection, getSelectedIds, getSelectedItems, selectAction, keepOnlyLastSelectedItem };

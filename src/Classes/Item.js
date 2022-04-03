@@ -163,12 +163,20 @@ class Item {
 
             produceContextMenu(editId, ev.clientX, ev.clientY);
         })
+        var prevColor = "";
+        const curId = this._id;
         this.domElement.ondragstart = (ev) => {
             cancelSelection();
-            cancelSelectedLinks(ev, 1);
+            cancelFunctionSelection();
             initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");
+            prevColor = document.getElementById(curId).style.backgroundColor;
+            document.getElementById(curId).style.backgroundColor = "#009dff";
             ev.dataTransfer.setData("text/plain", ev.target.id);
+        }
+        this.domElement.ondragend = (ev) => {
+            document.getElementById(curId).style.backgroundColor = prevColor;
+            prevColor = "";
         }
     }
     deleteLink(deletedItemId) {

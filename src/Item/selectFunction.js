@@ -48,4 +48,17 @@ function cancelFunctionSelection() {
     }
 }
 
-export { changeFunctionSelectState, cancelFunctionSelection, getSelectedFunctionIds, getSelectedFunctions };
+function keepOnlyLastSelectedFunction(id) {
+    var y = document.getElementsByClassName("selectedFunction");
+    var i = 0;
+    while (y.length !== 1) {
+        if (y[i].id === id) {
+            i++;
+            continue;
+        }
+        y[i].className = "function";
+    }
+}
+
+
+export { changeFunctionSelectState, cancelFunctionSelection, getSelectedFunctionIds, getSelectedFunctions, keepOnlyLastSelectedFunction };

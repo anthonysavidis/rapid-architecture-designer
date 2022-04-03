@@ -1,10 +1,11 @@
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
+import { keyCodes } from "../config/keyboardButtons.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { spawnHelper } from "../Item/geometry.js";
-import { cancelSelection, getSelectedIds } from "../Item/selectComponent.js";
-import { cancelFunctionSelection } from "../Item/selectFunction.js";
+import { cancelSelection, getSelectedIds, keepOnlyLastSelectedItem } from "../Item/selectComponent.js";
+import { cancelFunctionSelection, keepOnlyLastSelectedFunction } from "../Item/selectFunction.js";
 import { cancelSelectedLinks } from "../Item/selectLink.js";
 import { appearComponentButtons, appearFunctionButtons, appearEditButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { initializeTab, lastPressed } from "../UpTab/tabAppearance/tabInitializer.js";
@@ -81,6 +82,12 @@ function cancelAll(e) {
 
 //The Observer
 
+function hasClickedOnWorkspace(id) {
+    if (id === "html1")
+        return true;
+    return false;
+}
+
 function whichElement(e) {
     var targ;
     if (!e) {
@@ -93,16 +100,25 @@ function whichElement(e) {
     }
     var tname;
     tname = targ.tagName;
+    console.log(targ.id)
     checkToClose(e.clientX, e.clientY, e);
     const isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, e.clientX, e.clientY);
-    if (!isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)) {
-        setTimeout(() => {
-            document.getElementById("selectedComponentList").innerHTML = "";
-            cancelAll(e);
-            appearComponentButtons();
-            appearFunctionButtons();
-            appearEditButtons();
-        }, 100);
+    //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
+    if (hasClickedOnWorkspace(targ.id)) {
+        // setTimeout(() => {
+        document.getElementById("selectedComponentList").innerHTML = "";
+        cancelAll(e);
+        appearComponentButtons();
+        appearFunctionButtons();
+        appearEditButtons();
+        // }, 50);
+    } else if (isInsideComponent && !e.ctrlKey) { //selected operations intacted
+        const componentId = targ.id.match(/\d+/);
+        keepOnlyLastSelectedItem(componentId[0]);
+    } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
+        const functionId = targ.id.match(/\d+/);
+        keepOnlyLastSelectedFunction(functionId[0]);
+
     }
     checkToSwitchTabs(e);
     appearComponentButtons();
