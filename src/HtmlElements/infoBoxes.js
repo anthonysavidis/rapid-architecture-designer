@@ -1,10 +1,35 @@
 import { constantNames } from "../config/constantNames.js";
+import { addMotion, dragModalHandler } from "../Input/movingModal.js";
+
+
+function produceGrayLayer(box) {
+    var grayLayer = document.createElement('div');
+    grayLayer.className = "closingLayer";
+    grayLayer.id = "grayLayer";
+    grayLayer.onclick = () => {
+        box.remove();
+        grayLayer.remove();
+    }
+    document.getElementById('body').appendChild(grayLayer);
+    return;
+}
+
+function produceMovingBar(box) {
+    var bar = document.createElement('div');
+    bar.className = "movingBar";
+    bar.id = "movingBar";
+    box.appendChild(bar);
+
+    return;
+}
 
 function produceBox(type, extraInfo, callBack) {
     var box = document.createElement('div');
     box.className = type + "Box";
     var closeBox = function() {
         box.remove();
+        if (document.getElementById('grayLayer'))
+            document.getElementById('grayLayer').remove();
     }
 
     var closeButton = document.createElement('div');
@@ -21,8 +46,10 @@ function produceBox(type, extraInfo, callBack) {
     var title = document.createElement('h3');
     title.className = "boxTitle";
     if (type === "confirmation") {
+
         var params = extraInfo.split('@');
         title.innerText = params[0];
+        produceMovingBar(box);
         box.appendChild(title);
         confirmationButton.className = "deleteButton";
         (params[1] === '1') ? confirmationButton.innerHTML = "<p style=\"margin-top:9px\">OK</p>": confirmationButton.innerHTML = "<p style=\"margin-top:9px\">Delete</p>";
@@ -30,6 +57,7 @@ function produceBox(type, extraInfo, callBack) {
             callBack();
             closeBox();
         }
+        produceGrayLayer(box);
     } else if (type === "updating") {
         title.innerText = extraInfo;
         box.appendChild(title);
@@ -39,6 +67,8 @@ function produceBox(type, extraInfo, callBack) {
         }, 1500);
         return;
     } else if (type === "selecting") {
+        produceMovingBar(box);
+
         closeButton.style.left = closeButton.getBoundingClientRect().x + 220 + "px";
         title.innerText = extraInfo[0];
         box.appendChild(title);
@@ -63,10 +93,11 @@ function produceBox(type, extraInfo, callBack) {
             closeBox();
         }
     } else if (type === "input") {
+        produceMovingBar(box);
         // title.innerText = constantNames["inputBox"]["msg"] + extraInfo + constantNames["dot"];
         // box.appendChild(title);
         var form = document.createElement('form');
-
+        form.id = "inputForm";
         var nameFormExternal = document.createElement('div');
         var nameLabelDiv = document.createElement('div');
         nameLabelDiv.className = "labelDiv";
@@ -104,6 +135,8 @@ function produceBox(type, extraInfo, callBack) {
                 callBack(nameFormDiv.firstChild.value, descriptionFormDiv.firstChild.value);
             closeBox();
         }
+        form.onmousedown = null;
+        produceGrayLayer(box);
     }
     var buttons = document.createElement('div');
     buttons.className = "buttonTeam";
@@ -111,7 +144,7 @@ function produceBox(type, extraInfo, callBack) {
     buttons.appendChild(confirmationButton);
     box.appendChild(buttons);
     document.getElementById("body").appendChild(box);
-
+    addMotion(box);
     return;
 }
 
