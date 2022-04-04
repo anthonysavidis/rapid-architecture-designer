@@ -71,7 +71,7 @@ function produceBox(type, extraInfo, callBack) {
         document.getElementById("movingBar").style.backgroundColor = "#cedff7";
         setTimeout(() => {
             box.remove();
-        }, 5500);
+        }, 2500);
         addMotion(box);
 
         return;
