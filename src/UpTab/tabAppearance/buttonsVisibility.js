@@ -81,7 +81,7 @@ function appearFunctionButtons() {
         if (items.hasFunction(c, f)) {
             document.getElementById("resetFunctionButton").style.display = "inline-block";
         } else {
-            document.getElementById("setFunctionButton").style.display = "inline-block";
+            // document.getElementById("setFunctionButton").style.display = "inline-block";
 
         }
     } else {

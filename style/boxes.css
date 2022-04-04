@@ -1,5 +1,4 @@
 .confirmationBox {
-    margin-top: 2px;
     padding-bottom: 5px;
     width: 500px;
     height: auto;
@@ -150,6 +149,7 @@ select {
 
 .movingBar {
     background-color: #e7e5e5;
+    /* background-color: #FF00FF; */
     height: 15px;
     width: 100%;
     margin-top: -3px;

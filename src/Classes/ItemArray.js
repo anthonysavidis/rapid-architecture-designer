@@ -6,6 +6,7 @@ import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
 import { resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
+import { cancelSelection } from "../Item/selectComponent.js";
 class ItemHolder {
 
     constructor(str) {
@@ -42,8 +43,10 @@ class ItemHolder {
             }
             bRecs.deleteBoundingRec(layers.selectedLayer._id, deletingItemId);
             //delete sublayers...
+            cancelSelection();
             if (document.getElementById("byComponent").checked)
                 showByComponent();
+
         }
         if (this.itemList[itemListIndex]._type === "Function") {
             var ownersDelete = this.itemList[itemListIndex].owners;

@@ -40,10 +40,10 @@ function addMotion(elmnt) {
         pos3 = e.clientX;
         pos4 = e.clientY;
         var v;
-        if (v = canMove(elmnt.offsetTop - pos2, elmnt.offsetLeft - pos1)) {
-            elmnt.style.top = e.clientY - elmnt.style.height / 2 + "px";
-            elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
-        }
+        // if (v = canMove(elmnt.offsetTop - pos2, elmnt.offsetLeft - pos1)) {
+        elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+        elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+        // }
         // console.log(v);
         // set the element's new position:
     }

@@ -70,20 +70,20 @@ function produceBox(type, extraInfo, callBack) {
         }, 1500);
         return;
     } else if (type === "selecting") {
-        produceMovingBar(box);
 
+        box.style.width = "300px";
+        box.style.height = "200px";
         closeButton.style.left = closeButton.getBoundingClientRect().x + 220 + "px";
         title.innerText = extraInfo[0];
+        produceMovingBar(box);
         box.appendChild(title);
 
         var selectExternal = document.createElement('div');
         selectExternal.style.alignContent = "center";
         selectExternal.style.margin = 0;
+        selectExternal.style.width = 200 + "px";
         var select = document.createElement('select');
         select.innerHTML = extraInfo[1];
-        // select.innerHTML = "<option value=\"2\">" + constantNames["splittedBox"]["2nd"] + "</option>";
-        // select.innerHTML += "<option value=\"4\" selected>" + constantNames["splittedBox"]["3rd"] + "</option>";
-        // select.innerHTML += "<option value=\"" + extraInfo + "\">" + extraInfo + "</option>";
         selectExternal.appendChild(select);
         select.style.marginLeft = 47 + "px";
         select.style.marginBottom = 24 + "px";
@@ -95,6 +95,7 @@ function produceBox(type, extraInfo, callBack) {
             callBack(select.value);
             closeBox();
         }
+        produceGrayLayer(box, extraInfo, "");
     } else if (type === "input") {
         produceMovingBar(box);
         // title.innerText = constantNames["inputBox"]["msg"] + extraInfo + constantNames["dot"];

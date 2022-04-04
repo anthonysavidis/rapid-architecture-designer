@@ -1,9 +1,12 @@
 import { items } from "../Classes/ItemArray.js";
-import { hideCurrentFunctions, showSpecificFunctions } from "../Workspace/functionAppearance.js";
+import { hideCurrentFunctions, showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 
 function handleByComponent() {
     hideCurrentFunctions();
-
+    // if (document.getElementById("byComponent").checked) {
+    updateSelectedList();
+    showByComponent();
+    // }
     return;
 }
 

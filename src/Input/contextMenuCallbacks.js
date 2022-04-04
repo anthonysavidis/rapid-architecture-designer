@@ -45,12 +45,11 @@ const splitCallBack = () => {
     showSpecificFunctions(it._id);
     setTimeout(() => {
         selectAction(it._id);
+
     }, 400);
 
 
     actions.saveCommand(standardSplitAction, inverseSplitAction, funcsStr, it.toString());
-    updateSelectedList();
-
     return;
 }
 
