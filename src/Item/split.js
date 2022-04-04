@@ -1,6 +1,7 @@
 import { items } from "../Classes/ItemArray.js";
 import { Item } from "../Classes/Item.js";
 import { cancelSelection, keepOnlyLastSelectedItem, selectAction } from "./selectComponent.js";
+import { showByComponent, updateSelectedList } from "../Workspace/functionAppearance.js";
 
 //round robin
 function splitByN(splitingItem, itemParts, oldName, componentsNo) {
@@ -50,6 +51,10 @@ function joinComponents(joiningItems) {
     items.updateNameAndDescription(totalComponent._id, "Joined Item", "Joined Items: " + namesString + ".");
     cancelSelection();
     selectAction(totalComponent._id);
+    if (document.getElementById("byComponent").checked) {
+        showByComponent();
+        updateSelectedList();
+    }
     return totalComponent;
 }
 export { splitComponent, joinComponents };

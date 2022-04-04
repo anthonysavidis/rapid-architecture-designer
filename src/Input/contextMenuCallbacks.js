@@ -4,6 +4,7 @@ import { Item } from "../Classes/Item.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { addToParentContext, closeContext } from "../HtmlElements/functionsContextMenu.js";
+import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
 import { showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
@@ -69,13 +70,17 @@ const unparentCallBack = () => {
 const deleteCallBack = () => {
     const tobeDeleted = getSelectedFunctions();
     const toBeDeletedStr = itemFromListToObject(tobeDeleted);
-    for (var x in tobeDeleted)
-        items.delete(tobeDeleted[x]._id);
-    actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedStr, "");
-    closeContext();
-    if (document.getElementById("byComponent").checked) {
-        showByComponent();
-    }
+    var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + tobeDeleted.length + constantNames["confirmationBox"]["DeleteMsgFunctionEnd"];
+
+    produceBox("confirmation", msg + "@1", () => {
+        for (var x in tobeDeleted)
+            items.delete(tobeDeleted[x]._id);
+        actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedStr, "");
+        closeContext();
+        if (document.getElementById("byComponent").checked) {
+            showByComponent();
+        }
+    });
 }
 
 

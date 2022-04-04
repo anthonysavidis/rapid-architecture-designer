@@ -52,7 +52,7 @@
 
 .context-menu {
     position: absolute;
-    z-index: 10000;
+    z-index: 29;
     width: 150px;
     background: #ffffff;
     border-radius: 5px;

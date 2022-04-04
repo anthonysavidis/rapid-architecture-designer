@@ -4,9 +4,10 @@ import { renderLine } from "../Item/createLine.js";
 import { layers } from "./LayerHolder.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
-import { resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
+import { configAppearance, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 import { cancelSelection } from "../Item/selectComponent.js";
+import { cancelFunctionSelection } from "../Item/selectFunction.js";
 class ItemHolder {
 
     constructor(str) {
@@ -56,7 +57,9 @@ class ItemHolder {
                 console.log(ownersDelete + " " + deletingItemId);
                 this.itemList[ownerDeleteIndex].deleteFunction(deletingItemId);
             }
+            this.unparentFunction(deletingItemId); //check again...
             this.itemList[itemListIndex].owners = [];
+
         }
         this.deleteFromLists(deletingItemId);
         document.getElementById(deletingItemId + 'external').remove();
@@ -100,21 +103,11 @@ class ItemHolder {
         const settedFunction = this.itemList[this.itemList.findIndex(el => el._id === functionId)];
         var overwrite = 0;
         if (settedFunction.owners[0]) {
-            // alert("Operation already attached to component!");
             return 2;
-            // const selectedFuncs = getSelectedFunctions();
-            // const initialFuncsStr = itemFromListToObject([settedFunction]);
-            // for (var x in selectedFuncs) {
-            // const funcId = selectedFuncs[x]._id;
-            // this.unlinkOwnerFunction(settedFunction.owners[0], settedFunction._id);
-            // }
-            // this.itemList[itemListIndex].setFunction(functionId);
-            // actions.saveCommand(massiveSet, massiveMove1, initialFuncsStr, JSON.stringify(itemId));
         }
         if (!exists) {
+            console.log('setted ok');
             this.itemList[itemListIndex].setFunction(functionId);
-        } else {
-            alert("FUNCTION EXIST!");
         }
         return;
     }

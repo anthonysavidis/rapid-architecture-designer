@@ -87,6 +87,7 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
+    loadSpecific("finalCompiler1.txt")
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

@@ -66,8 +66,6 @@ function splitAction(actionItems) {
     for (var x in splitedParts) {
         var itStr = JSON.stringify(splitedParts[x]);
         var it = new Item(itStr, 0);
-        console.log(it);
-
     }
     return;
 }

@@ -118,4 +118,4 @@ function setUpFunctionDisplayListeners() {
     return;
 }
 
-export { setUpFunctionDisplayListeners, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
+export { setUpFunctionDisplayListeners, configAppearance, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };

@@ -64,15 +64,22 @@ function getLinkItems(joinedItemList) {
     var defaultLinkList = [];
     for (var x in joinedItemList) {
         if (joinedItemList[x].links) {
-            if (joinedItemList[x].links) {
-                Array.from(joinedItemList[x].links.entries()).forEach(function(e) {
-                    defaultLinkList.push(e[1]); // get the value
-                });
+            // Array.from(joinedItemList[x].links.entries()).forEach(function(e) {
+            //     defaultLinkList.push(e[1]); // get the value
+            // });
+            for (let [key, value] of joinedItemList[x].links.entries()) {
+                // console.log(key + " = " + value);
+                defaultLinkList.push(value);
             }
         }
     }
-    var linkIdList = defaultLinkList.filter((a, i, aa) => aa.indexOf(a) === i && aa.lastIndexOf(a) !== i);
+    console.log(defaultLinkList);
+    // var linkIdList = defaultLinkList.filter((a, i, aa) => aa.indexOf(a) === i && aa.lastIndexOf(a) !== i);
+    var linkIdList = [];
     var linkItems = [];
+    $.each(defaultLinkList, function(i, el) {
+        if ($.inArray(el, linkIdList) === -1) linkIdList.push(el);
+    });
     for (var x in linkIdList) {
         linkItems.push(items.itemList[items.itemList.findIndex((el) => el._id === linkIdList[x])]);
     }

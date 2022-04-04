@@ -2,7 +2,7 @@ import { deleteFunction } from "../Item/edit.js";
 import { Item } from "../Classes/Item.js";
 import { items, itemFromListToObject } from "../Classes/ItemArray.js";
 import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
-import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
+import { cancelFunctionSelection, getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
 import { actions } from "../Classes/Actions.js";
 import { createSpecificFunction, deleteSpecificFunction, createMultipleSpecificFunctions, deleteMultipleSpecificFunctions, setSpecificFunction, resetSpecificFunction } from "../Actions/inverseFunctionsActions.js";
 import { askForDetails } from "./componentTab.js";
@@ -41,10 +41,14 @@ function addFunctionTabListeners() {
         askForDetails(functionItem, "");
     });
     document.getElementById("deleteFunctionButton").addEventListener("click", function() {
-        var toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());
-        deleteFunctionAction();
-        actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedFunctions, "");
+        const toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());
+        var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + getSelectedFunctionIds().length + constantNames["confirmationBox"]["DeleteMsgFunctionEnd"];
 
+        produceBox("confirmation", msg + "@1", () => {
+            deleteFunctionAction();
+            actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedFunctions, "");
+            cancelFunctionSelection();
+        });
     });
     document.getElementById("setFunctionButton").addEventListener("click", function() {
         var itemList = [getSelectedFunctions()[0], getSelectedItems()[0]];
