@@ -3,6 +3,7 @@ import { actions } from "../Classes/Actions.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { cropName } from "../HtmlElements/doubleClickEditing.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
+import { cancelSelection } from "../Item/selectComponent.js";
 
 var treeData = []; //hold it and write it to json
 
@@ -19,6 +20,9 @@ function refreshTree() {
         }
     }).on('changed.jstree', function(e, data) {
         closeTheTooltip();
+        cancelSelection();
+        if (document.getElementById("selectedComponentsList"))
+            document.getElementById("selectedComponentsList").innerHTML = "";
         var oldLayerId = layers.selectedLayer._id;
         var currentId = data.node.id.split("branch")[0];
         layers.changeLayer(currentId);

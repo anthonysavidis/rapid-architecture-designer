@@ -1,7 +1,8 @@
+import { cancelSelection } from "../Item/selectComponent.js";
 import { restorePreviewImages, savePreviewImages } from "../Layers/Storage/localStorageRetrieval.js";
 import { actionsOfNextLayer } from "../Layers/switchActions.js";
 import { clearTree, addToArchitectureList, updateTree } from "../Layers/Tree.js";
-import { setUpFunctionDisplayListeners } from "../Workspace/functionAppearance.js";
+import { setUpFunctionDisplayListeners, showAll } from "../Workspace/functionAppearance.js";
 import { imageStorage } from "./ImageHolder.js";
 import { Item } from "./Item.js";
 import { ItemHolder } from "./ItemArray.js";
@@ -77,6 +78,7 @@ class LayerHolder {
 
     changeLayer(id) {
         //palia items save ...
+        cancelSelection();
         this.saveItems();
         this.selectLayer(id);
         this.bindItemsToLayer(id);

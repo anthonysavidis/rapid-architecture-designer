@@ -1,3 +1,4 @@
+import { imageStorage } from "../Classes/ImageHolder.js";
 import { items } from "../Classes/ItemArray.js";
 import { functionColors } from "../config/functionStyle.js";
 import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
@@ -23,6 +24,8 @@ function showByComponent() {
     hideCurrentFunctions();
     configAppearance("none");
     const selectedIds = getSelectedIds();
+    if (!selectedIds || !selectedIds[0])
+        return;
     for (var x in selectedIds) {
         showSpecificFunctions(selectedIds[x]);
     }

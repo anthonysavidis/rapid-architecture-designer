@@ -56,7 +56,7 @@ function unlinkSelectedItems() {
 
 function cancelSelection() {
     // document.getElementById("linkButton").style.display="none";
-
+    document.getElementById("selectedComponentList") ? document.getElementById("selectedComponentList").innerHTML = "" : 1;
     var y = document.getElementsByClassName("selected");
     while (y.length !== 0) {
         y[0].className = "component";

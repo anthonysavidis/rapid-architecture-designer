@@ -6,6 +6,7 @@ import { areAllCollapsed, areAllExtendable, areAllExtended } from "../../HtmlEle
 
 function appearComponentButtons() {
     const selectedItems = getSelectedItems();
+    if (!selectedItems || !selectedItems[0]) return;
     if (selectedItems.length === 1) {
         if (!selectedItems[0].subLayers.length) {
             document.getElementById("subdivideButton").style.display = "inline-block";
@@ -38,7 +39,9 @@ function appearComponentButtons() {
     if (selectedItems.length === 2) {
         if (selectedItems[0].links && selectedItems[1].links && selectedItems[0].isLinked(selectedItems[1]._id) && selectedItems[1].isLinked(selectedItems[0]._id)) {
             document.getElementById("unlinkButton").style.display = "inline-block";
+            document.getElementById("linkButton").style.display = "none";
         } else {
+            document.getElementById("unlinkButton").style.display = "none";
             document.getElementById("linkButton").style.display = "inline-block";
         }
     } else {
@@ -57,6 +60,14 @@ function appearFunctionButtons() {
     var selectedItems = getSelectedItems();
 
     var selectedFunctions = getSelectedFunctions();
+    if (!selectedFunctions || !selectedFunctions[0]) {
+        document.getElementById("splitButton").style.display = "none";
+        document.getElementById("deleteFunctionButton").style.display = "none";
+        document.getElementById("resetFunctionButton").style.display = "none";
+        document.getElementById("setFunctionButton").style.display = "none";
+
+        return;
+    }
     if (selectedFunctions.length >= 1) {
         document.getElementById("splitButton").style.display = "inline-block";
         document.getElementById("deleteFunctionButton").style.display = "inline-block";
