@@ -4,7 +4,7 @@ import { renderLine } from "../Item/createLine.js";
 import { layers } from "./LayerHolder.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
-import { resetOwner, showAll } from "../Workspace/functionAppearance.js";
+import { resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 class ItemHolder {
 
@@ -148,6 +148,8 @@ class ItemHolder {
         resetOwner(items.itemList[items.itemList.findIndex((el) => el._id === fid)]);
         this.deleteFunctionFromOwner(id, fid);
         this.deleteOwnerFromFunction(id, fid);
+        if (document.getElementById("byComponent").checked)
+            showByComponent();
         return;
     }
     compareObjects(originalStr, alteredStr) {

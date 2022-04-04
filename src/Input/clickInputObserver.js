@@ -9,7 +9,7 @@ import { cancelFunctionSelection, keepOnlyLastSelectedFunction } from "../Item/s
 import { cancelSelectedLinks } from "../Item/selectLink.js";
 import { appearComponentButtons, appearFunctionButtons, appearEditButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { initializeTab, lastPressed } from "../UpTab/tabAppearance/tabInitializer.js";
-import { hideCurrentFunctions } from "../Workspace/functionAppearance.js";
+import { hideCurrentFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 import { bRecs } from "./boundingRectanglesObserver.js";
 
 function isIconOrName(type, clickedElementId) {
@@ -117,6 +117,8 @@ function whichElement(e) {
             keepOnlyLastSelectedFunction(functionId[0]);
     }
     // checkToSwitchTabs(e);
+    if (isInsideComponent)
+        updateSelectedList();
     appearComponentButtons();
     appearFunctionButtons();
     appearEditButtons();

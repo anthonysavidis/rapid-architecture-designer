@@ -6,7 +6,7 @@ import { constantNames } from "../config/constantNames.js";
 import { addToParentContext, closeContext } from "../HtmlElements/functionsContextMenu.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
-import { showSpecificFunctions } from "../Workspace/functionAppearance.js";
+import { showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 
 const moveCallBack = (compId) => {
     const selectedFuncs = getSelectedFunctions();
@@ -18,6 +18,9 @@ const moveCallBack = (compId) => {
     }
     actions.saveCommand(massiveSet, massiveMove, initialFuncsStr, JSON.stringify(compId));
     closeContext();
+    if (document.getElementById("byComponent").checked) {
+        showByComponent();
+    }
     return;
 }
 
@@ -46,6 +49,8 @@ const splitCallBack = () => {
 
 
     actions.saveCommand(standardSplitAction, inverseSplitAction, funcsStr, it.toString());
+    updateSelectedList();
+
     return;
 }
 
@@ -59,6 +64,7 @@ const unparentCallBack = () => {
     }
     actions.saveCommand(massiveUnparent, massiveMove, toBeUnparentStr, "");
     closeContext();
+    showByComponent();
 }
 
 const deleteCallBack = () => {
@@ -68,6 +74,9 @@ const deleteCallBack = () => {
         items.delete(tobeDeleted[x]._id);
     actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedStr, "");
     closeContext();
+    if (document.getElementById("byComponent").checked) {
+        showByComponent();
+    }
 }
 
 

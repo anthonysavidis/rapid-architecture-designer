@@ -251,6 +251,8 @@ class Item {
         var updatingMessage = items.itemList[fIndex]._name + " attached to " + this._name + ".";
         produceBox("updating", updatingMessage, null);
         showOwner(items.itemList[fIndex]);
+        if (document.getElementById("byComponent").checked)
+            showByComponent();
         return;
     }
 
@@ -259,6 +261,8 @@ class Item {
         if (itemListIndex > -1) {
             this._functions.splice(itemListIndex, 1);
         }
+        if (document.getElementById("byComponent").checked)
+            showByComponent();
         return;
     }
     deleteOwner(id) {

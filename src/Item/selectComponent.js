@@ -3,16 +3,7 @@ import { hideCurrentFunctions, showSpecificFunctions } from "../Workspace/functi
 
 function handleByComponent() {
     hideCurrentFunctions();
-    const componentsIdList = getSelectedIds();
-    const componentItems = getSelectedItems()
-    document.getElementById("selectedComponentList").innerHTML = "";
-    for (var x in componentsIdList) {
-        showSpecificFunctions(componentsIdList[x]);
-        if (!document.getElementById("selectedComponentList").innerHTML)
-            document.getElementById("selectedComponentList").innerHTML = componentItems[x]._name;
-        else
-            document.getElementById("selectedComponentList").innerHTML += ", " + componentItems[x]._name;
-    }
+
     return;
 }
 

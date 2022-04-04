@@ -94,7 +94,7 @@ function askForDetails(it, extraInfo) {
         items.updateNameAndDescription(it._id, name, description);
         if (it._type === "Component") {
             actions.saveCommand(spawnSpecificItem, deleteLatestItem, "", it.toString());
-            // autoResize(it._id, it._name);
+            autoResize(it._id, it._name);
         } else if (it._type === "Link") {
             var finalLinkedItems = JSON.parse(extraInfo);
             finalLinkedItems[2] = JSON.parse(it.toString());

@@ -1,6 +1,7 @@
 import { items } from "../Classes/ItemArray.js";
 import { functionColors } from "../config/functionStyle.js";
 import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
+import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
 
 var lastSelected = "";
 
@@ -19,7 +20,12 @@ function configAppearance(display) {
 }
 
 function showByComponent() {
+    hideCurrentFunctions();
     configAppearance("none");
+    const selectedIds = getSelectedIds();
+    for (var x in selectedIds) {
+        showSpecificFunctions(selectedIds[x]);
+    }
     return;
 }
 
@@ -31,7 +37,8 @@ function showOwner(functionItem) {
     const newName = functionItem._name + '  <' + ownerName + '>';
     document.getElementById(functionItem._id + 'name').innerText += '  <' + ownerName + '>';
     setTimeout(() => { //due to listeners...
-        document.getElementById(functionItem._id).style.backgroundColor = functionColors["attached"];
+        if (!document.getElementById("byComponent").checked)
+            document.getElementById(functionItem._id).style.backgroundColor = functionColors["attached"];
     }, 50)
 
     return;
@@ -53,6 +60,19 @@ function showAll() {
         }
     }
     return;
+}
+
+function updateSelectedList() {
+    const componentsIdList = getSelectedIds();
+    const componentItems = getSelectedItems()
+    document.getElementById("selectedComponentList").innerHTML = "";
+    for (var x in componentsIdList) {
+        showSpecificFunctions(componentsIdList[x]);
+        if (!document.getElementById("selectedComponentList").innerHTML)
+            document.getElementById("selectedComponentList").innerHTML = componentItems[x]._name;
+        else
+            document.getElementById("selectedComponentList").innerHTML += ", " + componentItems[x]._name;
+    }
 }
 
 function hideCurrentFunctions() {
@@ -95,4 +115,4 @@ function setUpFunctionDisplayListeners() {
     return;
 }
 
-export { setUpFunctionDisplayListeners, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
+export { setUpFunctionDisplayListeners, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };

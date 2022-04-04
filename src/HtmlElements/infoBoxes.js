@@ -2,13 +2,16 @@ import { constantNames } from "../config/constantNames.js";
 import { addMotion, dragModalHandler } from "../Input/movingModal.js";
 
 
-function produceGrayLayer(box) {
+function produceGrayLayer(box, extraInfo, callBack) {
     var grayLayer = document.createElement('div');
     grayLayer.className = "closingLayer";
     grayLayer.id = "grayLayer";
     grayLayer.onclick = () => {
         box.remove();
         grayLayer.remove();
+        if (callBack)
+            callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
+
     }
     document.getElementById('body').appendChild(grayLayer);
     return;
@@ -136,7 +139,7 @@ function produceBox(type, extraInfo, callBack) {
                 closeBox();
             }
             // form.onmousedown = null;
-        produceGrayLayer(box);
+        produceGrayLayer(box, extraInfo, callBack);
     }
     var buttons = document.createElement('div');
     buttons.className = "buttonTeam";
