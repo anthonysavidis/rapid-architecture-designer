@@ -42,6 +42,8 @@ class ItemHolder {
             }
             bRecs.deleteBoundingRec(layers.selectedLayer._id, deletingItemId);
             //delete sublayers...
+            if (document.getElementById("byComponent").checked)
+                showByComponent();
         }
         if (this.itemList[itemListIndex]._type === "Function") {
             var ownersDelete = this.itemList[itemListIndex].owners;

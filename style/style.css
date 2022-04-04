@@ -88,14 +88,15 @@
     cursor: grab;
     /* border-radius: 10%; */
     color: black;
+    /* outline-color: black; */
     z-index: 9;
     background: rgba(255, 255, 255);
     /* background: transparent; */
-    outline: 2px auto;
+    /* outline: 2px black; */
     /* outline-color: white; */
-    /* border: 2px  solid rgba(0,0,0,0.5);  */
-    -moz-box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0);
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 .selected {
@@ -109,10 +110,11 @@
     z-index: 9;
     background: rgba(255, 255, 255);
     /* background: transparent; */
-    outline: 2px auto;
-    outline-color: blue;
+    /* outline: 2px auto; */
+    /* outline-color: blue; */
     -moz-box-sizing: border-box;
     /* border: 2px  solid rgba(0,0,0,0.5);  */
+    border: 2px solid blue;
     box-sizing: border-box;
 }
 
