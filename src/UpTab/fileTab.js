@@ -77,10 +77,13 @@ function loadSpecific(name) {
 }
 
 function saveAction() {
-    var name = showInputDialog("Please type the name of the exported architecture:");
-    if (!name)
-        name = "myArchitecture.txt";
-    download(name, layers.toString());
+    var callBack = (name, cancelled) => {
+        if (cancelled)
+            return;
+        // name = "myArchitecture.txt";
+        download(name, layers.toString());
+    }
+    showInputDialog("Save", callBack);
 }
 
 function addFileTabListeners() {

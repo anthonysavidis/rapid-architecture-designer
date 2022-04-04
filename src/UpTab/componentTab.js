@@ -70,10 +70,12 @@ function produceNewLayer(sid, name) {
 
 function subdivideAction() {
     const sid = getSelectedIds()[0];
-    const name = showInputDialog(constantNames["componentsTab"]["LayerDialog"]);
-    if (!name)
-        return;
-    return produceNewLayer(sid, name);
+    var callBack = (name, cancelled) => {
+        if (cancelled)
+            return;
+        return produceNewLayer(sid, name);
+    }
+    showInputDialog(constantNames["componentsTab"]["LayerDialog"], callBack);
 }
 
 // function unsubdivideAction() {
@@ -173,12 +175,14 @@ function addComponentTabListeners() {
     });
     document.getElementById("subdivideButton").addEventListener("click", function() {
         const sid = getSelectedIds()[0];
-        console.log(sid);
-        const name = showInputDialog(constantNames["componentsTab"]["LayerDialog"]);
-        if (!name)
-            return;
-        var layerCreated = produceNewLayer(sid, name);
-        actions.saveCommand(createSpecificLayer, deleteSpecificLayer, "", layerCreated.toString());
+        var callBack = (name, cancelled) => {
+            // console.log(sid);
+            if (cancelled)
+                return;
+            var layerCreated = produceNewLayer(sid, name);
+            actions.saveCommand(createSpecificLayer, deleteSpecificLayer, "", layerCreated.toString());
+        }
+        showInputDialog("layer", callBack);
 
     });
     document.getElementById("unsubdivideButton").addEventListener("click", function() {

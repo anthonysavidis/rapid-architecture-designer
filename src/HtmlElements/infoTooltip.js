@@ -208,12 +208,15 @@ function closeTooltip(id) {
 }
 
 function createEmptySubArchitecture(id) {
-    const name = showInputDialog(constantNames["componentsTab"]["LayerDialog"]);
-    if (!name)
-        return;
-    var layerCreated = produceNewLayer(id, name);
-    actions.saveCommand(createSpecificLayer, deleteSpecificLayer, "", layerCreated.toString());
-    closeTooltip(id);
+    var callBack = (name, cancelled) => {
+        if (cancelled === 1)
+            return;
+        var layerCreated = produceNewLayer(id, name);
+        actions.saveCommand(createSpecificLayer, deleteSpecificLayer, "", layerCreated.toString());
+        closeTooltip(id);
+    }
+
+    showInputDialog("layer", callBack);
     return;
 }
 
@@ -230,7 +233,7 @@ function setUpTooltipListeners(id, layerExists) {
             document.getElementById(id + 'architectureEditButton').style.display = "block";
         });
         document.getElementById(id + 'sublayerImage').addEventListener("mouseout", function() {
-            document.getElementById(id + 'architectureEditButton').style.display = "none";
+            // document.getElementById(id + 'architectureEditButton').style.display = "none";
         });
         document.getElementById(id + 'architectureEditButton').addEventListener("mousedown", function(ev) {
             var currentId = items.itemList[items.itemList.findIndex((el) => el._id === id)].subLayers[0];

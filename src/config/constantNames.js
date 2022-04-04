@@ -76,7 +76,9 @@ const constantNames = {
         "nameLabel": {
             "Component": "Name:",
             "Link": "Name:",
-            "Function": "Name:"
+            "Function": "Name:",
+            "Layer": "Name:",
+            "Save": "Name of the exported architecture:"
         },
         "descriptionLabel": {
             "Component": "Description:",
@@ -93,10 +95,12 @@ const constantNames = {
     "emptyNames": {
         "component": "New Component",
         "function": "New Function",
+        "layer": "New Layer",
         "link": "New Link",
         "line": "New Link",
         "description": "No description added.",
-        "info": "No info has been added."
+        "info": "No info has been added.",
+        "save": "myArchitecture.txt"
     },
     "functionsContext": {
         "move": "Move to",

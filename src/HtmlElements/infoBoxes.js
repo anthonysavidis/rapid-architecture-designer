@@ -129,13 +129,13 @@ function produceBox(type, extraInfo, callBack) {
             closeBox();
         }
         confirmationButton.onclick = function() {
-            if (!nameFormDiv.firstChild.value) {
-                callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
-            } else
-                callBack(nameFormDiv.firstChild.value, descriptionFormDiv.firstChild.value);
-            closeBox();
-        }
-        form.onmousedown = null;
+                if (!nameFormDiv.firstChild.value) {
+                    callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
+                } else
+                    callBack(nameFormDiv.firstChild.value, descriptionFormDiv.firstChild.value);
+                closeBox();
+            }
+            // form.onmousedown = null;
         produceGrayLayer(box);
     }
     var buttons = document.createElement('div');
@@ -148,4 +148,4 @@ function produceBox(type, extraInfo, callBack) {
     return;
 }
 
-export { produceBox };
+export { produceBox, produceGrayLayer };

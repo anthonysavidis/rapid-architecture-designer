@@ -1,4 +1,5 @@
 import { items } from "../Classes/ItemArray.js";
+import { functionColors } from "../config/functionStyle.js";
 import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 
 var lastSelected = "";
@@ -30,7 +31,7 @@ function showOwner(functionItem) {
     const newName = functionItem._name + '  <' + ownerName + '>';
     document.getElementById(functionItem._id + 'name').innerText += '  <' + ownerName + '>';
     setTimeout(() => { //due to listeners...
-        document.getElementById(functionItem._id).style.backgroundColor = "#99ff00";
+        document.getElementById(functionItem._id).style.backgroundColor = functionColors["attached"];
     }, 50)
 
     return;

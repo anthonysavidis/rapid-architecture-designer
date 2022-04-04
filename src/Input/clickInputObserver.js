@@ -101,6 +101,7 @@ function whichElement(e) {
     var tname;
     tname = targ.tagName;
     checkToClose(e.clientX, e.clientY, e);
+    console.log(tname + " " + targ.id);
     const isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, e.clientX, e.clientY);
     //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
     if (hasClickedOnWorkspace(targ.id)) {
@@ -108,10 +109,12 @@ function whichElement(e) {
         cancelAll(e);
     } else if (isInsideComponent && !e.ctrlKey) { //selected operations intacted
         const componentId = targ.id.match(/\d+/);
-        keepOnlyLastSelectedItem(componentId[0]);
+        if (componentId)
+            keepOnlyLastSelectedItem(componentId[0]);
     } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
         const functionId = targ.id.match(/\d+/);
-        keepOnlyLastSelectedFunction(functionId[0]);
+        if (functionId)
+            keepOnlyLastSelectedFunction(functionId[0]);
     }
     // checkToSwitchTabs(e);
     appearComponentButtons();

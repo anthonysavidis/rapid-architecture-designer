@@ -20,6 +20,7 @@ import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { produceContextMenu } from "../HtmlElements/functionsContextMenu.js";
 import { showAll, showByComponent, showOwner } from "../Workspace/functionAppearance.js";
 import { moveCallBack } from "../Input/contextMenuCallbacks.js";
+import { functionColors } from "../config/functionStyle.js";
 
 class Item {
 
@@ -177,7 +178,7 @@ class Item {
             initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");
             prevColor = document.getElementById(curId).style.backgroundColor;
-            document.getElementById(curId).style.backgroundColor = "#009dff";
+            document.getElementById(curId).style.backgroundColor = functionColors["ondrag"];
             ev.dataTransfer.setData("text/plain", ev.target.id);
         }
         this.domElement.ondragend = (ev) => {

@@ -70,10 +70,11 @@
 }
 
 .architectureEditButton {
-    background-image: url('../images/Edit1.png');
+    background-image: url('../images/Edit.png');
     width: 24px;
     height: 24px;
     float: right;
     margin-top: 72px;
-    display: none;
+    object-fit: cover;
+    background-size: contain;
 }
