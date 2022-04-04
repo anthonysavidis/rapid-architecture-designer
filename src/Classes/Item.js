@@ -111,7 +111,7 @@ class Item {
                 // var str = '{"0":"{' + settingFunction.toString() + '}","1":"{' + this.toString() + '}"}'
                 // actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
             } else {
-                alert("THIS FUNCTION ALREADY EXISTS IN COMPONENT!");
+                produceBox("updating", constantNames["messages"]["functionExists"]);
             }
 
             event.preventDefault();

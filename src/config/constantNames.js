@@ -111,7 +111,7 @@ const constantNames = {
     },
     "messages": {
         "pngMsg": "Insert name of the current layer.",
-
+        "functionExists": "THIS FUNCTION ALREADY EXISTS IN COMPONENT!"
     },
     "dot": ".",
     "ok": "OK",
