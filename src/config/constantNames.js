@@ -67,7 +67,7 @@ const constantNames = {
     },
     "confirmationBox": {
         "DeleteMsgStart": "Do you want to delete ",
-        "DeleteMsgEnd": " Components?",
+        "DeleteMsgEnd": " Component(s)?",
         "DeleteMsgFunctionEnd": " Functions?",
         "ResetStart": "Do you want reset this function from ",
         "ResetEnd": "?"

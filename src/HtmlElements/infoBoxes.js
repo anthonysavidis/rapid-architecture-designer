@@ -2,7 +2,7 @@ import { constantNames } from "../config/constantNames.js";
 import { addMotion, dragModalHandler } from "../Input/movingModal.js";
 
 
-function produceGrayLayer(box, extraInfo, callBack) {
+function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
     var grayLayer = document.createElement('div');
     grayLayer.className = "closingLayer";
     grayLayer.id = "grayLayer";
@@ -11,7 +11,8 @@ function produceGrayLayer(box, extraInfo, callBack) {
         grayLayer.remove();
         if (callBack)
             callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
-
+        if (cancelCallBack)
+            cancelCallBack();
     }
     document.getElementById('body').appendChild(grayLayer);
     return;
@@ -26,9 +27,15 @@ function produceMovingBar(box) {
     return;
 }
 
-function produceBox(type, extraInfo, callBack) {
+function produceBox(type, extraInfo, callBack, cancelCallBack) {
     var box = document.createElement('div');
     box.className = type + "Box";
+    var cancelAction = () => {
+        if (cancelCallBack)
+            cancelCallBack();
+        closeBox();
+    }
+
     var closeBox = function() {
         box.remove();
         if (document.getElementById('grayLayer'))
@@ -37,13 +44,14 @@ function produceBox(type, extraInfo, callBack) {
 
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
-    closeButton.onclick = () => { closeBox(); }
+    closeButton.onclick = cancelAction;
+
     box.appendChild(closeButton);
 
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
     cancelButton.className = "cancelButton";
-    cancelButton.onclick = closeBox;
+    cancelButton.onclick = cancelAction;
     cancelButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["cancel"] + "</p>";
 
     var title = document.createElement('h3');
@@ -60,7 +68,7 @@ function produceBox(type, extraInfo, callBack) {
             callBack();
             closeBox();
         }
-        produceGrayLayer(box);
+        produceGrayLayer(box, "", "", cancelCallBack);
     } else if (type === "updating") {
         title.innerText = extraInfo;
         produceMovingBar(box);

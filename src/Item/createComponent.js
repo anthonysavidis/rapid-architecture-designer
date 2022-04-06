@@ -7,6 +7,8 @@ import { cancelSelectedLinks } from "./selectLink.js";
 import { canBeDeleted, deleteWithTrashBin } from "../Workspace/trashBin.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { spawnDot } from "./geometry.js";
+import { produceBox } from "../HtmlElements/infoBoxes.js";
+import { constantNames } from "../config/constantNames.js";
 
 function canMove(top, left, height, width) {
     var rightBoundary = (left + width) < document.getElementById('right_tab').getBoundingClientRect().x;
@@ -77,7 +79,12 @@ function dragElement(elmnt) {
         if (updatedBoundingRec !== _initialBoundingRec) {
             actions.saveCommand(moveNext, movePrev, initialBoundingRec, updatedBoundingRec);
             if (canBeDeleted(elmnt.getBoundingClientRect())) {
-                deleteWithTrashBin(elmnt);
+                const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + 1 + constantNames["confirmationBox"]["DeleteMsgEnd"];
+                produceBox("confirmation", msg + "@1", () => {
+                    deleteWithTrashBin(elmnt);
+                }, () => {
+                    movePrev({ initialItem: initialBoundingRec, updatedItem: updatedBoundingRec });
+                });
             }
         }
     }
