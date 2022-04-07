@@ -1,6 +1,6 @@
 import { layers } from "../Classes/LayerHolder.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
-import { hideCurrentFunctions, resetOwner, showAll } from "../Workspace/functionAppearance.js";
+import { hideCurrentFunctions, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 
 function refreshExtendedComponents(layersItems) {
     for (var x in layersItems) {
@@ -17,7 +17,10 @@ function actionsOfNextLayer(layerId) {
     const layerItems = layers.itemMap.get(layerId);
     refreshExtendedComponents(layerItems.itemList);
     hideCurrentFunctions();
-    showAll();
+    if (document.getElementById('all').checked)
+        showAll();
+    else
+        showByComponent();
     // resetOwner()
     return;
 }
