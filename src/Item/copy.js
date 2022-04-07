@@ -6,6 +6,7 @@ import { Layer } from "../Classes/Layer.js";
 import { actions } from "../Classes/Actions.js";
 import { deletePastedItems, pasteAction } from "../Actions/inverseActions.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
+import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 
 ///einai lista me items! kai oxi nested!!!
 ///{"0":{},"1":{}} : this way
@@ -170,6 +171,11 @@ async function pasteComponent() {
         var pastingItemsJSON = JSON.parse(result);
         actions.saveCommand(pasteAction, deletePastedItems, result, "");
         pasteFromStr(result);
+        if (document.getElementById('all').checked) {
+            showAllRefresh();
+        } else {
+            showByComponent();
+        }
     } catch (error) {
         console.log('Not a valid item.');
     }
