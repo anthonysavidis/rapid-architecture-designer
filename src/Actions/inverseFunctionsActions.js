@@ -47,8 +47,8 @@ function setSpecificFunction(actionItems) {
     // console.log(itemsObject[1]._id, itemsObject[0]._id); IDS OK
     items.setFunctionToItem(itemsObject[1]._id, itemsObject[0]._id);
     // console.log(items.itemList[0]._functions);
-    console.log('attached');
-    console.log(actionItems.initialItem);
+    // console.log('attached');
+    // console.log(actionItems.initialItem);
     return;
 }
 
@@ -57,8 +57,27 @@ function resetSpecificFunction(actionItems) {
     // console.log(itemsObject[1]._id, itemsObject[0]._id); IDS OK.
     items.unlinkOwnerFunction(itemsObject[1]._id, itemsObject[0]._id);
     // console.log(items.itemList[0]._functions);
-    console.log('detached');
-    console.log(actionItems.initialItem);
+    // console.log('detached');
+    // console.log(actionItems.initialItem);
+    return;
+}
+
+function resetMultipleFunctions(actionItems) {
+    var itemsObject = JSON.parse(actionItems.initialItem);
+    for (var x in itemsObject) {
+        items.unlinkOwnerFunction(itemsObject[x].owners, itemsObject[x]._id);
+    }
+    return;
+}
+
+
+function setMultipleFunctions(actionItems) {
+
+    var itemsObject = JSON.parse(actionItems.initialItem);
+    console.log(itemsObject);
+    for (var x in itemsObject) {
+        items.setFunctionToItem(itemsObject[x].owners, itemsObject[x]._id);
+    }
     return;
 }
 
@@ -112,4 +131,4 @@ function massiveUnparent(actionItems) {
     }
 }
 
-export { createSpecificFunction, createMultipleSpecificFunctions, deleteSpecificFunction, deleteMultipleSpecificFunctions, resetSpecificFunction, setSpecificFunction, standardSplitAction, inverseSplitAction, massiveSet, massiveMove, massiveUnparent };
+export { createSpecificFunction, createMultipleSpecificFunctions, resetMultipleFunctions, setMultipleFunctions, deleteSpecificFunction, deleteMultipleSpecificFunctions, resetSpecificFunction, setSpecificFunction, standardSplitAction, inverseSplitAction, massiveSet, massiveMove, massiveUnparent };

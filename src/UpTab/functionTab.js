@@ -4,7 +4,7 @@ import { items, itemFromListToObject } from "../Classes/ItemArray.js";
 import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
 import { cancelFunctionSelection, getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
 import { actions } from "../Classes/Actions.js";
-import { createSpecificFunction, deleteSpecificFunction, createMultipleSpecificFunctions, deleteMultipleSpecificFunctions, setSpecificFunction, resetSpecificFunction } from "../Actions/inverseFunctionsActions.js";
+import { createSpecificFunction, deleteSpecificFunction, createMultipleSpecificFunctions, deleteMultipleSpecificFunctions, setSpecificFunction, resetSpecificFunction, resetMultipleFunctions, setMultipleFunctions } from "../Actions/inverseFunctionsActions.js";
 import { askForDetails } from "./componentTab.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
@@ -60,15 +60,17 @@ function addFunctionTabListeners() {
         actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
     });
     document.getElementById("resetFunctionButton").addEventListener("click", function() {
-        var itemList = [getSelectedFunctions()[0], getSelectedItems()[0]];
+        var itemList = getSelectedFunctions();
         var str = itemFromListToObject(itemList);
-        const fid = itemList[0]._id;
-        const cid = itemList[1]._id;
-        produceBox("confirmation", constantNames["confirmationBox"]["ResetStart"] + itemList[1]._name + constantNames["confirmationBox"]["ResetEnd"] + "@1", () => {
-            resetFunctionAction(fid, cid);
-            var updatingMessage = itemList[0]._name + " detached from " + itemList[1]._name + ".";
+        // const fid = itemList[0]._id;
+        // const cid = itemList[1]._id;
+        produceBox("confirmation", constantNames["confirmationBox"]["ResetMult"] + itemList.length + constantNames["confirmationBox"]["ResetEnd"] + "@1", () => {
+            for (var x in itemList) {
+                resetFunctionAction(itemList[x]._id, itemList[x].owners[0]);
+            }
+            var updatingMessage = "Operation(s) detached successfully.";
             produceBox("updating", updatingMessage, null);
-            actions.saveCommand(resetSpecificFunction, setSpecificFunction, str, "");
+            actions.saveCommand(resetMultipleFunctions, setMultipleFunctions, str, "");
         });
     });
 }

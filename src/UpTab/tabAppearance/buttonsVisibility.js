@@ -85,14 +85,14 @@ function appearFunctionButtons() {
         document.getElementById("splitButton").style.display = "none";
         document.getElementById("deleteFunctionButton").style.display = "none";
     }
-    if (selectedItems.length === 1 && selectedFunctions.length === 1) {
-        var f = getSelectedFunctionIds()[0];
-        var c = getSelectedIds()[0];
-        if (items.hasFunction(c, f)) {
+    if (selectedFunctions.length >= 1) {
+        var functionList = getSelectedFunctions();
+        var canReset = true;
+        functionList.forEach((el, index, arr) => {
+            (!el.owners) ? canReset = false: 1;
+        });
+        if (canReset) {
             document.getElementById("resetFunctionButton").style.display = "inline-block";
-        } else {
-            // document.getElementById("setFunctionButton").style.display = "inline-block";
-
         }
     } else {
         document.getElementById("resetFunctionButton").style.display = "none";

@@ -70,7 +70,8 @@ const constantNames = {
         "DeleteMsgEnd": " Components?",
         "DeleteMsgFunctionEnd": " Functions?",
         "ResetStart": "Do you want reset this function from ",
-        "ResetEnd": "?"
+        "ResetMult": "Do you want reset the selected (",
+        "ResetEnd": ") function(s)?"
     },
     "inputBox": {
         "msg": "Insert name & description of ",
