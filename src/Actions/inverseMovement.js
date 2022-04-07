@@ -30,8 +30,17 @@ function movePrev(actionItems) {
 
 function restoreFromTrashBin(actionItems) {
     var restoringItems = JSON.parse(actionItems.initialItem);
-    for (var x in restoringItems)
+    for (var x in restoringItems) {
         var it = new Item(JSON.stringify(restoringItems[x]));
+        if (it._functions) {
+            const functionIds = it._functions;
+            it._functions = [];
+            for (var x in functionIds) {
+                items.deleteFunctionFromOwner(it._id, functionIds[x]);
+                items.setFunctionToItem(it._id, functionIds[x]);
+            }
+        }
+    }
     document.getElementById(restoringItems[0]._id).style.top = document.getElementById(restoringItems[0]._id).getBoundingClientRect().top - 100 + "px";
     renderLine(restoringItems[0]._id);
 }

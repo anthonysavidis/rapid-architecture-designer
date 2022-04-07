@@ -3,6 +3,7 @@ import { restoreFromTrashBin } from "../Actions/inverseMovement.js";
 import { getAllDeletedItemsStrs, getSingleItemStrs } from "../Actions/itemStackFunctions.js";
 import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
+import { showAllRefresh } from "./functionAppearance.js";
 
 function canBeDeleted(elementRect) {
     var trashRect = document.getElementById('trashBin').getBoundingClientRect();
@@ -28,6 +29,9 @@ function canBeDeleted(elementRect) {
 function deleteWithTrashBin(elmnt) {
     actions.saveCommand(deleteSpecificItems, restoreFromTrashBin, getSingleItemStrs(items.itemList[items.itemList.findIndex(el => el._id === elmnt.id)]), "");
     items.delete(elmnt.id);
+    if (document.getElementById('all').checked) {
+        showAllRefresh();
+    }
 }
 
 export { canBeDeleted, deleteWithTrashBin };
