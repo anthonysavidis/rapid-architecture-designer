@@ -7,10 +7,20 @@ import { Layer } from "../Classes/Layer.js";
 import { updateTree } from "../Layers/Tree.js";
 import { pasteComponentAction } from "../UpTab/componentTab.js";
 import { pasteFromStr } from "../Item/copy.js";
+import { showAllRefresh } from "../Workspace/functionAppearance.js";
+import { selectAction } from "../Item/selectComponent.js";
 
 
 function spawnSpecificItem(actionItems) {
     var it = new Item(actionItems.updatedItem);
+    if (it._functions) {
+        const functionIds = it._functions;
+        it._functions = [];
+        for (var x in functionIds) {
+            items.deleteFunctionFromOwner(it._id, functionIds[x]);
+            items.setFunctionToItem(it._id, functionIds[x]);
+        }
+    }
     return;
 }
 
@@ -35,6 +45,14 @@ function respawnDeletedItems(actionItems) {
     var respawningItems = JSON.parse(actionItems.initialItem);
     for (var x in respawningItems) {
         var it = new Item(JSON.stringify(respawningItems[x]), 0);
+        if (it._functions) {
+            const functionIds = it._functions;
+            it._functions = [];
+            for (var x in functionIds) {
+                items.deleteFunctionFromOwner(it._id, functionIds[x]);
+                items.setFunctionToItem(it._id, functionIds[x]);
+            }
+        }
     }
     return;
 }
@@ -66,7 +84,19 @@ function splitAction(actionItems) {
     for (var x in splitedParts) {
         var itStr = JSON.stringify(splitedParts[x]);
         var it = new Item(itStr, 0);
+        if (it._functions) {
+            const functionIds = it._functions;
+            it._functions = [];
+            for (var x in functionIds) {
+                items.deleteFunctionFromOwner(it._id, functionIds[x]);
+                items.setFunctionToItem(it._id, functionIds[x]);
+            }
+        }
+        //select all forcely
+        (it._type === "Component") ? selectAction(it._id): 1;
     }
+    if (document.getElementById('all').checked)
+        showAllRefresh();
     return;
 }
 

@@ -1,7 +1,7 @@
 import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResize } from "../Item/resize.js";
-import { showOwner } from "../Workspace/functionAppearance.js";
+import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -40,13 +40,20 @@ function produceDoubleClickEditingName(editId) {
 
     input.value = val;
     input.onblur = (function() {
+        console.log('item db edit');
         var val = (this.value == "" || !this.value.replace(/\s/g, '').length) ? constantNames["emptyNames"][items.itemList[index]._type.toLowerCase()] : this.value;
         items.itemList[index]._name = val;
         //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
 
-        document.getElementById(items.itemList[index]._id + "name").innerHTML = val;
         if (itemType === "Function" && items.itemList[index].owners[0] && document.getElementById("all").checked) {
-            showOwner(items.itemList[index]);
+            // showOwner(items.itemList[index]);
+            showAllRefresh();
+        } else
+            document.getElementById(items.itemList[index]._id + "name").innerHTML = val;
+
+        if (items.itemList[index]._type === "Component" && document.getElementById("all").checked) {
+            showAllRefresh();
+
         }
         input.remove();
         autoResize(editId, val);

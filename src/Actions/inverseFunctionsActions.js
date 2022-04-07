@@ -1,7 +1,7 @@
 import { spawnSpecificItem, deleteSpecificItems } from "./inverseActions.js";
 import { items } from "../Classes/ItemArray.js";
 import { Item } from "../Classes/Item.js";
-import { showAll, showByComponent, showOwner } from "../Workspace/functionAppearance.js";
+import { showAll, showByComponent } from "../Workspace/functionAppearance.js";
 
 function createSpecificFunction(actionItems) {
     var it = new Item(actionItems.updatedItem);

@@ -3,6 +3,7 @@ import { items } from "../Classes/ItemArray.js";
 import { functionColors } from "../config/functionStyle.js";
 import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
+import { cancelFunctionSelection } from "../Item/selectFunction.js";
 
 var lastSelected = "";
 
@@ -37,8 +38,8 @@ function showOwner(functionItem) {
     if (!ownerId)
         return;
     const ownerName = items.itemList[items.itemList.findIndex((el) => el._id === ownerId)]._name;
-    const newName = functionItem._name + '  <' + ownerName + '>';
-    document.getElementById(functionItem._id + 'name').innerText += '  <' + ownerName + '>';
+    var newName = functionItem._name + '  <' + ownerName + '>';
+    document.getElementById(functionItem._id + 'name').innerText = functionItem._name + '  <' + ownerName + '>';
     setTimeout(() => { //due to listeners...
         if (!document.getElementById("byComponent").checked)
             document.getElementById(functionItem._id).style.backgroundColor = functionColors["attached"];
@@ -98,10 +99,16 @@ function showSpecificFunctions(id) {
     return;
 }
 
+function showAllRefresh() {
+    showByComponent();
+    showAll();
+    return;
+}
 
 function setUpFunctionDisplayListeners() {
     document.getElementById("all").addEventListener("change", function() {
         if (document.getElementById("all").checked) {
+            cancelFunctionSelection();
             document.getElementById("byComponent").checked = false;
             showAll();
             toggleSelectedComponents();
@@ -110,12 +117,14 @@ function setUpFunctionDisplayListeners() {
 
     document.getElementById("byComponent").addEventListener("change", function() {
         if (document.getElementById("byComponent").checked) {
+            cancelFunctionSelection();
             document.getElementById("all").checked = false;
             showByComponent();
             toggleSelectedComponents();
+            updateSelectedList();
         }
     });
     return;
 }
 
-export { setUpFunctionDisplayListeners, configAppearance, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
+export { setUpFunctionDisplayListeners, configAppearance, showAllRefresh, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };

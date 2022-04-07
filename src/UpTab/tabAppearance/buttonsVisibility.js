@@ -6,7 +6,17 @@ import { areAllCollapsed, areAllExtendable, areAllExtended } from "../../HtmlEle
 
 function appearComponentButtons() {
     const selectedItems = getSelectedItems();
-    if (!selectedItems || !selectedItems[0]) return;
+    if (!selectedItems || !selectedItems[0]) {
+        document.getElementById("subdivideButton").style.display = "none";
+        document.getElementById("unsubdivideButton").style.display = "none";
+        document.getElementById("deleteButton").style.display = "none";
+        document.getElementById("extendButton").style.display = "none";
+        document.getElementById("collapseButton").style.display = "none";
+        document.getElementById("joinButton").style.display = "none";
+        document.getElementById("unlinkButton").style.display = "none";
+        document.getElementById("linkButton").style.display = "none";
+        return;
+    }
     if (selectedItems.length === 1) {
         if (!selectedItems[0].subLayers.length) {
             document.getElementById("subdivideButton").style.display = "inline-block";

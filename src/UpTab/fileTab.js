@@ -87,7 +87,7 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
-    // loadSpecific("finalCompiler1.txt");
+    loadSpecific("JoinTest.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

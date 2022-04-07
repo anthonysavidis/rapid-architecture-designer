@@ -38,11 +38,13 @@ function canResize(id, pointerX, pointerY) {
 function autoResize(id, text) {
     const textDims = getTextDimensions(text);
     var p = document.getElementById(id);
-    if (!p.className.includes("component") && !p.className.includes("selected"))
-        return;
+    const resizedItem = items.itemList[items.itemList.findIndex(el => el._id === id)];
+    if (resizedItem._type === "Link" || resizedItem._type === "Function")
+        return; //no need for resize
+
     p.style.width = 150 + (textDims.width > 150 ? textDims.width - 100 : 0) + "px";
 
-    if (items.itemList[items.itemList.findIndex(el => el._id === id)].links)
+    if (resizedItem.links)
         renderLine(id);
     // renderInfoButton(id);
     return;

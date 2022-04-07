@@ -4,7 +4,7 @@ import { renderLine } from "../Item/createLine.js";
 import { layers } from "./LayerHolder.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
-import { configAppearance, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
+import { configAppearance, resetOwner, showAll, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
@@ -71,6 +71,10 @@ class ItemHolder {
         this.itemList[oldIndex]._name = newName;
         this.itemList[oldIndex]._description = newDescription;
         this.itemList[oldIndex].updateDomName(newName);
+        if (document.getElementById("all").checked && this.itemList[oldIndex]._type === "Component") {
+            showAllRefresh();
+            console.log('name update in list');
+        }
     }
     addLink(lineId, id1, id2) {
         const matchId1 = (element) => element._id == id1;

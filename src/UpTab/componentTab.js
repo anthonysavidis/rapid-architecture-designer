@@ -20,6 +20,7 @@ import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { splitCallBack } from "../Input/contextMenuCallbacks.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actions/inversePropertiesTab.js";
+import { showAllRefresh } from "../Workspace/functionAppearance.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -94,7 +95,7 @@ function askForDetails(it, extraInfo) {
         items.updateNameAndDescription(it._id, name, description);
         if (it._type === "Component") {
             actions.saveCommand(spawnSpecificItem, deleteLatestItem, "", it.toString());
-            autoResize(it._id, it._name);
+            // autoResize(it._id, it._name);
         } else if (it._type === "Link") {
             var finalLinkedItems = JSON.parse(extraInfo);
             finalLinkedItems[2] = JSON.parse(it.toString());
@@ -134,6 +135,8 @@ function addComponentTabListeners() {
         produceBox("confirmation", msg + "@1", () => {
             deleteComponentAction(selectedIds);
             actions.saveCommand(deleteSpecificItems, respawnDeletedItems, originalItemsStrs, "");
+            if (document.getElementById('all').checked)
+                showAllRefresh();
         });
     });
     document.getElementById("linkButton").addEventListener("click", function() {
@@ -165,6 +168,8 @@ function addComponentTabListeners() {
         } else
             itemToBeJoined = JSON.parse(itemFromListToObject(toBeJoined));
         var joinedItem = joinComponentAction();
+        if (document.getElementById('all').checked)
+            showAllRefresh();
         actions.saveCommand(joinAction, splitAction, joinedItem, itemToBeJoined);
     });
     document.getElementById("copyButton").addEventListener("click", function() {

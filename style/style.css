@@ -231,6 +231,7 @@ body {
     cursor: grab;
     text-align: right;
     line-height: 170%;
+    padding-right: 14px;
     box-sizing: border-box;
     margin-left: 5px;
     margin-top: 5px;

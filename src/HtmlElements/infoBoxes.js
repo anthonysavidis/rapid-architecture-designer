@@ -53,12 +53,12 @@ function produceBox(type, extraInfo, callBack, cancelCallBack) {
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
     cancelButton.className = "cancelButton";
-    cancelButton.onclick = cancelAction;
     cancelButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["cancel"] + "</p>";
 
     var title = document.createElement('h3');
     title.className = "boxTitle";
     if (type === "confirmation") {
+        cancelButton.onclick = cancelAction;
 
         var params = extraInfo.split('@');
         title.innerText = params[0];
@@ -104,6 +104,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack) {
         select.style.marginLeft = 47 + "px";
         select.style.marginBottom = 24 + "px";
         box.appendChild(selectExternal);
+        cancelButton.onclick = cancelAction;
 
         confirmationButton.className = "okButton";
         confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
