@@ -41,7 +41,7 @@ function detectMacros(params) {
                     actions.undo();
             } else if (ctrlDown && (e.keyCode == 73)) {
                 console.log(items);
-            } else if (ctrlDown && (e.keyCode == 77)) {
+            } else if (ctrlDown && (e.keyCode == 77)) { //m
                 console.log(actions);
             }
         });

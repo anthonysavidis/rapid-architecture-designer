@@ -120,6 +120,7 @@ function createSpecificLayer(actionItems) {
     updateTree();
     layers.changeLayer(lid);
     console.log(layers);
+    items.itemList[items.itemList.findIndex((el) => el._id === l.componentId)].subLayers[0] = l._id;
     return;
 }
 

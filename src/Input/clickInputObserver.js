@@ -88,6 +88,26 @@ function hasClickedOnWorkspace(id) {
     return false;
 }
 
+function selectionHandler(e, targ) {
+    const isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, e.clientX, e.clientY);
+    //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
+    if (hasClickedOnWorkspace(targ.id)) {
+        document.getElementById("selectedComponentList").innerHTML = "";
+        cancelAll(e);
+    } else if (isInsideComponent && !e.ctrlKey) { //selected operations intacted
+        const componentId = targ.id.match(/\d+/);
+        if (componentId && !targ.id.includes('L'))
+            keepOnlyLastSelectedItem(componentId[0]);
+    } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
+        const functionId = targ.id.match(/\d+/);
+        if (functionId && !targ.id.includes('L'))
+            keepOnlyLastSelectedFunction(functionId[0]);
+    }
+    // checkToSwitchTabs(e);
+    if (isInsideComponent)
+        updateSelectedList();
+}
+
 function whichElement(e) {
     var targ;
     if (!e) {
@@ -102,23 +122,9 @@ function whichElement(e) {
     tname = targ.tagName;
     checkToClose(e.clientX, e.clientY, e);
     // console.log(tname + " " + targ.id);
-    const isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, e.clientX, e.clientY);
-    //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
-    if (hasClickedOnWorkspace(targ.id)) {
-        document.getElementById("selectedComponentList").innerHTML = "";
-        cancelAll(e);
-    } else if (isInsideComponent && !e.ctrlKey) { //selected operations intacted
-        const componentId = targ.id.match(/\d+/);
-        if (componentId)
-            keepOnlyLastSelectedItem(componentId[0]);
-    } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
-        const functionId = targ.id.match(/\d+/);
-        if (functionId)
-            keepOnlyLastSelectedFunction(functionId[0]);
-    }
-    // checkToSwitchTabs(e);
-    if (isInsideComponent)
-        updateSelectedList();
+
+    // if(targ)
+    selectionHandler(e, targ);
     appearComponentButtons();
     appearFunctionButtons();
     appearEditButtons();
