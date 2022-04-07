@@ -1,6 +1,7 @@
 import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
 import { copyComponent, pasteComponent } from "../Item/copy.js";
+import { appearEditButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
 function detectMacros(params) {
 
@@ -14,6 +15,7 @@ function detectMacros(params) {
             cmdKey = 91,
             vKey = 86,
             zKey = 90,
+            yKey = 89,
             cKey = 67;
 
         $(document).keydown(function(e) {
@@ -33,12 +35,22 @@ function detectMacros(params) {
 
         // Document Ctrl + C/V 
         $(document).keydown(function(e) {
-            if (ctrlDown && (e.keyCode == cKey)) { copyComponent(); } else if (ctrlDown && (e.keyCode == vKey)) { pasteComponent(); } else if (ctrlDown && shiftDown && (e.keyCode == zKey)) {
-                if (actions.redoStack.length >= 1)
+            if (ctrlDown && (e.keyCode == cKey)) {
+                copyComponent();
+            } else if (ctrlDown && (e.keyCode == vKey)) {
+                pasteComponent();
+            } else if (ctrlDown && (e.keyCode == yKey)) {
+                if (actions.redoStack.length >= 1) {
                     actions.redo();
+                    // if (document.getElementById("Edit").style.display === "block")
+                    appearEditButtons();
+                }
             } else if (ctrlDown && (e.keyCode == zKey)) {
-                if (actions.undoStack.length >= 1)
+                if (actions.undoStack.length >= 1) {
                     actions.undo();
+                    // if (document.getElementById("Edit").style.display === "block")
+                    appearEditButtons();
+                }
             } else if (ctrlDown && (e.keyCode == 73)) {
                 console.log(items);
             } else if (ctrlDown && (e.keyCode == 77)) { //m

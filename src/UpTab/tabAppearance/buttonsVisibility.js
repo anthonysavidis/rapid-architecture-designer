@@ -104,12 +104,12 @@ function appearFunctionButtons() {
 function appearEditButtons() {
     var showUndo = 1;
     var showRedo = 1;
-    if (showUndo) {
+    if (actions.undoStack.length !== 0) {
         document.getElementById("undoButton").style.display = "inline-block";
     } else {
         document.getElementById("undoButton").style.display = "none";
     }
-    if (showRedo) {
+    if (actions.redoStack.length !== 0) {
         document.getElementById("redoButton").style.display = "inline-block";
     } else {
         document.getElementById("redoButton").style.display = "none";
