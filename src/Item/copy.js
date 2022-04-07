@@ -162,6 +162,11 @@ function pasteFromStr(result) {
         console.log("x" + ' ' + x);
         imageStorage.save(x + "_LAYER_PREVIEW", pastingItemsJSON['localStorage'][x]);
     }
+    if (document.getElementById('all').checked) {
+        showAllRefresh();
+    } else {
+        showByComponent();
+    }
 }
 
 async function pasteComponent() {
@@ -171,11 +176,7 @@ async function pasteComponent() {
         var pastingItemsJSON = JSON.parse(result);
         actions.saveCommand(pasteAction, deletePastedItems, result, "");
         pasteFromStr(result);
-        if (document.getElementById('all').checked) {
-            showAllRefresh();
-        } else {
-            showByComponent();
-        }
+
     } catch (error) {
         console.log('Not a valid item.');
     }
