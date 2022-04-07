@@ -67,7 +67,7 @@ const constantNames = {
     },
     "confirmationBox": {
         "DeleteMsgStart": "Do you want to delete ",
-        "DeleteMsgEnd": " Component(s)?",
+        "DeleteMsgEnd": " Components?",
         "DeleteMsgFunctionEnd": " Functions?",
         "ResetStart": "Do you want reset this function from ",
         "ResetEnd": "?"
@@ -124,7 +124,6 @@ const buttonTooltips = {
         "Delete": "Delete the selected component.",
         "Link": "Link two selected components.",
         "Unlink": "Unlink two selected components.",
-        "Split": "Split the selected component.",
         "Join": "Join the selected components.",
         "Subdivide": "Create a new sublayer of the selected component.",
         "Unsubdivide": "Delete the sublayer of the selected component.",
