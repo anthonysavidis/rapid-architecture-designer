@@ -6,6 +6,8 @@ import { showAll, showByComponent, showOwner } from "../Workspace/functionAppear
 function createSpecificFunction(actionItems) {
     var it = new Item(actionItems.updatedItem);
     it.owners[0] ? items.setFunctionToItem(itemsObject[1]._id, itemsObject[0]._id) : 1;
+    if (document.getElementById('byComponent').checked)
+        showByComponent();
     return;
 }
 
@@ -25,6 +27,8 @@ function createMultipleSpecificFunctions(actionItems) {
             items.itemList[items.itemList.findIndex(el => el._id === it._id)].owners = [];
             items.setFunctionToItem(ownerID, it._id);
         }
+        if (document.getElementById('byComponent').checked)
+            showByComponent();
     }
 
     return;

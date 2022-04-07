@@ -173,7 +173,7 @@ class Item {
         var prevColor = "";
         const curId = this._id;
         this.domElement.ondragstart = (ev) => {
-            cancelSelection();
+            // cancelSelection();
             keepOnlyLastSelectedFunction(curId);
             initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");

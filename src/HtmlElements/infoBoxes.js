@@ -18,9 +18,11 @@ function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
     return;
 }
 
-function produceMovingBar(box) {
+function produceMovingBar(box, isMsgBox) {
     var bar = document.createElement('div');
     bar.className = "movingBar";
+    if (isMsgBox)
+        bar.style.backgroundColor = "#cedff7";
     bar.id = "movingBar";
     box.appendChild(bar);
 
@@ -71,12 +73,12 @@ function produceBox(type, extraInfo, callBack, cancelCallBack) {
         produceGrayLayer(box, "", "", cancelCallBack);
     } else if (type === "updating") {
         title.innerText = extraInfo;
-        produceMovingBar(box);
+        produceMovingBar(box, 1);
         title.style.marginTop = -3 + "px";
         box.appendChild(title);
 
         document.getElementById("body").appendChild(box);
-        document.getElementById("movingBar").style.backgroundColor = "#cedff7";
+
         setTimeout(() => {
             box.remove();
         }, 2500);

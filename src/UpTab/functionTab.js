@@ -8,6 +8,7 @@ import { createSpecificFunction, deleteSpecificFunction, createMultipleSpecificF
 import { askForDetails } from "./componentTab.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
+import { showByComponent } from "../Workspace/functionAppearance.js";
 
 function setFunctionAction() {
     var f = getSelectedFunctionIds()[0];
@@ -39,6 +40,8 @@ function addFunctionTabListeners() {
     document.getElementById("newFunctionButton").addEventListener("click", function() {
         var functionItem = newFunctionAction();
         askForDetails(functionItem, "");
+        if (document.getElementById('byComponent').checked)
+            showByComponent();
     });
     document.getElementById("deleteFunctionButton").addEventListener("click", function() {
         const toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());

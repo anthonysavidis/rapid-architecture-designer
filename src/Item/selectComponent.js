@@ -19,7 +19,9 @@ const selectAction = function(compId) {
 }
 
 function changeSelectState(id) {
-    document.getElementById(id).addEventListener("mousedown", function() {
+    document.getElementById(id).addEventListener("mousedown", function(e) {
+        if (!e.ctrlKey)
+            cancelSelection();
         selectAction(id);
     });
     return;
