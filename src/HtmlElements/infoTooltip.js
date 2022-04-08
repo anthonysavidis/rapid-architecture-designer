@@ -41,7 +41,7 @@ function produceMainPart(tooltip, src, id, itemType, description, moreInfo) {
     title.innerText = constantNames['infoTooltip']['imageTitle'];
     title.style.marginLeft = 6 + "px";
     title.style.marginTop = 3 + "px";
-    mainPart.appendChild(title);
+    // mainPart.appendChild(title);
 
     mainPart.className = "mainPart";
     if (itemType === "Component") {
@@ -55,7 +55,7 @@ function produceMainPart(tooltip, src, id, itemType, description, moreInfo) {
         if (itemType === "Link") {
             title.innerText = constantNames["infoTooltip"]["al"];
             var select = document.createElement('select');
-            select.style.width = 212 + "px";
+            select.style.width = 205 + "px";
             var optionMap = new Map([
                 ["", ""],
                 ["point2", ""],
@@ -117,12 +117,12 @@ function produceMainPart(tooltip, src, id, itemType, description, moreInfo) {
         actions.saveCommand(alterItemsDetails, inverseItemsDetails, originalItemStr, alteredItemStr);
     });
     if (itemType === "Component") {
-        sublayerImage.appendChild(editButton);
+        // sublayerImage.appendChild(editButton);
         mainPart.appendChild(sublayerImage);
     }
     mainPart.appendChild(descriptionDiv);
-    mainPart.appendChild(moreInfoTittle);
-    mainPart.appendChild(moreInfoDiv);
+    // mainPart.appendChild(moreInfoTittle);
+    // mainPart.appendChild(moreInfoDiv);
     tooltip.appendChild(mainPart);
     return;
 }
@@ -228,24 +228,7 @@ function setUpTooltipListeners(id, layerExists) {
     document.getElementById(id + 'closeTooltip').addEventListener("click", function() {
         closeTooltip(id);
     });
-    if (layerExists) {
-        document.getElementById(id + 'sublayerImage').addEventListener("mouseenter", function() {
-            document.getElementById(id + 'architectureEditButton').style.display = "block";
-        });
-        document.getElementById(id + 'architectureEditButton').addEventListener("mouseenter", function() {
-            document.getElementById(id + 'architectureEditButton').style.display = "block";
-        });
-        document.getElementById(id + 'sublayerImage').addEventListener("mouseout", function() {
-            // document.getElementById(id + 'architectureEditButton').style.display = "none";
-        });
-        document.getElementById(id + 'architectureEditButton').addEventListener("mousedown", function(ev) {
-            var currentId = items.itemList[items.itemList.findIndex((el) => el._id === id)].subLayers[0];
-            closeTooltip(id);
-            var oldLayerId = layers.selectedLayer._id;
-            layers.changeLayer(currentId);
-            actions.saveCommand(changeNextLayer, changePrevLayer, oldLayerId, currentId);
-        });
-    } else {
+    if (!layerExists) {
         var itemIndex = items.itemList.findIndex((el) => el._id === id);
         if (items.itemList[itemIndex]._type === "Component") {
             // span.innerText = "Double click to subdivide.";

@@ -1,17 +1,16 @@
 import { items } from "../Classes/ItemArray.js";
 import { actions } from "../Classes/Actions.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
+import { autoResize } from "../Item/resize.js";
 
 
 var lastOriginalItem = null;
 
-function detailDetailChangeListener(id) {
+function detailChangeListener(id, originalItemStr) {
     var index = items.itemList.findIndex((el) => el._id === id);
-    var alteredItem = items.itemList[index].toString();
-    var originalItem = lastOriginalItem;
-    if (items.compareObjects(originalItem, alteredItem)) {
-        console.log("den einai ta idia");
-        actions.saveCommand(alterItemsDetails, inverseItemsDetails, originalItem.toString(), alteredItem.toString());
+    var alteredItemStr = items.itemList[index].toString();
+    if (items.compareObjects(originalItemStr, alteredItemStr)) {
+        actions.saveCommand(alterItemsDetails, inverseItemsDetails, originalItemStr, alteredItemStr);
         return true;
     }
     return false;
@@ -20,7 +19,10 @@ function detailDetailChangeListener(id) {
 function changeDetails(actionItem) {
     var alteredItemObject = JSON.parse(actionItem);
     items.updateNameAndDescription(alteredItemObject._id, alteredItemObject._name, alteredItemObject._description);
-    items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)].moreInfo = alteredItemObject.moreInfo;
+    // items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)].moreInfo = alteredItemObject.moreInfo;
+    if (alteredItemObject._type === "Component")
+        autoResize(alteredItemObject._id, alteredItemObject._name);
+
     return;
 }
 
@@ -49,4 +51,4 @@ function collapseSubcomponentsAction(actionItems) {
         turnOffExtension(collapseItems[x]._id);
 }
 
-export { detailDetailChangeListener, inverseItemsDetails, alterItemsDetails, setLastOriginalItem, extendSubcomponentsAction, collapseSubcomponentsAction };
+export { detailChangeListener, inverseItemsDetails, alterItemsDetails, setLastOriginalItem, extendSubcomponentsAction, collapseSubcomponentsAction };

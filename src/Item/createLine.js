@@ -4,6 +4,7 @@ import { changeLinkSelectState, forceSelectLink, cancelSelectedLinks } from "./s
 import { produceArrows, placeArrow, changeDisplayedArrow } from "./pointedArrow.js";
 import { produceTooltip, closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { computeDirectionChangeAngle, spawnDot } from "./geometry.js";
+import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
 
 function contextLineMenu(ev, lineId) {
     ev.preventDefault();
@@ -108,7 +109,10 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     nameArea.id = lineId + "name";
     nameArea.innerText = name;
     nameArea.onblur = (function() {
-        items.itemList[items.itemList.findIndex(el => el._id === lineId)]._name = nameArea.innerText;
+        const lIndex = items.itemList.findIndex(el => el._id === lineId);
+        const originalItemStr = items.itemList[lIndex].toString();
+        items.itemList[lIndex]._name = nameArea.innerText;
+        detailChangeListener(lineId, originalItemStr);
     });
     document.getElementById(lineId).appendChild(nameArea);
     document.getElementById(lineId + "name").style.margin = 0;

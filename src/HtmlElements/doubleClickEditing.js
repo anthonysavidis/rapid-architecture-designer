@@ -1,3 +1,4 @@
+import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
 import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResize } from "../Item/resize.js";
@@ -42,6 +43,7 @@ function produceDoubleClickEditingName(editId) {
     input.onblur = (function() {
         console.log('item db edit');
         var val = (this.value == "" || !this.value.replace(/\s/g, '').length) ? constantNames["emptyNames"][items.itemList[index]._type.toLowerCase()] : this.value;
+        const originalItemStr = items.itemList[index].toString();
         items.itemList[index]._name = val;
         //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
 
@@ -57,6 +59,7 @@ function produceDoubleClickEditingName(editId) {
         }
         input.remove();
         autoResize(editId, val);
+        detailChangeListener(editId, originalItemStr);
     });
     document.getElementById(editId + "name").innerText = "";
     document.getElementById(editId + "name").appendChild(input);
