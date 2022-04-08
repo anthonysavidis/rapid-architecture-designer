@@ -2,6 +2,7 @@ import { items } from "../Classes/ItemArray.js";
 import { actions } from "../Classes/Actions.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { autoResize } from "../Item/resize.js";
+import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
 
 var lastOriginalItem = null;
@@ -43,12 +44,15 @@ function extendSubcomponentsAction(actionItems) {
     const extendItems = JSON.parse(actionItems.initialItem);
     for (var x in extendItems)
         turnOnExtension(extendItems[x]._id);
+    appearComponentButtons();
+
 }
 
 function collapseSubcomponentsAction(actionItems) {
     const collapseItems = JSON.parse(actionItems.initialItem);
     for (var x in collapseItems)
         turnOffExtension(collapseItems[x]._id);
+    appearComponentButtons();
 }
 
 export { detailChangeListener, inverseItemsDetails, alterItemsDetails, setLastOriginalItem, extendSubcomponentsAction, collapseSubcomponentsAction };

@@ -130,7 +130,9 @@ const buttonTooltips = {
         "Unsubdivide": "Delete the sublayer of the selected component.",
         "Copy": "Copy selected component(s) to paste it in another editor.",
         "Paste": "Paste copied component(s) from another editor.",
-        "Transfer": "Transfer or copy operations from one component to another."
+        "Transfer": "Transfer or copy operations from one component to another.",
+        "Extend": "Extend selected component(s) to their subcomponents.",
+        "Collapse": "Collapse the selected component(s)."
     },
     "File": {
         "Save": "Save the current architecture.",
