@@ -26,12 +26,13 @@ function createSendingItem(selectedItemList) {
         idsToBeCopied.push(selectedItemList[x]._id);
     }
     const argList = [idsToBeCopied, selectedItemList];
+    console.log(argList);
     const sendedItem = copyComponent(1, argList);
     return sendedItem;
 }
 
-function setUpMoveAction(layerId, selectedItemList) {
-    const initialItem = [layers.selectedLayer._id, selectedItemList];
+function setUpMoveAction(layerId, selectedItemList, allLinks) {
+    const initialItem = [layers.selectedLayer._id, selectedItemList, itemFromListToObject(allLinks)];
     const updatedItem = [layerId, selectedItemList];
     actions.saveCommand(moveToNext, moveToPrev, initialItem, updatedItem);
 }
@@ -44,4 +45,4 @@ function moveItemsTo(layerId, selectedItemList) {
     return;
 }
 
-export { moveItemsTo, setUpMoveAction };
+export { moveItemsTo, setUpMoveAction, removeFromCurrentLayer };

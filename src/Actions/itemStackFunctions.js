@@ -73,7 +73,7 @@ function getLinkItems(joinedItemList) {
             }
         }
     }
-    console.log(defaultLinkList);
+    // console.log(defaultLinkList);
     // var linkIdList = defaultLinkList.filter((a, i, aa) => aa.indexOf(a) === i && aa.lastIndexOf(a) !== i);
     var linkIdList = [];
     var linkItems = [];

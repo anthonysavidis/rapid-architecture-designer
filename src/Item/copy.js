@@ -44,8 +44,8 @@ function removeLinksFromJSON(itemsToBeCopiedJSON, deleteLinkIds) {
             itemObject.links = JSON.stringify(itemLinks);
             itemObject.linkedItems = JSON.stringify(linkedItems);
             itemsToBeCopiedJSON['ItemMap']['current'][counter] = JSON.stringify(itemObject);
-            console.log(itemObject);
-            console.log(deleteLinkIds);
+            // console.log(itemObject);
+            // console.log(deleteLinkIds);
 
         }
         counter++;
