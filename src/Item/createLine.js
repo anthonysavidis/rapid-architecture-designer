@@ -108,11 +108,17 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     nameArea.style.outline = 0 + "px";
     nameArea.id = lineId + "name";
     nameArea.innerText = name;
+    nameArea.className = "blurName";
+    nameArea.onfocus = () => {
+        nameArea.className = "focusName";
+    }
     nameArea.onblur = (function() {
         const lIndex = items.itemList.findIndex(el => el._id === lineId);
         const originalItemStr = items.itemList[lIndex].toString();
         items.itemList[lIndex]._name = nameArea.innerText;
         detailChangeListener(lineId, originalItemStr);
+        nameArea.className = "blurName";
+
     });
     document.getElementById(lineId).appendChild(nameArea);
     document.getElementById(lineId + "name").style.margin = 0;
