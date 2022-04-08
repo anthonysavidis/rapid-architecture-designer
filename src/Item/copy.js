@@ -171,15 +171,25 @@ function pasteFromStr(result) {
 
 async function pasteComponent() {
     //TODO: χρειάζεται πολλή προσοχή το πρώτο από τα υπο-λεϊερς
-    const result = await navigator.clipboard.readText();
-    try {
-        var pastingItemsJSON = JSON.parse(result);
-        actions.saveCommand(pasteAction, deletePastedItems, result, "");
-        pasteFromStr(result);
-
-    } catch (error) {
-        console.log('Not a valid item.');
+    var result = "";
+    const userAgent = navigator.userAgent;
+    if (userAgent.match(/firefox|fxios/i)) {
+        document.onpaste = (event) => {
+            result = (event.clipboardData || window.clipboardData).getData('text');
+        }
+    } else if (userAgent.match(/chrome|chromium|crios/i)) {
+        result = await navigator.clipboard.readText();
     }
+    setTimeout(() => {
+        try {
+            var pastingItemsJSON = JSON.parse(result);
+            actions.saveCommand(pasteAction, deletePastedItems, result, "");
+            pasteFromStr(result);
+
+        } catch (error) {
+            console.log('Not a valid item.');
+        }
+    }, 100);
     return;
 }
 

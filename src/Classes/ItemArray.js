@@ -8,6 +8,7 @@ import { configAppearance, resetOwner, showAll, showAllRefresh, showByComponent 
 import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
+import { closeTheTooltip } from "../Input/clickInputObserver.js";
 class ItemHolder {
 
     constructor(str) {
@@ -45,6 +46,7 @@ class ItemHolder {
             bRecs.deleteBoundingRec(layers.selectedLayer._id, deletingItemId);
             //delete sublayers...
             cancelSelection();
+            closeTheTooltip();
             if (document.getElementById("byComponent").checked)
                 showByComponent();
 

@@ -1,6 +1,8 @@
 import { layers } from "../Classes/LayerHolder.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
+import { cancelSelection } from "../Item/selectComponent.js";
+import { appearComponentButtons, appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { hideCurrentFunctions, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 
 function refreshExtendedComponents(layersItems) {
@@ -19,6 +21,9 @@ function actionsOfNextLayer(layerId) {
     refreshExtendedComponents(layerItems.itemList);
     hideCurrentFunctions();
     closeTheTooltip();
+    cancelSelection();
+    appearComponentButtons();
+    appearFunctionButtons();
     if (document.getElementById('all').checked)
         showAll();
     else
