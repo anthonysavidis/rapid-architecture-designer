@@ -21,6 +21,7 @@ import { splitCallBack } from "../Input/contextMenuCallbacks.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actions/inversePropertiesTab.js";
 import { showAllRefresh } from "../Workspace/functionAppearance.js";
+import { imageStorage } from "../Classes/ImageHolder.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -193,12 +194,13 @@ function addComponentTabListeners() {
     document.getElementById("unsubdivideButton").addEventListener("click", function() {
         var itemToBeUnsubdivided = getSelectedItems()[0];
         var layerBeingDeleted = layers.layerList[layers.layerList.findIndex((el) => itemToBeUnsubdivided.subLayers[0] === el._id)];
+        const layerImage = imageStorage.get(layerBeingDeleted._id + "_LAYER_PREVIEW");
+        console.log(layerImage);
         var layerStr = layerBeingDeleted.toString();
-        console.log(layers.layerList);
+
         layers.deleteLayer(layerBeingDeleted._id);
-        console.log(layers.layerList);
         updateTree();
-        actions.saveCommand(deleteSpecificLayer, createSpecificLayer, "", layerStr);
+        actions.saveCommand(deleteSpecificLayer, createSpecificLayer, layerImage, layerStr);
 
     });
     document.getElementById("extendButton").addEventListener("click", function() {

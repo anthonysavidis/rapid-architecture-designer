@@ -10,6 +10,7 @@ import { pasteFromStr } from "../Item/copy.js";
 import { showAllRefresh } from "../Workspace/functionAppearance.js";
 import { selectAction } from "../Item/selectComponent.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
+import { imageStorage } from "../Classes/ImageHolder.js";
 
 
 function spawnSpecificItem(actionItems) {
@@ -120,12 +121,13 @@ function joinAction(actionItems) {
 
 function createSpecificLayer(actionItems) {
     var lid = layers.selectedLayer._id;
-    console.log(actionItems);
     var l = new Layer("", -1, -1, JSON.parse(actionItems.updatedItem), 0);
+    if (actionItems.initialItem !== "")
+        imageStorage.save(l._id + "_LAYER_PREVIEW", actionItems.initialItem);
     updateTree();
     layers.changeLayer(lid);
-    console.log(layers);
     items.itemList[items.itemList.findIndex((el) => el._id === l.componentId)].subLayers[0] = l._id;
+    console.log(imageStorage);
     return;
 }
 
