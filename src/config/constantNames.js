@@ -30,7 +30,7 @@ const constantNames = {
         "LayerDialog": "Please enter new layer's name:"
     },
     "functionsTab": {
-        "tabName": "Functions",
+        "tabName": "Operations",
         "New": "New",
         "Delete": "Delete",
         "Set": "Set",
@@ -67,14 +67,14 @@ const constantNames = {
     },
     "confirmationBox": {
         "DeleteMsgStart": "Do you want to delete ",
-        "DeleteMsgEnd": " Components?",
-        "DeleteMsgFunctionEnd": " Functions?",
-        "ResetStart": "Do you want reset this function from ",
+        "DeleteMsgEnd": " components?",
+        "DeleteMsgFunctionEnd": " operations?",
+        "ResetStart": "Do you want reset this operation from ",
         "ResetMult": "Do you want reset the selected (",
-        "ResetEnd": ") function(s)?"
+        "ResetEnd": ") operation(s)?"
     },
     "inputBox": {
-        "msg": "Insert name & description of ",
+        "msg": "Insert name and description of ",
         "nameLabel": {
             "Component": "Name:",
             "Link": "Name:",
@@ -95,13 +95,13 @@ const constantNames = {
         "name": "Component split"
     },
     "emptyNames": {
-        "component": "New Component",
-        "function": "New Function",
-        "layer": "New Layer",
-        "link": "New Link",
-        "line": "New Link",
+        "component": "Component(New)",
+        "function": "Operation(New)",
+        "layer": "Layer(New)",
+        "link": " Link(New)",
+        "line": "Line(New)",
         "description": "No description added.",
-        "info": "No info has been added.",
+        "info": "No info added.",
         "save": "myArchitecture.txt"
     },
     "functionsContext": {
@@ -112,7 +112,7 @@ const constantNames = {
     },
     "messages": {
         "pngMsg": "Insert name of the current layer.",
-        "functionExists": "THIS FUNCTION ALREADY EXISTS IN COMPONENT!"
+        "functionExists": "Already attached to component!"
     },
     "dot": ".",
     "ok": "OK",
@@ -137,15 +137,16 @@ const buttonTooltips = {
         "Load": "Load an architecture."
     },
     "Edit": {
-        "Grid": "Turn on/off the dotted grid.",
+        "Grid": "Toggle grid.",
         "Undo": "Undo the latest action.",
         "Redo": "Redo the latest action."
     },
-    "Functions": {
-        "New": "Create a new Function.",
-        "Delete": "Delete selected Function.",
-        "Set": "Set selected Function to selected Component.",
-        "Reset": "Reset selected Function from selected Component."
+    "Operations": {
+        "New": "Create a new operation.",
+        "Delete": "Delete selected operation.",
+        "Split": "Split operations to a new component.",
+        "Set": "Attach selected operation to  component.",
+        "Reset": "Detach selected operation from component."
     },
     "Hierarchy": {
         "Move To": "Move component to another layer."
