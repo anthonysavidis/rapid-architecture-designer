@@ -159,26 +159,26 @@ class ItemHolder {
     compareObjects(originalStr, alteredStr) {
         var original = JSON.parse(originalStr);
         var altered = JSON.parse(alteredStr);
-        var isEqualList = false;
         var index = items.itemList.findIndex((el) => el._id === altered._id);
-        if (altered._type === "Component" && original._functions) {
-            var objectLength = 0;
-            for (var x in original._functions) {
-                if (original._functions[x])
-                    objectLength++;
-            }
-            isEqualList = (items.itemList[index]._functions.length === objectLength);
-        } else if (altered._type === "Function" && original._owners) {
-            var objectLength = 0;
-            for (var x in original.owners) {
-                if (original.owners[x])
-                    objectLength++;
-            }
-            isEqualList = (items.itemList[index].owners.length === objectLength);
-        }
+        // var isEqualList = false;
+        // if (altered._type === "Component" && original._functions) {
+        //     var objectLength = 0;
+        //     for (var x in original._functions) {
+        //         if (original._functions[x])
+        //             objectLength++;
+        //     }
+        //     isEqualList = (items.itemList[index]._functions.length === objectLength);
+        // } else if (altered._type === "Function" && original._owners) {
+        //     var objectLength = 0;
+        //     for (var x in original.owners) {
+        //         if (original.owners[x])
+        //             objectLength++;
+        //     }
+        //     isEqualList = (items.itemList[index].owners.length === objectLength);
+        // }
         var isEqualName = original._name === items.itemList[index]._name;
         var isEqualDescription = original._description === items.itemList[index]._description;
-        return !(isEqualList && isEqualName && isEqualDescription);
+        return !(isEqualName && isEqualDescription);
     }
 
     alterObjectsLists(original, altered) {

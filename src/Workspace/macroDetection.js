@@ -35,18 +35,19 @@ function detectMacros(params) {
 
         // Document Ctrl + C/V 
         $(document).keydown(function(e) {
+            const isBoxOpen = document.getElementsByClassName('confirmationBox').length || document.getElementsByClassName('selectingBox').length || document.getElementsByClassName('inputBox').length;
             const isFormActive = document.getElementsByClassName('no-outline').length || document.getElementsByClassName('focusName').length;
             if (ctrlDown && (e.keyCode == cKey)) {
                 copyComponent();
             } else if (ctrlDown && (e.keyCode == vKey)) {
                 pasteComponent();
-            } else if (ctrlDown && (e.keyCode == yKey) && !isFormActive) {
+            } else if (ctrlDown && (e.keyCode == yKey) && !isFormActive && !isBoxOpen) {
                 if (actions.redoStack.length >= 1) {
                     actions.redo();
                     // if (document.getElementById("Edit").style.display === "block")
                     appearEditButtons();
                 }
-            } else if (ctrlDown && (e.keyCode == zKey) && !isFormActive) {
+            } else if (ctrlDown && (e.keyCode == zKey) && !isFormActive && !isBoxOpen) {
                 if (actions.undoStack.length >= 1) {
                     actions.undo();
                     // if (document.getElementById("Edit").style.display === "block")
