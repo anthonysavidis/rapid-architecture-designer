@@ -104,7 +104,7 @@ function selectionHandler(e, targ) {
             keepOnlyLastSelectedItem(componentId[0]);
     } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
         const functionId = targ.id.match(/\d+/);
-        if (functionId && !targ.id.includes('L') && index !== -1)
+        if (functionId && !targ.id.includes('L'))
             keepOnlyLastSelectedFunction(functionId[0]);
     }
     // checkToSwitchTabs(e);

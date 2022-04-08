@@ -8,6 +8,8 @@ import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { copyComponent } from "../Item/copy.js";
 import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 import { showAll } from "../Workspace/functionAppearance.js";
+import { actions } from "../Classes/Actions.js";
+import { loadNext, loadPrev } from "../Actions/inverseFileActions.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
@@ -58,6 +60,7 @@ function loadAction() {
                 alert('Error while reading file');
                 return;
             }
+            const previousLayerHolderStr = layers.toString();
             var filecontent = evt.target.result;
             var allText = filecontent;
             for (var x in layers.layerList) {
@@ -65,6 +68,7 @@ function loadAction() {
                 document.getElementById(layers.layerList[x]._id + "functions").remove();
             }
             var lh = new LayerHolder(allText);
+            actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
         };
 
         reader.readAsText(e.target.files[0]);
@@ -87,7 +91,6 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
-    loadSpecific("finalCompiler1.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

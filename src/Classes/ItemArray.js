@@ -228,6 +228,7 @@ class ItemHolder {
         this.idList = [];
         var itemsInJSON = JSON.parse(itemsInStr);
         var allLinks = [];
+        var allFunctions = [];
         var iterator = 0;
         for (var x in itemsInJSON) {
             // console.log(iterator)1
@@ -236,8 +237,11 @@ class ItemHolder {
                     allLinks.push(itemsInJSON[x]);
                     continue;
                 }
-                if (itemsInJSON[x]._type === "Function")
+                if (itemsInJSON[x]._type === "Function") {
+                    allFunctions.push(itemsInJSON[x]);
                     this.functionCounter++;
+                    continue;
+                }
                 var tempItem = new Item(JSON.stringify(itemsInJSON[x]), 0);
                 // console.log(tempItem);
                 this.itemList.push(tempItem);
@@ -250,7 +254,10 @@ class ItemHolder {
         for (var i = 0; i < (allLinks.length); i++) {
             var tempItem = new Item(JSON.stringify(allLinks[i]));
             this.add(tempItem);
-
+        }
+        for (var i = 0; i < (allFunctions.length); i++) {
+            var tempItem = new Item(JSON.stringify(allFunctions[i]));
+            this.add(tempItem);
         }
         // renderLinks();
         //calculate function counter
