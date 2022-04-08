@@ -2,6 +2,7 @@ import { imageStorage } from "../Classes/ImageHolder.js";
 import { items } from "../Classes/ItemArray.js";
 import { functionColors } from "../config/functionStyle.js";
 import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
+import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 
@@ -112,6 +113,7 @@ function setUpFunctionDisplayListeners() {
             document.getElementById("byComponent").checked = false;
             showAll();
             toggleSelectedComponents();
+            closeTheTooltip();
         }
     });
 
@@ -122,6 +124,8 @@ function setUpFunctionDisplayListeners() {
             showByComponent();
             toggleSelectedComponents();
             updateSelectedList();
+            closeTheTooltip();
+
         }
     });
     return;

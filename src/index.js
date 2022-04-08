@@ -9,6 +9,7 @@ import { renderInfoButton } from "./HtmlElements/componentInfo.js";
 import { constantNames } from "./config/constantNames.js";
 
 document.addEventListener("DOMContentLoaded", function() {
+
     insertUpTabs();
     initializeStyleAndOperations();
     initializeObserver();
@@ -20,4 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("trashBin").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";
     document.getElementById("trashBin").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 30 + "px";
     initializeTab(constantNames["componentsTab"]["tabName"], "componentTab");
+    document.onpaste = function(params) {
+        console.log(params.clipboardData);
+    }
 });

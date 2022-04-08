@@ -2,8 +2,10 @@ import { spawnSpecificItem, deleteSpecificItems } from "./inverseActions.js";
 import { items } from "../Classes/ItemArray.js";
 import { Item } from "../Classes/Item.js";
 import { showAll, showByComponent } from "../Workspace/functionAppearance.js";
+import { closeTheTooltip } from "../Input/clickInputObserver.js";
 
 function createSpecificFunction(actionItems) {
+
     var it = new Item(actionItems.updatedItem);
     it.owners[0] ? items.setFunctionToItem(itemsObject[1]._id, itemsObject[0]._id) : 1;
     if (document.getElementById('byComponent').checked)
@@ -12,6 +14,8 @@ function createSpecificFunction(actionItems) {
 }
 
 function deleteSpecificFunction(actionItems) {
+    closeTheTooltip();
+
     var itemObject = JSON.parse(actionItems.updatedItem);
     items.delete(itemObject._id);
     return;
@@ -35,6 +39,8 @@ function createMultipleSpecificFunctions(actionItems) {
 }
 
 function deleteMultipleSpecificFunctions(actionItems) {
+    closeTheTooltip();
+
     var itemObjectsToBeDeleted = JSON.parse(actionItems.initialItem);
     for (var x in itemObjectsToBeDeleted) {
         items.delete(itemObjectsToBeDeleted[x]._id);

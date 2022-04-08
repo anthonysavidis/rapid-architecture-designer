@@ -11,6 +11,7 @@ import { appearComponentButtons, appearFunctionButtons, appearEditButtons } from
 import { initializeTab, lastPressed } from "../UpTab/tabAppearance/tabInitializer.js";
 import { hideCurrentFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 import { bRecs } from "./boundingRectanglesObserver.js";
+import { closeTooltipIfClickedOutside } from "./tooltipObserver.js";
 
 function isIconOrName(type, clickedElementId) {
     if ((clickedElementId.includes("name") && type === "P") || (clickedElementId.includes("name") && type === "DIV") || clickedElementId.includes("infoIcon") || clickedElementId.includes("paragraph")) {
@@ -91,16 +92,19 @@ function hasClickedOnWorkspace(id) {
 function selectionHandler(e, targ) {
     const isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, e.clientX, e.clientY);
     //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
+    const suspectedId = targ.id.match(/\d+/);
+    const index = items.itemList.findIndex(el => el._id === suspectedId);
+
     if (hasClickedOnWorkspace(targ.id)) {
         document.getElementById("selectedComponentList").innerHTML = "";
         cancelAll(e);
     } else if (isInsideComponent && !e.ctrlKey) { //selected operations intacted
         const componentId = targ.id.match(/\d+/);
-        if (componentId && !targ.id.includes('L'))
+        if (componentId && !targ.id.includes('L') && index !== -1)
             keepOnlyLastSelectedItem(componentId[0]);
     } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
         const functionId = targ.id.match(/\d+/);
-        if (functionId && !targ.id.includes('L'))
+        if (functionId && !targ.id.includes('L') && index !== -1)
             keepOnlyLastSelectedFunction(functionId[0]);
     }
     // checkToSwitchTabs(e);
@@ -128,7 +132,6 @@ function whichElement(e) {
     appearComponentButtons();
     appearFunctionButtons();
     appearEditButtons();
-
 }
 
 function initializeObserver() {
@@ -138,9 +141,16 @@ function initializeObserver() {
 
 function closeTheTooltip() {
     const tooltip = document.getElementsByClassName('tooltiptext')[0];
+    const fArrow = document.getElementsByClassName('fInfoArrow')[0];
+    if (fArrow)
+        fArrow.remove();
     if (!tooltip)
         return;
     var itemId = tooltip.id.split('tooltip')[0];
+    if (document.getElementById(itemId + "tooltipExternal"))
+        document.getElementById(itemId + "tooltipExternal").remove();
+    if (document.getElementById(itemId + "tooltipArrow"))
+        document.getElementById(itemId + "tooltipArrow").remove();
     closeTooltip(itemId);
     return;
 }

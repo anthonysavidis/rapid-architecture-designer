@@ -92,7 +92,8 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
 
     produceArrows(rec1, rec2, degree, lineId, linkState);
 
-    document.getElementById(lineId + "external").addEventListener("contextmenu", function(ev) {
+    document.getElementById(lineId).addEventListener("contextmenu", function(ev) {
+        ev.preventDefault();
         if (document.getElementById(lineId + "tooltipExternal"))
             document.getElementById(lineId + "tooltipExternal").remove();
         contextLineMenu(ev, lineId);

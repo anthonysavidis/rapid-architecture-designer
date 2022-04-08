@@ -151,7 +151,7 @@ function fixPositionAndArrow(tooltip, id, itemType, itemRect, x, y) {
         document.getElementById(tooltip.id).style.top = infoRec.y - 125 + "px";
 
     } else if (itemType === "Link") {
-        document.getElementById(id + "tooltipArrow").style.display = "none";
+        document.getElementById(id + "tooltipArrow").remove();
         document.getElementById(tooltip.id).style.left = x - 100 + "px";
         document.getElementById(tooltip.id).style.top = y - 100 + "px";
     } else if (itemType === "Function") {
@@ -163,8 +163,6 @@ function fixPositionAndArrow(tooltip, id, itemType, itemRect, x, y) {
         document.getElementById(tooltip.id).style.top = y - 150 + "px";
 
     }
-    // document.getElementById(id + "tooltipArrow").style.left = itemRect.x + itemRect.width - 15 + "px";
-    // document.getElementById(id + "tooltipArrow").style.top = itemRect.y - itemRect.height / 2 + 50 + "px";
     return;
 }
 
@@ -174,7 +172,9 @@ function closeOthers() {
         return;
     const arrowId = otherTooltip.id + 'Arrow';
     otherTooltip.remove();
-    document.getElementById(arrowId).remove();
+    if (document.getElementById(arrowId))
+        document.getElementById(arrowId).remove();
+
     return;
 }
 
@@ -202,8 +202,11 @@ function produceTooltip(x, y, src, id) {
 function closeTooltip(id) {
     if (!document.getElementById(id + "tooltip"))
         return;
-    document.getElementById(id + "tooltipArrow").remove();
     document.getElementById(id + "tooltip").remove();
+    if (document.getElementById(id + "tooltipArrow"))
+        document.getElementById(id + "tooltipArrow").remove();
+    if (document.getElementById(id + "tooltipExternal"))
+        document.getElementById(id + "tooltipExternal").remove();
     return;
 }
 

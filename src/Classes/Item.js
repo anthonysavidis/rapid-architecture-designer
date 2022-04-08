@@ -21,6 +21,7 @@ import { produceContextMenu } from "../HtmlElements/functionsContextMenu.js";
 import { showAll, showByComponent, showOwner } from "../Workspace/functionAppearance.js";
 import { moveCallBack } from "../Input/contextMenuCallbacks.js";
 import { functionColors } from "../config/functionStyle.js";
+import { closeTheTooltip } from "../Input/clickInputObserver.js";
 
 class Item {
 
@@ -174,6 +175,8 @@ class Item {
         const curId = this._id;
         this.domElement.ondragstart = (ev) => {
             // cancelSelection();
+            closeTheTooltip();
+
             keepOnlyLastSelectedFunction(curId);
             initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");

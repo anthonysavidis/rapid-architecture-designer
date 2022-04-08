@@ -9,6 +9,7 @@ import { pasteComponentAction } from "../UpTab/componentTab.js";
 import { pasteFromStr } from "../Item/copy.js";
 import { showAllRefresh } from "../Workspace/functionAppearance.js";
 import { selectAction } from "../Item/selectComponent.js";
+import { closeTheTooltip } from "../Input/clickInputObserver.js";
 
 
 function spawnSpecificItem(actionItems) {
@@ -25,12 +26,15 @@ function spawnSpecificItem(actionItems) {
 }
 
 function deleteLatestItem(actionItems) {
+    closeTheTooltip();
     var itemObject = JSON.parse(actionItems.updatedItem);
     items.delete(itemObject._id);
 }
 
 
 function deleteSpecificItems(actionItems) {
+    closeTheTooltip();
+
     var deletedItems = JSON.parse(actionItems.initialItem);
     for (var x in deletedItems) {
         if (!items.idList.includes(deletedItems[x]._id) && deletedItems[x]._type === "Link") {
@@ -67,6 +71,7 @@ function linkItems(actionItems) {
 }
 
 function unlinkItems(actionItems) {
+    closeTheTooltip();
     var toBeUnlinkedItems = JSON.parse(actionItems.initialItem);
     var index0 = items.itemList.findIndex((el) => el._id === toBeUnlinkedItems[0]._id);
     var index1 = items.itemList.findIndex((el) => el._id === toBeUnlinkedItems[1]._id);

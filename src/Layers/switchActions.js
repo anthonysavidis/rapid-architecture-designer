@@ -1,5 +1,6 @@
 import { layers } from "../Classes/LayerHolder.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
+import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { hideCurrentFunctions, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 
 function refreshExtendedComponents(layersItems) {
@@ -17,6 +18,7 @@ function actionsOfNextLayer(layerId) {
     const layerItems = layers.itemMap.get(layerId);
     refreshExtendedComponents(layerItems.itemList);
     hideCurrentFunctions();
+    closeTheTooltip();
     if (document.getElementById('all').checked)
         showAll();
     else
