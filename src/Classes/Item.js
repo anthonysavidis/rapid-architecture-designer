@@ -89,6 +89,7 @@ class Item {
         }
 
         this.domElement.ondrop = (event) => {
+            event.preventDefault();
             var functionId = event.dataTransfer.getData("text");
             if (!this._functions.includes(functionId)) {
                 var hasError = items.setFunctionToItem(this._id, functionId);
@@ -114,7 +115,6 @@ class Item {
                 produceBox("updating", constantNames["messages"]["functionExists"]);
             }
 
-            event.preventDefault();
         }
         this.domElement.ondragstart = (ev) => {
             console.log("dragStart");
