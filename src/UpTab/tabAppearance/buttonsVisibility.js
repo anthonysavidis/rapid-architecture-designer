@@ -117,4 +117,15 @@ function appearEditButtons() {
     return;
 }
 
-export { appearComponentButtons, appearFunctionButtons, appearEditButtons };
+function appearHierarchyButtons() {
+    const selectedItems = getSelectedItems();
+    const selectedFunctions = getSelectedFunctions();
+    if (selectedItems.length >= 1 && selectedFunctions.length === 0) {
+        document.getElementById("moveToLayerButton").style.display = "inline-block";
+    } else {
+        document.getElementById("moveToLayerButton").style.display = "none";
+
+    }
+}
+
+export { appearComponentButtons, appearFunctionButtons, appearEditButtons, appearHierarchyButtons };

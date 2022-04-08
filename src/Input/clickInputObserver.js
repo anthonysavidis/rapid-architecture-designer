@@ -7,7 +7,7 @@ import { spawnHelper } from "../Item/geometry.js";
 import { cancelSelection, getSelectedIds, keepOnlyLastSelectedItem } from "../Item/selectComponent.js";
 import { cancelFunctionSelection, keepOnlyLastSelectedFunction } from "../Item/selectFunction.js";
 import { cancelSelectedLinks } from "../Item/selectLink.js";
-import { appearComponentButtons, appearFunctionButtons, appearEditButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { appearComponentButtons, appearFunctionButtons, appearEditButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { initializeTab, lastPressed } from "../UpTab/tabAppearance/tabInitializer.js";
 import { hideCurrentFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 import { bRecs } from "./boundingRectanglesObserver.js";
@@ -132,6 +132,7 @@ function whichElement(e) {
     appearComponentButtons();
     appearFunctionButtons();
     appearEditButtons();
+    appearHierarchyButtons();
 }
 
 function initializeObserver() {

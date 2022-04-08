@@ -42,6 +42,7 @@ function createSelectElementsFromLayers(selectedItems) {
 // function moveTo(layerId, selectedItemList)
 
 function addHierarchyTabListeners() {
+    document.getElementById("moveToLayerButton").style.display = "none";
     document.getElementById("moveToLayerButton").addEventListener("click", function() {
         const selectedItems = getSelectedItems();
         produceBox('selecting', [constantNames["layersTab"]["moveBox"], createSelectElementsFromLayers(selectedItems)], function(layerId) {
