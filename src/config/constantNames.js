@@ -58,7 +58,7 @@ const constantNames = {
     },
     "infoTooltip": {
         "imageTitle": "Preview",
-        "descTitle": "Description",
+        "descTitle": "Edit Description",
         "emptyDescription": "No description has been added yet.",
         "moreInfo": "More Information",
         "al": "Arrow Type",

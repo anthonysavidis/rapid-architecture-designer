@@ -9,9 +9,11 @@ function produceSizeForm(box, className, callBack) {
     select.innerHTML += "<option value=\"medium\">" + constantNames["configBox"]["Medium"] + "</option>";
     select.innerHTML += "<option value=\"large\">" + constantNames["configBox"]["Large"] + "</option>";
     select.innerHTML += "<option value=\"x-large\">" + constantNames["configBox"]["xLarge"] + "</option>";
+
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
     select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextSize');
+    (!select.value) ? select.value = "medium": 1;
     select.addEventListener("change", function() {
         callBack(className, select.value);
     })
@@ -45,6 +47,8 @@ function produceFontFamilyForms(box, className, callBack) {
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
     select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextFamily');
+    (!select.value) ? select.value = "Arial, Helvetica, sans-serif": 1;
+
     box.appendChild(select);
 }
 

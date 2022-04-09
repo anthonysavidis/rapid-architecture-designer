@@ -4,14 +4,15 @@ import { actions } from "../Classes/Actions.js";
 import { moveNext, movePrev } from "../Actions/inverseMovement.js";
 import { renderInfoButton } from "../HtmlElements/componentInfo.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
+import { layers } from "../Classes/LayerHolder.js";
 
 function getTextDimensions(str) {
 
     var text = document.createElement("span");
     document.body.appendChild(text);
 
-    text.style.font = "times new roman";
-    text.style.fontSize = 16 + "px";
+    text.style.font = "--var(componentTextFamily)";
+    text.style.fontSize = "--var(componentTextSize)";
     text.style.height = 'auto';
     text.style.width = 'auto';
     text.style.position = 'absolute';
@@ -50,6 +51,12 @@ function autoResize(id, text) {
     return;
 }
 
+function autoResizeAllComponents() {
+    for (var x in layers.idList) {
+
+    }
+}
+
 function addResize(id) {
     var p = document.getElementById(id);
     if (document.getElementById(id + "resizer")) {
@@ -83,7 +90,7 @@ function addResize(id) {
             p.style.width = startWidth + e.clientX - startX + "px";
             p.style.height = startHeight + e.clientY - startY + "px";
             renderLine(id);
-            renderInfoButton(id);
+            // renderInfoButton(id);
         }
     }
 

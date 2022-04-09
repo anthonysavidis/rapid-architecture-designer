@@ -1,6 +1,7 @@
 import { constantNames } from "../config/constantNames.js";
 import { produceComponentForm, produceLinkForm, produceOperationForm } from "../HtmlElements/configBox.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
+import { addMotion } from "../Input/movingModal.js";
 
 
 
@@ -17,8 +18,8 @@ function createConfigBox() {
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
     closeButton.onclick = closeBox;
-    box.appendChild(closeButton);
     produceMovingBar(box, 0);
+    box.appendChild(closeButton);
     produceComponentForm(box);
     produceOperationForm(box);
     produceLinkForm(box);
@@ -35,7 +36,8 @@ function createConfigBox() {
     box.appendChild(closeButton);
     box.appendChild(confirmationButton);
     document.getElementById('body').appendChild(box);
-    return
+    addMotion(box);
+    return;
 }
 
 
