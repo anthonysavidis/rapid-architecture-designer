@@ -1,0 +1,7 @@
+.rod {
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    cursor: col-resize;
+    background-color: transparent;
+}

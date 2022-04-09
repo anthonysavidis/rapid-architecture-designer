@@ -76,6 +76,7 @@
     width: 18%;
     height: 100%;
     overflow: hidden;
+    position: absolute;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
 }
@@ -255,6 +256,10 @@ body {
     height: 25px;
     background: no-repeat;
     background-image: url('../images/fIcon.png');
+}
+
+.overflowDis {
+    overflow: hidden;
 }
 
 .selectedFunction {

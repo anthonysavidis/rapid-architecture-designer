@@ -66,7 +66,7 @@ function initializeTheTrashBin() {
     $("#trashBin").droppable({
         drop: function(event, ui) {
             var deletingItems = getSelectedItems();
-            const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + 1 + constantNames["confirmationBox"]["DeleteMsgEnd"];
+            const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + deletingItems.length + constantNames["confirmationBox"]["DeleteMsgEnd"];
             produceBox("confirmation", msg + "@1", () => {
                 deleteMultWithTrashBin(deletingItems);
             });
@@ -74,4 +74,26 @@ function initializeTheTrashBin() {
     });
 }
 
-export { canBeDeleted, deleteWithTrashBin, initializeTheTrashBin };
+function fixTrashBinPosition() {
+    document.getElementById("trashBin").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";
+    document.getElementById("trashBin").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 30 + "px";
+    return;
+}
+
+function createDraggableSpace() {
+    if (document.getElementById("space"))
+        document.getElementById("space").remove();
+    var div = document.createElement('div');
+    div.id = "space";
+    div.style.height = window.screen.height + 0 + "px";
+    div.style.top = document.getElementById('tabButtons').getBoundingClientRect().y + document.getElementById('tabButtons').getBoundingClientRect().height + "px";
+    div.style.left = 4 + "px";
+    div.style.height = window.screen.height + "px";
+    div.style.zIndex = -1;
+    div.style.width = document.getElementById('tabButtons').getBoundingClientRect().width - document.getElementById('right_tab').getBoundingClientRect().width - 4 + "px";
+    document.getElementById('body').appendChild(div);
+    document.getElementById("right_tab").style.left = document.getElementById("tabButtons").getBoundingClientRect().width + 8 - document.getElementById("right_tab").getBoundingClientRect().width + "px";
+
+}
+
+export { canBeDeleted, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, fixTrashBinPosition };
