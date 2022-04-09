@@ -113,17 +113,20 @@ function getAssociatedLayers(selectedItems) {
     totalLayerBranches = [];
     var totalLayerIds = [];
     var selectedSublayerIds = [];
+    var hasNotLayers = true;
     for (var x in selectedItems) {
         if (selectedItems[x]._type === "Component" && selectedItems[x].subLayers) {
+            hasNotLayers = false;
             selectedSublayerIds.push(selectedItems[x].subLayers[0]);
             totalLayerIds.push(selectedItems[x].subLayers[0]);
             recursiveChildrenFind(getTreeData(), selectedItems[x].subLayers[0] + 'branch');
         }
     }
-
+    if (hasNotLayers || !totalLayerIds[0])
+        return "";
     totalLayerBranches.forEach((el) => {
         totalLayerIds.push(el.id.split('branch')[0]);
-    })
+    });
     return totalLayerIds;
 }
 
@@ -167,7 +170,9 @@ function copyComponent(notClipboard, itemArgs, copyOnlyRest) {
     if (!copyOnlyRest)
         copyClickedItems(itemsSelected, itemsToBeCopiedJSON, idsToBeCopied);
     //ta ypoloipa ypo-epipeda
-    addLayer(itemsToBeCopiedJSON, childLayers);
+    console.log(childLayers);
+    if (childLayers)
+        addLayer(itemsToBeCopiedJSON, childLayers);
     copyRest(itemsToBeCopiedJSON);
     var totalStr = JSON.stringify(itemsToBeCopiedJSON);
     totalLayerBranches = [];

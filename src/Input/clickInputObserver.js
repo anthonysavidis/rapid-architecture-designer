@@ -126,7 +126,6 @@ function whichElement(e) {
     var tname;
     tname = targ.tagName;
     checkToClose(e.clientX, e.clientY, e);
-    console.log(tname + " " + targ.id);
 
     // if(targ)
     selectionHandler(e, targ);

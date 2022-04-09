@@ -7,6 +7,7 @@ import { insertUpTabs } from "./HtmlElements/upTabCreation.js";
 import { items } from "./Classes/ItemArray.js";
 import { renderInfoButton } from "./HtmlElements/componentInfo.js";
 import { constantNames } from "./config/constantNames.js";
+import { initializeTheTrashBin } from "./Workspace/trashBin.js";
 
 function createDraggableSpace() {
 
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     createFirstLayer();
     initializeTree();
     detectMacros();
+    initializeTheTrashBin();
     document.getElementById("fSidebar").style.height = window.screen.height * 0.7 + "px";
     document.getElementById("right_tab").style.height = window.screen.height * 0.7 + "px";
     document.getElementById("trashBin").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";

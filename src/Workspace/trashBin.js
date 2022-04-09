@@ -1,7 +1,10 @@
-import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
+import { deleteTrashBinItem, movePrev, restoreFromTrashBin } from "../Actions/inverseMovement.js";
 import { getAllDeletedItemsStrs, getLinkItems, getSingleItemStrs } from "../Actions/itemStackFunctions.js";
 import { actions } from "../Classes/Actions.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
+import { constantNames } from "../config/constantNames.js";
+import { produceBox } from "../HtmlElements/infoBoxes.js";
+import { getSelectedItems } from "../Item/selectComponent.js";
 import { createSendingItem } from "../Layers/moveItem.js";
 import { showAllRefresh } from "./functionAppearance.js";
 
@@ -42,4 +45,35 @@ function deleteWithTrashBin(elmnt) {
     }
 }
 
-export { canBeDeleted, deleteWithTrashBin };
+function deleteMultWithTrashBin(itemElmnts) {
+    const links = getLinkItems(itemElmnts);
+    const str = createSendingItem(itemElmnts);
+    var linkArg;
+    if (links.length === 0)
+        linkArg = "";
+    else
+        linkArg = itemFromListToObject(links);
+    actions.saveCommand(deleteTrashBinItem, restoreFromTrashBin, [str, linkArg], "");
+    for (var x in itemElmnts)
+        items.delete(itemElmnts[x]._id);
+    if (document.getElementById('all').checked) {
+        showAllRefresh();
+    }
+}
+
+
+function initializeTheTrashBin() {
+    $("#trashBin").droppable({
+        drop: function(event, ui) {
+            var deletingItems = getSelectedItems();
+            const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + 1 + constantNames["confirmationBox"]["DeleteMsgEnd"];
+            produceBox("confirmation", msg + "@1", () => {
+                deleteMultWithTrashBin(deletingItems);
+            }, () => {
+                movePrev({ initialItem: initialBoundingRec, updatedItem: updatedBoundingRec });
+            });
+        }
+    });
+}
+
+export { canBeDeleted, deleteWithTrashBin, initializeTheTrashBin };

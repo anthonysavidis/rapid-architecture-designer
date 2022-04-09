@@ -87,6 +87,7 @@ class Item {
         var movingObject = {};
         $('#' + this._id).on('dragstart', () => {
             closeTheTooltip();
+            appearComponentButtons();
             const dragIds = getSelectedIds();
             const elmnt = document.getElementById(editId);
             for (var x in dragIds) {
