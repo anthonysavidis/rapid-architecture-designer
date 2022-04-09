@@ -14,13 +14,20 @@ function moveToNext(actionItems) {
 function moveToPrev(actionItems) {
     const prevLayerId = actionItems.initialItem[0];
     const itemList = actionItems.initialItem[1];
-    const allLinks = JSON.parse(actionItems.initialItem[2]);
+    var allLinks;
+    try {
+        allLinks = JSON.parse(actionItems.initialItem[2]);
+    } catch {
+        allLinks = "";
+    }
     moveItemsTo(prevLayerId, itemList);
     closeTheTooltip();
-    console.log(allLinks);
-    for (var x in allLinks) {
-        if (items.itemList.findIndex((el) => el._id === allLinks[x]._id) === -1)
-            var it = new Item(JSON.stringify(allLinks[x]));
+    if (allLinks) {
+        console.log(allLinks);
+        for (var x in allLinks) {
+            if (items.itemList.findIndex((el) => el._id === allLinks[x]._id) === -1)
+                var it = new Item(JSON.stringify(allLinks[x]));
+        }
     }
     return;
 }

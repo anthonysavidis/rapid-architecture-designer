@@ -57,7 +57,7 @@ function addHierarchyTabListeners() {
         }
         produceBox('selecting', [constantNames["layersTab"]["moveBox"], createSelectElementsFromLayers(selectedItems)], function(layerId) {
             const itemLinks = getLinkItems(selectedItems);
-            console.log(itemLinks);
+            // console.log(itemLinks);
             // var itemToBeJoined = selectedItems;
             // if (itemLinks[0]) {
             //     itemToBeJoined = selectedItems.concat(itemLinks);
@@ -67,6 +67,8 @@ function addHierarchyTabListeners() {
             // const initialItem = [layers.selectedLayer._id, itemFromListToObject(itemToBeJoined)];
             // const updatedItem = [layerId, itemFromListToObject(itemToBeJoined)];
             // actions.saveCommand(moveToNext, moveToPrev, initialItem, updatedItem);
+            if (!itemLinks)
+                itemLinks = "";
             setUpMoveAction(layerId, selectedItems, itemLinks);
             moveItemsTo(layerId, selectedItems);
 
