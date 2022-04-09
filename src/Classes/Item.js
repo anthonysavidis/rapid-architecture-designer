@@ -84,7 +84,6 @@ class Item {
 
         // div.style.transition = "width 1s, height 1s, transform 1s";
         document.getElementById(layers.selectedLayer._id).appendChild(div);
-        renderInfoButton(this._id);
         addResize(this._id);
         changeSelectState(this._id);
         // moveItem(this._id);
@@ -148,7 +147,10 @@ class Item {
         this.domElement.ondragover = (event) => {
             event.preventDefault();
         }
-
+        document.getElementById(editId).addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            produceTooltip(e.clientX - 10, e.clientY - 10, "", editId);
+        })
         this.domElement.ondrop = (event) => {
                 event.preventDefault();
                 try {

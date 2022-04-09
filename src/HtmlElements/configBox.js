@@ -5,17 +5,19 @@ function produceSizeForm(box, className, callBack) {
     select.style.width = "150px";
     select.style.marginLeft = "30px";
     select.style.float = "left";
-    select.innerHTML = "<option value=\"x-small\">" + constantNames["configBox"]["xSmall"] + "</option>";
-    select.innerHTML += "<option value=\"small\">" + constantNames["configBox"]["Small"] + "</option>";
-    select.innerHTML += "<option value=\"medium\" selected>" + constantNames["configBox"]["Medium"] + "</option>";
+    select.innerHTML = "<option value=\"small\">" + constantNames["configBox"]["Small"] + "</option>";
+    select.innerHTML += "<option value=\"medium\">" + constantNames["configBox"]["Medium"] + "</option>";
     select.innerHTML += "<option value=\"large\">" + constantNames["configBox"]["Large"] + "</option>";
     select.innerHTML += "<option value=\"x-large\">" + constantNames["configBox"]["xLarge"] + "</option>";
-
+    var r = document.querySelector(':root');
+    var rs = getComputedStyle(r);
+    select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextSize');
     select.addEventListener("change", function() {
         callBack(className, select.value);
     })
     box.appendChild(select);
 }
+
 
 function produceFontFamilyForms(box, className, callBack) {
     var select = document.createElement('select');
@@ -40,6 +42,9 @@ function produceFontFamilyForms(box, className, callBack) {
     select.addEventListener("change", function() {
         callBack(className, select.value);
     })
+    var r = document.querySelector(':root');
+    var rs = getComputedStyle(r);
+    select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextFamily');
     box.appendChild(select);
 }
 

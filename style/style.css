@@ -344,6 +344,7 @@ hr.solid {
 }
 
 .componentName {
+    position: relative;
     font-size: var(--componentTextSize);
     font-family: var(--componentTextFamily);
 }

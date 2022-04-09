@@ -23,7 +23,6 @@ function produceClosingButton(tooltip, id) {
     title.innerText = "Details";
     title.style.fontSize = 16 + "pt";
     title.style.textAlign = "center";
-    tooltip.appendChild(title);
 
     return;
 }
@@ -50,6 +49,13 @@ function produceMainPart(tooltip, src, id, itemType, description, moreInfo) {
         sublayerImage.style.backgroundSize = 215 + "px";
         sublayerImage.style.backgroundImage = "url(" + src + ")"; //χρειαζεται ρεσκειλ
         editButton.id = id + 'architectureEditButton';
+        var descTitle = document.createElement('div');
+        descTitle.className = "tooltipTitle";
+        descTitle.innerText = constantNames['infoTooltip']['descTitle'];
+        descTitle.style.marginLeft = 6 + "px";
+        descTitle.style.marginBottom = 4 + "px";
+        descTitle.style.marginTop = 2 + "px";
+        mainPart.appendChild(descTitle);
         editButton.className = "architectureEditButton";
     } else {
         if (itemType === "Link") {
@@ -118,7 +124,7 @@ function produceMainPart(tooltip, src, id, itemType, description, moreInfo) {
     });
     if (itemType === "Component") {
         // sublayerImage.appendChild(editButton);
-        mainPart.appendChild(sublayerImage);
+        // mainPart.appendChild(sublayerImage);
     }
     mainPart.appendChild(descriptionDiv);
     // mainPart.appendChild(moreInfoTittle);
@@ -144,11 +150,11 @@ function fixPositionAndArrow(tooltip, id, itemType, itemRect, x, y) {
     tooltipArrow.className = "infoArrow";
     document.getElementById("main").appendChild(tooltipArrow);
     if (itemType === "Component") {
-        var infoRec = document.getElementById(id + "infoIcon").getBoundingClientRect();
-        document.getElementById(id + "tooltipArrow").style.left = infoRec.x + 10 + "px";
-        document.getElementById(id + "tooltipArrow").style.top = infoRec.y + "px";
-        document.getElementById(tooltip.id).style.left = infoRec.x + 20 + "px";
-        document.getElementById(tooltip.id).style.top = infoRec.y - 125 + "px";
+        // var infoRec = document.getElementById(id + "infoIcon").getBoundingClientRect();
+        document.getElementById(id + "tooltipArrow").style.left = x + 10 + "px";
+        document.getElementById(id + "tooltipArrow").style.top = y + "px";
+        document.getElementById(tooltip.id).style.left = x + 20 + "px";
+        document.getElementById(tooltip.id).style.top = y - 125 + "px";
 
     } else if (itemType === "Link") {
         document.getElementById(id + "tooltipArrow").remove();
@@ -229,13 +235,6 @@ function setUpTooltipListeners(id, layerExists) {
     document.getElementById(id + 'closeTooltip').addEventListener("click", function() {
         closeTooltip(id);
     });
-    if (!layerExists) {
-        var itemIndex = items.itemList.findIndex((el) => el._id === id);
-        if (items.itemList[itemIndex]._type === "Component") {
-            // span.innerText = "Double click to subdivide.";
-            const imgRec = document.getElementById(id + 'sublayerImage').getBoundingClientRect();
-        }
-    }
 }
 
 export { produceTooltip, closeTooltip };
