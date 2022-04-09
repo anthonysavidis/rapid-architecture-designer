@@ -169,4 +169,4 @@ function produceBox(type, extraInfo, callBack, cancelCallBack) {
     return;
 }
 
-export { produceBox, produceGrayLayer };
+export { produceBox, produceGrayLayer, produceMovingBar };

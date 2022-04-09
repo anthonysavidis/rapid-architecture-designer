@@ -4,6 +4,10 @@ const constantNames = {
         "Save": "Save",
         "Load": "Load"
     },
+    "settingsTab": {
+        "tabName": "Settings",
+        "Configure": "Configure"
+    },
     "editTab": {
         "tabName": "Edit",
         "Grid": "Grid",
@@ -73,6 +77,13 @@ const constantNames = {
         "ResetMult": "Do you want reset the selected (",
         "ResetEnd": ") operation(s)?"
     },
+    "configBox": {
+        "xSmall": "x-Small",
+        "Small": "Small",
+        "Medium": "Medium",
+        "Large": "Large",
+        "xLarge": "x-Large"
+    },
     "inputBox": {
         "msg": "Insert name and description of ",
         "nameLabel": {
@@ -117,7 +128,8 @@ const constantNames = {
     },
     "dot": ".",
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "close": "Close"
 }
 
 const buttonTooltips = {
@@ -153,6 +165,9 @@ const buttonTooltips = {
     },
     "Hierarchy": {
         "Move To": "Move component to another layer."
+    },
+    "Settings": {
+        "Configure": "Configure text & font size"
     },
 }
 

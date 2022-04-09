@@ -5,6 +5,7 @@ import { addEditTabListeners } from "../editTab.js";
 import { buttonTooltips, constantNames } from "../../config/constantNames.js";
 import { getTextWidth } from "../../HtmlElements/doubleClickEditing.js";
 import { addHierarchyTabListeners } from "../hierarchyTab.js";
+import { addSettingsTabListeners } from "../settingsTab.js";
 
 function addButton(label, id, tab) {
     const imgName = label.includes(' ') ? label.replace(' ', '') : label;
@@ -44,6 +45,9 @@ function addAllButtons() {
     addButton(constantNames["fileTab"]["Load"], "loadButton", constantNames["fileTab"]["tabName"]);
 
     addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
+
+    addButton(constantNames['settingsTab']["Configure"], "configureButton", constantNames['settingsTab']['tabName']);
+
 }
 
 function initButtons() {
@@ -53,6 +57,7 @@ function initButtons() {
     addFileTabListeners();
     addEditTabListeners();
     addHierarchyTabListeners();
+    addSettingsTabListeners();
 }
 
 export { initButtons };

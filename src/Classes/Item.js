@@ -77,7 +77,7 @@ class Item {
         return id;
     }
     spawnComponent() {
-        var str = "<div droppable=\"true\" class=\"component\" id=\"" + this._id + "\"><p style=\"text-align:center;\" id=\"" + this._id + "name\">" + this._name + "</p></div>";
+        var str = "<div droppable=\"true\" class=\"component\" id=\"" + this._id + "\"><p class=\"componentName\" style=\"text-align:center;\" id=\"" + this._id + "name\">" + this._name + "</p></div>";
         var div = document.createElement("div");
         div.innerHTML = str;
         div.id = this._id + "external";
@@ -132,8 +132,6 @@ class Item {
                     updatedItem[dragIds[x]] = {};
                     updatedItem[dragIds[x]]["newRec"] = document.getElementById(dragIds[x]).getBoundingClientRect();
                 }
-                console.log(initialItem);
-                console.log(updatedItem);
                 const itemIndex = items.itemList.findIndex((el) => el._id === editId);
                 items.itemList[itemIndex].updateBoundingRec();
                 actions.saveCommand(moveAllNext, moveAllPrev, initialItem, updatedItem);

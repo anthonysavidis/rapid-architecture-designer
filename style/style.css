@@ -1,3 +1,13 @@
+:root {
+    --componentTextSize: medium;
+    --operationTextSize: medium;
+    --linkTextSize: medium;
+    --componentTextFamily: Arial, Helvetica, sans-serif;
+    --operationTextFamily: Arial, Helvetica, sans-serif;
+    --linkTextFamily: Arial, Helvetica, sans-serif;
+}
+
+
 /* Style the tab */
 
 .tab {
@@ -87,6 +97,7 @@
     text-align: center;
     position: absolute;
     cursor: grab;
+    font-size: medium;
     /* border-radius: 10%; */
     color: black;
     /* outline-color: black; */
@@ -110,6 +121,8 @@
     color: black;
     z-index: 9;
     background: rgba(255, 255, 255);
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
     /* background: transparent; */
     /* outline: 2px auto; */
     /* outline-color: blue; */
@@ -241,6 +254,8 @@ body {
 }
 
 .fName {
+    font-size: var(--operationTextSize);
+    font-family: var(--operationTextFamily);
     text-align: left;
     margin-top: -0.5px;
     margin-left: 40px;
@@ -321,4 +336,24 @@ hr.solid {
 
 ::-webkit-scrollbar-corner {
     background: rgba(0, 0, 0, 0);
+}
+
+.linkName {
+    font-size: var(--linkTextSize);
+    font-family: var(--linkTextFamily);
+}
+
+.componentName {
+    font-size: var(--componentTextSize);
+    font-family: var(--componentTextFamily);
+}
+
+.focusName {
+    font-size: var(--linkTextSize);
+    font-family: var(--linkTextFamily);
+}
+
+.blurName {
+    font-size: var(--linkTextSize);
+    font-family: var(--linkTextFamily);
 }

@@ -103,6 +103,7 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
 
 
     var nameArea = document.createElement("div");
+    // nameArea.className = "linkName";
     nameArea.contentEditable = true;
     nameArea.style.marginLeft = length / 2 - 30 + "px";
     nameArea.style.outline = 0 + "px";
