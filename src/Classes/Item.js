@@ -22,6 +22,7 @@ import { moveCallBack } from "../Input/contextMenuCallbacks.js";
 import { functionColors } from "../config/functionStyle.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { canMove } from "../Item/createComponent.js";
 
 class Item {
 
@@ -85,6 +86,7 @@ class Item {
         var editId = this._id;
         var movingObject = {};
         $('#' + this._id).on('dragstart', () => {
+            closeTheTooltip();
             const dragIds = getSelectedIds();
             const elmnt = document.getElementById(editId);
             for (var x in dragIds) {
@@ -93,7 +95,7 @@ class Item {
             }
         });
         $('#' + this._id).draggable({
-            axis: 'xy',
+            containment: "#space",
             drag: (e) => { //prepei na ginei handle to containment, to trash bin kai ta links.
                 renderLine(editId);
                 const dragIds = getSelectedIds();
@@ -103,12 +105,16 @@ class Item {
                     var distanceLeft = elmntRec.left - movingObject[editId]["initialRec"].left;
                     var distanceTop = elmntRec.top - movingObject[editId]["initialRec"].top;
                     for (var x in dragIds) {
+                        const curRec = document.getElementById(dragIds[x]).getBoundingClientRect();
+                        const DLeft = movingObject[dragIds[x]]["initialRec"].left + distanceLeft;
+                        const DTop = movingObject[dragIds[x]]["initialRec"].top + distanceTop;
                         if (editId === dragIds[x])
                             continue;
-                        document.getElementById(dragIds[x]).style.left = movingObject[dragIds[x]]["initialRec"].left + distanceLeft + "px";
-                        document.getElementById(dragIds[x]).style.top = movingObject[dragIds[x]]["initialRec"].top + distanceTop + "px";
-                        renderLine(dragIds[x]);
-                        console.log(dragIds[x]);
+                        if (canMove(DTop, DLeft, curRec.height, curRec.width)) {
+                            document.getElementById(dragIds[x]).style.left = DLeft + "px";
+                            document.getElementById(dragIds[x]).style.top = DTop + "px";
+                            renderLine(dragIds[x]);
+                        }
                     }
                 }
             },

@@ -8,8 +8,21 @@ import { items } from "./Classes/ItemArray.js";
 import { renderInfoButton } from "./HtmlElements/componentInfo.js";
 import { constantNames } from "./config/constantNames.js";
 
-document.addEventListener("DOMContentLoaded", function() {
+function createDraggableSpace() {
 
+    var div = document.createElement('div');
+    div.id = "space";
+    div.style.height = window.screen.height + 0 + "px";
+    div.style.top = document.getElementById('tabButtons').getBoundingClientRect().y + document.getElementById('tabButtons').getBoundingClientRect().height + "px";
+    div.style.left = 4 + "px";
+    div.style.height = window.screen.height + "px";
+    div.style.zIndex = -1;
+    div.style.width = document.getElementById('tabButtons').getBoundingClientRect().width - document.getElementById('right_tab').getBoundingClientRect().width - 4 + "px";
+    document.getElementById('body').appendChild(div);
+
+}
+
+document.addEventListener("DOMContentLoaded", function() {
     insertUpTabs();
     initializeStyleAndOperations();
     initializeObserver();
@@ -24,4 +37,5 @@ document.addEventListener("DOMContentLoaded", function() {
     // document.onpaste = function(params) {
     //     // console.log(params.clipboardData);
     // }
+    createDraggableSpace();
 });
