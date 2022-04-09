@@ -112,7 +112,8 @@ const constantNames = {
     },
     "messages": {
         "pngMsg": "Insert name of the current layer.",
-        "functionExists": "Already attached to component!"
+        "functionExists": "Already attached to component!",
+        "moveToMsg": "Cannot move items to another layer."
     },
     "dot": ".",
     "ok": "OK",

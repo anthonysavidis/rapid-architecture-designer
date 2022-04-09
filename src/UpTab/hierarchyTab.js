@@ -14,20 +14,20 @@ import { moveItemsTo, setUpMoveAction } from "../Layers/moveItem.js";
 function getDisabledLayers(selectedItems) {
     var disabledLayerIds = [];
     for (var i in selectedItems) {
-        if (selectedItems[i].subLayers.length != 0) {
+        if (selectedItems[i].subLayers[0]) {
             disabledLayerIds.push(selectedItems[i].subLayers[0]);
         }
     }
     if (!disabledLayerIds)
         return;
-    console.log(disabledLayerIds);
     for (var x in disabledLayerIds) {
         const layerItems = layers.itemMap.get(disabledLayerIds[x]).itemList;
         for (var i in layerItems) {
-            if (layerItems[i].subLayers)
+            if (layerItems[i]._type === "Component" && layerItems[i].subLayers[0])
                 disabledLayerIds.push(layerItems[i].subLayers[0]);
         }
     }
+    console.log(disabledLayerIds);
     disabledLayerIds.push(layers.selectedLayer._id);
     return disabledLayerIds;
 }
@@ -51,8 +51,12 @@ function addHierarchyTabListeners() {
     document.getElementById("moveToLayerButton").style.display = "none";
     document.getElementById("moveToLayerButton").addEventListener("click", function() {
         const selectedItems = getSelectedItems();
-        if (getDisabledLayers(selectedItems).length === layers.idList.length) {
-            produceBox('updating', "Cannot move items to another layer.", '');
+        const disabled = getDisabledLayers(selectedItems).length;
+        const l_no = layers.idList.length;
+        console.log(disabled + " " + l_no);
+
+        if (disabled === l_no) {
+            produceBox('updating', constantNames["messages"]["moveToMsg"], '');
             return;
         }
         produceBox('selecting', [constantNames["layersTab"]["moveBox"], createSelectElementsFromLayers(selectedItems)], function(layerId) {
