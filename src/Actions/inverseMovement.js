@@ -30,6 +30,27 @@ function movePrev(actionItems) {
     renderLine(componentId);
 }
 
+
+function moveAllNext(actionItems) {
+    const updatedItem = actionItems.updatedItem;
+    for (var x in updatedItem) {
+        document.getElementById(x).style.left = updatedItem[x]["newRec"].left + "px";
+        document.getElementById(x).style.top = updatedItem[x]["newRec"].top + "px";
+        console.log('mpros');
+    }
+    return;
+}
+
+function moveAllPrev(actionItems) {
+    const initalItem = actionItems.initialItem;
+    for (var x in initalItem) {
+
+        document.getElementById(x).style.left = initalItem[x]["initialRec"].left + "px";
+        document.getElementById(x).style.top = initalItem[x]["initialRec"].top + "px";
+    }
+    return;
+}
+
 function restoreFromTrashBin(actionItems) {
     var totalObject = JSON.parse(actionItems.initialItem[0]);
     var restoringItems = totalObject["ItemMap"]["current"];
@@ -65,4 +86,4 @@ function deleteTrashBinItem(actionItems) {
     }
 }
 
-export { moveNext, movePrev, restoreFromTrashBin, deleteTrashBinItem };
+export { moveNext, movePrev, moveAllNext, moveAllPrev, restoreFromTrashBin, deleteTrashBinItem };

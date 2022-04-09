@@ -69,8 +69,6 @@ function initializeTheTrashBin() {
             const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + 1 + constantNames["confirmationBox"]["DeleteMsgEnd"];
             produceBox("confirmation", msg + "@1", () => {
                 deleteMultWithTrashBin(deletingItems);
-            }, () => {
-                movePrev({ initialItem: initialBoundingRec, updatedItem: updatedBoundingRec });
             });
         }
     });

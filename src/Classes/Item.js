@@ -23,6 +23,7 @@ import { functionColors } from "../config/functionStyle.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { canMove } from "../Item/createComponent.js";
+import { moveAllNext, moveAllPrev, moveNext, movePrev } from "../Actions/inverseMovement.js";
 
 class Item {
 
@@ -118,6 +119,18 @@ class Item {
                         }
                     }
                 }
+            },
+            stop: (e) => { //actionsSave item... apoi to move item
+                const dragIds = getSelectedIds();
+                const initialItem = movingObject;
+                var updatedItem = {};
+                for (var x in dragIds) {
+                    updatedItem[dragIds[x]] = {};
+                    updatedItem[dragIds[x]]["newRec"] = document.getElementById(dragIds[x]).getBoundingClientRect();
+                }
+                console.log(initialItem);
+                console.log(updatedItem);
+                actions.saveCommand(moveAllNext, moveAllPrev, initialItem, updatedItem);
             },
             click: (e) => {
                 appearComponentButtons();
