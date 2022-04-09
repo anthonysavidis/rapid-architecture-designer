@@ -37,10 +37,14 @@ class Item {
         var myId = this._id;
         $("#" + this._id).droppable({
             drop: function(event, ui) {
-                if (event.target.className === "selected")
-                    return;
-                var functionId = ui.draggable[0].id;
-                items.setFunctionToItem(myId, functionId);
+                try {
+                    if (event.target.className === "selected")
+                        return;
+                    var functionId = ui.draggable[0].id;
+                    items.setFunctionToItem(myId, functionId);
+                } catch (error) {
+
+                }
 
             }
         });
@@ -130,6 +134,8 @@ class Item {
                 }
                 console.log(initialItem);
                 console.log(updatedItem);
+                const itemIndex = items.itemList.findIndex((el) => el._id === editId);
+                items.itemList[itemIndex].updateBoundingRec();
                 actions.saveCommand(moveAllNext, moveAllPrev, initialItem, updatedItem);
             },
             click: (e) => {
@@ -147,32 +153,28 @@ class Item {
 
         this.domElement.ondrop = (event) => {
                 event.preventDefault();
-                if (event.target.className === "selected")
-                    return;
-                console.log(event)
-                var functionId = event.dataTransfer.getData("text");
-                if (!this._functions.includes(functionId)) {
-                    var hasError = items.setFunctionToItem(this._id, functionId);
-                    if (hasError === -1)
+                try {
+                    if (event.target.className === "selected")
                         return;
-                    if (hasError === 2) {
-                        moveCallBack(editId);
-                        return;
+                    console.log(event.target.id);
+                    var functionId = event.dataTransfer.getData("text");
+                    if (!this._functions.includes(functionId)) {
+                        var hasError = items.setFunctionToItem(this._id, functionId);
+                        if (hasError === -1)
+                            return;
+                        if (hasError === 2) {
+                            moveCallBack(editId);
+                            return;
+                        }
+                        var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
+                        var funcComp = [settingFunction, this];
+                        var str = itemFromListToObject(funcComp);
+                        actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
+                    } else {
+                        produceBox("updating", constantNames["messages"]["functionExists"]);
                     }
-                    var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
+                } catch {
 
-                    // console.log("setted");
-                    // var updatingMessage = settingFunction._name + " was setted in " + this._name + ".";
-                    // produceBox("updating", updatingMessage, null);
-                    // var itemList = [settingFunction, this];
-                    var funcComp = [settingFunction, this];
-                    var str = itemFromListToObject(funcComp);
-                    actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
-
-                    // var str = '{"0":"{' + settingFunction.toString() + '}","1":"{' + this.toString() + '}"}'
-                    // actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
-                } else {
-                    produceBox("updating", constantNames["messages"]["functionExists"]);
                 }
 
             }

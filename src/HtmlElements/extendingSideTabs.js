@@ -1,3 +1,5 @@
+import { layers } from "../Classes/LayerHolder.js";
+import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { createDraggableSpace, fixTrashBinPosition } from "../Workspace/trashBin.js";
 
@@ -11,6 +13,22 @@ function produceRightTabRod() {
     document.getElementById('rightTabRod').style.height = 500 + "px";
     document.getElementById('rightTabRod').style.left = document.getElementById("right_tab").getBoundingClientRect().left + "px";
     addRightTabRodListener();
+}
+
+function produceLayerTabRod() {
+    var layerTabRod = document.createElement('div');
+    layerTabRod.id = "layerTabRod";
+    layerTabRod.className = 'rod';
+    document.getElementById('body').appendChild(layerTabRod);
+    document.getElementById('layerTabRod').style.top = 110 + "px";
+    document.getElementById('layerTabRod').style.height = 500 + "px";
+    document.getElementById('layerTabRod').style.left = document.getElementById("fSidebar").getBoundingClientRect().right - 10 + "px";
+    addLayerRodListener();
+}
+
+function removeLayerTabRod() {
+    if (document.getElementById("layerTabRod"))
+        document.getElementById("layerTabRod").remove();
 }
 
 function fixFunctionsWidth() {
@@ -42,6 +60,12 @@ function addRightTabRodListener() {
             var rightRec = document.getElementById('right_tab').getBoundingClientRect();
             var tP = document.getElementById('right_tab').getBoundingClientRect().left;
             var rodRec = document.getElementById('rightTabRod').getBoundingClientRect();
+            // var isInsideComponent = false;
+            // for (var j = rodRec.top; j < (rodRec.top + rodRec.height); j++) {
+            //     isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, rodRec.left - 15, j);
+            //     if (isInsideComponent)
+            //         break;
+            // }
             if (rodRec.x > (buttonsRec.right - 30))
                 return;
             var dP = tP - initialPosition.left;
@@ -77,5 +101,41 @@ function addRightTabRodListener() {
     });
 }
 
+function fixHierarchyWidth() {
+    const buttonsRec = document.getElementById('tabButtons').getBoundingClientRect();
+    const rightRec = document.getElementById('fSidebar').getBoundingClientRect();
+    var diff = buttonsRec.left - rightRec.left;
+    document.getElementById('fSidebar').style.width = rightRec.width + diff + "px";
+    document.getElementById('fSidebar').style.left = buttonsRec.left + "px";
+    return;
+}
 
-export { produceRightTabRod }
+function addLayerRodListener() {
+    var initialPosition = {};
+    var rodInitialPos = {};
+    const buttonsRec = document.getElementById('tabButtons').getBoundingClientRect();
+    document.getElementById('layerTabRod').addEventListener('mouseup', (e) => {
+        document.getElementById('layerTabRod').style.left = document.getElementById('fSidebar').getBoundingClientRect().right + "px";
+    });
+    $('#layerTabRod').draggable({
+        axis: 'x',
+        start: (e) => {
+            initialPosition = document.getElementById('fSidebar').getBoundingClientRect();
+            rodInitialPos = document.getElementById('layerTabRod').getBoundingClientRect();
+            document.getElementById('body').style.overflow = "hidden";
+        },
+        drag: (e) => {
+            var leftRec = document.getElementById('fSidebar').getBoundingClientRect();
+            var rodRec = document.getElementById('layerTabRod').getBoundingClientRect();
+            var diff = rodRec.right - leftRec.right;
+            if ((rodRec.x + rodRec.width) > 0.1 * buttonsRec.width && (rodRec.x + rodRec.width) < 0.30 * buttonsRec.width)
+                document.getElementById('fSidebar').style.width = leftRec.width + diff + "px";
+        },
+        stop: (e) => {
+            document.getElementById('layerTabRod').style.left = document.getElementById('fSidebar').getBoundingClientRect().right + "px";
+            fixHierarchyWidth();
+        }
+    });
+}
+
+export { produceRightTabRod, produceLayerTabRod, removeLayerTabRod }

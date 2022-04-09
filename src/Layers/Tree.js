@@ -2,6 +2,7 @@ import { changeNextLayer, changePrevLayer } from "../Actions/inverseLayerActions
 import { actions } from "../Classes/Actions.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { cropName } from "../HtmlElements/doubleClickEditing.js";
+import { removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 
@@ -43,7 +44,10 @@ function closeLayerTree() {
 }
 
 function initializeTree() {
-    document.getElementById("closeLayersButton").addEventListener("click", closeLayerTree);
+    document.getElementById("closeLayersButton").addEventListener("click", () => {
+        closeLayerTree();
+        removeLayerTabRod();
+    });
 }
 
 function addToArchitectureList(id, name, parentId, componentId) {

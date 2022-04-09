@@ -8,7 +8,7 @@ import { items } from "./Classes/ItemArray.js";
 import { renderInfoButton } from "./HtmlElements/componentInfo.js";
 import { constantNames } from "./config/constantNames.js";
 import { createDraggableSpace, fixTrashBinPosition, initializeTheTrashBin } from "./Workspace/trashBin.js";
-import { produceRightTabRod } from "./HtmlElements/extendingSideTabs.js";
+import { produceLayerTabRod, produceRightTabRod } from "./HtmlElements/extendingSideTabs.js";
 
 
 

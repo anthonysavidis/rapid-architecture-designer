@@ -7,6 +7,7 @@ import { layers } from "../../Classes/LayerHolder.js";
 import { takeScreenshot } from "../../Layers/preview.js";
 import { getSelectedLinkItems } from "../../Item/selectLink.js";
 import { constantNames } from "../../config/constantNames.js";
+import { produceLayerTabRod, removeLayerTabRod } from "../../HtmlElements/extendingSideTabs.js";
 
 var lastPressed;
 
@@ -23,6 +24,7 @@ function initializeTab(tabName, tablinkId) {
     document.getElementById("main").style.display = "block";
     document.getElementById("right_tab").style.display = "block";
     closeLayerTree();
+    removeLayerTabRod();
     spawnTab(tabName);
 
     var tablink = document.getElementById(tablinkId);
@@ -39,6 +41,7 @@ function changeToLayerTab() {
     clearTree();
     updateTree();
     openLayerTree();
+    produceLayerTabRod();
     return;
 }
 
