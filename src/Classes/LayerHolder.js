@@ -63,6 +63,7 @@ class LayerHolder {
 
         imageStorage.remove(id + "_LAYER_PREVIEW");
         document.getElementById(id).remove();
+        document.getElementById(id + 'functions').remove();
         updateTree();
         return;
     }

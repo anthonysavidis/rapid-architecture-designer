@@ -7,6 +7,7 @@ import { actions } from "../Classes/Actions.js";
 import { deletePastedItems, pasteAction } from "../Actions/inverseActions.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
+import { getTreeData } from "../Layers/Tree.js";
 
 ///einai lista me items! kai oxi nested!!!
 ///{"0":{},"1":{}} : this way
@@ -90,7 +91,47 @@ function copyClickedItems(itemsSelected, itemsToBeCopiedJSON, idsToBeCopied) {
     return;
 }
 
+var totalLayerBranches = [];
+
+function recursiveChildrenFind(array, id) {
+    var childList = array.filter((el) => (el.parent === id));
+    if (!childList)
+        return;
+    else {
+        childList.forEach((el) => {
+            totalLayerBranches.push(el);
+            recursiveChildrenFind(array, el.id);
+        })
+    }
+}
+
+function getAssociatedLayers(selectedItems) {
+    // var tree = getTreeData();
+    // for (var x in tree) {
+    //     tree[x]
+    // }
+    totalLayerBranches = [];
+    var totalLayerIds = [];
+    var selectedSublayerIds = [];
+    for (var x in selectedItems) {
+        if (selectedItems[x]._type === "Component" && selectedItems[x].subLayers) {
+            selectedSublayerIds.push(selectedItems[x].subLayers[0]);
+            totalLayerIds.push(selectedItems[x].subLayers[0]);
+            recursiveChildrenFind(getTreeData(), selectedItems[x].subLayers[0] + 'branch');
+        }
+    }
+
+    totalLayerBranches.forEach((el) => {
+        totalLayerIds.push(el.id.split('branch')[0]);
+    })
+    return totalLayerIds;
+}
+
+
+
 function copyRest(itemsToBeCopiedJSON) {
+    var tree = getTreeData();
+    console.log(tree);
     for (var currentLayerId in itemsToBeCopiedJSON['Layers']) {
         itemsToBeCopiedJSON['ItemMap'][currentLayerId] = {};
         var layerItemCounter = 0;
@@ -98,14 +139,16 @@ function copyRest(itemsToBeCopiedJSON) {
         for (var currentItemIndex in currentItemList) {
             itemsToBeCopiedJSON['ItemMap'][currentLayerId][(layerItemCounter).toString()] = currentItemList[currentItemIndex].toString();
             layerItemCounter++;
-            if (currentItemList[currentItemIndex].subLayers) {
-                addLayer(itemsToBeCopiedJSON, currentItemList[currentItemIndex].subLayers);
-            }
+            // if (currentItemList[currentItemIndex].subLayers) {
+            //     addLayer(itemsToBeCopiedJSON, currentItemList[currentItemIndex].subLayers);
+            // }
         }
     }
 }
 
-function copyComponent(notClipboard, itemArgs) {
+function copyComponent(notClipboard, itemArgs, copyOnlyRest) {
+
+
     var idsToBeCopied, itemsSelected;
     if (!notClipboard) {
         idsToBeCopied = getSelectedIds();
@@ -114,17 +157,20 @@ function copyComponent(notClipboard, itemArgs) {
         idsToBeCopied = itemArgs[0];
         itemsSelected = itemArgs[1];
     }
-
+    const childLayers = getAssociatedLayers(itemsSelected);
     var itemsToBeCopiedJSON = {};
     itemsToBeCopiedJSON['Layers'] = {};
     itemsToBeCopiedJSON['ItemMap'] = {};
     itemsToBeCopiedJSON['ItemMap']['current'] = {};
     itemsToBeCopiedJSON['localStorage'] = {};
     //epipedo relative0
-    copyClickedItems(itemsSelected, itemsToBeCopiedJSON, idsToBeCopied);
+    if (!copyOnlyRest)
+        copyClickedItems(itemsSelected, itemsToBeCopiedJSON, idsToBeCopied);
     //ta ypoloipa ypo-epipeda
+    addLayer(itemsToBeCopiedJSON, childLayers);
     copyRest(itemsToBeCopiedJSON);
     var totalStr = JSON.stringify(itemsToBeCopiedJSON);
+    totalLayerBranches = [];
     if (!notClipboard)
         navigator.clipboard.writeText(totalStr);
     return totalStr;

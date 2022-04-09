@@ -23,7 +23,7 @@ import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actio
 import { showAllRefresh } from "../Workspace/functionAppearance.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
 import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
-import { createSendingItem } from "../Layers/moveItem.js";
+import { createSendingItem, createSendingLayer } from "../Layers/moveItem.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -140,7 +140,12 @@ function addComponentTabListeners() {
             const links = getLinkItems(itemObjects);
             const str = createSendingItem(itemObjects);
             deleteComponentAction(selectedIds);
-            actions.saveCommand(deleteSpecificItems, restoreFromTrashBin, [str, itemFromListToObject(links)], "");
+            var linkArg;
+            if (links.length === 0)
+                linkArg = "";
+            else
+                linkArg = itemFromListToObject(links);
+            actions.saveCommand(deleteSpecificItems, restoreFromTrashBin, [str, linkArg], "");
             if (document.getElementById('all').checked)
                 showAllRefresh();
         });
@@ -201,11 +206,11 @@ function addComponentTabListeners() {
         var layerBeingDeleted = layers.layerList[layers.layerList.findIndex((el) => itemToBeUnsubdivided.subLayers[0] === el._id)];
         const layerImage = imageStorage.get(layerBeingDeleted._id + "_LAYER_PREVIEW");
         console.log(layerImage);
-        var layerStr = layerBeingDeleted.toString();
-
+        // var layerStr = layerBeingDeleted.toString();
+        var str = createSendingLayer(itemToBeUnsubdivided);
         layers.deleteLayer(layerBeingDeleted._id);
         updateTree();
-        actions.saveCommand(deleteSpecificLayer, createSpecificLayer, layerImage, layerStr);
+        actions.saveCommand(deleteSpecificLayer, createSpecificLayer, layerBeingDeleted._id, str);
 
     });
     document.getElementById("extendButton").addEventListener("click", function() {

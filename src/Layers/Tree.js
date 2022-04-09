@@ -72,4 +72,10 @@ function updateTree() {
 }
 
 
-export { initializeTree, openLayerTree, closeLayerTree, addToArchitectureList, treeData, clearTree, updateTree };
+function getTreeData() {
+    var v = $('#jstree').jstree(true).get_json('#', { flat: true })
+    var mytext = JSON.stringify(v);
+    return JSON.parse(mytext);
+}
+
+export { initializeTree, getTreeData, openLayerTree, closeLayerTree, addToArchitectureList, treeData, clearTree, updateTree };

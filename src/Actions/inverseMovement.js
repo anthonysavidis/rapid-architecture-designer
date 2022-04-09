@@ -40,6 +40,8 @@ function restoreFromTrashBin(actionItems) {
         }
     }
     pasteFromStr(actionItems.initialItem[0]);
+    if (!actionItems.initialItem[1])
+        return;
     var allLinks = JSON.parse(actionItems.initialItem[1]);
     for (var x in allLinks) {
         var it = new Item(JSON.stringify(allLinks[x]));

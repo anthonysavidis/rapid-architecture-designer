@@ -30,7 +30,12 @@ function deleteWithTrashBin(elmnt) {
     const theItem = items.itemList[items.itemList.findIndex(el => el._id === elmnt.id)];
     const links = getLinkItems([theItem]);
     const str = createSendingItem([theItem]);
-    actions.saveCommand(deleteTrashBinItem, restoreFromTrashBin, [str, itemFromListToObject(links)], "");
+    var linkArg;
+    if (links.length === 0)
+        linkArg = "";
+    else
+        linkArg = itemFromListToObject(links);
+    actions.saveCommand(deleteTrashBinItem, restoreFromTrashBin, [str, linkArg], "");
     items.delete(elmnt.id);
     if (document.getElementById('all').checked) {
         showAllRefresh();
