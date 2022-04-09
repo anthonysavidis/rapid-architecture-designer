@@ -120,6 +120,9 @@ class ItemHolder {
 
     unparentFunction(functionId) {
         const itemListIndex = this.itemList.findIndex(((element) => element._id === functionId));
+        if (!this.itemList[itemListIndex].owners) {
+            return;
+        }
         const c = this.itemList[itemListIndex].owners[0];
 
         if (!c)

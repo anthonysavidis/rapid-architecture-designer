@@ -1,8 +1,8 @@
-import { deleteSpecificItems } from "../Actions/inverseActions.js";
-import { restoreFromTrashBin } from "../Actions/inverseMovement.js";
-import { getAllDeletedItemsStrs, getSingleItemStrs } from "../Actions/itemStackFunctions.js";
+import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
+import { getAllDeletedItemsStrs, getLinkItems, getSingleItemStrs } from "../Actions/itemStackFunctions.js";
 import { actions } from "../Classes/Actions.js";
-import { items } from "../Classes/ItemArray.js";
+import { itemFromListToObject, items } from "../Classes/ItemArray.js";
+import { createSendingItem } from "../Layers/moveItem.js";
 import { showAllRefresh } from "./functionAppearance.js";
 
 function canBeDeleted(elementRect) {
@@ -27,7 +27,10 @@ function canBeDeleted(elementRect) {
 }
 
 function deleteWithTrashBin(elmnt) {
-    actions.saveCommand(deleteSpecificItems, restoreFromTrashBin, getSingleItemStrs(items.itemList[items.itemList.findIndex(el => el._id === elmnt.id)]), "");
+    const theItem = items.itemList[items.itemList.findIndex(el => el._id === elmnt.id)];
+    const links = getLinkItems([theItem]);
+    const str = createSendingItem([theItem]);
+    actions.saveCommand(deleteTrashBinItem, restoreFromTrashBin, [str, itemFromListToObject(links)], "");
     items.delete(elmnt.id);
     if (document.getElementById('all').checked) {
         showAllRefresh();

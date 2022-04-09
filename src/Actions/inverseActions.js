@@ -36,12 +36,16 @@ function deleteLatestItem(actionItems) {
 function deleteSpecificItems(actionItems) {
     closeTheTooltip();
 
-    var deletedItems = JSON.parse(actionItems.initialItem);
-    for (var x in deletedItems) {
-        if (!items.idList.includes(deletedItems[x]._id) && deletedItems[x]._type === "Link") {
-            continue; //ok deleted from the others.
+    var totalObject = JSON.parse(actionItems.initialItem[0]);
+    var restoringItems = totalObject["ItemMap"]["current"];
+    for (var x in restoringItems) {
+        var it = JSON.parse(restoringItems[x]);
+        if (it._type === "Component") {
+            items.delete(it._id);
         }
-        items.delete(deletedItems[x]._id);
+    }
+    if (document.getElementById('all').checked) {
+        showAllRefresh();
     }
     return;
 }

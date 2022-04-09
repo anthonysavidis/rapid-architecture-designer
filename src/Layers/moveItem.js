@@ -45,4 +45,4 @@ function moveItemsTo(layerId, selectedItemList) {
     return;
 }
 
-export { moveItemsTo, setUpMoveAction, removeFromCurrentLayer };
+export { moveItemsTo, setUpMoveAction, removeFromCurrentLayer, createSendingItem };

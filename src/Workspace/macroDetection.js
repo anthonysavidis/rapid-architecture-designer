@@ -1,5 +1,6 @@
 import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
+import { layers } from "../Classes/LayerHolder.js";
 import { copyComponent, pasteComponent } from "../Item/copy.js";
 import { appearEditButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
@@ -57,6 +58,8 @@ function detectMacros(params) {
                 console.log(items);
             } else if (ctrlDown && (e.keyCode == 77)) { //m
                 console.log(actions);
+            } else if (ctrlDown && (e.keyCode == 66)) { //m
+                console.log(layers);
             }
         });
     });

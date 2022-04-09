@@ -1,4 +1,3 @@
-import { spawnSpecificItem, deleteSpecificItems } from "./inverseActions.js";
 import { items } from "../Classes/ItemArray.js";
 import { Item } from "../Classes/Item.js";
 import { showAll, showByComponent } from "../Workspace/functionAppearance.js";

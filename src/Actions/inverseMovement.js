@@ -1,7 +1,9 @@
 import { actions } from "../Classes/Actions.js";
 import { Item } from "../Classes/Item.js";
 import { items } from "../Classes/ItemArray.js";
+import { pasteFromStr } from "../Item/copy.js";
 import { renderLine } from "../Item/createLine.js";
+import { showAllRefresh } from "../Workspace/functionAppearance.js";
 
 function moveSpecificDirection(index, componentId, boundingStr) {
     var currentBoundingRec = JSON.parse(boundingStr);
@@ -29,20 +31,36 @@ function movePrev(actionItems) {
 }
 
 function restoreFromTrashBin(actionItems) {
-    var restoringItems = JSON.parse(actionItems.initialItem);
+    var totalObject = JSON.parse(actionItems.initialItem[0]);
+    var restoringItems = totalObject["ItemMap"]["current"];
     for (var x in restoringItems) {
-        var it = new Item(JSON.stringify(restoringItems[x]));
-        if (it._functions) {
-            const functionIds = it._functions;
-            it._functions = [];
-            for (var x in functionIds) {
-                items.deleteFunctionFromOwner(it._id, functionIds[x]);
-                items.setFunctionToItem(it._id, functionIds[x]);
-            }
+        var it = JSON.parse(restoringItems[x]);
+        if (it._type === "Function") {
+            items.delete(it._id);
         }
     }
-    document.getElementById(restoringItems[0]._id).style.top = document.getElementById(restoringItems[0]._id).getBoundingClientRect().top - 100 + "px";
-    renderLine(restoringItems[0]._id);
+    pasteFromStr(actionItems.initialItem[0]);
+    var allLinks = JSON.parse(actionItems.initialItem[1]);
+    for (var x in allLinks) {
+        var it = new Item(JSON.stringify(allLinks[x]));
+    }
+
+    // document.getElementById(restoringItems[0]._id).style.top = document.getElementById(restoringItems[0]._id).getBoundingClientRect().top - 100 + "px";
+    // renderLine(restoringItems[0]._id);
 }
 
-export { moveNext, movePrev, restoreFromTrashBin };
+function deleteTrashBinItem(actionItems) {
+    var totalObject = JSON.parse(actionItems.initialItem[0]);
+    var restoringItems = totalObject["ItemMap"]["current"];
+    for (var x in restoringItems) {
+        var it = JSON.parse(restoringItems[x]);
+        if (it._type === "Component") {
+            items.delete(it._id);
+        }
+    }
+    if (document.getElementById('all').checked) {
+        showAllRefresh();
+    }
+}
+
+export { moveNext, movePrev, restoreFromTrashBin, deleteTrashBinItem };

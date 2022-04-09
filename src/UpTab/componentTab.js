@@ -22,6 +22,8 @@ import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComp
 import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actions/inversePropertiesTab.js";
 import { showAllRefresh } from "../Workspace/functionAppearance.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
+import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
+import { createSendingItem } from "../Layers/moveItem.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -134,8 +136,11 @@ function addComponentTabListeners() {
         var originalItemsStrs = getAllDeletedItemsStrs();
         const selectedIds = getSelectedIds();
         produceBox("confirmation", msg + "@1", () => {
+            const itemObjects = getSelectedItems();
+            const links = getLinkItems(itemObjects);
+            const str = createSendingItem(itemObjects);
             deleteComponentAction(selectedIds);
-            actions.saveCommand(deleteSpecificItems, respawnDeletedItems, originalItemsStrs, "");
+            actions.saveCommand(deleteSpecificItems, restoreFromTrashBin, [str, itemFromListToObject(links)], "");
             if (document.getElementById('all').checked)
                 showAllRefresh();
         });
