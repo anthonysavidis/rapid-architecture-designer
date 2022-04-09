@@ -2,7 +2,7 @@ import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { copyComponent, pasteComponent } from "../Item/copy.js";
-import { appearEditButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { appearComponentButtons, appearEditButtons, appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
 function detectMacros(params) {
 
@@ -47,12 +47,16 @@ function detectMacros(params) {
                     actions.redo();
                     // if (document.getElementById("Edit").style.display === "block")
                     appearEditButtons();
+                    appearComponentButtons();
+                    appearFunctionButtons();
                 }
             } else if (ctrlDown && (e.keyCode == zKey) && !isFormActive && !isBoxOpen) {
                 if (actions.undoStack.length >= 1) {
                     actions.undo();
                     // if (document.getElementById("Edit").style.display === "block")
                     appearEditButtons();
+                    appearComponentButtons();
+                    appearFunctionButtons();
                 }
             } else if (ctrlDown && (e.keyCode == 73)) {
                 console.log(items);

@@ -124,23 +124,24 @@ function joinAction(actionItems) {
 }
 
 function createSpecificLayer(actionItems) {
-    console.log(JSON.parse(actionItems.updatedItem));
     pasteFromStr(actionItems.updatedItem);
-    // var lid = layers.selectedLayer._id;
-    // var l = new Layer("", -1, -1, JSON.parse(actionItems.updatedItem), 0);
-    // if (actionItems.initialItem !== "")
-    // imageStorage.save(l._id + "_LAYER_PREVIEW", actionItems.initialItem);
-    // updateTree();
-    // layers.changeLayer(lid);
-    // items.itemList[items.itemList.findIndex((el) => el._id === l.componentId)].subLayers[0] = l._id;
     return;
+}
+
+function createNewLayer(actionItems) {
+    var lid = layers.selectedLayer._id;
+    var l = new Layer("", -1, -1, JSON.parse(actionItems.updatedItem), 0);
+    // if (actionItems.initialItem !== "")
+    imageStorage.save(l._id + "_LAYER_PREVIEW", "");
+    updateTree();
+    layers.changeLayer(lid);
+    items.itemList[items.itemList.findIndex((el) => el._id === l.componentId)].subLayers[0] = l._id;
 }
 
 function deleteSpecificLayer(actionItems) {
     layers.deleteLayer(actionItems.initialItem);
     // layers.changeLayer(layers.idList[0]);
     updateTree();
-    console.log(layers);
     return;
 }
 
@@ -158,4 +159,4 @@ function deletePastedItems(actionItems) {
         items.delete(itemToBeDeleted._id);
     }
 }
-export { spawnSpecificItem, deleteLatestItem, respawnDeletedItems, deleteSpecificItems, linkItems, unlinkItems, splitAction, joinAction, createSpecificLayer, deleteSpecificLayer, pasteAction, deletePastedItems };
+export { spawnSpecificItem, deleteLatestItem, respawnDeletedItems, createNewLayer, deleteSpecificItems, linkItems, unlinkItems, splitAction, joinAction, createSpecificLayer, deleteSpecificLayer, pasteAction, deletePastedItems };

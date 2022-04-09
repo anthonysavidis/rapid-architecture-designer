@@ -8,7 +8,7 @@ import { copyComponent, pasteComponent } from "../Item/copy.js";
 import { showInputDialog } from "../Input/inputDialog.js";
 import { Layer } from "../Classes/Layer.js";
 import { layers } from "../Classes/LayerHolder.js";
-import { deleteLatestItem, deleteSpecificItems, respawnDeletedItems, spawnSpecificItem, linkItems, unlinkItems, splitAction, joinAction, deleteSpecificLayer, createSpecificLayer, pasteAction, deletePastedItems } from "../Actions/inverseActions.js";
+import { deleteLatestItem, deleteSpecificItems, respawnDeletedItems, spawnSpecificItem, linkItems, unlinkItems, splitAction, joinAction, deleteSpecificLayer, createSpecificLayer, pasteAction, deletePastedItems, createNewLayer } from "../Actions/inverseActions.js";
 import { getAllDeletedItemsStrs, getLinkItems } from "../Actions/itemStackFunctions.js";
 import { actions } from "../Classes/Actions.js";
 import { updateTree } from "../Layers/Tree.js";
@@ -196,7 +196,7 @@ function addComponentTabListeners() {
             if (cancelled)
                 return;
             var layerCreated = produceNewLayer(sid, name);
-            actions.saveCommand(createSpecificLayer, deleteSpecificLayer, "", layerCreated.toString());
+            actions.saveCommand(createNewLayer, deleteSpecificLayer, layerCreated._id, layerCreated.toString());
         }
         showInputDialog("layer", callBack);
 
