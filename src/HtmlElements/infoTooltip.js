@@ -210,18 +210,19 @@ function closeTooltip(id) {
     return;
 }
 
-function createEmptySubArchitecture(id) {
-    var callBack = (name, cancelled) => {
-        if (cancelled === 1)
-            return;
-        var layerCreated = produceNewLayer(id, name);
-        actions.saveCommand(createSpecificLayer, deleteSpecificLayer, "", layerCreated.toString());
-        closeTooltip(id);
-    }
+// function createEmptySubArchitecture(id) {
+//     var callBack = (name, cancelled) => {
+//         if (cancelled === 1)
+//             return;
+//lath0s
+//         var layerCreated = produceNewLayer(id, name);
+//         actions.saveCommand(createSpecificLayer, deleteSpecificLayer, "", layerCreated.toString());
+//         closeTooltip(id);
+//     }
 
-    showInputDialog("layer", callBack);
-    return;
-}
+//     showInputDialog("layer", callBack);
+//     return;
+// }
 
 function setUpTooltipListeners(id, layerExists) {
     //x kai edit
@@ -233,9 +234,6 @@ function setUpTooltipListeners(id, layerExists) {
         if (items.itemList[itemIndex]._type === "Component") {
             // span.innerText = "Double click to subdivide.";
             const imgRec = document.getElementById(id + 'sublayerImage').getBoundingClientRect();
-            document.getElementById(id + 'sublayerImage').addEventListener("dblclick", function() {
-                createEmptySubArchitecture(id);
-            });
         }
     }
 }

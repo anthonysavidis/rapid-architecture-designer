@@ -14,7 +14,7 @@ class Layer {
             this.setOfItems = new ItemHolder(); //1 layer has 1 setOfItems.
             this.domElement = this.spawnLayer();
             this.domFunctions = this.spawnFunctionContainer();
-            this.treeObj = addToArchitectureList(this._id, name, parentLayerId);
+            this.treeObj = addToArchitectureList(this._id, name, parentLayerId, this.componentId);
             layers.add(this);
         } else {
             this._id = obj._id;
@@ -26,7 +26,7 @@ class Layer {
             this.domElement = this.spawnLayer();
             this.domElement.innerHTML = "";
             this.domFunctions = this.spawnFunctionContainer();
-            this.treeObj = addToArchitectureList(this._id, this._name, this.parentId);
+            this.treeObj = addToArchitectureList(this._id, this._name, this.parentId, this.componentId);
             if (!savedFlag) {
                 layers.add(this);
 

@@ -2,7 +2,7 @@ import { spawnTab } from "../tabSwitch.js";
 import { initButtons } from "./initializer.js";
 import { cancelSelection, getSelectedItems } from "../../Item/selectComponent.js";
 import { getSelectedFunctions } from "../../Item/selectFunction.js";
-import { closeLayerTree, openLayerTree } from "../../Layers/Tree.js";
+import { clearTree, closeLayerTree, openLayerTree, updateTree } from "../../Layers/Tree.js";
 import { layers } from "../../Classes/LayerHolder.js";
 import { takeScreenshot } from "../../Layers/preview.js";
 import { getSelectedLinkItems } from "../../Item/selectLink.js";
@@ -36,6 +36,8 @@ function changeToLayerTab() {
         const oldId = layers.selectedLayer._id;
         takeScreenshot(oldId);
     }
+    clearTree();
+    updateTree();
     openLayerTree();
     return;
 }

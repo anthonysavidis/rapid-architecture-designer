@@ -5,7 +5,6 @@ import { cancelFunctionSelection, changeFunctionSelectState, keepOnlyLastSelecte
 import { linedraw } from "../Item/createLine.js"
 import { layers } from "./LayerHolder.js";
 import { Layer } from "./Layer.js";
-import { addToArchitectureList } from "../Layers/Tree.js";
 import { addResize, autoResize } from "../Item/resize.js";
 import { actions } from "./Actions.js";
 import { setSpecificFunction, resetSpecificFunction } from "../Actions/inverseFunctionsActions.js";

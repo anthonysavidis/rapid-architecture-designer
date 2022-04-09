@@ -2,6 +2,7 @@ import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
 import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResize } from "../Item/resize.js";
+import { updateTree } from "../Layers/Tree.js";
 import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
 
 function cropName(value, limit) {
@@ -55,7 +56,8 @@ function produceDoubleClickEditingName(editId) {
 
         if (items.itemList[index]._type === "Component" && document.getElementById("all").checked) {
             showAllRefresh();
-
+            if (document.getElementById("jstree").style.display === "block")
+                updateTree();
         }
         input.remove();
         autoResize(editId, val);

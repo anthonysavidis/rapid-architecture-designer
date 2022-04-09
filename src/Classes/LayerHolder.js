@@ -122,7 +122,7 @@ class LayerHolder {
     produceTree() {
         clearTree();
         for (var i = 0; i < layers.layerList.length; i++) {
-            addToArchitectureList(layers.layerList[i]._id, layers.layerList[i]._name, layers.layerList[i].parentId);
+            addToArchitectureList(layers.layerList[i]._id, layers.layerList[i]._name, layers.layerList[i].parentId, layers.layerList[i].componentId);
         }
     }
 

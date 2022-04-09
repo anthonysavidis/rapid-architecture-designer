@@ -32,6 +32,7 @@ function refreshTree() {
 }
 
 function openLayerTree() {
+    console.log(treeData);
     document.getElementById("fSidebar").style.display = "block";
     document.getElementById("jstree").style.display = "block";
 }
@@ -45,12 +46,12 @@ function initializeTree() {
     document.getElementById("closeLayersButton").addEventListener("click", closeLayerTree);
 }
 
-function addToArchitectureList(id, name, parentId) {
+function addToArchitectureList(id, name, parentId, componentId) {
     var treeBranch;
     if (parentId === "#") {
         treeBranch = { "id": id + "branch", "parent": parentId, "text": name };
     } else {
-        treeBranch = { "id": id + "branch", "parent": parentId + "branch", "text": cropName(name, 19) };
+        treeBranch = { "id": id + "branch", "parent": parentId + "branch", "text": name };
     }
     treeData.push(treeBranch);
     refreshTree();
@@ -63,10 +64,19 @@ function clearTree() {
     refreshTree();
 }
 
+function searchForName(id, pLayer) {
+    var currentItemList = layers.itemMap.get(pLayer).itemList;
+    return currentItemList[currentItemList.findIndex(el => el._id === id)]._name;
+}
+
 function updateTree() {
     treeData = [];
     for (var i = 0; i < layers.layerList.length; i++) {
-        treeData.push(JSON.parse(layers.layerList[i].treeObj));
+        var obj = JSON.parse(layers.layerList[i].treeObj);
+        if (i != 0)
+            obj.text = obj.text + ' &lt;' + searchForName(layers.layerList[i].componentId, layers.layerList[i].parentId) + '&gt;';
+        console.log(obj);
+        treeData.push(obj);
     }
     refreshTree();
 }
