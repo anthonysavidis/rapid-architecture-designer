@@ -84,7 +84,7 @@ function cancelAll(e) {
 //The Observer
 
 function hasClickedOnWorkspace(id) {
-    if (id === "html1")
+    if (id === "space")
         return true;
     return false;
 }
@@ -94,7 +94,8 @@ function selectionHandler(e, targ) {
     //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
     const suspectedId = targ.id.match(/\d+/);
     const index = items.itemList.findIndex(el => el._id === suspectedId);
-    const currentlyDraggingFlag = $('.selected').is('.ui-draggable-dragging');
+
+
     if (hasClickedOnWorkspace(targ.id)) {
         document.getElementById("selectedComponentList").innerHTML = "";
         cancelAll(e);
@@ -125,7 +126,7 @@ function whichElement(e) {
     var tname;
     tname = targ.tagName;
     checkToClose(e.clientX, e.clientY, e);
-    // console.log(tname + " " + targ.id);
+    console.log(tname + " " + targ.id);
 
     // if(targ)
     selectionHandler(e, targ);
