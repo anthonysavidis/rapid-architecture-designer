@@ -4,7 +4,6 @@ import { items } from "../Classes/ItemArray.js";
 
 function moveItem(id) {
     dragElement(document.getElementById(id));
-    changeSelectState(id);
     // changeSelectState(id + 'infoIcon');
     // changeSelectState(id + 'name');
 }

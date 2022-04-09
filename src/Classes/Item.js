@@ -1,8 +1,8 @@
 import { moveItem } from "../Item/edit.js";
 import { items, itemFromListToObject } from "../Classes/ItemArray.js";
-import { getSelectedIds, cancelSelection } from "../Item/selectComponent.js";
+import { getSelectedIds, cancelSelection, changeSelectState } from "../Item/selectComponent.js";
 import { cancelFunctionSelection, changeFunctionSelectState, keepOnlyLastSelectedFunction } from "../Item/selectFunction.js";
-import { linedraw } from "../Item/createLine.js"
+import { linedraw, renderLine } from "../Item/createLine.js"
 import { layers } from "./LayerHolder.js";
 import { Layer } from "./Layer.js";
 import { addResize, autoResize } from "../Item/resize.js";
@@ -21,6 +21,7 @@ import { showAll, showByComponent, showOwner } from "../Workspace/functionAppear
 import { moveCallBack } from "../Input/contextMenuCallbacks.js";
 import { functionColors } from "../config/functionStyle.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
+import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
 class Item {
 
@@ -34,6 +35,8 @@ class Item {
         var myId = this._id;
         $("#" + this._id).droppable({
             drop: function(event, ui) {
+                if (event.target.className === "selected")
+                    return;
                 var functionId = ui.draggable[0].id;
                 items.setFunctionToItem(myId, functionId);
 
@@ -77,9 +80,43 @@ class Item {
         document.getElementById(layers.selectedLayer._id).appendChild(div);
         renderInfoButton(this._id);
         addResize(this._id);
-        moveItem(this._id);
-        this.domElement = div;
+        changeSelectState(this._id);
+        // moveItem(this._id);
         var editId = this._id;
+        var movingObject = {};
+        $('#' + this._id).on('dragstart', () => {
+            const dragIds = getSelectedIds();
+            const elmnt = document.getElementById(editId);
+            for (var x in dragIds) {
+                movingObject[dragIds[x]] = {};
+                movingObject[dragIds[x]]["initialRec"] = document.getElementById(dragIds[x]).getBoundingClientRect();
+            }
+        });
+        $('#' + this._id).draggable({
+            axis: 'xy',
+            drag: (e) => { //prepei na ginei handle to containment, to trash bin kai ta links.
+                renderLine(editId);
+                const dragIds = getSelectedIds();
+                if (dragIds.length > 1) {
+                    const elmnt = document.getElementById(editId);
+                    const elmntRec = document.getElementById(editId).getBoundingClientRect();
+                    var distanceLeft = elmntRec.left - movingObject[editId]["initialRec"].left;
+                    var distanceTop = elmntRec.top - movingObject[editId]["initialRec"].top;
+                    for (var x in dragIds) {
+                        if (editId === dragIds[x])
+                            continue;
+                        document.getElementById(dragIds[x]).style.left = movingObject[dragIds[x]]["initialRec"].left + distanceLeft + "px";
+                        document.getElementById(dragIds[x]).style.top = movingObject[dragIds[x]]["initialRec"].top + distanceTop + "px";
+                        renderLine(dragIds[x]);
+                        console.log(dragIds[x]);
+                    }
+                }
+            },
+            click: (e) => {
+                appearComponentButtons();
+            }
+        });
+        this.domElement = div;
         document.getElementById(this._id + "name").addEventListener("dblclick", function() {
             produceDoubleClickEditingName(editId);
             closeTooltip(editId);
@@ -89,37 +126,40 @@ class Item {
         }
 
         this.domElement.ondrop = (event) => {
-            event.preventDefault();
-            var functionId = event.dataTransfer.getData("text");
-            if (!this._functions.includes(functionId)) {
-                var hasError = items.setFunctionToItem(this._id, functionId);
-                if (hasError === -1)
+                event.preventDefault();
+                if (event.target.className === "selected")
                     return;
-                if (hasError === 2) {
-                    moveCallBack(editId);
-                    return;
+                console.log(event)
+                var functionId = event.dataTransfer.getData("text");
+                if (!this._functions.includes(functionId)) {
+                    var hasError = items.setFunctionToItem(this._id, functionId);
+                    if (hasError === -1)
+                        return;
+                    if (hasError === 2) {
+                        moveCallBack(editId);
+                        return;
+                    }
+                    var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
+
+                    // console.log("setted");
+                    // var updatingMessage = settingFunction._name + " was setted in " + this._name + ".";
+                    // produceBox("updating", updatingMessage, null);
+                    // var itemList = [settingFunction, this];
+                    var funcComp = [settingFunction, this];
+                    var str = itemFromListToObject(funcComp);
+                    actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
+
+                    // var str = '{"0":"{' + settingFunction.toString() + '}","1":"{' + this.toString() + '}"}'
+                    // actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
+                } else {
+                    produceBox("updating", constantNames["messages"]["functionExists"]);
                 }
-                var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
 
-                // console.log("setted");
-                // var updatingMessage = settingFunction._name + " was setted in " + this._name + ".";
-                // produceBox("updating", updatingMessage, null);
-                // var itemList = [settingFunction, this];
-                var funcComp = [settingFunction, this];
-                var str = itemFromListToObject(funcComp);
-                actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
-
-                // var str = '{"0":"{' + settingFunction.toString() + '}","1":"{' + this.toString() + '}"}'
-                // actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
-            } else {
-                produceBox("updating", constantNames["messages"]["functionExists"]);
             }
-
-        }
-        this.domElement.ondragstart = (ev) => {
-            console.log("dragStart");
-            ev.dataTransfer.setData("text/plain", ev.target.id);
-        }
+            // this.domElement.ondragstart = (ev) => {
+            //     console.log("dragStart");
+            //     ev.dataTransfer.setData("text/plain", ev.target.id);
+            // }
 
     }
     spawnLink() {

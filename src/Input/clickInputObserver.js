@@ -94,7 +94,7 @@ function selectionHandler(e, targ) {
     //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
     const suspectedId = targ.id.match(/\d+/);
     const index = items.itemList.findIndex(el => el._id === suspectedId);
-
+    const currentlyDraggingFlag = $('.selected').is('.ui-draggable-dragging');
     if (hasClickedOnWorkspace(targ.id)) {
         document.getElementById("selectedComponentList").innerHTML = "";
         cancelAll(e);

@@ -64,6 +64,7 @@ function addResize(id) {
     var initialBoundingRec = null;
 
     function initDrag(e) {
+        $('#' + id).draggable('disable');
         closeTooltip(id);
         startX = e.clientX;
         startY = e.clientY;
@@ -75,6 +76,7 @@ function addResize(id) {
     }
 
     function doDrag(e) {
+
         document.onmouseup = null;
         document.onmousemove = null;
         if (canResize(id, e.clientX, e.clientY)) {
@@ -86,6 +88,8 @@ function addResize(id) {
     }
 
     function stopDrag(e) {
+        $('#' + id).draggable('enable');
+
         document.documentElement.removeEventListener("mousemove", doDrag, false);
         document.documentElement.removeEventListener("mouseup", stopDrag, false);
         var updatedBoundingRec = JSON.stringify(document.getElementById(id).getBoundingClientRect());
