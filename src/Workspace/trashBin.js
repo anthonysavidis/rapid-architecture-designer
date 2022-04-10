@@ -89,7 +89,7 @@ function createDraggableSpace() {
     div.style.height = window.screen.height + 0 + "px";
     div.style.top = document.getElementById('tabButtons').getBoundingClientRect().y + document.getElementById('tabButtons').getBoundingClientRect().height + "px";
     div.style.left = 4 + "px";
-    div.style.height = window.screen.height + "px";
+    div.style.height = window.screen.height - 100 + "px";
     div.style.zIndex = -1;
     div.style.width = document.getElementById('tabButtons').getBoundingClientRect().width - document.getElementById('right_tab').getBoundingClientRect().width - 4 + "px";
     document.getElementById('body').appendChild(div);

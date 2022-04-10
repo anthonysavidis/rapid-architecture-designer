@@ -126,14 +126,20 @@ class Item {
             stop: (e) => { //actionsSave item... apoi to move item
                 const dragIds = getSelectedIds();
                 const initialItem = movingObject;
-                var updatedItem = {};
-                for (var x in dragIds) {
-                    updatedItem[dragIds[x]] = {};
-                    updatedItem[dragIds[x]]["newRec"] = document.getElementById(dragIds[x]).getBoundingClientRect();
+                if (dragIds.length > 1) {
+                    var updatedItem = {};
+                    for (var x in dragIds) {
+                        updatedItem[dragIds[x]] = {};
+                        updatedItem[dragIds[x]]["newRec"] = document.getElementById(dragIds[x]).getBoundingClientRect();
+                    }
+                    const itemIndex = items.itemList.findIndex((el) => el._id === editId);
+                    items.itemList[itemIndex].updateBoundingRec();
+                    actions.saveCommand(moveAllNext, moveAllPrev, initialItem, updatedItem);
+                } else {
+                    var updatedItem = document.getElementById(dragIds[0]).getBoundingClientRect();
+                    actions.saveCommand(moveNext, movePrev,
+                        JSON.stringify(initialItem[dragIds[0]]["initialRec"]) + '@' + dragIds[0], JSON.stringify(updatedItem));
                 }
-                const itemIndex = items.itemList.findIndex((el) => el._id === editId);
-                items.itemList[itemIndex].updateBoundingRec();
-                actions.saveCommand(moveAllNext, moveAllPrev, initialItem, updatedItem);
             },
             click: (e) => {
                 appearComponentButtons();

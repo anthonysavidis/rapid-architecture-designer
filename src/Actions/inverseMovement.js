@@ -36,7 +36,8 @@ function moveAllNext(actionItems) {
     for (var x in updatedItem) {
         document.getElementById(x).style.left = updatedItem[x]["newRec"].left + "px";
         document.getElementById(x).style.top = updatedItem[x]["newRec"].top + "px";
-        console.log('mpros');
+        renderLine(x);
+
     }
     return;
 }
@@ -44,9 +45,10 @@ function moveAllNext(actionItems) {
 function moveAllPrev(actionItems) {
     const initalItem = actionItems.initialItem;
     for (var x in initalItem) {
-
         document.getElementById(x).style.left = initalItem[x]["initialRec"].left + "px";
         document.getElementById(x).style.top = initalItem[x]["initialRec"].top + "px";
+        renderLine(x);
+
     }
     return;
 }
