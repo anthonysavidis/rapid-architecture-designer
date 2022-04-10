@@ -33,7 +33,6 @@ function refreshTree() {
 }
 
 function openLayerTree() {
-    console.log(treeData);
     document.getElementById("fSidebar").style.display = "block";
     document.getElementById("jstree").style.display = "block";
 }
@@ -79,7 +78,6 @@ function updateTree() {
         var obj = JSON.parse(layers.layerList[i].treeObj);
         if (i != 0)
             obj.text = obj.text + ' &lt;' + searchForName(layers.layerList[i].componentId, layers.layerList[i].parentId) + '&gt;';
-        console.log(obj);
         treeData.push(obj);
     }
     refreshTree();

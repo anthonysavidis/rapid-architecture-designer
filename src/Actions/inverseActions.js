@@ -125,6 +125,9 @@ function joinAction(actionItems) {
 
 function createSpecificLayer(actionItems) {
     pasteFromStr(actionItems.updatedItem);
+    var againId = actionItems.initialItem;
+    var componentId = layers.layerList[layers.layerList.findIndex(el => el._id === againId)].componentId;
+    items.itemList[items.itemList.findIndex(el => el._id === componentId)].subLayers[0] = againId;
     return;
 }
 
