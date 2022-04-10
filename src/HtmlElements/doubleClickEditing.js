@@ -30,15 +30,17 @@ function produceDoubleClickEditingName(editId) {
     var val = items.itemList[index]._name;
     var input = document.createElement("input");
     input.className = "no-outline";
+    const itemRec = document.getElementById(editId).getBoundingClientRect();
     input.style.width = inputWidth + "px";
-    input.style.left = inputLeft + "px";
     var itemType = items.itemList[index]._type;
     if (itemType === "Function") {
         input.style.width = 148 + "px";
         input.style.position = "absolute";
-        input.style.left = inputLeft + 20 + "px";
-        input.style.top = document.getElementById(editId).getBoundingClientRect().top + 5 + "px";
-    }
+        input.style.zIndex = 999;
+        input.style.left = itemRec.left + "px";
+        input.style.top = itemRec.top + "px";
+    } else
+        input.style.left = inputLeft + "px";
 
     input.value = val;
     input.onblur = (function() {
@@ -64,7 +66,12 @@ function produceDoubleClickEditingName(editId) {
         detailChangeListener(editId, originalItemStr);
     });
     document.getElementById(editId + "name").innerText = "";
-    document.getElementById(editId + "name").appendChild(input);
+    if (itemType === "Function") {
+        document.getElementById('body').appendChild(input);
+        input.style.left = itemRec.left + "px";
+        input.style.top = itemRec.top + "px";
+    } else
+        document.getElementById(editId + "name").appendChild(input);
     input.focus();
 }
 
