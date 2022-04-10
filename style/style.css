@@ -359,3 +359,21 @@ hr.solid {
     font-size: var(--linkTextSize);
     font-family: var(--linkTextFamily);
 }
+
+.layerPath {
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(84, 84, 84);
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    z-index: 29;
+    text-align: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+}

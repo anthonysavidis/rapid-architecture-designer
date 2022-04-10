@@ -20,7 +20,7 @@ function produceLayerTabRod() {
     layerTabRod.id = "layerTabRod";
     layerTabRod.className = 'rod';
     document.getElementById('body').appendChild(layerTabRod);
-    document.getElementById('layerTabRod').style.top = 110 + "px";
+    document.getElementById('layerTabRod').style.top = 125 + "px";
     document.getElementById('layerTabRod').style.height = 500 + "px";
     document.getElementById('layerTabRod').style.left = document.getElementById("fSidebar").getBoundingClientRect().right - 10 + "px";
     addLayerRodListener();

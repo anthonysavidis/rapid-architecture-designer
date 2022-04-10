@@ -3,6 +3,7 @@ import { actions } from "../Classes/Actions.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { cropName } from "../HtmlElements/doubleClickEditing.js";
 import { removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
+import { updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 
@@ -20,6 +21,9 @@ function refreshTree() {
             'data': treeData
         }
     }).on('changed.jstree', function(e, data) {
+        var path = data.instance.get_path(data.node, '/');
+        // console.log('Selected: ' + path);
+        updateFullPath(path);
         closeTheTooltip();
         cancelSelection();
         if (document.getElementById("selectedComponentsList"))
@@ -43,7 +47,7 @@ function closeLayerTree() {
 }
 
 function initializeTree() {
-    document.getElementById("closeLayersButton").addEventListener("click", () => {
+    document.getElementById("closeLayersButton").addEventListener("mousedown", () => {
         closeLayerTree();
         removeLayerTabRod();
     });

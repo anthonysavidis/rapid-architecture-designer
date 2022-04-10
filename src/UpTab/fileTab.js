@@ -10,6 +10,7 @@ import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 import { showAll } from "../Workspace/functionAppearance.js";
 import { actions } from "../Classes/Actions.js";
 import { loadNext, loadPrev } from "../Actions/inverseFileActions.js";
+import { autoResizeAllComponents } from "../Item/resize.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
@@ -94,6 +95,7 @@ function addFileTabListeners() {
     // loadSpecific("withOperations.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
+        autoResizeAllComponents();
     });
     document.getElementById("saveButton").addEventListener("click", function() {
         saveAction();
