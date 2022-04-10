@@ -300,7 +300,7 @@ class Item {
                 items.add(this);
                 items.updateNameAndDescription(this._id, this._name, this._description);
             }
-            this._type === "Component" ? renderInfoButton(this._id) : 1;
+            // this._type === "Component" ? renderInfoButton(this._id) : 1;
             return;
         }
         items.add(this);
