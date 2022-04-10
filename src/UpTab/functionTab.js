@@ -50,10 +50,9 @@ function deleteOperationWithTrashBin() {
 function addFunctionTabListeners() {
     initialAppearance();
     document.getElementById("newFunctionButton").addEventListener("click", function() {
-        var functionItem = newFunctionAction();
-        askForDetails(functionItem, "");
-        if (document.getElementById('byComponent').checked)
-            showByComponent();
+        // var functionItem = newFunctionAction();
+        askForDetails("Function", "");
+
     });
     document.getElementById("deleteFunctionButton").addEventListener("click", function() {
         const toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());
@@ -87,4 +86,4 @@ function addFunctionTabListeners() {
     });
 }
 
-export { addFunctionTabListeners, deleteOperationWithTrashBin };
+export { addFunctionTabListeners, newFunctionAction, deleteOperationWithTrashBin };

@@ -1,5 +1,7 @@
+import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { addMotion, dragModalHandler } from "../Input/movingModal.js";
+import { unlink } from "../Item/Link.js";
 
 
 function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
@@ -9,8 +11,8 @@ function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
     grayLayer.onclick = () => {
         box.remove();
         grayLayer.remove();
-        if (callBack)
-            callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
+        // if (callBack)
+        //     callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
         if (cancelCallBack)
             cancelCallBack();
     }
@@ -29,7 +31,7 @@ function produceMovingBar(box, isMsgBox) {
     return;
 }
 
-function produceBox(type, extraInfo, callBack, cancelCallBack) {
+function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     var box = document.createElement('div');
     box.className = type + "Box";
     var cancelAction = () => {
@@ -146,7 +148,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack) {
         confirmationButton.className = "okButton";
         confirmationButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["ok"] + "</p>";
         cancelButton.onclick = function() {
-            callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
+            // callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
+            cancelCallBack();
             closeBox();
         }
         confirmationButton.onclick = function() {
@@ -157,7 +160,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack) {
                 closeBox();
             }
             // form.onmousedown = null;
-        produceGrayLayer(box, extraInfo, callBack);
+        produceGrayLayer(box, extraInfo, callBack, cancelCallBack);
     }
     var buttons = document.createElement('div');
     buttons.className = "buttonTeam";

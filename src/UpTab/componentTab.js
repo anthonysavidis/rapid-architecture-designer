@@ -20,10 +20,11 @@ import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { splitCallBack } from "../Input/contextMenuCallbacks.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actions/inversePropertiesTab.js";
-import { showAllRefresh } from "../Workspace/functionAppearance.js";
+import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
 import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
 import { createSendingItem, createSendingLayer } from "../Layers/moveItem.js";
+import { newFunctionAction } from "./functionTab.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -91,21 +92,42 @@ function subdivideAction() {
 //     return;
 // }
 
-function askForDetails(it, extraInfo) {
-    produceBox("input", it._type, (name, description) => {
+function askForDetails(type, extraInfo) {
+    produceBox("input", type, (name, description) => {
+        var it;
         if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"]["component"];
         if (description === "" || !description.replace(/\s/g, '').length) description = constantNames["emptyNames"]["description"];
-        items.updateNameAndDescription(it._id, name, description);
-        if (it._type === "Component") {
+        if (type === "Component") {
+            it = newComponentAction();
+            items.updateNameAndDescription(it._id, name, description);
+
             actions.saveCommand(spawnSpecificItem, deleteLatestItem, "", it.toString());
             // autoResize(it._id, it._name);
-        } else if (it._type === "Link") {
-            var finalLinkedItems = JSON.parse(extraInfo);
+        } else if (type === "Link") {
+            it = linkComponentsAction();
+            var linkedItems = getSelectedItems();
+            var itemsStr = "{ \"0\":" + linkedItems[0].toString() + ", \"1\":" + linkedItems[1].toString() + ",\"2\":" + it.toString() + "}"
+
+            var finalLinkedItems = JSON.parse(itemsStr);
             finalLinkedItems[2] = JSON.parse(it.toString());
             console.log(finalLinkedItems);
+            items.updateNameAndDescription(it._id, name, description);
+
             actions.saveCommand(linkItems, unlinkItems, JSON.stringify(finalLinkedItems), it.toString());
-        } else if (it._type === "Function")
+        } else if (type === "Function") {
+            var it = newFunctionAction()
+            items.updateNameAndDescription(it._id, name, description);
+
             actions.saveCommand(createSpecificFunction, deleteSpecificFunction, "", it.toString());
+        }
+        if (it._type === "Function" && document.getElementById('byComponent').checked)
+            showByComponent();
+    }, () => {
+        // if (it._type === "Component" || it._type === "Function") {
+        //     items.delete(it._id);
+        // } else if (it._type === "Link") {
+        //     unlink();
+        // }
     });
 }
 
@@ -127,8 +149,8 @@ function extendButton(extentableItems) {
 
 function addComponentTabListeners() {
     document.getElementById("newButton").addEventListener("click", function() {
-        var it = newComponentAction();
-        askForDetails(it, ""); //fix
+
+        askForDetails("Component", ""); //fix
     });
     document.getElementById("deleteButton").addEventListener("click", function() {
         // deletedItemsStack.push(getAllDeletedItemsStrs());
@@ -151,10 +173,10 @@ function addComponentTabListeners() {
         });
     });
     document.getElementById("linkButton").addEventListener("click", function() {
-        var linkItem = linkComponentsAction();
-        var linkedItems = getSelectedItems();
-        var itemsStr = "{ \"0\":" + linkedItems[0].toString() + ", \"1\":" + linkedItems[1].toString() + ",\"2\":" + linkItem.toString() + "}"
-        askForDetails(linkItem, itemsStr); //fix
+        // var linkItem = linkComponentsAction();
+        // var linkedItems = getSelectedItems();
+        // var itemsStr = "{ \"0\":" + linkedItems[0].toString() + ", \"1\":" + linkedItems[1].toString() + ",\"2\":" + linkItem.toString() + "}"
+        askForDetails("Link", ""); //fix
     });
     document.getElementById("unlinkButton").addEventListener("click", function() {
         var unlinkedItems = getSelectedItems();
