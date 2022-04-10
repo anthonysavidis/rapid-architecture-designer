@@ -1,4 +1,5 @@
 import { constantNames } from "../config/constantNames.js";
+import { autoResizeAllComponents } from "../Item/resize.js";
 
 function produceSizeForm(box, className, callBack) {
     var select = document.createElement('select');
@@ -57,6 +58,7 @@ const handleFontFamily = (type, value) => {
     switch (type) {
         case "Component":
             r.style.setProperty('--componentTextFamily', value);
+            autoResizeAllComponents();
             break;
         case "Operation":
             r.style.setProperty('--operationTextFamily', value);
@@ -75,6 +77,7 @@ const handleFontSize = (type, value) => {
     switch (type) {
         case "Component":
             r.style.setProperty('--componentTextSize', value);
+            autoResizeAllComponents();
             break;
         case "Operation":
             r.style.setProperty('--operationTextSize', value);

@@ -11,8 +11,13 @@ function getTextDimensions(str) {
     var text = document.createElement("span");
     document.body.appendChild(text);
 
-    text.style.font = "--var(componentTextFamily)";
-    text.style.fontSize = "--var(componentTextSize)";
+    var r = document.querySelector(':root');
+    var rs = getComputedStyle(r);
+    var fontSize = rs.getPropertyValue('--componentTextSize');
+    var fontFamily = rs.getPropertyValue('--componentTextFamily');
+
+    text.style.fontFamily = fontFamily;
+    text.style.fontSize = fontSize;
     text.style.height = 'auto';
     text.style.width = 'auto';
     text.style.position = 'absolute';
@@ -43,7 +48,7 @@ function autoResize(id, text) {
     if (resizedItem._type === "Link" || resizedItem._type === "Function")
         return; //no need for resize
 
-    p.style.width = 150 + (textDims.width > 150 ? textDims.width - 100 : 0) + "px";
+    p.style.width = 150 + (textDims.width > 130 ? textDims.width - 100 : 0) + "px";
 
     if (resizedItem.links)
         renderLine(id);
@@ -51,10 +56,22 @@ function autoResize(id, text) {
     return;
 }
 
-function autoResizeAllComponents() {
-    for (var x in layers.idList) {
 
+
+function autoResizeAllComponents() {
+    const currentLayerId = layers.selectedLayer._id;
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+        for (var y in layerItems.itemList) {
+            if (layerItems.itemList[y]._type === "Component") {
+                autoResize(layerItems.itemList[y]._id, layerItems.itemList[y]._name);
+            }
+        }
     }
+    layers.changeLayer(currentLayerId);
+    console.log('resized');
+    return;
 }
 
 function addResize(id) {
@@ -112,4 +129,4 @@ function addResize(id) {
 //     p.removeChild(resizer);
 // }
 
-export { addResize, autoResize, getTextDimensions };
+export { addResize, autoResize, getTextDimensions, autoResizeAllComponents };

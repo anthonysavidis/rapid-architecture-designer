@@ -1,4 +1,5 @@
 import { items } from "../Classes/ItemArray.js";
+import { appearComponentButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { hideCurrentFunctions, showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 
 function handleByComponent() {
@@ -12,6 +13,8 @@ function handleByComponent() {
 
 const selectAction = function(compId) {
     document.getElementById(compId).className = "selected";
+    appearComponentButtons();
+    appearHierarchyButtons();
     if (document.getElementById("byComponent").checked) {
         handleByComponent();
     }
