@@ -6,6 +6,7 @@ import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { createFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
+import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { createSendingItem } from "../Layers/moveItem.js";
 import { showAllRefresh } from "./functionAppearance.js";
 
@@ -64,13 +65,22 @@ function deleteMultWithTrashBin(itemElmnts) {
 
 
 function initializeTheTrashBin() {
+    // document.getElementById('trashBin').ondrop = (event) => {
+    //     event.preventDefault();
+    //     console.log(event.target.id);
+    //     var functionId = event.dataTransfer.getData("text");
+    // };
     $("#trashBin").droppable({
         drop: function(event, ui) {
             var deletingItems = getSelectedItems();
-            const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + deletingItems.length + constantNames["confirmationBox"]["DeleteMsgEnd"];
-            produceBox("confirmation", msg + "@1", () => {
-                deleteMultWithTrashBin(deletingItems);
-            });
+            if (deletingItems.length === 0)
+                return;
+            else {
+                const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + deletingItems.length + constantNames["confirmationBox"]["DeleteMsgEnd"];
+                produceBox("confirmation", msg + "@1", () => {
+                    deleteMultWithTrashBin(deletingItems);
+                });
+            }
         }
     });
 }

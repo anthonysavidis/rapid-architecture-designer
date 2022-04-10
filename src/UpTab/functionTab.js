@@ -35,6 +35,18 @@ function initialAppearance() {
     document.getElementById("resetFunctionButton").style.display = "none";
 }
 
+function deleteOperationWithTrashBin() {
+    const toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());
+    var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + getSelectedFunctionIds().length + constantNames["confirmationBox"]["DeleteMsgFunctionEnd"];
+
+    produceBox("confirmation", msg + "@1", () => {
+        deleteFunctionAction();
+        actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedFunctions, "");
+        cancelFunctionSelection();
+    });
+    return;
+}
+
 function addFunctionTabListeners() {
     initialAppearance();
     document.getElementById("newFunctionButton").addEventListener("click", function() {
@@ -75,4 +87,4 @@ function addFunctionTabListeners() {
     });
 }
 
-export { addFunctionTabListeners };
+export { addFunctionTabListeners, deleteOperationWithTrashBin };

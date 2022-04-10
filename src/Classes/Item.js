@@ -24,6 +24,7 @@ import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { canMove } from "../Item/createComponent.js";
 import { moveAllNext, moveAllPrev, moveNext, movePrev } from "../Actions/inverseMovement.js";
+import { deleteOperationWithTrashBin } from "../UpTab/functionTab.js";
 
 class Item {
 
@@ -252,9 +253,17 @@ class Item {
             ev.dataTransfer.setData("text/plain", ev.target.id);
         }
         this.domElement.ondragend = (ev) => {
-            document.getElementById(curId).style.backgroundColor = prevColor;
-            prevColor = "";
-        }
+                document.getElementById(curId).style.backgroundColor = prevColor;
+                prevColor = "";
+                // alert('operation dropped');
+
+                const trashRec = document.getElementById('trashBin').getBoundingClientRect();
+                const funcRec = document.getElementById(editId).getBoundingClientRect();
+                if (ev.clientX >= trashRec.x && ev.clientY >= (trashRec.y) && ev.clientX <= (trashRec.x + trashRec.width) && ev.clientY <= (trashRec.y + trashRec.height)) {
+                    deleteOperationWithTrashBin();
+                }
+            }
+            // ()
     }
     deleteLink(deletedItemId) {
         var deletedLineId = this.links.get(deletedItemId);
