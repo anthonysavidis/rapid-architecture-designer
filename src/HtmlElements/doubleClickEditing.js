@@ -73,8 +73,8 @@ function produceDoubleClickEditingName(editId) {
     document.getElementById(editId + "name").innerText = "";
     if (itemType === "Function") {
         document.getElementById('body').appendChild(input);
-        input.style.left = itemRec.left + "px";
-        input.style.top = itemRec.top + "px";
+        input.style.left = itemRec.left + 30 + "px";
+        input.style.top = itemRec.top + 5 + "px";
     } else
         document.getElementById(editId + "name").appendChild(input);
     input.focus();
