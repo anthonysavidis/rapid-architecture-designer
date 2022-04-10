@@ -105,13 +105,12 @@ function askForDetails(type, extraInfo) {
             // autoResize(it._id, it._name);
         } else if (type === "Link") {
             it = linkComponentsAction();
+            items.updateNameAndDescription(it._id, name, description);
             var linkedItems = getSelectedItems();
             var itemsStr = "{ \"0\":" + linkedItems[0].toString() + ", \"1\":" + linkedItems[1].toString() + ",\"2\":" + it.toString() + "}"
 
             var finalLinkedItems = JSON.parse(itemsStr);
             finalLinkedItems[2] = JSON.parse(it.toString());
-            console.log(finalLinkedItems);
-            items.updateNameAndDescription(it._id, name, description);
 
             actions.saveCommand(linkItems, unlinkItems, JSON.stringify(finalLinkedItems), it.toString());
         } else if (type === "Function") {
