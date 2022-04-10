@@ -124,7 +124,8 @@ const constantNames = {
     "messages": {
         "pngMsg": "Insert name of the current layer.",
         "functionExists": "Already attached to component!",
-        "moveToMsg": "Cannot move items to another layer."
+        "moveToMsg": "Cannot move items to another layer.",
+        "unsubdivideMsg": "Do you want to delete the subarchitecture of the selected Component?"
     },
     "dot": ".",
     "ok": "OK",

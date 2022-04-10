@@ -223,16 +223,19 @@ function addComponentTabListeners() {
 
     });
     document.getElementById("unsubdivideButton").addEventListener("click", function() {
-        var itemToBeUnsubdivided = getSelectedItems()[0];
-        var layerBeingDeleted = layers.layerList[layers.layerList.findIndex((el) => itemToBeUnsubdivided.subLayers[0] === el._id)];
-        const layerImage = imageStorage.get(layerBeingDeleted._id + "_LAYER_PREVIEW");
-        console.log(layerImage);
-        // var layerStr = layerBeingDeleted.toString();
-        var str = createSendingLayer(itemToBeUnsubdivided);
-        layers.deleteLayer(layerBeingDeleted._id);
-        updateTree();
-        actions.saveCommand(deleteSpecificLayer, createSpecificLayer, layerBeingDeleted._id, str);
-
+        const unsubdivideCallBack = () => {
+            var itemToBeUnsubdivided = getSelectedItems()[0];
+            var layerBeingDeleted = layers.layerList[layers.layerList.findIndex((el) => itemToBeUnsubdivided.subLayers[0] === el._id)];
+            const layerImage = imageStorage.get(layerBeingDeleted._id + "_LAYER_PREVIEW");
+            console.log(layerImage);
+            // var layerStr = layerBeingDeleted.toString();
+            var str = createSendingLayer(itemToBeUnsubdivided);
+            layers.deleteLayer(layerBeingDeleted._id);
+            updateTree();
+            actions.saveCommand(deleteSpecificLayer, createSpecificLayer, layerBeingDeleted._id, str);
+        }
+        var msg = constantNames['messages']['unsubdivideMsg'];
+        produceBox("confirmation", msg + "@1", unsubdivideCallBack);
     });
     document.getElementById("extendButton").addEventListener("click", function() {
         const extentableItems = getSelectedItems();
