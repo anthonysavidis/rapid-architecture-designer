@@ -63,9 +63,9 @@ const constantNames = {
         "moreInfo": "More Information",
         "al": "Arrow Type",
         "none": " - ",
-        "->": " -> ",
-        "<-": " <- ",
-        "<->": " <-> ",
+        "->": " → ",
+        "<-": " ← ",
+        "<->": " ←→ ",
         "collapse": "Collapsed View",
         "extended": "Extended View"
     },
