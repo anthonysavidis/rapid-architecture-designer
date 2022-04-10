@@ -3,6 +3,7 @@ import { actions } from "../Classes/Actions.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { autoResize } from "../Item/resize.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 
 
 var lastOriginalItem = null;
@@ -23,7 +24,13 @@ function changeDetails(actionItem) {
     // items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)].moreInfo = alteredItemObject.moreInfo;
     if (alteredItemObject._type === "Component")
         autoResize(alteredItemObject._id, alteredItemObject._name);
-
+    else if (alteredItemObject._type === "Function") {
+        if (document.getElementById('all').checked) {
+            showAllRefresh();
+        } else {
+            showByComponent();
+        }
+    }
     return;
 }
 
