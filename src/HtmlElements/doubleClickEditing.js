@@ -2,8 +2,9 @@ import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
 import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResize } from "../Item/resize.js";
-import { updateTree } from "../Layers/Tree.js";
+import { closeLayerTree, updateTree } from "../Layers/Tree.js";
 import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
+import { removeLayerTabRod } from "./extendingSideTabs.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -57,6 +58,10 @@ function produceDoubleClickEditingName(editId) {
             document.getElementById(items.itemList[index]._id + "name").innerHTML = val;
 
         if (items.itemList[index]._type === "Component" && document.getElementById("all").checked) {
+            if (document.getElementById('Hierarchy').style.display === "block") {
+                closeLayerTree();
+                removeLayerTabRod();
+            }
             showAllRefresh();
             if (document.getElementById("jstree").style.display === "block")
                 updateTree();
