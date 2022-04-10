@@ -4,6 +4,7 @@ import { actions } from "../Classes/Actions.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
+import { createFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { createSendingItem } from "../Layers/moveItem.js";
 import { showAllRefresh } from "./functionAppearance.js";
@@ -93,7 +94,7 @@ function createDraggableSpace() {
     div.style.width = document.getElementById('tabButtons').getBoundingClientRect().width - document.getElementById('right_tab').getBoundingClientRect().width - 4 + "px";
     document.getElementById('body').appendChild(div);
     document.getElementById("right_tab").style.left = document.getElementById("tabButtons").getBoundingClientRect().width + 8 - document.getElementById("right_tab").getBoundingClientRect().width + "px";
-
+    createFullPath();
 }
 
 export { canBeDeleted, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, fixTrashBinPosition };

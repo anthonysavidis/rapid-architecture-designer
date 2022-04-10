@@ -70,6 +70,8 @@ function loadAction() {
             }
             var lh = new LayerHolder(allText);
             actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
+            autoResizeAllComponents();
+
         };
 
         reader.readAsText(e.target.files[0]);
@@ -95,7 +97,6 @@ function addFileTabListeners() {
     // loadSpecific("withOperations.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
-        autoResizeAllComponents();
     });
     document.getElementById("saveButton").addEventListener("click", function() {
         saveAction();

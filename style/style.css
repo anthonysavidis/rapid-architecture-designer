@@ -365,7 +365,7 @@ hr.solid {
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(84, 84, 84);
     position: absolute;
-    width: 100%;
+    width: inherit;
     height: 20px;
     z-index: 29;
     text-align: center;
