@@ -59,6 +59,14 @@ class Layer {
         newFunctionsContainer.style.display = "none";
         return newFunctionsContainer;
     }
+    updateLayerName(name) {
+        var oldObject = JSON.parse(this.treeObj);
+        oldObject.text = name;
+        this.treeObj = JSON.stringify(oldObject);
+        this._name = name;
+        return;
+    }
+
     toString() {
         var str = '{';
         for (var x in this) {

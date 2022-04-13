@@ -1,10 +1,14 @@
+import { changeNextLayerName, changePrevLayer, changePrevLayerName } from "../Actions/inverseLayerActions.js";
 import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
+import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
+import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResize } from "../Item/resize.js";
-import { closeLayerTree, updateTree } from "../Layers/Tree.js";
+import { changeTreeName, closeLayerTree, createNodeFullPath, treeData, updateTree } from "../Layers/Tree.js";
 import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
 import { removeLayerTabRod } from "./extendingSideTabs.js";
+import { replaceOnFullPath, updateFullPath } from "./pathAndLayerSpan.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -80,6 +84,41 @@ function produceDoubleClickEditingName(editId) {
     input.focus();
 }
 
+function produceDoubleClickEditingLayerName(domId, oldName, layerObject, branchRect, nodeData) {
+    var input = document.createElement("input");
+    input.style.left = branchRect.left + "px";
+    input.className = "no-outline";
+    input.style.position = "absolute";
+    input.style.width = branchRect.width + "px";
+    input.value = layerObject._name;
+    input.style.zIndex = 90;
+    input.onblur = (function() {
+        var val = (this.value == "" || !this.value.replace(/\s/g, '').length) ? constantNames["emptyNames"]["layer"] : this.value;
+        const oldObject = layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].treeObj;
+        layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].updateLayerName(val);
+        if (layers.idList[0] === layerObject._id)
+            document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val;
+        else
+            document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val + " " + ' &lt;' + layerObject.componentId + '&gt;';
+        input.remove();
+        if (oldName !== val) {
+            const prevObj = JSON.stringify([domId, layerObject._id, oldName]);
+            const nextObj = JSON.stringify([domId, layerObject._id, layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)]._name]);
+            actions.saveCommand(changeNextLayerName, changePrevLayerName, prevObj, nextObj);
+            changeTreeName(layerObject._id, val);
+            replaceOnFullPath(oldName, val);
+            updateTree();
+        }
+    });
+    document.getElementById(domId).innerHTML = "";
+    document.getElementById('body').appendChild(input);
+    input.style.top = branchRect.top + 5 + "px";
+
+    input.focus();
+}
 
 
-export { produceDoubleClickEditingName, cropName, getTextWidth };
+
+
+
+export { produceDoubleClickEditingName, produceDoubleClickEditingLayerName, cropName, getTextWidth };

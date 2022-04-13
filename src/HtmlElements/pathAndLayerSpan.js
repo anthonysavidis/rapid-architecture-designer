@@ -6,6 +6,11 @@ function updateFullPath(text) {
     return;
 }
 
+function replaceOnFullPath(oldName, newName) {
+    var oldPath = document.getElementById('layerPath').innerHTML;
+    document.getElementById('layerPath').innerHTML = oldPath.replace(oldName, newName);
+}
+
 function createFullPath() {
     var path = document.createElement('div');
     if (document.getElementById('layerPath'))
@@ -20,4 +25,4 @@ function createFullPath() {
     return;
 }
 
-export { updateFullPath, createFullPath };
+export { updateFullPath, createFullPath, replaceOnFullPath };

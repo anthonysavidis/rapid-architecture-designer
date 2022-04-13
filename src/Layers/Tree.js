@@ -1,7 +1,7 @@
 import { changeNextLayer, changePrevLayer } from "../Actions/inverseLayerActions.js";
 import { actions } from "../Classes/Actions.js";
 import { layers } from "../Classes/LayerHolder.js";
-import { cropName } from "../HtmlElements/doubleClickEditing.js";
+import { cropName, produceDoubleClickEditingLayerName } from "../HtmlElements/doubleClickEditing.js";
 import { removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
 import { updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
@@ -9,11 +9,20 @@ import { cancelSelection } from "../Item/selectComponent.js";
 
 var treeData = []; //hold it and write it to json
 
+function createNodeFullPath(data) {
+    var path = data.instance.get_path(data.node, '/');
+    console.log('Selected: ' + path);
+    updateFullPath(path);
+}
+
 function refreshTree() {
     document.getElementById('jstree').remove();
     var jsTreeDiv = document.createElement('div');
-    var jsTreeStr = '<div style="width:150px; padding-top: 50px;" id="jstree"></div>'
-    jsTreeDiv.innerHTML = jsTreeStr;
+    jsTreeDiv.id = "jstree";
+    jsTreeDiv.style.width = 150 + "px";
+    jsTreeDiv.style.paddingTop = 50 + "px";
+    // var jsTreeStr = '<div style="width:150px; padding-top: 50px;" id="jstree"></div>'
+    // jsTreeDiv.innerHTML = jsTreeStr;
     document.getElementById('fSidebar').appendChild(jsTreeDiv);
 
     $('#jstree').jstree({
@@ -21,19 +30,24 @@ function refreshTree() {
             'data': treeData
         }
     }).on('changed.jstree', function(e, data) {
-        var path = data.instance.get_path(data.node, '/');
-        // console.log('Selected: ' + path);
-        updateFullPath(path);
+        createNodeFullPath(data)
         closeTheTooltip();
         cancelSelection();
         if (document.getElementById("selectedComponentsList"))
             document.getElementById("selectedComponentsList").innerHTML = "";
         var oldLayerId = layers.selectedLayer._id;
         var currentId = data.node.id.split("branch")[0];
+        document.getElementById(data.node.id).ondblclick = (e) => {
+            const layerObject = layers.layerList[layers.layerList.findIndex(el => el._id === currentId)];
+            const oldName = layerObject._name;
+            const domId = data.node.id + "_anchor";
+            const rect = document.getElementById(domId).getBoundingClientRect();
+            produceDoubleClickEditingLayerName(domId, oldName, layerObject, rect, data);
+            // refreshTree();
+        }
         layers.changeLayer(currentId);
         actions.saveCommand(changeNextLayer, changePrevLayer, oldLayerId, currentId);
     });
-
 }
 
 function openLayerTree() {
@@ -87,6 +101,10 @@ function updateTree() {
     refreshTree();
 }
 
+function changeTreeName(id, name) {
+    treeData[treeData.findIndex(el => el.id === id + "branch")].text = name;
+    return;
+}
 
 function getTreeData() {
     var v = $('#jstree').jstree(true).get_json('#', { flat: true })
@@ -94,4 +112,4 @@ function getTreeData() {
     return JSON.parse(mytext);
 }
 
-export { initializeTree, getTreeData, openLayerTree, closeLayerTree, addToArchitectureList, treeData, clearTree, updateTree };
+export { initializeTree, getTreeData, searchForName, openLayerTree, createNodeFullPath, closeLayerTree, addToArchitectureList, treeData, changeTreeName, clearTree, updateTree };
