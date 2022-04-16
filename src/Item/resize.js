@@ -43,7 +43,6 @@ function canResize(id, pointerX, pointerY) {
 
 function autoResize(id, text) {
     const textDims = getTextDimensions(text);
-    console.log(text + ' ' + textDims.width);
     var p = document.getElementById(id);
     const resizedItem = items.itemList[items.itemList.findIndex(el => el._id === id)];
     if (resizedItem._type === "Link" || resizedItem._type === "Function")
@@ -64,7 +63,7 @@ function autoResizeAllComponents() {
     for (var x in layers.layerList) {
         layers.changeLayer(layers.layerList[x]._id);
         const layerItems = layers.itemMap.get(layers.layerList[x]._id);
-        console.log(layerItems);
+        // console.log(layerItems);
 
         for (var y in layerItems.itemList) {
             autoResize(layerItems.itemList[y]._id, layerItems.itemList[y]._name);

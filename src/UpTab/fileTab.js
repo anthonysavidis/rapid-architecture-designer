@@ -11,6 +11,7 @@ import { showAll } from "../Workspace/functionAppearance.js";
 import { actions } from "../Classes/Actions.js";
 import { loadNext, loadPrev } from "../Actions/inverseFileActions.js";
 import { autoResizeAllComponents } from "../Item/resize.js";
+import { updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
@@ -71,7 +72,7 @@ function loadAction() {
             var lh = new LayerHolder(allText);
             actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
             autoResizeAllComponents();
-
+            updateFullPath(layers.layerList[0]._name);
         };
 
         reader.readAsText(e.target.files[0]);

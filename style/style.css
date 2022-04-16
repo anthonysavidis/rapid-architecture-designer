@@ -1,10 +1,16 @@
 :root {
     --componentTextSize: medium;
-    --operationTextSize: medium;
-    --linkTextSize: medium;
+    --componentFontWeight: normal;
     --componentTextFamily: Arial, Helvetica, sans-serif;
+
+    --operationTextSize: medium;
+    --operationsFontWeight: normal;
     --operationTextFamily: Arial, Helvetica, sans-serif;
+    
+    --linkTextSize: medium;
+    --linkFontWeight:normal;
     --linkTextFamily: Arial, Helvetica, sans-serif;
+    
 }
 
 
