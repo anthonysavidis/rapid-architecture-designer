@@ -172,8 +172,8 @@ select {
 }
 
 .styleButton {
-    width: 75px;
-    height: 25px;
+    width: 100px;
+    height: 50px;
     display: inline;
     background-color: #f1f1f1;
     padding-left: 5px;
@@ -185,8 +185,8 @@ select {
 }
 
 .styleButtonPressed {
-    width: 75px;
-    height: 25px;
+    width: 100px;
+    height: 50px;
     display: inline;
 
     background-color: #ccc;
@@ -208,7 +208,6 @@ select {
     width: 665px;
     height: auto;
     margin-top: 20px;
-
     margin-bottom: 10px;
     display: inline-block;
 

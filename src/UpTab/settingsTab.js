@@ -13,18 +13,20 @@ function createConfigBox() {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
-    }
+    };
 
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
     closeButton.onclick = closeBox;
+    closeButton.style.position = "absolute";
+    closeButton.style.left =680+"px";
     produceMovingBar(box, 0);
     box.appendChild(closeButton);
     produceComponentForm(box);
     produceOperationForm(box);
     produceLinkForm(box);
     var closeButton = document.createElement('div'),
-        confirmationButton = document.createElement('div');
+    confirmationButton = document.createElement('div');
     closeButton.className = "cancelButton";
     closeButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["close"] + "</p>";
     closeButton.onclick = closeBox;

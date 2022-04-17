@@ -234,6 +234,14 @@ input[type=submit]:hover {
 .labelDiv {
     margin-top: 15px;
     padding-bottom: 1px;
-    margin-left: 25px;
+    margin-left: 31px;
+    text-align: left;
+}
+
+.tittleDiv {
+    font-size: x-large;
+    margin-top: 15px;
+    padding-bottom: 1px;
+    margin-left: 20px;
     text-align: left;
 }

@@ -1,16 +1,28 @@
 :root {
     --componentTextSize: medium;
-    --componentFontWeight: normal;
     --componentTextFamily: Arial, Helvetica, sans-serif;
-
+    --componentFontWeight: "normal";
+    --componentFontStyle: "normal";
+    --componentTextDecoration: "none";
+    --componentTextBackgroundColor: #FFFFFF;
+    --componentTextColor: #000000;
     --operationTextSize: medium;
-    --operationsFontWeight: normal;
+    
     --operationTextFamily: Arial, Helvetica, sans-serif;
-    
+    --operationFontWeight: "normal";
+    --operationFontStyle: "normal";
+    --operationTextDecoration: "none";
+    --operationTextBackgroundColor: #FFFFFF;
+    --operationTextColor: #000000;
+
     --linkTextSize: medium;
-    --linkFontWeight:normal;
     --linkTextFamily: Arial, Helvetica, sans-serif;
-    
+    --linkFontWeight: "normal";
+    --linkFontStyle: "normal";
+    --linkTextDecoration: "none";
+    --linkTextBackgroundColor: #FFFFFF;
+    --linkTextColor: #000000;
+
 }
 
 
@@ -262,6 +274,11 @@ body {
 .fName {
     font-size: var(--operationTextSize);
     font-family: var(--operationTextFamily);
+    font-weight: var(--operationFontWeight);
+    font-style: var(--operationFontStyle);
+    text-decoration: var(--operationTextDecoration);
+    color: var(--operationTextColor);
+    background-color: var(--operationTextBackgroundColor);
     text-align: left;
     margin-top: -0.5px;
     margin-left: 40px;
@@ -347,23 +364,45 @@ hr.solid {
 .linkName {
     font-size: var(--linkTextSize);
     font-family: var(--linkTextFamily);
+    font-weight: var(--linkFontWeight);
+    font-style: var(--linkFontStyle);
+    text-decoration: var(--linkTextDecoration);
+    color: var(--linkTextColor);
+    background-color: var(--linkTextBackgroundColor);
+
 }
 
 .componentName {
     position: relative;
     font-size: var(--componentTextSize);
     font-family: var(--componentTextFamily);
+    font-weight: var(--componentFontWeight);
+    font-style: var(--componentFontStyle);
+    text-decoration: var(--componentTextDecoration);
+    color: var(--componentTextColor);
+    background-color: var(--componentTextBackgroundColor);
     white-space: nowrap;
 }
 
 .focusName {
     font-size: var(--linkTextSize);
     font-family: var(--linkTextFamily);
+    font-weight: var(--linkFontWeight);
+    font-style: var(--linkFontStyle);
+    text-decoration: var(--linkTextDecoration);
+    color: var(--linkTextColor);
+    background-color: var(--linkTextBackgroundColor);
+    
 }
 
 .blurName {
     font-size: var(--linkTextSize);
     font-family: var(--linkTextFamily);
+    font-weight: var(--linkFontWeight);
+    font-style: var(--linkFontStyle);
+    text-decoration: var(--linkTextDecoration);
+    color: var(--linkTextColor);
+    background-color: var(--linkTextBackgroundColor);
 }
 
 .layerPath {
