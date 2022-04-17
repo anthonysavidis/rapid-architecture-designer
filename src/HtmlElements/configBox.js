@@ -10,15 +10,16 @@ function produceSizeForm(box, className, callBack) {
 
     select.style.marginLeft = "30px";
     select.style.float = "left";
-    select.innerHTML = "<option value=\"small\">" + constantNames["configBox"]["Small"] + "</option>";
-    select.innerHTML += "<option value=\"medium\">" + constantNames["configBox"]["Medium"] + "</option>";
-    select.innerHTML += "<option value=\"large\">" + constantNames["configBox"]["Large"] + "</option>";
-    select.innerHTML += "<option value=\"x-large\">" + constantNames["configBox"]["xLarge"] + "</option>";
-
+    var selectStr = "";
+    for (var i = 4; i <= 24; i += 2) {
+        selectStr += "<option value=\"" + i + "pt\">" + i + "pt" + "</option>"
+    }
+    select.innerHTML = selectStr;
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
-    select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextSize');
-    (!select.value) ? select.value = "medium" : 1;
+    const rsValue = rs.getPropertyValue('--' + className.toLowerCase() + 'TextSize');
+    select.value = rsValue.charAt(0) === " " ? rsValue.slice(1) : rsValue;
+    // (!select.value) ? select.value = "medium" : 1;
     select.addEventListener("change", function () {
         callBack(className, 'textSize', select.value);
     })
@@ -49,7 +50,7 @@ function produceFontFamilyForms(box, className, callBack) {
   <option value=\"Lucida Console\">Lucida Console</option>';
     select.addEventListener("change", function () {
         callBack(className, 'textFamily', select.value);
-    })
+    });
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
     select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextFamily');
@@ -83,7 +84,7 @@ function produceStyleButtons(box, className, callBack) {
             italicButton.className = "styleButtonPressed";
         }
         else {
-            callBack(className, 'fontStyle',"normal");
+            callBack(className, 'fontStyle', "normal");
             italicButton.className = "styleButton";
         }
     })
@@ -95,7 +96,7 @@ function produceStyleButtons(box, className, callBack) {
             underlinedButton.className = "styleButtonPressed";
         }
         else {
-            callBack(className, 'textDecoration',"none");
+            callBack(className, 'textDecoration', "none");
             underlinedButton.className = "styleButton";
         }
     })
@@ -108,44 +109,44 @@ function produceStyleButtons(box, className, callBack) {
     return;
 }
 
-function createPicker(txt,selected,callBack) {
+function createPicker(txt, selected, callBack) {
     var labelDiv = document.createElement('div');
     labelDiv.style.position = "";
     labelDiv.className = "labelDiv";
 
     labelDiv.innerText = txt;
     var picker = document.createElement('input');
-    picker.type="color";
-    picker.addEventListener("change",function () {
+    picker.type = "color";
+    picker.addEventListener("change", function () {
         callBack(picker.value);
     })
-    picker.style.display="inline-block";
-    picker.style.marginLeft="10px";
-    picker.value=selected.charAt(0)===" "?selected.slice(1):selected;
+    picker.style.display = "inline-block";
+    picker.style.marginLeft = "10px";
+    picker.value = selected.charAt(0) === " " ? selected.slice(1) : selected;
     // picker.value= rs.getPropertyValue('--' + className.toLowerCase() + capitalizeFirstLetter(selected));
     labelDiv.appendChild(picker);
     // picker.defaultValue = rs.getPropertyValue('--' + className.toLowerCase() + capitalizeFirstLetter(selected));
     return labelDiv;
 }
 
-function produceTextColor(box,className,callBack) {
+function produceTextColor(box, className, callBack) {
 
-    
+
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
-    const selectedColor= rs.getPropertyValue('--' + className.toLowerCase() + "TextColor");
-    const selectedBackgroundColor= rs.getPropertyValue('--' + className.toLowerCase() + "TextBackgroundColor");
+    const selectedColor = rs.getPropertyValue('--' + className.toLowerCase() + "TextColor");
+    const selectedBackgroundColor = rs.getPropertyValue('--' + className.toLowerCase() + "TextBackgroundColor");
 
-    const textCallBack = (value)=>{callBack(className,"textColor",value);};
-    const textBackgroundCallBack = (value)=>{callBack(className,"textBackgroundColor",value);};
+    const textCallBack = (value) => { callBack(className, "textColor", value); };
+    const textBackgroundCallBack = (value) => { callBack(className, "textBackgroundColor", value); };
 
 
-    var textColor = createPicker("Text color:",selectedColor,textCallBack);
-    var backgroundColor = createPicker("Background color:",selectedBackgroundColor,textBackgroundCallBack);
-    textColor.style.float="left";
-    
+    var textColor = createPicker("Text color:", selectedColor, textCallBack);
+    var backgroundColor = createPicker("Background color:", selectedBackgroundColor, textBackgroundCallBack);
+    textColor.style.float = "left";
+
     box.appendChild(textColor);
-    backgroundColor.style.float="right";
+    backgroundColor.style.float = "right";
     backgroundColor.style.marginRight = "186px";
     box.appendChild(backgroundColor);
     // box.appendChild(picker);
@@ -163,7 +164,7 @@ function produceComponentForm(box) {
     produceSizeForm(div, "Component", callBack);
     produceStyleButtons(div, "Component", callBack);
     produceFontFamilyForms(div, "Component", callBack);
-    produceTextColor(div,"Component",callBack); 
+    produceTextColor(div, "Component", callBack);
     box.appendChild(div);
     return;
 }
@@ -173,19 +174,19 @@ function produceOperationForm(box) {
     var labelDiv = document.createElement('div');
     labelDiv.className = "tittleDiv";
     labelDiv.style.position = "relative";
-    
+
     labelDiv.innerText = "Operation Settings";
     labelDiv.style.marginTop = "10px";
-    
+
     var div = document.createElement('div');
     div.className = "formContainer";
-    
+
     div.appendChild(labelDiv);
     const callBack = (type, attributeChanged, value) => { configStyle.operationsText.handleChange(type, attributeChanged, value) };
     produceSizeForm(div, "Operation", callBack);
     produceStyleButtons(div, "Operation", callBack);
     produceFontFamilyForms(div, "Operation", callBack);
-    produceTextColor(div,"Operation",callBack); 
+    produceTextColor(div, "Operation", callBack);
     box.appendChild(div);
     return;
 }
@@ -204,10 +205,41 @@ function produceLinkForm(box) {
     produceSizeForm(div, "Link", callBack);
     produceStyleButtons(div, "Link", callBack);
     produceFontFamilyForms(div, "Link", callBack);
-    produceTextColor(div,"Link",callBack); 
+    produceTextColor(div, "Link", callBack);
+    div.style.marginBottom = "30px";
     box.appendChild(div);
     return;
 }
 
+function produceComponentConfigBox(box) {
 
-export { produceComponentForm, produceOperationForm, produceLinkForm };
+    const backgroundCallBack = (value) => { configStyle.handleChange('Component', "backgroundColor", value); };
+    const borderCallBack = (value) => { configStyle.handleChange('Component', "borderColor", value); };
+    const selectedBorderCallBack = (value) => { configStyle.handleChange('Component', "selectedBorderColor", value); };
+    var r = document.querySelector(':root');
+    var rs = getComputedStyle(r);
+    var selectedBackgroundColor = rs.getPropertyValue('--componentBackgroundColor');
+    var borderColor = rs.getPropertyValue('--componentBorderColor');
+    var selectedBorderColor = rs.getPropertyValue('--componentSelectedBorderColor');
+
+    selectedBackgroundColor = selectedBackgroundColor.charAt(0) === " " ? selectedBackgroundColor.slice(1) : selectedBackgroundColor;
+    selectedBorderColor = selectedBorderColor.charAt(0) === " " ? selectedBorderColor.slice(1) : selectedBorderColor;
+    borderColor = borderColor.charAt(0) === " " ? borderColor.slice(1) : borderColor;
+    var backgroundColorPicker = createPicker("Component color:", selectedBackgroundColor, backgroundCallBack);
+    var selectedBorderColorPicker = createPicker("Selected border color:", selectedBorderColor, selectedBorderCallBack);
+    var borderColorPicker = createPicker("Border color:", borderColor, borderCallBack);
+    
+    backgroundColorPicker.style.float="left";
+    borderColorPicker.style.float="right";
+    selectedBorderColorPicker.style.float="right";
+    borderColorPicker.style.marginRight=25+"px";
+    selectedBorderColorPicker.style.marginRight=30+"px";
+    selectedBorderColorPicker.style.marginTop =backgroundColorPicker.style.marginTop = borderColorPicker.style.marginTop = 40+"px";  
+    selectedBorderColorPicker.style.marginBottom =backgroundColorPicker.style.marginBottom = borderColorPicker.style.marginBottom = 20+"px";  
+    box.appendChild(backgroundColorPicker);
+    box.appendChild(selectedBorderColorPicker);
+    box.appendChild(borderColorPicker);
+    return;
+}
+
+export { produceComponentForm, produceOperationForm, produceLinkForm,produceComponentConfigBox };

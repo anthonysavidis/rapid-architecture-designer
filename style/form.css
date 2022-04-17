@@ -232,7 +232,7 @@ input[type=submit]:hover {
     margin-right: 2.5px;
 }
 .labelDiv {
-    margin-top: 15px;
+    margin-top: 7px;
     padding-bottom: 1px;
     margin-left: 31px;
     text-align: left;
@@ -240,7 +240,7 @@ input[type=submit]:hover {
 
 .tittleDiv {
     font-size: x-large;
-    margin-top: 15px;
+    margin-top: 7px;
     padding-bottom: 1px;
     margin-left: 20px;
     text-align: left;

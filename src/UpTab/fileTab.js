@@ -25,6 +25,7 @@ function readTextFile(file) {
                     document.getElementById(layers.layerList[x]._id + "functions").remove();
                 }
                 var lh = new LayerHolder(allText);
+            autoResizeAllComponents();
 
             }
         }
@@ -95,6 +96,7 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
+    loadSpecific("compilerFixed.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

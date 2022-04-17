@@ -47,6 +47,7 @@ function addAllButtons() {
     addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
 
     addButton(constantNames['settingsTab']["Configure"], "configureButton", constantNames['settingsTab']['tabName']);
+    addButton(constantNames['settingsTab']["Configure Component"], "configureComponentButton", constantNames['settingsTab']['tabName']);
 
 }
 

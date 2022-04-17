@@ -1,26 +1,33 @@
 :root {
-    --componentTextSize: medium;
+    --componentTextSize: 12pt;
     --componentTextFamily: Arial, Helvetica, sans-serif;
     --componentFontWeight: "normal";
     --componentFontStyle: "normal";
     --componentTextDecoration: "none";
-    --componentTextBackgroundColor: #FFFFFF;
+    --componentTextBackgroundColor: transparent;
     --componentTextColor: #000000;
-    --operationTextSize: medium;
-    
+
+    --componentBackgroundColor: #FFFFFF;
+    --componentBorderColor: #000000;
+    --componentBorderWidth: 2px;
+    --componentSelectedBorderColor:blue;
+    --componentTextBorderWidth:0px;
+
+
+    --operationTextSize: 12pt;
     --operationTextFamily: Arial, Helvetica, sans-serif;
     --operationFontWeight: "normal";
     --operationFontStyle: "normal";
     --operationTextDecoration: "none";
-    --operationTextBackgroundColor: #FFFFFF;
+    --operationTextBackgroundColor: transparent;;
     --operationTextColor: #000000;
 
-    --linkTextSize: medium;
+    --linkTextSize: 12pt;
     --linkTextFamily: Arial, Helvetica, sans-serif;
     --linkFontWeight: "normal";
     --linkFontStyle: "normal";
     --linkTextDecoration: "none";
-    --linkTextBackgroundColor: #FFFFFF;
+    --linkTextBackgroundColor: transparent;
     --linkTextColor: #000000;
 
 }
@@ -120,11 +127,13 @@
     color: black;
     /* outline-color: black; */
     z-index: 9;
-    background: rgba(255, 255, 255);
+    background: var(--componentBackgroundColor);
     /* background: transparent; */
     /* outline: 2px black; */
     /* outline-color: white; */
-    border: 2px solid rgba(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    border: var(--componentBorderWidth) solid var(--componentBorderColor);
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
@@ -138,7 +147,9 @@
     /* border-radius: 10%; */
     color: black;
     z-index: 9;
-    background: rgba(255, 255, 255);
+    background: var(--componentBackgroundColor);
+    display: flex;
+    justify-content: center;
     font-size: medium;
     font-family: Arial, Helvetica, sans-serif;
     /* background: transparent; */
@@ -146,7 +157,8 @@
     /* outline-color: blue; */
     -moz-box-sizing: border-box;
     /* border: 2px  solid rgba(0,0,0,0.5);  */
-    border: 2px solid blue;
+    border: var(--componentBorderWidth) solid var(--componentSelectedBorderColor);
+
     box-sizing: border-box;
 }
 
@@ -373,6 +385,11 @@ hr.solid {
 }
 
 .componentName {
+    width: 100%;
+    height: fit-content;
+    padding: 4px;
+    /* can be done with calc */
+    margin-top: 6px;
     position: relative;
     font-size: var(--componentTextSize);
     font-family: var(--componentTextFamily);
@@ -380,6 +397,7 @@ hr.solid {
     font-style: var(--componentFontStyle);
     text-decoration: var(--componentTextDecoration);
     color: var(--componentTextColor);
+    border: var(--componentTextBorderWidth) solid black;
     background-color: var(--componentTextBackgroundColor);
     white-space: nowrap;
 }
@@ -392,7 +410,7 @@ hr.solid {
     text-decoration: var(--linkTextDecoration);
     color: var(--linkTextColor);
     background-color: var(--linkTextBackgroundColor);
-    
+
 }
 
 .blurName {

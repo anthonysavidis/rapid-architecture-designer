@@ -6,7 +6,8 @@ const constantNames = {
     },
     "settingsTab": {
         "tabName": "Settings",
-        "Configure": "Configure"
+        "Configure": "Configure",
+        "Configure Component":"Configure Component"
     },
     "editTab": {
         "tabName": "Edit",
