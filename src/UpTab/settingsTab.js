@@ -1,5 +1,5 @@
 import { constantNames } from "../config/constantNames.js";
-import { produceComponentConfigBox, produceComponentForm, produceLinkForm, produceOperationForm } from "../HtmlElements/configBox.js";
+import { produceComponentConfigBox, produceComponentForm, produceLinkForm, produceOperationForm, produceSliders, produceSwitches } from "../HtmlElements/configBox.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
 
@@ -9,7 +9,7 @@ function createConfigBox() {
     var box = document.createElement('div');
     box.className = 'configurationBox';
     produceGrayLayer(box, "", "", "");
-    var closeBox = function() {
+    var closeBox = function () {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
@@ -19,20 +19,20 @@ function createConfigBox() {
     closeButton.className = "closeBoxButton";
     closeButton.onclick = closeBox;
     closeButton.style.position = "absolute";
-    closeButton.style.left =680+"px";
+    closeButton.style.left = 680 + "px";
     produceMovingBar(box, 0);
     box.appendChild(closeButton);
     produceComponentForm(box);
     produceOperationForm(box);
     produceLinkForm(box);
     var closeButton = document.createElement('div'),
-    confirmationButton = document.createElement('div');
+        confirmationButton = document.createElement('div');
     closeButton.className = "cancelButton";
     closeButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["close"] + "</p>";
     closeButton.onclick = closeBox;
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
-    confirmationButton.onclick = function() {
+    confirmationButton.onclick = function () {
         closeBox();
     }
     box.appendChild(closeButton);
@@ -46,8 +46,9 @@ function createConfigBox() {
 function createComponentConfigBox() {
     var box = document.createElement('div');
     box.className = 'configurationBox';
+    
     produceGrayLayer(box, "", "", "");
-    var closeBox = function() {
+    var closeBox = function () {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
@@ -57,25 +58,50 @@ function createComponentConfigBox() {
     closeButton.className = "closeBoxButton";
     closeButton.onclick = closeBox;
     closeButton.style.position = "absolute";
-    closeButton.style.left =680+"px";
+    closeButton.style.left = 680 + "px";
     produceMovingBar(box, 0);
     box.appendChild(closeButton);
     produceComponentConfigBox(box);
-
+    produceSwitches(box);
+    produceSliders(box);
+    /*
+    <input type="checkbox" id="switch"
+                    class="checkbox" />
+        <label for="switch" class="toggle">
+    */
+  
+  
     var closeButton = document.createElement('div'),
-    confirmationButton = document.createElement('div');
+        confirmationButton = document.createElement('div');
     closeButton.className = "cancelButton";
     closeButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["close"] + "</p>";
     closeButton.onclick = closeBox;
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
-    confirmationButton.onclick = function() {
+    confirmationButton.onclick = function () {
         closeBox();
     }
-    box.appendChild(closeButton);
-    box.appendChild(confirmationButton);
+    var buttonsContainer = document.createElement('div');
+    buttonsContainer.style.position = "relative"
+    buttonsContainer.style.width = "100%";
+    buttonsContainer.style.height = 40+ "px";
+    buttonsContainer.style.display = "inline-block";
+
+    buttonsContainer.style.marginTop = 25 + "px";
+    buttonsContainer.appendChild(closeButton);
+    buttonsContainer.appendChild(confirmationButton);
+    box.appendChild(buttonsContainer);
+
     document.getElementById('body').appendChild(box);
     addMotion(box);
+    document.getElementById("autofitSwitch").addEventListener("change",()=>{
+        if(document.getElementById("autofitSwitch").checked){
+            document.getElementById('innerMarginSlider').style.display="inline-block";
+        }
+        else{
+            document.getElementById('innerMarginSlider').style.display="none";
+        }
+    });
     return;
 }
 

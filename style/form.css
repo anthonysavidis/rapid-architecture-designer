@@ -83,6 +83,7 @@
 
 
 }
+
 .form-style-6 input[type="text"]:focus,
 .form-style-6 input[type="date"]:focus,
 .form-style-6 input[type="datetime"]:focus,
@@ -97,11 +98,12 @@
     padding: 3%;
     border: 1px solid #43d1af;
 }
+
 .formButton {
     /* box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box; */
-    
+
     width: 40%;
     padding: 2%;
     background: #909090;
@@ -111,12 +113,15 @@
     border-left-style: none;
     color: #fff;
 }
+
 .formButton:hover {
     background: #627070;
 }
+
 * {
     box-sizing: border-box;
 }
+
 input[type=text],
 select,
 textarea {
@@ -126,6 +131,7 @@ textarea {
     border-radius: 4px;
     resize: vertical;
 }
+
 input[type=text]:focus,
 textarea:focus,
 .atomicFunctionRec:focus,
@@ -137,12 +143,14 @@ textarea:hover,
 .atomicFunctionRec:hover {
     border: 2px solid blue;
 }
+
 label {
     padding: 5px 5px 5px 0;
     display: inline-block;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
 }
+
 input[type=submit] {
     background-color: #4CAF50;
     color: white;
@@ -152,9 +160,11 @@ input[type=submit] {
     cursor: pointer;
     float: right;
 }
+
 input[type=submit]:hover {
     background-color: #45a049;
 }
+
 .container {
     border-radius: 5px;
     background-color: #f2f2f2;
@@ -165,11 +175,13 @@ input[type=submit]:hover {
     border: #899c98 1px solid;
     /* display:none; */
 }
+
 .col-25 {
     float: left;
     width: 25%;
     margin-top: 6px;
 }
+
 .col-75 {
     float: left;
     width: 70%;
@@ -186,6 +198,7 @@ input[type=submit]:hover {
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
+
     .col-25,
     .col-75,
     input[type=submit] {
@@ -193,13 +206,14 @@ input[type=submit]:hover {
         margin-top: 0;
     }
 }
+
 .atomicFunction {
     width: 90%;
     height: 30px;
     text-align: center;
     cursor: grab;
     /* position: absolute; */
-    
+
     line-height: 170%;
     background-color: #909090;
     border: 1px solid black;
@@ -208,6 +222,7 @@ input[type=submit]:hover {
     margin-top: 5px;
     z-index: 11;
 }
+
 .atomicFunctionRec {
     width: 100%;
     height: 200px;
@@ -222,6 +237,7 @@ input[type=submit]:hover {
     user-select: none;
     overflow: scroll;
 }
+
 .closeInfoElement {
     width: 20px;
     height: 20px;
@@ -231,6 +247,7 @@ input[type=submit]:hover {
     margin-top: -23px;
     margin-right: 2.5px;
 }
+
 .labelDiv {
     margin-top: 7px;
     padding-bottom: 1px;
@@ -244,4 +261,112 @@ input[type=submit]:hover {
     padding-bottom: 1px;
     margin-left: 20px;
     text-align: left;
+}
+
+.slidecontainer {
+    width: 400px;
+    margin-top: 15px;
+    margin-right: 0;
+}
+
+.slider {
+    -webkit-appearance: none;
+    display: inline-block;
+    width: 30%;
+    height: 10px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
+}
+
+
+
+.h1Text {
+    color: lightblue;
+}
+
+/* toggle in label designing */
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 27px;
+    background-color: #ccc;
+    border-radius: 30px;
+    border: 2px solid #FFFFFF;
+}
+
+/* After slide changes */
+.toggle:after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    top: 1.5px;
+    left: 1px;
+    transition: all 0.5s;
+}
+
+/* Toggle text */
+.pText {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+/* Checkbox checked effect */
+.checkbox:checked+.toggle::after {
+    left: 29px;
+}
+
+/* Checkbox checked toggle label bg color */
+.checkbox:checked+.toggle {
+    background-color: deepskyblue;
+}
+
+/* Checkbox vanished */
+.checkbox {
+    display: none;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.gridItem {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
 }

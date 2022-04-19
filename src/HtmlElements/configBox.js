@@ -228,18 +228,104 @@ function produceComponentConfigBox(box) {
     var backgroundColorPicker = createPicker("Component color:", selectedBackgroundColor, backgroundCallBack);
     var selectedBorderColorPicker = createPicker("Selected border color:", selectedBorderColor, selectedBorderCallBack);
     var borderColorPicker = createPicker("Border color:", borderColor, borderCallBack);
-    
-    backgroundColorPicker.style.float="left";
-    borderColorPicker.style.float="right";
-    selectedBorderColorPicker.style.float="right";
-    borderColorPicker.style.marginRight=25+"px";
-    selectedBorderColorPicker.style.marginRight=30+"px";
-    selectedBorderColorPicker.style.marginTop =backgroundColorPicker.style.marginTop = borderColorPicker.style.marginTop = 40+"px";  
-    selectedBorderColorPicker.style.marginBottom =backgroundColorPicker.style.marginBottom = borderColorPicker.style.marginBottom = 20+"px";  
+
+    backgroundColorPicker.style.float = "left";
+    borderColorPicker.style.float = "right";
+    selectedBorderColorPicker.style.float = "right";
+    borderColorPicker.style.marginRight = 25 + "px";
+    selectedBorderColorPicker.style.marginRight = 30 + "px";
+    selectedBorderColorPicker.style.marginTop = backgroundColorPicker.style.marginTop = borderColorPicker.style.marginTop = 40 + "px";
+    selectedBorderColorPicker.style.marginBottom = backgroundColorPicker.style.marginBottom = borderColorPicker.style.marginBottom = 20 + "px";
     box.appendChild(backgroundColorPicker);
     box.appendChild(selectedBorderColorPicker);
     box.appendChild(borderColorPicker);
     return;
 }
 
-export { produceComponentForm, produceOperationForm, produceLinkForm,produceComponentConfigBox };
+function getSliderGroup(labelName, minVal, maxVal, defVal, callBack) {
+    var sliderContainer = document.createElement('div');
+    sliderContainer.className = "slidecontainer";
+    var slider = document.createElement('input');
+    slider.type = "range";
+    slider.min = minVal;
+    slider.max = maxVal;
+    slider.value = defVal;
+    slider.className = "slider";
+    var label = document.createElement('span');
+    label.innerText = labelName;
+    label.style.display = "inline-block";
+    label.style.marginLeft = 10+"px";
+    sliderContainer.appendChild(label);
+    var span = document.createElement('span');
+    span.innerText = defVal+"px";
+    span.style.marginLeft = 8+"px";
+    slider.style.marginLeft = 10+"px";
+    slider.addEventListener("change", () => {
+        span.innerText = slider.value+"px";
+        callBack(slider.value);
+    })
+    sliderContainer.appendChild(slider);
+    sliderContainer.appendChild(span);
+    return sliderContainer;
+}
+
+function produceSliders(box) {
+    const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
+    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px"); };
+    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px"); };
+
+
+    var borderWidthSlider = getSliderGroup("Component's border width:",1, 10, 2, borderSliderCallBack);
+    borderWidthSlider.style.float = "right";
+    borderWidthSlider.style.marginRight = "82px";
+    borderWidthSlider.style.marginTop = "17px";
+
+    var innerMarginDiv = document.createElement('div');
+    var innerMarginX = getSliderGroup("Inner Margin X:",1, 50, 4, innerMarginXCallBack);
+    var innerMarginY = getSliderGroup("Inner Margin Y:",1, 50, 4, innerMarginYCallBack);
+    innerMarginY.style.width=innerMarginX.style.width = "100%";
+    innerMarginY.style.display =innerMarginX.style.display = "inline-block";
+    innerMarginDiv.id = "innerMarginSlider"; 
+    innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
+    innerMarginDiv.style.marginTop = "17px";
+    innerMarginDiv.style.width = "100%";
+    innerMarginDiv.style.height = "100px";
+    innerMarginDiv.style.display = "none";
+
+    box.appendChild(borderWidthSlider);
+    innerMarginDiv.appendChild(innerMarginX);
+    innerMarginDiv.appendChild(innerMarginY);
+    box.appendChild (innerMarginDiv);
+    return;
+}
+
+function getSwitch(id) {
+    var container = document.createElement('div');
+    var label = document.createElement('span');
+    label.innerText = "Auto-fit:";
+    label.style.display = "inline-block";
+    label.style.float = "left";
+    label.style.marginLeft = 10+"px";
+    label.style.marginTop = 7+"px";
+
+    container.appendChild(label);
+    container.innerHTML += '<input type="checkbox" id="'+id+'"class="checkbox" /><label for="'+id+'" class="toggle">';
+    container.style.display = 'inline-block';
+    container.style.width = "150px";
+    container.style.height = "25px";
+    container.style.float = "left";
+    return container;
+}
+
+function produceSwitches(box) {
+    
+    var switcher = getSwitch("autofitSwitch");
+    switcher.style.marginLeft = "22px";
+    switcher.style.marginTop = "12px";
+    box.appendChild(switcher);
+    return;
+}
+
+
+
+export { produceComponentForm, produceOperationForm, produceLinkForm, produceComponentConfigBox, produceSliders,produceSwitches };

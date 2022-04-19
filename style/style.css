@@ -7,12 +7,14 @@
     --componentTextBackgroundColor: transparent;
     --componentTextColor: #000000;
 
+
     --componentBackgroundColor: #FFFFFF;
     --componentBorderColor: #000000;
     --componentBorderWidth: 2px;
     --componentSelectedBorderColor:blue;
     --componentTextBorderWidth:0px;
-
+    --componentInnerMarginX:4px;
+    --componentInnerMarginY:4px;
 
     --operationTextSize: 12pt;
     --operationTextFamily: Arial, Helvetica, sans-serif;
@@ -118,7 +120,7 @@
 
 .component {
     width: 165px;
-    height: 75px;
+    height: auto;
     text-align: center;
     position: absolute;
     cursor: grab;
@@ -140,7 +142,8 @@
 
 .selected {
     width: 165px;
-    height: 75px;
+    height: auto;
+    /* height: 75px; */
     text-align: center;
     position: absolute;
     cursor: grab;
@@ -387,7 +390,11 @@ hr.solid {
 .componentName {
     width: 100%;
     height: fit-content;
-    padding: 4px;
+    /* padding: 4px; */
+    padding-left: var(--componentInnerMarginX);
+    padding-right: var(--componentInnerMarginX);
+    padding-top: var(--componentInnerMarginY);
+    padding-bottom: var(--componentInnerMarginY);
     /* can be done with calc */
     margin-top: 6px;
     position: relative;
