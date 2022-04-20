@@ -191,7 +191,9 @@ class Item {
             //     console.log("dragStart");
             //     ev.dataTransfer.setData("text/plain", ev.target.id);
             // }
-
+            // document.getElementById(this._id).style.width="100px";
+            // document.getElementById(this._id).style.height="50px";
+            // autoResize(this._id, this._name);
     }
     spawnLink() {
         var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--

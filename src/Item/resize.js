@@ -31,7 +31,7 @@ function getTextDimensions(str) {
     return { width: width, height: height };
 }
 
-function canResize(id, pointerX, pointerY) {
+function canResize(id, pointerX, pointerY) { //NEEDS REDOING
     var textDim = getTextDimensions(document.getElementById(id + 'name').innerText);
     var nameRec = document.getElementById(id + 'name').getBoundingClientRect();
     const pRec = { x: nameRec.x, y: nameRec.y, width: textDim.width + 40, height: textDim.height };
@@ -57,9 +57,7 @@ function autoResize(id, text) {
     return;
 }
 
-
-
-function autoResizeAllComponents() {
+function autoGrow() {
     const currentLayerId = layers.selectedLayer._id;
     for (var x in layers.layerList) {
         layers.changeLayer(layers.layerList[x]._id);
@@ -71,6 +69,14 @@ function autoResizeAllComponents() {
         }
     }
     layers.changeLayer(currentLayerId);
+}
+
+function autoResizeAllComponents() {
+    if(configStyle.autoFit){
+        autoResizeAutoFit();
+    }else{
+        autoGrow();
+    }
     return;
 }
 
@@ -83,7 +89,6 @@ function autoResizeAutoFit() {
 
         for (var y in layerItems.itemList) {
             if(layerItems.itemList[y]._type==="Component"){
-                console.log(configStyle);
                 var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
                 var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
                 
@@ -91,7 +96,6 @@ function autoResizeAutoFit() {
                 var widthOfName = dims.width;
                 var heightOfName = dims.height;
 
-                console.log(offsetY);
                 document.getElementById(layerItems.itemList[y]._id).style.width= widthOfName + 2*offsetX+"px";
                 document.getElementById(layerItems.itemList[y]._id).style.height= heightOfName + 2*offsetY+"px";
             }

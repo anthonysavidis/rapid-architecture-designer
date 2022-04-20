@@ -7,6 +7,7 @@ class Config{
         this.linkText = new TextConfig();
         this.operationsText = new TextConfig();
         this.configJSON={};
+        this.autoFit = false;
         this.configJSON["innerMarginX"] = "2px";
         this.configJSON["innerMarginY"] = "2px";
     }

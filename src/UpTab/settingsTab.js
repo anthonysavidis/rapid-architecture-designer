@@ -95,6 +95,7 @@ function createComponentConfigBox() {
     document.getElementById('body').appendChild(box);
     addMotion(box);
     document.getElementById("autofitSwitch").addEventListener("change",()=>{
+        configStyle.autoFit = document.getElementById("autofitSwitch").checked;
         if(document.getElementById("autofitSwitch").checked){
             document.getElementById('innerMarginSlider').style.display="inline-block";
         }
