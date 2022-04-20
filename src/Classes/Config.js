@@ -7,6 +7,8 @@ class Config{
         this.linkText = new TextConfig();
         this.operationsText = new TextConfig();
         this.configJSON={};
+        this.configJSON["innerMarginX"] = "2px";
+        this.configJSON["innerMarginY"] = "2px";
     }
     
     setJSONValue(key, value) {
@@ -14,6 +16,10 @@ class Config{
         return;
     }
     
+    getJSONValue(key){
+        return this.configJSON[key];
+    }
+
     handleChange(type, attributeChanged, value) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);

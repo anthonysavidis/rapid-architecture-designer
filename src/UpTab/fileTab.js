@@ -25,7 +25,7 @@ function readTextFile(file) {
                     document.getElementById(layers.layerList[x]._id + "functions").remove();
                 }
                 var lh = new LayerHolder(allText);
-            autoResizeAllComponents();
+            // autoResizeAllComponents();
 
             }
         }
@@ -72,7 +72,7 @@ function loadAction() {
             }
             var lh = new LayerHolder(allText);
             actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
-            autoResizeAllComponents();
+            // autoResizeAllComponents();
             updateFullPath(layers.layerList[0]._name);
         };
 
@@ -96,7 +96,7 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
-    loadSpecific("compilerFixed.txt");
+    // loadSpecific("compilerFixed.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

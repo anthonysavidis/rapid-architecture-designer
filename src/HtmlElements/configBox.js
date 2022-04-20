@@ -1,7 +1,7 @@
 import { configStyle } from "../Classes/Config.js";
 import { capitalizeFirstLetter } from "../Classes/TextConfig.js";
 import { constantNames } from "../config/constantNames.js";
-import { autoResizeAllComponents } from "../Item/resize.js";
+import { autoResizeAllComponents, autoResizeAutoFit } from "../Item/resize.js";
 
 function produceSizeForm(box, className, callBack) {
     var select = document.createElement('select');
@@ -271,8 +271,8 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack) {
 
 function produceSliders(box) {
     const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
-    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px"); };
-    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px"); };
+    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px");autoResizeAutoFit(); };
+    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px");autoResizeAutoFit(); };
 
 
     var borderWidthSlider = getSliderGroup("Component's border width:",1, 10, 2, borderSliderCallBack);

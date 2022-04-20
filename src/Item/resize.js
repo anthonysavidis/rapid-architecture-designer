@@ -5,6 +5,7 @@ import { moveNext, movePrev } from "../Actions/inverseMovement.js";
 import { renderInfoButton } from "../HtmlElements/componentInfo.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { layers } from "../Classes/LayerHolder.js";
+import { configStyle } from "../Classes/Config.js";
 
 function getTextDimensions(str) {
 
@@ -73,6 +74,33 @@ function autoResizeAllComponents() {
     return;
 }
 
+function autoResizeAutoFit() {
+    const currentLayerId = layers.selectedLayer._id;
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+        // console.log(layerItems);
+
+        for (var y in layerItems.itemList) {
+            if(layerItems.itemList[y]._type==="Component"){
+                console.log(configStyle);
+                var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
+                var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+                
+                var dims = getTextDimensions(document.getElementById(layerItems.itemList[y]._id+'name').innerText);
+                var widthOfName = dims.width;
+                var heightOfName = dims.height;
+
+                console.log(offsetY);
+                document.getElementById(layerItems.itemList[y]._id).style.width= widthOfName + 2*offsetX+"px";
+                document.getElementById(layerItems.itemList[y]._id).style.height= heightOfName + 2*offsetY+"px";
+            }
+        }
+    }
+    layers.changeLayer(currentLayerId);
+    return;
+}
+
 function addResize(id) {
     var p = document.getElementById(id);
     if (document.getElementById(id + "resizer")) {
@@ -128,4 +156,4 @@ function addResize(id) {
 //     p.removeChild(resizer);
 // }
 
-export { addResize, autoResize, getTextDimensions, autoResizeAllComponents };
+export { addResize, autoResize, getTextDimensions, autoResizeAllComponents,autoResizeAutoFit };
