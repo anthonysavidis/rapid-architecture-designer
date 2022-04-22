@@ -1,5 +1,6 @@
-import { autoResizeAllComponents } from "../Item/resize.js";
+import { autoResizeAllComponents } from "../Item/autoResize.js";
 import { capitalizeFirstLetter, TextConfig } from "./TextConfig.js";
+import { constantValues } from "../config/constantValues.js";
 
 class Config{
     constructor(){
@@ -8,8 +9,8 @@ class Config{
         this.operationsText = new TextConfig();
         this.configJSON={};
         this.autoFit = false;
-        this.configJSON["innerMarginX"] = "2px";
-        this.configJSON["innerMarginY"] = "2px";
+        this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"]+"px";
+        this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"]+"px";
     }
     
     setJSONValue(key, value) {

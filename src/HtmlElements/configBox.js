@@ -1,7 +1,7 @@
 import { configStyle } from "../Classes/Config.js";
 import { capitalizeFirstLetter } from "../Classes/TextConfig.js";
 import { constantNames } from "../config/constantNames.js";
-import { autoResizeAllComponents, autoResizeAutoFit } from "../Item/resize.js";
+import { autoResizeAutoFit, autoResizeAllComponents } from "../Item/autoResize.js";
 
 function produceSizeForm(box, className, callBack) {
     var select = document.createElement('select');
@@ -225,9 +225,9 @@ function produceComponentConfigBox(box) {
     selectedBackgroundColor = selectedBackgroundColor.charAt(0) === " " ? selectedBackgroundColor.slice(1) : selectedBackgroundColor;
     selectedBorderColor = selectedBorderColor.charAt(0) === " " ? selectedBorderColor.slice(1) : selectedBorderColor;
     borderColor = borderColor.charAt(0) === " " ? borderColor.slice(1) : borderColor;
-    var backgroundColorPicker = createPicker("Component color:", selectedBackgroundColor, backgroundCallBack);
-    var selectedBorderColorPicker = createPicker("Selected border color:", selectedBorderColor, selectedBorderCallBack);
-    var borderColorPicker = createPicker("Border color:", borderColor, borderCallBack);
+    var backgroundColorPicker = createPicker(constantNames["configBox"]["componentColor"], selectedBackgroundColor, backgroundCallBack);
+    var selectedBorderColorPicker = createPicker(constantNames["configBox"]["selectedBorder"], selectedBorderColor, selectedBorderCallBack);
+    var borderColorPicker = createPicker(constantNames["configBox"]["borderColor"], borderColor, borderCallBack);
 
     backgroundColorPicker.style.float = "left";
     borderColorPicker.style.float = "right";
@@ -271,18 +271,18 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack) {
 
 function produceSliders(box) {
     const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
-    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px");autoResizeAutoFit(); };
-    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px");autoResizeAutoFit(); };
+    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px");autoResizeAllComponents(); };
+    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px");autoResizeAllComponents(); };
 
 
     var borderWidthSlider = getSliderGroup("Component's border width:",1, 10, 2, borderSliderCallBack);
     borderWidthSlider.style.float = "right";
-    borderWidthSlider.style.marginRight = "82px";
+    borderWidthSlider.style.marginRight = "70px";
     borderWidthSlider.style.marginTop = "17px";
 
     var innerMarginDiv = document.createElement('div');
-    var innerMarginX = getSliderGroup("Inner Margin X:",1, 50, 4, innerMarginXCallBack);
-    var innerMarginY = getSliderGroup("Inner Margin Y:",1, 50, 4, innerMarginYCallBack);
+    var innerMarginX = getSliderGroup("Inner Margin X:",1, 50, configStyle.getJSONValue("innerMarginX").split("px")[0], innerMarginXCallBack);
+    var innerMarginY = getSliderGroup("Inner Margin Y:",1, 50, configStyle.getJSONValue("innerMarginY").split("px")[0], innerMarginYCallBack);
     innerMarginY.style.width=innerMarginX.style.width = "100%";
     innerMarginY.style.display =innerMarginX.style.display = "inline-block";
     innerMarginDiv.id = "innerMarginSlider"; 
@@ -299,13 +299,14 @@ function produceSliders(box) {
     return;
 }
 
-function getSwitch(id) {
+function getSwitch(id,labelText) {
     var container = document.createElement('div');
     var label = document.createElement('span');
-    label.innerText = "Auto-fit:";
+    label.innerText = labelText;
     label.style.display = "inline-block";
     label.style.float = "left";
     label.style.marginLeft = 10+"px";
+    label.style.marginRight = 10+"px";
     label.style.marginTop = 7+"px";
 
     container.appendChild(label);
@@ -319,9 +320,10 @@ function getSwitch(id) {
 
 function produceSwitches(box) {
     
-    var switcher = getSwitch("autofitSwitch");
+    var switcher = getSwitch("autofitSwitch",constantNames["configBox"]["autoFitLabel"]);
     switcher.style.marginLeft = "22px";
     switcher.style.marginTop = "12px";
+    switcher.style.width = "auto";
     box.appendChild(switcher);
     return;
 }

@@ -2,6 +2,8 @@ import { renderLine } from "../Item/createLine.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { configStyle } from "../Classes/Config.js";
+import { getTextDimensions } from "./resize.js";
+import { constantValues } from "../config/constantValues.js";
 
 
 function autoGrow(component) {
@@ -25,7 +27,7 @@ function autoGrow(component) {
 function autoResizeAutoFit(component) {
     var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
-
+    var componentRect = document.getElementById(component._id).getBoundingClientRect();
     var dims = getTextDimensions(document.getElementById(component._id + 'name').innerText);
     var widthOfName = dims.width;
     var heightOfName = dims.height;
@@ -36,8 +38,8 @@ function autoResizeAutoFit(component) {
 }
 
 var autoResizeDispatch = {
-    "true": autoResizeAutoFit,
-    "false": autoGrow
+    "autoFit": autoResizeAutoFit,
+    "autoGrow": autoGrow
 }
 
 function autoResizeAllComponents() {
@@ -49,18 +51,35 @@ function autoResizeAllComponents() {
 
         for (var y in layerItems.itemList) {
             if (layerItems.itemList[y]._type === "Component") {
-                autoResizeDispatch[configStyle.autoFit.toString()](layerItems.itemList[y]);
+                if (!passAutoFitRestrictions(layerItems.itemList[y]._id))
+                    autoResizeDispatch["autoFit"](layerItems.itemList[y]);
             }
         }
     }
     layers.changeLayer(currentLayerId);
-
-    // if (configStyle.autoFit) {
-    //     autoResizeAutoFit();
-    // } else {
-    //     autoGrow();
-    // }
     return;
 }
 
-export {autoResizeDispatch};
+function setInitialSize(id, text) {
+    var textDims = getTextDimensions(text);
+    var totalWidth = 2*constantValues["initialOffsetWidth"]+document.getElementById(id).getBoundingClientRect().width;
+    var totalHeight = textDims.height + 2*constantValues["initialOffsetHeight"];
+    document.getElementById(id).style.width = totalWidth + "px";
+    console.log(totalWidth);
+    document.getElementById(id).style.height = totalHeight + "px";
+
+}
+
+
+function passAutoFitRestrictions(id) {
+    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+
+    var dims = getTextDimensions(document.getElementById(id + 'name').innerText);
+    var widthOfName = dims.width + 2 * offsetX;
+    var heightOfName = dims.height + 2 * offsetY;
+    var componentRect = document.getElementById(id).getBoundingClientRect();
+    return (componentRect.width >= widthOfName && componentRect.height >= heightOfName);
+}
+
+export { autoResizeDispatch, autoResizeAllComponents, autoResizeAutoFit, setInitialSize,passAutoFitRestrictions};

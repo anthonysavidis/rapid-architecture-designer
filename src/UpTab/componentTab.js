@@ -15,7 +15,6 @@ import { updateTree } from "../Layers/Tree.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { constantNames } from "../config/constantNames.js";
 import { createSpecificFunction, deleteSpecificFunction } from "../Actions/inverseFunctionsActions.js";
-import { autoResize } from "../Item/resize.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { splitCallBack } from "../Input/contextMenuCallbacks.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
@@ -102,7 +101,6 @@ function askForDetails(type, extraInfo) {
             items.updateNameAndDescription(it._id, name, description);
 
             actions.saveCommand(spawnSpecificItem, deleteLatestItem, "", it.toString());
-            // autoResize(it._id, it._name);
         } else if (type === "Link") {
             it = linkComponentsAction();
             items.updateNameAndDescription(it._id, name, description);

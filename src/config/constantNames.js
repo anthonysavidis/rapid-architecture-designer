@@ -83,7 +83,12 @@ const constantNames = {
         "Small": "Small",
         "Medium": "Medium",
         "Large": "Large",
-        "xLarge": "x-Large"
+        "xLarge": "x-Large",
+        "autoFitLabel":"Custom auto-fit:",
+        "componentColor":"Component color:",
+        "borderColor":"Border color:",
+        "selectedBorder":"Selected border color:",
+        "borderWidth":"Component's border width:"
     },
     "inputBox": {
         "msg": "Insert name and description of ",

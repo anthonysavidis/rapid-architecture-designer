@@ -1,5 +1,4 @@
-import { autoResizeAllComponents } from "../Item/resize.js";
-
+import { autoResizeAllComponents } from "../Item/autoResize.js";
 class TextConfig {
     
     constructor() {

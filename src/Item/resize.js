@@ -6,6 +6,7 @@ import { renderInfoButton } from "../HtmlElements/componentInfo.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { configStyle } from "../Classes/Config.js";
+import { passAutoFitRestrictions } from "./autoResize.js";
 
 function getTextDimensions(str) {
 
@@ -99,4 +100,4 @@ function addResize(id) {
 //     p.removeChild(resizer);
 // }
 
-export { addResize, autoResize, getTextDimensions, autoResizeAllComponents,autoResizeAutoFit };
+export { addResize, getTextDimensions };

@@ -4,7 +4,6 @@ import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
-import { autoResize } from "../Item/resize.js";
 import { changeTreeName, closeLayerTree, createNodeFullPath, treeData, updateTree } from "../Layers/Tree.js";
 import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
 import { removeLayerTabRod } from "./extendingSideTabs.js";
@@ -71,8 +70,10 @@ function produceDoubleClickEditingName(editId) {
                 updateTree();
         }
         input.remove();
-        autoResize(editId, val);
+
+        
         detailChangeListener(editId, originalItemStr);
+        autoResizeDispatch["autoFit"](items.itemList[index]);
     });
     document.getElementById(editId + "name").innerText = "";
     if (itemType === "Function") {

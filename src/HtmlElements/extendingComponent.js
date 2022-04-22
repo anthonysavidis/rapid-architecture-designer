@@ -4,7 +4,7 @@ import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { renderLine } from "../Item/createLine.js";
-import { addResize, autoResize, getTextDimensions } from "../Item/resize.js";
+import { addResize, getTextDimensions } from "../Item/resize.js";
 import { closeTooltip } from "./infoTooltip.js";
 
 function getSubComponentWidth(text) {
