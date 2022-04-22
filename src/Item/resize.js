@@ -42,68 +42,7 @@ function canResize(id, pointerX, pointerY) { //NEEDS REDOING
     return true;
 }
 
-function autoResize(id, text) {
-    const textDims = getTextDimensions(text);
-    var p = document.getElementById(id);
-    const resizedItem = items.itemList[items.itemList.findIndex(el => el._id === id)];
-    if (resizedItem._type === "Link" || resizedItem._type === "Function")
-        return; //no need for resize
 
-    p.style.width = 165 + (textDims.width > 130 ? textDims.width - 100 : 0) + "px";
-
-    if (resizedItem.links)
-        renderLine(id);
-    // renderInfoButton(id);
-    return;
-}
-
-function autoGrow() {
-    const currentLayerId = layers.selectedLayer._id;
-    for (var x in layers.layerList) {
-        layers.changeLayer(layers.layerList[x]._id);
-        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
-        // console.log(layerItems);
-
-        for (var y in layerItems.itemList) {
-            autoResize(layerItems.itemList[y]._id, layerItems.itemList[y]._name);
-        }
-    }
-    layers.changeLayer(currentLayerId);
-}
-
-function autoResizeAllComponents() {
-    if(configStyle.autoFit){
-        autoResizeAutoFit();
-    }else{
-        autoGrow();
-    }
-    return;
-}
-
-function autoResizeAutoFit() {
-    const currentLayerId = layers.selectedLayer._id;
-    for (var x in layers.layerList) {
-        layers.changeLayer(layers.layerList[x]._id);
-        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
-        // console.log(layerItems);
-
-        for (var y in layerItems.itemList) {
-            if(layerItems.itemList[y]._type==="Component"){
-                var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
-                var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
-                
-                var dims = getTextDimensions(document.getElementById(layerItems.itemList[y]._id+'name').innerText);
-                var widthOfName = dims.width;
-                var heightOfName = dims.height;
-
-                document.getElementById(layerItems.itemList[y]._id).style.width= widthOfName + 2*offsetX+"px";
-                document.getElementById(layerItems.itemList[y]._id).style.height= heightOfName + 2*offsetY+"px";
-            }
-        }
-    }
-    layers.changeLayer(currentLayerId);
-    return;
-}
 
 function addResize(id) {
     var p = document.getElementById(id);

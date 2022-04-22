@@ -4,6 +4,7 @@ import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComp
 import { autoResize } from "../Item/resize.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
+import { autoResizeDispatch } from "../Item/autoResize.js";
 
 
 var lastOriginalItem = null;
@@ -22,8 +23,11 @@ function changeDetails(actionItem) {
     var alteredItemObject = JSON.parse(actionItem);
     items.updateNameAndDescription(alteredItemObject._id, alteredItemObject._name, alteredItemObject._description);
     // items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)].moreInfo = alteredItemObject.moreInfo;
-    if (alteredItemObject._type === "Component")
-        autoResize(alteredItemObject._id, alteredItemObject._name);
+    if (alteredItemObject._type === "Component"){
+        var component  = items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)]
+        autoResizeDispatch["true"](layerItems.itemList[y]);
+        // autoResize(alteredItemObject._id, alteredItemObject._name);
+    }
     else if (alteredItemObject._type === "Function") {
         if (document.getElementById('all').checked) {
             showAllRefresh();
