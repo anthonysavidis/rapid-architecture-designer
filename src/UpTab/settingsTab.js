@@ -1,5 +1,5 @@
 import { constantNames } from "../config/constantNames.js";
-import { produceComponentConfigBox, produceComponentForm, produceLinkForm, produceOperationForm, produceSliders, produceSwitches } from "../HtmlElements/configBox.js";
+import { produceComponentConfigBox, produceComponentForm, produceLinkForm, produceOperationForm, produceSliders, produceSubComponentForm, produceSwitches } from "../HtmlElements/configBox.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
 import { configStyle } from "../Classes/Config.js";
@@ -65,6 +65,7 @@ function createComponentConfigBox() {
     produceComponentConfigBox(box);
     produceSwitches(box);
     produceSliders(box);
+    produceSubComponentForm(box);
     /*
     <input type="checkbox" id="switch"
                     class="checkbox" />

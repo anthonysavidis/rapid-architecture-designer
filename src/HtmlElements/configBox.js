@@ -310,7 +310,7 @@ function getSwitch(id,labelText) {
     label.style.marginTop = 7+"px";
 
     container.appendChild(label);
-    container.innerHTML += '<input type="checkbox" id="'+id+'"class="checkbox" /><label for="'+id+'" class="toggle">';
+    container.innerHTML += '<input type="checkbox" id="'+id+'"class="checkbox" style="position:absolute;" /><label for="'+id+'" class="toggle">';
     container.style.display = 'inline-block';
     container.style.width = "150px";
     container.style.height = "25px";
@@ -328,6 +328,28 @@ function produceSwitches(box) {
     return;
 }
 
+function produceSubComponentForm(box) {
+    // var labelDiv = document.createElement('div');
+    // var labelDiv = document.createElement('div');
+    // labelDiv.className = "tittleDiv";
+    // labelDiv.style.position = "relative";
+
+    // labelDiv.innerText = "Subcomponent Settings";
+    // labelDiv.style.marginTop = "10px";
+
+    // labelDiv.style.float = "left";
+    // labelDiv.innerText = "Subcomponent Settings";
+    // var div = document.createElement('div');
+    // div.className = "formContainer";
+    // div.appendChild(labelDiv);
+    // const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
+    // // produceStyleButtons(div, "Component", callBack);
+    // // produceFontFamilyForms(div, "Component", callBack);
+    // produceTextColor(div, "SubComponent", callBack);
+    // box.appendChild(div);
+    return;
+}
 
 
-export { produceComponentForm, produceOperationForm, produceLinkForm, produceComponentConfigBox, produceSliders,produceSwitches };
+
+export { produceSubComponentForm,produceComponentForm, produceOperationForm, produceLinkForm, produceComponentConfigBox, produceSliders,produceSwitches };

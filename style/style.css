@@ -6,7 +6,9 @@
     --componentTextDecoration: "none";
     --componentTextBackgroundColor: transparent;
     --componentTextColor: #000000;
-
+    --subcomponentTextSize: 12pt;
+    --subcomponentTextColor: #000000;
+    --subcomponentBackgroundColor: #FFFFFF;
 
     --componentBackgroundColor: #FFFFFF;
     --componentBorderColor: #000000;
@@ -379,6 +381,9 @@ hr.solid {
 .subComponent {
     width: auto;
     text-align: center;
+    font-size: var(--subcomponentTextSize);
+    color: var(--subcomponentTextColor);
+    background-color: var(--subcomponentBackgroundColor);
 }
 
 .customHr {

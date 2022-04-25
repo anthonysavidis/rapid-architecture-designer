@@ -82,7 +82,7 @@
 }
 
 
-}
+
 
 .form-style-6 input[type="text"]:focus,
 .form-style-6 input[type="date"]:focus,
@@ -313,7 +313,7 @@ input[type=submit]:hover {
 
 /* toggle in label designing */
 .toggle {
-    position: relative;
+    position: absolute;
     display: inline-block;
     width: 55px;
     height: 27px;
@@ -330,7 +330,7 @@ input[type=submit]:hover {
     height: 20px;
     border-radius: 50%;
     background-color: #FFFFFF;
-    top: 1.5px;
+    top: 1.3px;
     left: 1px;
     transition: all 0.5s;
 }
@@ -343,7 +343,7 @@ input[type=submit]:hover {
 
 /* Checkbox checked effect */
 .checkbox:checked+.toggle::after {
-    left: 29px;
+    left: 30px;
 }
 
 /* Checkbox checked toggle label bg color */
