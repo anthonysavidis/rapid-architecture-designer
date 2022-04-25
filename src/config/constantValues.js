@@ -1,5 +1,5 @@
 const constantValues = {
-    "initialOffsetWidth":6,
+    "initialOffsetWidth":19,
     "initialOffsetHeight":19
 }
 

@@ -31,7 +31,7 @@ function autoResizeAutoFit(component) {
     var dims = getTextDimensions(document.getElementById(component._id + 'name').innerText);
     var widthOfName = dims.width;
     var heightOfName = dims.height;
-
+    console.log(dims);
     document.getElementById(component._id).style.width = widthOfName + 2 * offsetX + "px";
     document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
     return;
@@ -41,6 +41,9 @@ var autoResizeDispatch = {
     "autoFit": autoResizeAutoFit,
     "autoGrow": autoGrow
 }
+
+// tin prwti fora 127
+// meta 98.
 
 function autoResizeAllComponents() {
     const currentLayerId = layers.selectedLayer._id;
@@ -61,13 +64,19 @@ function autoResizeAllComponents() {
 }
 
 function setInitialSize(id, text) {
-    var textDims = getTextDimensions(text);
-    var totalWidth = 2*constantValues["initialOffsetWidth"]+document.getElementById(id).getBoundingClientRect().width;
+    var textDims = getTextDimensions(document.getElementById(id+ 'name').innerText);
+    var totalWidth = 2*constantValues["initialOffsetWidth"]+document.getElementById(id+'name').getBoundingClientRect().width;
     var totalHeight = textDims.height + 2*constantValues["initialOffsetHeight"];
+    console.log(textDims);
+    //typwma family size edw kai stin autofit()
     document.getElementById(id).style.width = totalWidth + "px";
-    console.log(totalWidth);
     document.getElementById(id).style.height = totalHeight + "px";
+    return;
+}
 
+function canResizeAutofit(id,x,y) {
+
+    return;
 }
 
 

@@ -17,6 +17,8 @@ function getTextDimensions(str) {
     var rs = getComputedStyle(r);
     var fontSize = rs.getPropertyValue('--componentTextSize');
     var fontFamily = rs.getPropertyValue('--componentTextFamily');
+    console.log(fontSize);
+    console.log(fontFamily);
 
     text.style.fontFamily = fontFamily;
     text.style.fontSize = fontSize;

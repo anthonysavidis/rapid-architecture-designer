@@ -94,6 +94,9 @@ function subdivideAction() {
 function askForDetails(type, extraInfo) {
     produceBox("input", type, (name, description) => {
         var it;
+        if(name){
+            console.log(name);
+        }
         if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"]["component"];
         if (description === "" || !description.replace(/\s/g, '').length) description = constantNames["emptyNames"]["description"];
         if (type === "Component") {

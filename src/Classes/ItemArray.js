@@ -9,6 +9,7 @@ import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
+import { autoResizeAutoFit } from "../Item/autoResize.js";
 class ItemHolder {
 
     constructor(str) {
@@ -77,6 +78,8 @@ class ItemHolder {
             showAllRefresh();
             console.log('name update in list');
         }
+        if (this.itemList[oldIndex]._type === "Component")
+            autoResizeAutoFit(this.itemList[oldIndex]);
     }
     addLink(lineId, id1, id2) {
         const matchId1 = (element) => element._id == id1;
@@ -217,7 +220,7 @@ class ItemHolder {
         totalStr += '\"idList\":\" ' + this.idList + "\",";
         totalStr += '\"functionCounter\":\"' + this.functionCounter + "\",";
         var counter = 0;
-        this.itemList.forEach(function(item) {
+        this.itemList.forEach(function (item) {
             totalStr += '\"' + counter + '\":' + item.toString() + ",";
             counter++;
         });
