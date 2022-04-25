@@ -450,8 +450,8 @@ hr.solid {
     font-size: large;
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(84, 84, 84);
+    width: fit-content;
     position: absolute;
-    width: inherit;
     height: 20px;
     z-index: 29;
     text-align: center;

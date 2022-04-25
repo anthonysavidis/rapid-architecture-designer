@@ -6,7 +6,7 @@ import { renderInfoButton } from "../HtmlElements/componentInfo.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { configStyle } from "../Classes/Config.js";
-import { passAutoFitRestrictions } from "./autoResize.js";
+import { canResizeAutofit, passAutoFitRestrictions } from "./autoResize.js";
 
 function getTextDimensions(str) {
 
@@ -17,8 +17,6 @@ function getTextDimensions(str) {
     var rs = getComputedStyle(r);
     var fontSize = rs.getPropertyValue('--componentTextSize');
     var fontFamily = rs.getPropertyValue('--componentTextFamily');
-    console.log(fontSize);
-    console.log(fontFamily);
 
     text.style.fontFamily = fontFamily;
     text.style.fontSize = fontSize;
@@ -76,9 +74,11 @@ function addResize(id) {
 
         document.onmouseup = null;
         document.onmousemove = null;
-        if (canResize(id, e.clientX, e.clientY)) {
-            p.style.width = startWidth + e.clientX - startX + "px";
-            p.style.height = startHeight + e.clientY - startY + "px";
+        const possibleWidth =startWidth + e.clientX - startX ;
+        const possibleHeight =startHeight + e.clientY - startY ;
+        if (canResizeAutofit(id, possibleWidth, possibleHeight)) {
+            p.style.width = possibleWidth+ "px";
+            p.style.height =possibleHeight  + "px";
             renderLine(id);
             // renderInfoButton(id);
         }

@@ -27,11 +27,9 @@ function autoGrow(component) {
 function autoResizeAutoFit(component) {
     var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
-    var componentRect = document.getElementById(component._id).getBoundingClientRect();
     var dims = getTextDimensions(document.getElementById(component._id + 'name').innerText);
     var widthOfName = dims.width;
     var heightOfName = dims.height;
-    console.log(dims);
     document.getElementById(component._id).style.width = widthOfName + 2 * offsetX + "px";
     document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
     return;
@@ -54,7 +52,7 @@ function autoResizeAllComponents() {
 
         for (var y in layerItems.itemList) {
             if (layerItems.itemList[y]._type === "Component") {
-                if (!passAutoFitRestrictions(layerItems.itemList[y]._id))
+                // if (!passAutoFitRestrictions(layerItems.itemList[y]._id))
                     autoResizeDispatch["autoFit"](layerItems.itemList[y]);
             }
         }
@@ -64,19 +62,21 @@ function autoResizeAllComponents() {
 }
 
 function setInitialSize(id, text) {
-    var textDims = getTextDimensions(document.getElementById(id+ 'name').innerText);
-    var totalWidth = 2*constantValues["initialOffsetWidth"]+document.getElementById(id+'name').getBoundingClientRect().width;
-    var totalHeight = textDims.height + 2*constantValues["initialOffsetHeight"];
-    console.log(textDims);
-    //typwma family size edw kai stin autofit()
+    var textDims = getTextDimensions(document.getElementById(id + 'name').innerText);
+    var totalWidth = 2 * constantValues["initialOffsetWidth"] + document.getElementById(id + 'name').getBoundingClientRect().width;
+    var totalHeight = textDims.height + 2 * constantValues["initialOffsetHeight"];
     document.getElementById(id).style.width = totalWidth + "px";
     document.getElementById(id).style.height = totalHeight + "px";
     return;
 }
 
-function canResizeAutofit(id,x,y) {
-
-    return;
+function canResizeAutofit(id, possibleWidth, possibleHeight) {
+    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+    var dims = getTextDimensions(document.getElementById(id + 'name').innerText);
+    var widthOfName = dims.width + 2 * offsetX;
+    var heightOfName = dims.height + 2 * offsetY;
+    return !(widthOfName > possibleWidth && heightOfName > possibleHeight);
 }
 
 
@@ -91,4 +91,4 @@ function passAutoFitRestrictions(id) {
     return (componentRect.width >= widthOfName && componentRect.height >= heightOfName);
 }
 
-export { autoResizeDispatch, autoResizeAllComponents, autoResizeAutoFit, setInitialSize,passAutoFitRestrictions};
+export { autoResizeDispatch, canResizeAutofit, autoResizeAllComponents, autoResizeAutoFit, setInitialSize, passAutoFitRestrictions };

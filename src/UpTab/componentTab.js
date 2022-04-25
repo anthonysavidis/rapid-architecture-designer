@@ -97,7 +97,7 @@ function askForDetails(type, extraInfo) {
         if(name){
             console.log(name);
         }
-        if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"]["component"];
+        if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"][type.toLowerCase()];
         if (description === "" || !description.replace(/\s/g, '').length) description = constantNames["emptyNames"]["description"];
         if (type === "Component") {
             it = newComponentAction();
