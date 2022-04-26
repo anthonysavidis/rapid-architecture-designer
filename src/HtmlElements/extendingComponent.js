@@ -27,12 +27,14 @@ function addSubcomponents(id, nameList) {
     document.getElementById(id+'name').style.marginTop="12.5px";
     document.getElementById(id).appendChild(l1);
     document.getElementById(id).appendChild(l2);
-    document.getElementById(id).style.height = 50 + "px"
+    document.getElementById(id).style.height = "fit-content";
+    document.getElementById(id).style.width = "fit-content";
     for (let index = 0; index < numberOfSubcomponets; index++) {
         document.getElementById(id).style.height = parseInt(document.getElementById(id).style.height, 10) + 56 + "px";
-        var subComponent = document.createElement('p');
+        var subComponent = document.createElement('div');
         subComponent.id = id + 'subComponent' + index;
         subComponent.className = "subComponent";
+        // subComponent.style.width = parseInt(document.getElementById(id).style.width, 10)-2+"px";
         subComponent.innerText = nameList[index];
         var subWidth = getSubComponentWidth(nameList[index]);
         if (subWidth > document.getElementById(id).getBoundingClientRect().width) {
@@ -77,8 +79,10 @@ function calculateSubcomponents(id) {
 }
 
 function turnOnExtension(id) {
-    var r = document.querySelector(':root');
-        r.style.setProperty("--componentDisplay", "block");
+    // var r = document.querySelector(':root');
+    //     r.style.setProperty("--componentDisplay", "block");
+    document.getElementById(id).style.display="block";
+
     const subComponentsName = calculateSubcomponents(id);
     if (subComponentsName.length === 0)
         return;
@@ -92,9 +96,9 @@ function turnOnExtension(id) {
 
 function turnOffExtension(id) {
     const subComponentsName = calculateSubcomponents(id);
-    var r = document.querySelector(':root');
-    
-    r.style.setProperty("--componentDisplay", "flex");
+    // var r = document.querySelector(':root');
+    document.getElementById(id).style.display="flex";
+    // r.style.setProperty("--componentDisplay", "flex");
     document.getElementById(id+'name').style.marginTop="0";
 
     collapseSubcomponents(id);
