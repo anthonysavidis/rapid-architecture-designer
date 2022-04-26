@@ -6,6 +6,7 @@
     --componentTextDecoration: "none";
     --componentTextBackgroundColor: transparent;
     --componentTextColor: #000000;
+    --componentDisplay: flex;
     --subcomponentTextSize: 12pt;
     --subcomponentTextColor: #000000;
     --subcomponentBackgroundColor: #FFFFFF;
@@ -137,7 +138,7 @@
     /* background: transparent; */
     /* outline: 2px black; */
     /* outline-color: white; */
-    display: flex;
+    display: var(--componentDisplay);
     align-items: center;
     justify-content: center;
     border: var(--componentBorderWidth) solid var(--componentBorderColor);
@@ -170,7 +171,7 @@
     color: black;
     z-index: 9;
     background: var(--componentBackgroundColor);
-    display: flex;
+    display: var(--componentDisplay);;
     align-items: center;
     justify-content: center;
     font-size: medium;

@@ -75,6 +75,8 @@ function calculateSubcomponents(id) {
 }
 
 function turnOnExtension(id) {
+    var r = document.querySelector(':root');
+        r.style.setProperty("--componentDisplay", "block");
     const subComponentsName = calculateSubcomponents(id);
     if (subComponentsName.length === 0)
         return;
@@ -88,6 +90,9 @@ function turnOnExtension(id) {
 
 function turnOffExtension(id) {
     const subComponentsName = calculateSubcomponents(id);
+    var r = document.querySelector(':root');
+    
+    r.style.setProperty("--componentDisplay", "flex");
 
     collapseSubcomponents(id);
     // closeTooltip(id);
