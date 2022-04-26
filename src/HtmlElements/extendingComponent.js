@@ -14,9 +14,7 @@ function getSubComponentWidth(text) {
     // renderInfoButton(id);
 }
 
-
-function addSubcomponents(id, nameList) {
-    const numberOfSubcomponets = nameList.length;
+function addDoubleLine(id) {
     var l1 = document.createElement('div'),
         l2 = document.createElement('div');
     l1.className = l2.className = "seperativeLine";
@@ -27,6 +25,13 @@ function addSubcomponents(id, nameList) {
     document.getElementById(id+'name').style.marginTop="12.5px";
     document.getElementById(id).appendChild(l1);
     document.getElementById(id).appendChild(l2);
+    return;
+}
+
+
+function addSubcomponents(id, nameList) {
+    const numberOfSubcomponets = nameList.length;
+    addDoubleLine(id);
     document.getElementById(id).style.height = "fit-content";
     document.getElementById(id).style.width = "fit-content";
     for (let index = 0; index < numberOfSubcomponets; index++) {
@@ -161,6 +166,13 @@ function areAllExtended(itemsList) {
         }
     }
     return extended;
+}
+
+function turnOnDescription(id) {
+    if(document.getElementById(componentId + 'l1'))
+        return; //is already extended...
+    addDoubleLine(id);
+    
 }
 
 export { turnOnExtension, turnOffExtension, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };
