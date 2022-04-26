@@ -152,6 +152,8 @@ function produceTextColor(box, className, callBack) {
     // box.appendChild(picker);
     return;
 }
+//----------------------============================================================================================================----------------------------------------------------------------------
+
 function produceComponentForm(box) {
     var labelDiv = document.createElement('div');
     labelDiv.style.position = "";
@@ -174,13 +176,11 @@ function produceOperationForm(box) {
     var labelDiv = document.createElement('div');
     labelDiv.className = "tittleDiv";
     labelDiv.style.position = "relative";
-
     labelDiv.innerText = "Operation Settings";
     labelDiv.style.marginTop = "10px";
 
     var div = document.createElement('div');
     div.className = "formContainer";
-
     div.appendChild(labelDiv);
     const callBack = (type, attributeChanged, value) => { configStyle.operationsText.handleChange(type, attributeChanged, value) };
     produceSizeForm(div, "Operation", callBack);
@@ -211,6 +211,7 @@ function produceLinkForm(box) {
     return;
 }
 
+//----------------------============================================================================================================----------------------------------------------------------------------
 function produceComponentConfigBox(box) {
 
     const backgroundCallBack = (value) => { configStyle.handleChange('Component', "backgroundColor", value); };
@@ -277,7 +278,7 @@ function produceSliders(box) {
 
     var borderWidthSlider = getSliderGroup("Component's border width:",1, 10, 2, borderSliderCallBack);
     borderWidthSlider.style.float = "right";
-    borderWidthSlider.style.marginRight = "70px";
+    borderWidthSlider.style.marginRight = "20px";
     borderWidthSlider.style.marginTop = "17px";
 
     var innerMarginDiv = document.createElement('div');
@@ -329,27 +330,28 @@ function produceSwitches(box) {
 }
 
 function produceSubComponentForm(box) {
-    // var labelDiv = document.createElement('div');
-    // var labelDiv = document.createElement('div');
-    // labelDiv.className = "tittleDiv";
-    // labelDiv.style.position = "relative";
+    var labelDiv = document.createElement('div');
+    labelDiv.className = "tittleDiv";
+    labelDiv.style.position = "relative";
+    labelDiv.style.marginTop = "10px";
+    labelDiv.style.float = "left";
+    labelDiv.innerText = "Subcomponent Settings";
+    var div = document.createElement('div');
+    div.className = "formContainer";
+    div.style.width="100%";
+    div.appendChild(labelDiv);
+    var colorContainer = document.createElement('div');
+    colorContainer.style.width = "100%";
+    const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
+    // produceStyleButtons(div, "Component", callBack);
+    // produceFontFamilyForms(div, "Component", callBack);
+    // produceTextColor(colorContainer, "SubComponent", callBack);
 
-    // labelDiv.innerText = "Subcomponent Settings";
-    // labelDiv.style.marginTop = "10px";
-
-    // labelDiv.style.float = "left";
-    // labelDiv.innerText = "Subcomponent Settings";
-    // var div = document.createElement('div');
-    // div.className = "formContainer";
-    // div.appendChild(labelDiv);
-    // const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
-    // // produceStyleButtons(div, "Component", callBack);
-    // // produceFontFamilyForms(div, "Component", callBack);
-    // produceTextColor(div, "SubComponent", callBack);
-    // box.appendChild(div);
+    box.appendChild(div);
+    box.appendChild(colorContainer);
     return;
 }
 
 
 
-export { produceSubComponentForm,produceComponentForm, produceOperationForm, produceLinkForm, produceComponentConfigBox, produceSliders,produceSwitches };
+export { produceSubComponentForm,produceComponentForm, produceOperationForm, produceLinkForm, produceComponentConfigBox, produceSliders,produceSwitches,createPicker };
