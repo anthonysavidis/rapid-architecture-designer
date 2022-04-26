@@ -95,7 +95,7 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
-    // loadSpecific("compilerFixed.txt");
+    loadSpecific("extendTest.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

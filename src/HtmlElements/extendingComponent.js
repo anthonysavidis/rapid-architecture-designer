@@ -20,9 +20,11 @@ function addSubcomponents(id, nameList) {
     var l1 = document.createElement('div'),
         l2 = document.createElement('div');
     l1.className = l2.className = "seperativeLine";
+    l1.style.marginTop = "25px";
     l1.id = id + 'l1';
     l2.style.marginTop = 3 + "px";
     l2.id = id + 'l2';
+    document.getElementById(id+'name').style.marginTop="12.5px";
     document.getElementById(id).appendChild(l1);
     document.getElementById(id).appendChild(l2);
     document.getElementById(id).style.height = 50 + "px"
@@ -93,6 +95,7 @@ function turnOffExtension(id) {
     var r = document.querySelector(':root');
     
     r.style.setProperty("--componentDisplay", "flex");
+    document.getElementById(id+'name').style.marginTop="0";
 
     collapseSubcomponents(id);
     // closeTooltip(id);
