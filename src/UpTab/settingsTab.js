@@ -3,6 +3,7 @@ import { createPicker, produceComponentConfigBox, produceComponentForm, produceL
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
 import { configStyle } from "../Classes/Config.js";
+import { autoResizeAllComponents } from "../Item/autoResize.js";
 
 
 
@@ -83,7 +84,7 @@ function createComponentConfigBox() {
     backgroundColorPicker.style.float = "right";
     subSettingsContainer.appendChild(backgroundColorPicker);
     subSettingsContainer.appendChild(textColorPicker);
-    subSettingsContainer.style="float:left;margin-top: 20px;width:95.5%;height:50px;display:inline-block;";
+    subSettingsContainer.style = "float:left;margin-top: 20px;width:95.5%;height:50px;display:inline-block;";
     box.appendChild(subSettingsContainer);
     // produceSubComponentForm(box);
     /*
@@ -118,10 +119,18 @@ function createComponentConfigBox() {
     addMotion(box);
     document.getElementById("autofitSwitch").addEventListener("change", () => {
         configStyle.autoFit = document.getElementById("autofitSwitch").checked;
+
         if (document.getElementById("autofitSwitch").checked) {
+            document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("innerMarginX").split("px")[0];
+            document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("innerMarginX").split("px")[0]+"px";
+            document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("innerMarginY").split("px")[0];
+            document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("innerMarginY").split("px")[0]+"px";
             document.getElementById('innerMarginSlider').style.display = "inline-block";
+            console.log(document.getElementById('innerMarginSlider').firstChild)
         }
         else {
+            configStyle.setInitialMargins();
+            autoResizeAllComponents();
             document.getElementById('innerMarginSlider').style.display = "none";
         }
     });
@@ -135,6 +144,10 @@ function addSettingsTabListeners() {
     });
     document.getElementById('configureComponentButton').addEventListener('click', (e) => {
         createComponentConfigBox();
+        if (configStyle.autoFit) {
+            document.getElementById("autofitSwitch").checked = true;
+            document.getElementById('innerMarginSlider').style.display = "inline-block";
+        }
     });
     return;
 }

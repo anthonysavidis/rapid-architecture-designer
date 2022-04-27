@@ -32,6 +32,7 @@ function autoResizeAutoFit(component) {
     var heightOfName = dims.height;
     document.getElementById(component._id).style.width = widthOfName + 2 * offsetX + "px";
     document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
+    
     return;
 }
 
@@ -54,6 +55,8 @@ function autoResizeAllComponents() {
             if (layerItems.itemList[y]._type === "Component") {
                 // if (!passAutoFitRestrictions(layerItems.itemList[y]._id))
                     autoResizeDispatch["autoFit"](layerItems.itemList[y]);
+                    if (layerItems.itemList[y].links)
+                        renderLine(layerItems.itemList[y]._id);
             }
         }
     }

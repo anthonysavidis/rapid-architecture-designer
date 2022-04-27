@@ -143,7 +143,7 @@ class Item {
                     var updatedItem = document.getElementById(dragIds[0]).getBoundingClientRect();
                     actions.saveCommand(moveNext, movePrev,
                         JSON.stringify(initialItem[dragIds[0]]["initialRec"]) + '@' + dragIds[0], JSON.stringify(updatedItem));
-                }
+                } this.updateBoundingRec();
             },
             click: (e) => {
                 appearComponentButtons();

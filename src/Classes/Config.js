@@ -17,7 +17,10 @@ class Config{
         this.configJSON[key] = value;
         return;
     }
-    
+    setInitialMargins(){
+        this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"]+"px";
+        this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"]+"px";
+    }
     getJSONValue(key){
         return this.configJSON[key];
     }

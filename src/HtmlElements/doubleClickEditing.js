@@ -8,6 +8,7 @@ import { changeTreeName, closeLayerTree, createNodeFullPath, treeData, updateTre
 import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
 import { removeLayerTabRod } from "./extendingSideTabs.js";
 import { replaceOnFullPath, updateFullPath } from "./pathAndLayerSpan.js";
+import { autoResizeDispatch } from "../Item/autoResize.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -47,7 +48,7 @@ function produceDoubleClickEditingName(editId) {
         input.style.left = inputLeft + "px";
 
     input.value = val;
-    input.onblur = (function() {
+    input.onblur = (function () {
         console.log('item db edit');
         var val = (this.value == "" || !this.value.replace(/\s/g, '').length) ? constantNames["emptyNames"][items.itemList[index]._type.toLowerCase()] : this.value;
         const originalItemStr = items.itemList[index].toString();
@@ -70,10 +71,10 @@ function produceDoubleClickEditingName(editId) {
                 updateTree();
         }
         input.remove();
+        if (items.itemList[index]._type === "Component")
+            autoResizeDispatch["autoFit"](items.itemList[index]);
 
-        
         detailChangeListener(editId, originalItemStr);
-        autoResizeDispatch["autoFit"](items.itemList[index]);
     });
     document.getElementById(editId + "name").innerText = "";
     if (itemType === "Function") {
@@ -93,7 +94,7 @@ function produceDoubleClickEditingLayerName(domId, oldName, layerObject, branchR
     input.style.width = branchRect.width + "px";
     input.value = layerObject._name;
     input.style.zIndex = 90;
-    input.onblur = (function() {
+    input.onblur = (function () {
         var val = (this.value == "" || !this.value.replace(/\s/g, '').length) ? constantNames["emptyNames"]["layer"] : this.value;
         const oldObject = layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].treeObj;
         layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].updateLayerName(val);

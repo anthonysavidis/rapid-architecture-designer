@@ -6,6 +6,8 @@ import { constantNames } from "../config/constantNames.js";
 import { renderLine } from "../Item/createLine.js";
 import { addResize, getTextDimensions } from "../Item/resize.js";
 import { closeTooltip } from "./infoTooltip.js";
+import { autoResizeDispatch } from "../Item/autoResize.js";
+import { configStyle } from "../Classes/Config.js";
 
 function getSubComponentWidth(text) {
     const textDims = getTextDimensions(text);
@@ -22,7 +24,7 @@ function addDoubleLine(id) {
     l1.id = id + 'l1';
     l2.style.marginTop = 3 + "px";
     l2.id = id + 'l2';
-    document.getElementById(id+'name').style.marginTop="12.5px";
+    document.getElementById(id + 'name').style.marginTop = "12.5px";
     document.getElementById(id).appendChild(l1);
     document.getElementById(id).appendChild(l2);
     return;
@@ -78,15 +80,32 @@ function calculateSubcomponents(id) {
     const subLayerItems = layers.itemMap.get(component.subLayers[0]);
     var componentNames = [];
     for (var x in subLayerItems.itemList) {
-        (subLayerItems.itemList[x]._type === "Component") ? componentNames.push(subLayerItems.itemList[x]._name): 1;
+        (subLayerItems.itemList[x]._type === "Component") ? componentNames.push(subLayerItems.itemList[x]._name) : 1;
     }
     return componentNames;
+}
+
+function resizeExtended(id, nameList) {
+    var maxWidth = 0;
+    nameList.forEach((el) => {
+        var width = getTextDimensions(el).width;
+        (width > maxWidth) ? maxWidth = width : 1;
+    });
+    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+
+    document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
+    // document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
+    for (var i = 0; i < nameList.length; i++) {
+        document.getElementById(id + 'subComponent' + i).style.height = getTextDimensions(nameList[i]).height + 2 * offsetY + "px";
+    }
+    return;
 }
 
 function turnOnExtension(id) {
     // var r = document.querySelector(':root');
     //     r.style.setProperty("--componentDisplay", "block");
-    document.getElementById(id).style.display="block";
+    document.getElementById(id).style.display = "block";
 
     const subComponentsName = calculateSubcomponents(id);
     if (subComponentsName.length === 0)
@@ -94,7 +113,10 @@ function turnOnExtension(id) {
     addSubcomponents(id, subComponentsName);
     closeTooltip(id);
     document.getElementById(id + "resizer").remove();
-    if (items.itemList[items.itemList.findIndex(el => el._id === id)].links)
+    const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
+    // autoResizeDispatch["autoFit"](component);
+    resizeExtended(id, subComponentsName);
+    if (component.links)
         renderLine(id);
     return;
 }
@@ -102,14 +124,16 @@ function turnOnExtension(id) {
 function turnOffExtension(id) {
     const subComponentsName = calculateSubcomponents(id);
     // var r = document.querySelector(':root');
-    document.getElementById(id).style.display="flex";
+    document.getElementById(id).style.display = "flex";
     // r.style.setProperty("--componentDisplay", "flex");
-    document.getElementById(id+'name').style.marginTop="0";
+    document.getElementById(id + 'name').style.marginTop = "0";
 
     collapseSubcomponents(id);
     // closeTooltip(id);
     addResize(id);
-    if (items.itemList[items.itemList.findIndex(el => el._id === id)].links)
+    const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
+    autoResizeDispatch["autoFit"](component);
+    if (component.links)
         renderLine(id);
     return;
 }
@@ -122,7 +146,7 @@ function getSubcomponentButton(componentId) {
         switchButton.innerText = constantNames["infoTooltip"]["collapse"];
         switchButton.className = "deleteButton";
         switchButton.style.width = getTextDimensions(constantNames["infoTooltip"]["collapse"]).width + "px";
-        switchButton.addEventListener("click", function() {
+        switchButton.addEventListener("click", function () {
             turnOffExtension(componentId);
             actions.saveCommand(collapseSubcomponentsAction, extendSubcomponentsAction, componentId, "");
         });
@@ -130,7 +154,7 @@ function getSubcomponentButton(componentId) {
         switchButton.innerText = constantNames["infoTooltip"]["extended"];
         switchButton.className = "okButton";
         switchButton.style.width = getTextDimensions(constantNames["infoTooltip"]["extended"]).width + "px";
-        switchButton.addEventListener("click", function() {
+        switchButton.addEventListener("click", function () {
             turnOnExtension(componentId);
             actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, componentId, "");
         });
@@ -168,11 +192,11 @@ function areAllExtended(itemsList) {
     return extended;
 }
 
-function turnOnDescription(id) {
-    if(document.getElementById(componentId + 'l1'))
+function turnOnDescription(componentId) {
+    if (document.getElementById(componentId + 'l1'))
         return; //is already extended...
-    addDoubleLine(id);
-    
+    addDoubleLine(componentId);
+
 }
 
 export { turnOnExtension, turnOffExtension, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };
