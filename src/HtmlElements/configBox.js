@@ -354,4 +354,4 @@ function produceSubComponentForm(box) {
 
 
 
-export { produceSubComponentForm,produceComponentForm, produceOperationForm, produceLinkForm, produceComponentConfigBox, produceSliders,produceSwitches,createPicker };
+export { produceSubComponentForm,produceComponentForm, produceOperationForm, produceLinkForm,getSwitch, produceComponentConfigBox, produceSliders,produceSwitches,createPicker };

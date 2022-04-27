@@ -1,9 +1,11 @@
 import { constantNames } from "../config/constantNames.js";
-import { createPicker, produceComponentConfigBox, produceComponentForm, produceLinkForm, produceOperationForm, produceSliders, produceSubComponentForm, produceSwitches } from "../HtmlElements/configBox.js";
+import { createPicker, produceComponentConfigBox, produceComponentForm, produceLinkForm, produceOperationForm, produceSliders, produceSubComponentForm, produceSwitches, getSwitch } from "../HtmlElements/configBox.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
 import { configStyle } from "../Classes/Config.js";
 import { autoResizeAllComponents } from "../Item/autoResize.js";
+import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
+import { items } from "../Classes/ItemArray.js";
 
 
 
@@ -92,7 +94,13 @@ function createComponentConfigBox() {
                     class="checkbox" />
         <label for="switch" class="toggle">
     */
+   var switcher = getSwitch("descriptionSwitch",constantNames["configBox"]["descriptionLabel"]);
 
+   
+   switcher.style.marginLeft = "22px";
+   switcher.style.marginTop = "12px";
+   switcher.style.width = "auto";
+   box.appendChild(switcher);
 
     var closeButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
@@ -126,12 +134,16 @@ function createComponentConfigBox() {
             document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("innerMarginY").split("px")[0];
             document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("innerMarginY").split("px")[0]+"px";
             document.getElementById('innerMarginSlider').style.display = "inline-block";
-            console.log(document.getElementById('innerMarginSlider').firstChild)
         }
         else {
             configStyle.setInitialMargins();
             autoResizeAllComponents();
             document.getElementById('innerMarginSlider').style.display = "none";
+        }
+    });
+    document.getElementById("descriptionSwitch").addEventListener("change", () => {
+        if(document.getElementById("descriptionSwitch").checked){
+            turnOnDescription(items.itemList[0]._id);
         }
     });
     return;

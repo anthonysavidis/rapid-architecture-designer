@@ -85,6 +85,7 @@ const constantNames = {
         "Large": "Large",
         "xLarge": "x-Large",
         "autoFitLabel":"Custom auto-fit:",
+        "descriptionLabel":"Show description:",
         "componentColor":"Component color:",
         "subcomponentColor":"Subcomponent background color:",
         "subcomponentTextColor":"Subcomponent text color:",

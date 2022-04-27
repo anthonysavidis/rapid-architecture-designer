@@ -192,11 +192,22 @@ function areAllExtended(itemsList) {
     return extended;
 }
 
-function turnOnDescription(componentId) {
-    if (document.getElementById(componentId + 'l1'))
+function turnOnDescription(id) {
+    if (document.getElementById(id + 'l1'))
         return; //is already extended...
-    addDoubleLine(componentId);
+    document.getElementById(id).style.display = "block";
 
+    addDoubleLine(id);
+    document.getElementById(id).style.height = parseInt(document.getElementById(id).style.height, 10) + 65 + "px";
+    var subComponent = document.createElement('div');
+    subComponent.id = id + 'Description';
+    subComponent.className = "subComponent";
+    subComponent.innerText = items.itemList[items.itemList.findIndex(el=>el._id===id)]._description;
+    var subWidth = getSubComponentWidth(subComponent.innerText);
+    if (subWidth > document.getElementById(id).getBoundingClientRect().width) {
+        document.getElementById(id).style.width = subWidth + "px";
+    }
+    document.getElementById(id).append(subComponent);
 }
 
-export { turnOnExtension, turnOffExtension, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };
+export { turnOnExtension, turnOffExtension,turnOnDescription, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };
