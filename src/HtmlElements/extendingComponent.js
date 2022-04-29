@@ -4,7 +4,7 @@ import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { renderLine } from "../Item/createLine.js";
-import { addResize, getTextDimensions } from "../Item/resize.js";
+import { addResize, getTextDimensions, getCustomTextDimensions } from "../Item/resize.js";
 import { closeTooltip } from "./infoTooltip.js";
 import { autoResizeDispatch } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
@@ -19,12 +19,15 @@ function getSubComponentWidth(text) {
 function addDoubleLine(id) {
     var l1 = document.createElement('div'),
         l2 = document.createElement('div');
+    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+
     l1.className = l2.className = "seperativeLine";
-    l1.style.marginTop = "25px";
+    l1.style.marginTop = offsetY + "px";
     l1.id = id + 'l1';
     l2.style.marginTop = 3 + "px";
     l2.id = id + 'l2';
-    document.getElementById(id + 'name').style.marginTop = "12.5px";
+    document.getElementById(id + 'name').style.marginTop = offsetY + "px";
     document.getElementById(id).appendChild(l1);
     document.getElementById(id).appendChild(l2);
     return;
@@ -191,23 +194,82 @@ function areAllExtended(itemsList) {
     }
     return extended;
 }
+const getWidth = (txt) => {
+    return getCustomTextDimensions("Arial, Helvetica, sans-serif", "small", txt).width;
+}
 
-function turnOnDescription(id) {
+function handleSplitDescription(description, lineNo) {
+    description="Lorem ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
+    // var descDims = getCustomTextDimensions("Arial, Helvetica, sans-serif","small",description);
+    var words = description.split(" ");
+    var lines = [];
+    var word_counter = 0;
+    const PIXELS_LIMIT = 50;
+    for (var i = 0; i < lineNo; i++) {
+        var line = "";
+        var totalPixels = 0;
+        while (words[word_counter] && (totalPixels + getWidth(words[word_counter] + " ")) < PIXELS_LIMIT) {
+            line += words[word_counter] + " ";
+            word_counter++;
+            totalPixels += getWidth(words[word_counter]+" ");
+        }
+        line.slice(0, -1);
+        lines.push(line);
+    }
+    return lines;
+}
+
+function turnOnDescription(component) {
+    const id = component._id;
     if (document.getElementById(id + 'l1'))
         return; //is already extended...
     document.getElementById(id).style.display = "block";
+    // document.getElementById(id).style.height = "fit-content";
 
     addDoubleLine(id);
-    document.getElementById(id).style.height = parseInt(document.getElementById(id).style.height, 10) + 65 + "px";
+    document.getElementById(id).style.height = "fit-content";
+    document.getElementById(id).style.width = "fit-content";
     var subComponent = document.createElement('div');
     subComponent.id = id + 'Description';
     subComponent.className = "subComponent";
-    subComponent.innerText = items.itemList[items.itemList.findIndex(el=>el._id===id)]._description;
-    var subWidth = getSubComponentWidth(subComponent.innerText);
-    if (subWidth > document.getElementById(id).getBoundingClientRect().width) {
-        document.getElementById(id).style.width = subWidth + "px";
+    subComponent.style.fontSize = "small";
+    subComponent.style.color = "#545454";
+    const descriptionLines = handleSplitDescription(component._description, 4);
+    var lineMaxWidth=0,lineIndex=0;
+    for (var x in descriptionLines) {
+        if(lineMaxWidth<getWidth(descriptionLines[x])){
+            lineMaxWidth=getWidth(descriptionLines[x]);
+            lineIndex=x;
+        } 
+        subComponent.innerHTML += descriptionLines[x] + "<br />";
+    }
+    // document.getElementById(id).style.height = parseInt(document.getElementById(id).style.height, 10) +56 + "px";
+    var subWidth = lineMaxWidth;
+    const offsetX=configStyle.getJSONValue("innerMarginX").split("px")[0];
+    if ((subWidth+2*offsetX) > document.getElementById(id).getBoundingClientRect().width) {
+        document.getElementById(id).style.width = subWidth+2*offsetX + "px";
     }
     document.getElementById(id).append(subComponent);
+    document.getElementById(id + 'resizer').remove();
+    if (component.links)
+        renderLine(id);
 }
 
-export { turnOnExtension, turnOffExtension,turnOnDescription, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };
+function turnOffDescription(component) {
+    const id = component._id;
+    document.getElementById(id).style.display = "flex";
+    document.getElementById(id + 'name').style.marginTop = "0";
+    document.getElementById(id + 'Description').remove();
+    document.getElementById(id + 'l1').remove();
+    document.getElementById(id + 'l2').remove();
+    addResize(id);
+    // const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
+    autoResizeDispatch["autoFit"](component);
+    if (component.links)
+        renderLine(id);
+    return;
+}
+
+
+
+export { turnOnExtension, turnOffExtension, turnOnDescription, turnOffDescription, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };

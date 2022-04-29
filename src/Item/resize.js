@@ -31,6 +31,22 @@ function getTextDimensions(str) {
     document.body.removeChild(text);
     return { width: width, height: height };
 }
+function getCustomTextDimensions(fontFamily,fontSize,str) {
+    var text = document.createElement("span");
+    document.body.appendChild(text);
+    text.style.fontFamily = fontFamily;
+    text.style.fontSize = fontSize;
+    text.style.height = 'auto';
+    text.style.width = 'auto';
+    text.style.position = 'absolute';
+    text.style.whiteSpace = 'no-wrap';
+    text.innerHTML = str;
+    const width = Math.ceil(text.clientWidth);
+    const height = Math.ceil(text.clientHeight);
+    document.body.removeChild(text);
+    return { width: width, height: height };
+}
+
 
 function canResize(id, pointerX, pointerY) { //NEEDS REDOING
     var textDim = getTextDimensions(document.getElementById(id + 'name').innerText);
@@ -102,4 +118,4 @@ function addResize(id) {
 //     p.removeChild(resizer);
 // }
 
-export { addResize, getTextDimensions };
+export { addResize, getTextDimensions,getCustomTextDimensions };

@@ -4,8 +4,9 @@ import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js
 import { addMotion } from "../Input/movingModal.js";
 import { configStyle } from "../Classes/Config.js";
 import { autoResizeAllComponents } from "../Item/autoResize.js";
-import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
+import { turnOnDescription, turnOffDescription } from "../HtmlElements/extendingComponent.js";
 import { items } from "../Classes/ItemArray.js";
+import { layers } from "../Classes/LayerHolder.js";
 
 
 
@@ -94,13 +95,13 @@ function createComponentConfigBox() {
                     class="checkbox" />
         <label for="switch" class="toggle">
     */
-   var switcher = getSwitch("descriptionSwitch",constantNames["configBox"]["descriptionLabel"]);
+    var switcher = getSwitch("descriptionSwitch", constantNames["configBox"]["descriptionLabel"]);
 
-   
-   switcher.style.marginLeft = "22px";
-   switcher.style.marginTop = "12px";
-   switcher.style.width = "auto";
-   box.appendChild(switcher);
+
+    switcher.style.marginLeft = "22px";
+    switcher.style.marginTop = "12px";
+    switcher.style.width = "auto";
+    box.appendChild(switcher);
 
     var closeButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
@@ -130,9 +131,9 @@ function createComponentConfigBox() {
 
         if (document.getElementById("autofitSwitch").checked) {
             document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("innerMarginX").split("px")[0];
-            document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("innerMarginX").split("px")[0]+"px";
+            document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("innerMarginX").split("px")[0] + "px";
             document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("innerMarginY").split("px")[0];
-            document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("innerMarginY").split("px")[0]+"px";
+            document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("innerMarginY").split("px")[0] + "px";
             document.getElementById('innerMarginSlider').style.display = "inline-block";
         }
         else {
@@ -142,8 +143,22 @@ function createComponentConfigBox() {
         }
     });
     document.getElementById("descriptionSwitch").addEventListener("change", () => {
-        if(document.getElementById("descriptionSwitch").checked){
-            turnOnDescription(items.itemList[0]._id);
+        if (document.getElementById("descriptionSwitch").checked) {
+            for (var x in layers.layerList) {
+                const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+                for (var y in layerItems.itemList) {
+                    if (layerItems.itemList[y]._type === "Component")
+                        turnOnDescription(layerItems.itemList[y]);
+                }
+            }
+        } else {
+            for (var x in layers.layerList) {
+                const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+                for (var y in layerItems.itemList) {
+                    if (layerItems.itemList[y]._type === "Component")
+                        turnOffDescription(layerItems.itemList[y]);
+                }
+            }
         }
     });
     return;
