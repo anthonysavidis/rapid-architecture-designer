@@ -272,8 +272,8 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack) {
 
 function produceSliders(box) {
     const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
-    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px");autoResizeAllComponents(); };
-    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px");autoResizeAllComponents(); };
+    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px"); };
+    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px");};
 
 
     var borderWidthSlider = getSliderGroup("Component's border width:",1, 10, 2, borderSliderCallBack);

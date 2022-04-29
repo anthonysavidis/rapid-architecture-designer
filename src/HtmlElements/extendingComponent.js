@@ -246,6 +246,7 @@ function handleDescriptionExtension(component) {
 }
 
 function turnOnDescription(component) {
+
     turnOnExtension(component._id, 1, component._description);
     return;
 }
