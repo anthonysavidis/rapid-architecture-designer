@@ -43,19 +43,19 @@ function createASubcomponent(subid, compid, text) {
     return;
 }
 
-function addSubcomponents(id, nameList, descriptionMode) {
+function addSubcomponents(id, nameList) {
     const numberOfSubcomponets = nameList.length;
     addDoubleLine(id);
     document.getElementById(id).style.height = "fit-content";
     document.getElementById(id).style.width = "fit-content";
     for (let index = 0; index < numberOfSubcomponets; index++) {
         document.getElementById(id).style.height = parseInt(document.getElementById(id).style.height, 10) + 56 + "px";
-        (!descriptionMode) ? createASubcomponent(id + "subComponent" + index, id, nameList[index]) : createASubcomponent(id + "Description", id, nameList[index]);
+        createASubcomponent(id + "subComponent" + index, id, nameList[index]);
         var subWidth = getSubComponentWidth(nameList[index]);
         if (subWidth > document.getElementById(id).getBoundingClientRect().width) {
             document.getElementById(id).style.width = subWidth + "px";
         }
-        if (index !== (numberOfSubcomponets - 1) && !descriptionMode) {
+        if (index !== (numberOfSubcomponets - 1)) {
             var seperateLine = document.createElement('div');
             seperateLine.className = "seperativeLine";
             seperateLine.id = id + 'subComponent' + index + 'Line';
@@ -106,7 +106,7 @@ function resizeExtended(id, nameList) {
     if (document.getElementById(id + "Description")) {
         var heightAcc = 0;
         for (var i = 0; i < nameList.length; i++) {
-            heightAcc += getTextDimensions(nameList[i]).height + "px";
+            heightAcc += getTextDimensions(nameList[i]).height;
         }
         document.getElementById(id + "Description").style.height = heightAcc + 2 * offsetY + "px";
         // document.getElementById(id).style.height=document.getElementById(id).getC
@@ -119,30 +119,19 @@ function resizeExtended(id, nameList) {
     return;
 }
 
-function turnOnExtension(id, descriptionMode, compDescription, compLinks) {
+function turnOnExtension(id) {
     // var r = document.querySelector(':root');
     //     r.style.setProperty("--componentDisplay", "block");
     document.getElementById(id).style.display = "block";
     const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
-    var nameList = [];
-    if (!descriptionMode) {
-        const subComponentsName = calculateSubcomponents(id);
-        if (subComponentsName.length === 0)
-            return;
-        addSubcomponents(id, subComponentsName);
-        nameList = subComponentsName;
-    } else {
-        const strDesc = compDescription;
-        nameList = [strDesc];
-        console.log(component);
-        addSubcomponents(id, nameList, 1);
-    }
+    const subComponentsName = calculateSubcomponents(id);
+    addSubcomponents(id, subComponentsName);
     closeTooltip(id);
     document.getElementById(id + "resizer").remove();
     // autoResizeDispatch["autoFit"](component);
-    resizeExtended(id, nameList);
-    // if (component.links)
-    //    / renderLine(id);
+    resizeExtended(id, subComponentsName);
+    if (component.links)
+        renderLine(id);
     return;
 }
 
@@ -246,8 +235,17 @@ function handleDescriptionExtension(component) {
 }
 
 function turnOnDescription(component) {
-
-    turnOnExtension(component._id, 1, component._description);
+    const id = component._id;
+    document.getElementById(id).style.display = "block";
+    handleDescriptionExtension(component);
+    closeTooltip(id);
+    
+    document.getElementById(id + "resizer").remove();
+    // autoResizeDispatch["autoFit"](component);
+    resizeExtended(id, [component._description],1);
+    if (component.links)
+    renderLine(id);
+    document.getElementById(id).style.height = "fit-content";
     return;
 }
 

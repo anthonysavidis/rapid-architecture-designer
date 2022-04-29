@@ -20,8 +20,8 @@ function refreshDescriptionExtension(layersItems){
     for (var x in layersItems) {
         if (layersItems[x]._type === "Component" && document.getElementById(layersItems[x]._id + "Description")) {
             console.log(layersItems[x]._name);
-            turnOnDescription(layersItems[x]);
             turnOffDescription(layersItems[x]);
+            turnOnDescription(layersItems[x]);
         }
     }
     return;
