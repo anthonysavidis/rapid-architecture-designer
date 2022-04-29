@@ -1,17 +1,8 @@
-import { createSpecificLayer, deleteSpecificLayer } from "../Actions/inverseActions.js";
-import { changeNextLayer, changePrevLayer } from "../Actions/inverseLayerActions.js";
 import { alterItemsDetails, inverseItemsDetails } from "../Actions/inversePropertiesTab.js";
 import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
-import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
-import { bRecs } from "../Input/boundingRectanglesObserver.js";
-import { showInputDialog } from "../Input/inputDialog.js";
 import { chooseLineType } from "../Item/lineTypeListeners.js";
-import { cancelSelection } from "../Item/selectComponent.js";
-import { produceNewLayer, subdivideAction } from "../UpTab/componentTab.js";
-import { spawnTab } from "../UpTab/tabSwitch.js";
-import { getSubcomponentButton } from "./extendingComponent.js";
 
 function produceClosingButton(tooltip, id) {
     var closeTooltip = document.createElement('div');

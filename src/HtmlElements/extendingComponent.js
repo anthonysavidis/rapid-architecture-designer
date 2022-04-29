@@ -33,25 +33,29 @@ function addDoubleLine(id) {
     return;
 }
 
+function createASubcomponent(subid, compid, text) {
+    var subComponent = document.createElement('div');
+    subComponent.id = subid;
+    subComponent.className = "subComponent";
+    // subComponent.style.width = parseInt(document.getElementById(id).style.width, 10)-2+"px";
+    subComponent.innerText = text;
+    document.getElementById(compid).append(subComponent);
+    return;
+}
 
-function addSubcomponents(id, nameList) {
+function addSubcomponents(id, nameList, descriptionMode) {
     const numberOfSubcomponets = nameList.length;
     addDoubleLine(id);
     document.getElementById(id).style.height = "fit-content";
     document.getElementById(id).style.width = "fit-content";
     for (let index = 0; index < numberOfSubcomponets; index++) {
         document.getElementById(id).style.height = parseInt(document.getElementById(id).style.height, 10) + 56 + "px";
-        var subComponent = document.createElement('div');
-        subComponent.id = id + 'subComponent' + index;
-        subComponent.className = "subComponent";
-        // subComponent.style.width = parseInt(document.getElementById(id).style.width, 10)-2+"px";
-        subComponent.innerText = nameList[index];
+        (!descriptionMode) ? createASubcomponent(id + "subComponent" + index, id, nameList[index]) : createASubcomponent(id + "Description", id, nameList[index]);
         var subWidth = getSubComponentWidth(nameList[index]);
         if (subWidth > document.getElementById(id).getBoundingClientRect().width) {
             document.getElementById(id).style.width = subWidth + "px";
         }
-        document.getElementById(id).append(subComponent);
-        if (index !== (numberOfSubcomponets - 1)) {
+        if (index !== (numberOfSubcomponets - 1) && !descriptionMode) {
             var seperateLine = document.createElement('div');
             seperateLine.className = "seperativeLine";
             seperateLine.id = id + 'subComponent' + index + 'Line';
@@ -99,28 +103,46 @@ function resizeExtended(id, nameList) {
 
     document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
     // document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
-    for (var i = 0; i < nameList.length; i++) {
-        document.getElementById(id + 'subComponent' + i).style.height = getTextDimensions(nameList[i]).height + 2 * offsetY + "px";
+    if (document.getElementById(id + "Description")) {
+        var heightAcc = 0;
+        for (var i = 0; i < nameList.length; i++) {
+            heightAcc += getTextDimensions(nameList[i]).height + "px";
+        }
+        document.getElementById(id + "Description").style.height = heightAcc + 2 * offsetY + "px";
+        // document.getElementById(id).style.height=document.getElementById(id).getC
+    }
+    else {
+        for (var i = 0; i < nameList.length; i++) {
+            document.getElementById(id + 'subComponent' + i).style.height = getTextDimensions(nameList[i]).height + 2 * offsetY + "px";
+        }
     }
     return;
 }
 
-function turnOnExtension(id) {
+function turnOnExtension(id, descriptionMode, compDescription, compLinks) {
     // var r = document.querySelector(':root');
     //     r.style.setProperty("--componentDisplay", "block");
     document.getElementById(id).style.display = "block";
-
-    const subComponentsName = calculateSubcomponents(id);
-    if (subComponentsName.length === 0)
-        return;
-    addSubcomponents(id, subComponentsName);
+    const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
+    var nameList = [];
+    if (!descriptionMode) {
+        const subComponentsName = calculateSubcomponents(id);
+        if (subComponentsName.length === 0)
+            return;
+        addSubcomponents(id, subComponentsName);
+        nameList = subComponentsName;
+    } else {
+        const strDesc = compDescription;
+        nameList = [strDesc];
+        console.log(component);
+        addSubcomponents(id, nameList, 1);
+    }
     closeTooltip(id);
     document.getElementById(id + "resizer").remove();
-    const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
     // autoResizeDispatch["autoFit"](component);
-    resizeExtended(id, subComponentsName);
-    if (component.links)
-        renderLine(id);
+    resizeExtended(id, nameList);
+    // if (component.links)
+    //    / renderLine(id);
     return;
 }
 
@@ -139,30 +161,6 @@ function turnOffExtension(id) {
     if (component.links)
         renderLine(id);
     return;
-}
-
-function getSubcomponentButton(componentId) {
-    var switchButton = document.createElement('button');
-    switchButton.style.marginRight = 122 + "px";
-    switchButton.style.marginBottom = 5 + "px";
-    if (document.getElementById(componentId + 'l1')) {
-        switchButton.innerText = constantNames["infoTooltip"]["collapse"];
-        switchButton.className = "deleteButton";
-        switchButton.style.width = getTextDimensions(constantNames["infoTooltip"]["collapse"]).width + "px";
-        switchButton.addEventListener("click", function () {
-            turnOffExtension(componentId);
-            actions.saveCommand(collapseSubcomponentsAction, extendSubcomponentsAction, componentId, "");
-        });
-    } else {
-        switchButton.innerText = constantNames["infoTooltip"]["extended"];
-        switchButton.className = "okButton";
-        switchButton.style.width = getTextDimensions(constantNames["infoTooltip"]["extended"]).width + "px";
-        switchButton.addEventListener("click", function () {
-            turnOnExtension(componentId);
-            actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, componentId, "");
-        });
-    }
-    return switchButton;
 }
 
 function areAllExtendable(itemsList) {
@@ -199,7 +197,7 @@ const getWidth = (txt) => {
 }
 
 function handleSplitDescription(description, lineNo) {
-    description="Lorem ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
+    description = "Lorem";//ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
     // var descDims = getCustomTextDimensions("Arial, Helvetica, sans-serif","small",description);
     var words = description.split(" ");
     var lines = [];
@@ -211,7 +209,7 @@ function handleSplitDescription(description, lineNo) {
         while (words[word_counter] && (totalPixels + getWidth(words[word_counter] + " ")) < PIXELS_LIMIT) {
             line += words[word_counter] + " ";
             word_counter++;
-            totalPixels += getWidth(words[word_counter]+" ");
+            totalPixels += getWidth(words[word_counter] + " ");
         }
         line.slice(0, -1);
         lines.push(line);
@@ -219,13 +217,8 @@ function handleSplitDescription(description, lineNo) {
     return lines;
 }
 
-function turnOnDescription(component) {
+function handleDescriptionExtension(component) {
     const id = component._id;
-    if (document.getElementById(id + 'l1'))
-        return; //is already extended...
-    document.getElementById(id).style.display = "block";
-    // document.getElementById(id).style.height = "fit-content";
-
     addDoubleLine(id);
     document.getElementById(id).style.height = "fit-content";
     document.getElementById(id).style.width = "fit-content";
@@ -235,24 +228,26 @@ function turnOnDescription(component) {
     subComponent.style.fontSize = "small";
     subComponent.style.color = "#545454";
     const descriptionLines = handleSplitDescription(component._description, 4);
-    var lineMaxWidth=0,lineIndex=0;
+    var lineMaxWidth = 0, lineIndex = 0;
     for (var x in descriptionLines) {
-        if(lineMaxWidth<getWidth(descriptionLines[x])){
-            lineMaxWidth=getWidth(descriptionLines[x]);
-            lineIndex=x;
-        } 
-        subComponent.innerHTML += descriptionLines[x] + "<br />";
-    }
-    // document.getElementById(id).style.height = parseInt(document.getElementById(id).style.height, 10) +56 + "px";
-    var subWidth = lineMaxWidth;
-    const offsetX=configStyle.getJSONValue("innerMarginX").split("px")[0];
-    if ((subWidth+2*offsetX) > document.getElementById(id).getBoundingClientRect().width) {
-        document.getElementById(id).style.width = subWidth+2*offsetX + "px";
+        if (lineMaxWidth < getWidth(descriptionLines[x])) {
+            lineMaxWidth = getWidth(descriptionLines[x]);
+            lineIndex = x;
+        }
+        subComponent.innerText += descriptionLines[x] + "<br />";
     }
     document.getElementById(id).append(subComponent);
-    document.getElementById(id + 'resizer').remove();
-    if (component.links)
-        renderLine(id);
+    document.getElementById(id).style.width = document.getElementById(id).getBoundingClientRect().width + "px";
+    document.getElementById(id).style.height = document.getElementById(id).getBoundingClientRect().height + "px";
+    // subComponent.style.width = "fit-content";
+    // subComponent.style.height = "fit-content";
+
+    return descriptionLines;
+}
+
+function turnOnDescription(component) {
+    turnOnExtension(component._id, 1, component._description);
+    return;
 }
 
 function turnOffDescription(component) {
@@ -272,4 +267,4 @@ function turnOffDescription(component) {
 
 
 
-export { turnOnExtension, turnOffExtension, turnOnDescription, turnOffDescription, getSubcomponentButton, areAllExtendable, areAllCollapsed, areAllExtended };
+export { turnOnExtension, turnOffExtension, turnOnDescription, turnOffDescription, areAllExtendable, areAllCollapsed, areAllExtended };
