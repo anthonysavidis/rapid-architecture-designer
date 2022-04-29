@@ -93,25 +93,28 @@ function calculateSubcomponents(id) {
 }
 
 function resizeExtended(id, nameList) {
-    var maxWidth = 0;
-    nameList.forEach((el) => {
-        var width = getTextDimensions(el).width;
-        (width > maxWidth) ? maxWidth = width : 1;
-    });
     var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
 
-    document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
+    var maxWidth = 0;
     // document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
     if (document.getElementById(id + "Description")) {
+        maxWidth = getTextDimensions(document.getElementById(id + 'name').innerText).width;
         var heightAcc = 0;
         for (var i = 0; i < nameList.length; i++) {
-            heightAcc += getTextDimensions(nameList[i]).height;
+            var textDims = getCustomTextDimensions("Arial, Helvetica, sans-serif", "small", nameList[i]);
+            (textDims.width > maxWidth) ? maxWidth = textDims.width : 1;
+            heightAcc += textDims.height;
         }
         document.getElementById(id + "Description").style.height = heightAcc + 2 * offsetY + "px";
-        // document.getElementById(id).style.height=document.getElementById(id).getC
+        document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
     }
     else {
+        nameList.forEach((el) => {
+            var width = getTextDimensions(el).width;
+            (width > maxWidth) ? maxWidth = width : 1;
+        });
+        document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
         for (var i = 0; i < nameList.length; i++) {
             document.getElementById(id + 'subComponent' + i).style.height = getTextDimensions(nameList[i]).height + 2 * offsetY + "px";
         }
@@ -186,23 +189,26 @@ const getWidth = (txt) => {
 }
 
 function handleSplitDescription(description, lineNo) {
-    description = "Lorem";//ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
+    description = "Lorem ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
     // var descDims = getCustomTextDimensions("Arial, Helvetica, sans-serif","small",description);
     var words = description.split(" ");
     var lines = [];
     var word_counter = 0;
-    const PIXELS_LIMIT = 50;
+    const PIXELS_LIMIT = 150;
     for (var i = 0; i < lineNo; i++) {
         var line = "";
         var totalPixels = 0;
-        while (words[word_counter] && (totalPixels + getWidth(words[word_counter] + " ")) < PIXELS_LIMIT) {
+        while (words[word_counter] && (totalPixels + getWidth(words[word_counter])) < PIXELS_LIMIT) {
             line += words[word_counter] + " ";
             word_counter++;
             totalPixels += getWidth(words[word_counter] + " ");
         }
         line.slice(0, -1);
+        if (line === "" || !line.replace(/\s/g, '').length)
+            continue;
         lines.push(line);
     }
+
     return lines;
 }
 
@@ -223,7 +229,7 @@ function handleDescriptionExtension(component) {
             lineMaxWidth = getWidth(descriptionLines[x]);
             lineIndex = x;
         }
-        subComponent.innerText += descriptionLines[x] + "<br />";
+        subComponent.innerHTML += descriptionLines[x] + "<br />";
     }
     document.getElementById(id).append(subComponent);
     document.getElementById(id).style.width = document.getElementById(id).getBoundingClientRect().width + "px";
@@ -237,14 +243,14 @@ function handleDescriptionExtension(component) {
 function turnOnDescription(component) {
     const id = component._id;
     document.getElementById(id).style.display = "block";
-    handleDescriptionExtension(component);
     closeTooltip(id);
-    
+
     document.getElementById(id + "resizer").remove();
+
     // autoResizeDispatch["autoFit"](component);
-    resizeExtended(id, [component._description],1);
+    resizeExtended(id, handleDescriptionExtension(component), 1);
     if (component.links)
-    renderLine(id);
+        renderLine(id);
     document.getElementById(id).style.height = "fit-content";
     return;
 }
