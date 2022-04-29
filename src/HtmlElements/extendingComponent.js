@@ -222,7 +222,7 @@ function handleDescriptionExtension(component) {
     subComponent.className = "subComponent";
     subComponent.style.fontSize = "small";
     subComponent.style.color = "#545454";
-    const descriptionLines = handleSplitDescription(component._description, 4);
+    const descriptionLines = handleSplitDescription(component._description, 2);
     var lineMaxWidth = 0, lineIndex = 0;
     for (var x in descriptionLines) {
         if (lineMaxWidth < getWidth(descriptionLines[x])) {

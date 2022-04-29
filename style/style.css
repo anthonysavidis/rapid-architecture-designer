@@ -9,7 +9,7 @@
     --subcomponentTextSize: 12pt;
     --subcomponentTextColor: #000000;
     --subcomponentBackgroundColor: #FFFFFF;
-
+    --descriptionColor:#545454;
     --componentBackgroundColor: #FFFFFF;
     --componentBorderColor: #000000;
     --componentBorderWidth: 2px;
@@ -385,6 +385,8 @@ hr.solid {
     align-items:center;
     align-content: center;
     justify-content: center;
+    overflow:none ;
+    white-space: nowrap;
 
     font-size: var(--subcomponentTextSize);
     color: var(--subcomponentTextColor);

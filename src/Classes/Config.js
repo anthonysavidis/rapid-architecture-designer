@@ -11,6 +11,7 @@ class Config{
         this.autoFit = false;
         this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"]+"px";
         this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"]+"px";
+        this.configJSON["descriptionColor"] = "#545454";
     }
     
     setJSONValue(key, value) {
