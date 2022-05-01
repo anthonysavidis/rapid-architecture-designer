@@ -2,27 +2,29 @@ import { autoResizeAllComponents } from "../Item/autoResize.js";
 import { capitalizeFirstLetter, TextConfig } from "./TextConfig.js";
 import { constantValues } from "../config/constantValues.js";
 
-class Config{
-    constructor(){
+class Config {
+    constructor() {
         this.componentsText = new TextConfig();
         this.linkText = new TextConfig();
         this.operationsText = new TextConfig();
-        this.configJSON={};
+        this.configJSON = {};
         this.autoFit = false;
-        this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"]+"px";
-        this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"]+"px";
+        this.descriptionEnabled = false;
+        this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"] + "px";
+        this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"] + "px";
         this.configJSON["descriptionColor"] = "#545454";
+        this.configJSON["descriptionLines"] = "3";
     }
-    
+
     setJSONValue(key, value) {
         this.configJSON[key] = value;
         return;
     }
-    setInitialMargins(){
-        this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"]+"px";
-        this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"]+"px";
+    setInitialMargins() {
+        this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"] + "px";
+        this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"] + "px";
     }
-    getJSONValue(key){
+    getJSONValue(key) {
         return this.configJSON[key];
     }
 
@@ -41,4 +43,4 @@ class Config{
 
 var configStyle = new Config();
 
-export{configStyle};
+export { configStyle };

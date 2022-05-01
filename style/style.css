@@ -9,7 +9,6 @@
     --subcomponentTextSize: 12pt;
     --subcomponentTextColor: #000000;
     --subcomponentBackgroundColor: #FFFFFF;
-    --descriptionColor:#545454;
     --componentBackgroundColor: #FFFFFF;
     --componentBorderColor: #000000;
     --componentBorderWidth: 2px;
@@ -18,16 +17,14 @@
     /* Not functional*/
     --componentInnerMarginX: 4px;
     --componentInnerMarginY: 4px;
-
+    /* End off non functional*/
     --operationTextSize: 12pt;
     --operationTextFamily: Arial, Helvetica, sans-serif;
     --operationFontWeight: "normal";
     --operationFontStyle: "normal";
     --operationTextDecoration: "none";
     --operationTextBackgroundColor: transparent;
-    ;
     --operationTextColor: #000000;
-
     --linkTextSize: 12pt;
     --linkTextFamily: Arial, Helvetica, sans-serif;
     --linkFontWeight: "normal";
@@ -35,7 +32,8 @@
     --linkTextDecoration: "none";
     --linkTextBackgroundColor: transparent;
     --linkTextColor: #000000;
-
+    --descriptionColor: #545454;
+    --descriptionLines: 2;
 }
 
 
@@ -145,6 +143,7 @@
     -moz-box-sizing: border-box;
 }
 
+
 /* 
 .pillowY{
     width: var(--componentInnerMarginX);
@@ -157,7 +156,6 @@
     height: 4px;
     background-color: aquamarine;
 } */
-
 
 .selected {
     width: fit-content;
@@ -181,7 +179,6 @@
     -moz-box-sizing: border-box;
     /* border: 2px  solid rgba(0,0,0,0.5);  */
     border: var(--componentBorderWidth) solid var(--componentSelectedBorderColor);
-
     box-sizing: border-box;
 }
 
@@ -382,12 +379,11 @@ hr.solid {
     width: 100%;
     height: 50px;
     display: flex;
-    align-items:center;
+    align-items: center;
     align-content: center;
     justify-content: center;
-    overflow:none ;
+    overflow: none;
     white-space: nowrap;
-
     font-size: var(--subcomponentTextSize);
     color: var(--subcomponentTextColor);
     background-color: var(--subcomponentBackgroundColor);
@@ -414,7 +410,6 @@ hr.solid {
     text-decoration: var(--linkTextDecoration);
     color: var(--linkTextColor);
     background-color: var(--linkTextBackgroundColor);
-
 }
 
 .componentName {
@@ -445,7 +440,6 @@ hr.solid {
     text-decoration: var(--linkTextDecoration);
     color: var(--linkTextColor);
     background-color: var(--linkTextBackgroundColor);
-
 }
 
 .blurName {

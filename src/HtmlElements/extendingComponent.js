@@ -87,7 +87,7 @@ function calculateSubcomponents(id) {
     const subLayerItems = layers.itemMap.get(component.subLayers[0]);
     var componentNames = [];
     for (var x in subLayerItems.itemList) {
-        (subLayerItems.itemList[x]._type === "Component") ? componentNames.push(subLayerItems.itemList[x]._name) : 1;
+        (subLayerItems.itemList[x]._type === "Component") ? componentNames.push(subLayerItems.itemList[x]._name): 1;
     }
     return componentNames;
 }
@@ -103,16 +103,15 @@ function resizeExtended(id, nameList) {
         var heightAcc = 0;
         for (var i = 0; i < nameList.length; i++) {
             var textDims = getCustomTextDimensions("Arial, Helvetica, sans-serif", "small", nameList[i]);
-            (textDims.width > maxWidth) ? maxWidth = textDims.width : 1;
+            (textDims.width > maxWidth) ? maxWidth = textDims.width: 1;
             heightAcc += textDims.height;
         }
         document.getElementById(id + "Description").style.height = heightAcc + 2 * offsetY + "px";
         document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
-    }
-    else {
+    } else {
         nameList.forEach((el) => {
             var width = getTextDimensions(el).width;
-            (width > maxWidth) ? maxWidth = width : 1;
+            (width > maxWidth) ? maxWidth = width: 1;
         });
         document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
         for (var i = 0; i < nameList.length; i++) {
@@ -212,7 +211,7 @@ function handleSplitDescription(description, lineNo) {
     return lines;
 }
 
-function handleDescriptionExtension(component) {
+function handleDescriptionExtension(component, lineNo) {
     const id = component._id;
     addDoubleLine(id);
     document.getElementById(id).style.height = "fit-content";
@@ -221,9 +220,10 @@ function handleDescriptionExtension(component) {
     subComponent.id = id + 'Description';
     subComponent.className = "subComponent";
     subComponent.style.fontSize = "small";
-    subComponent.style.color = "#545454";
-    const descriptionLines = handleSplitDescription(component._description, 2);
-    var lineMaxWidth = 0, lineIndex = 0;
+    subComponent.style.color = "var(--descriptionColor)";
+    const descriptionLines = handleSplitDescription(component._description, lineNo);
+    var lineMaxWidth = 0,
+        lineIndex = 0;
     for (var x in descriptionLines) {
         if (lineMaxWidth < getWidth(descriptionLines[x])) {
             lineMaxWidth = getWidth(descriptionLines[x]);
@@ -248,7 +248,10 @@ function turnOnDescription(component) {
     document.getElementById(id + "resizer").remove();
 
     // autoResizeDispatch["autoFit"](component);
-    resizeExtended(id, handleDescriptionExtension(component), 1);
+    var r = document.querySelector(':root');
+    var rs = getComputedStyle(r);
+    const lineNo = rs.getPropertyValue("--descriptionLines");
+    resizeExtended(id, handleDescriptionExtension(component, lineNo));
     if (component.links)
         renderLine(id);
     document.getElementById(id).style.height = "fit-content";
@@ -257,6 +260,8 @@ function turnOnDescription(component) {
 
 function turnOffDescription(component) {
     const id = component._id;
+    if (!document.getElementById(id + 'Description'))
+        return;
     document.getElementById(id).style.display = "flex";
     document.getElementById(id + 'name').style.marginTop = "0";
     document.getElementById(id + 'Description').remove();

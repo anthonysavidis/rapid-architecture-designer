@@ -7,6 +7,7 @@ import { autoResizeAllComponents } from "../Item/autoResize.js";
 import { turnOnDescription, turnOffDescription } from "../HtmlElements/extendingComponent.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
+import { descriptionArea } from "../HtmlElements/descriptionConfig.js";
 
 
 
@@ -14,7 +15,7 @@ function createConfigBox() {
     var box = document.createElement('div');
     box.className = 'configurationBox';
     produceGrayLayer(box, "", "", "");
-    var closeBox = function () {
+    var closeBox = function() {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
@@ -37,7 +38,7 @@ function createConfigBox() {
     closeButton.onclick = closeBox;
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
-    confirmationButton.onclick = function () {
+    confirmationButton.onclick = function() {
         closeBox();
     }
     box.appendChild(closeButton);
@@ -53,7 +54,7 @@ function createComponentConfigBox() {
     box.className = 'configurationBox';
 
     produceGrayLayer(box, "", "", "");
-    var closeBox = function () {
+    var closeBox = function() {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
@@ -110,7 +111,7 @@ function createComponentConfigBox() {
     closeButton.onclick = closeBox;
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
-    confirmationButton.onclick = function () {
+    confirmationButton.onclick = function() {
         closeBox();
     }
     var buttonsContainer = document.createElement('div');
@@ -122,6 +123,7 @@ function createComponentConfigBox() {
     buttonsContainer.style.marginTop = 25 + "px";
     buttonsContainer.appendChild(closeButton);
     buttonsContainer.appendChild(confirmationButton);
+    descriptionArea(box);
     box.appendChild(buttonsContainer);
 
     document.getElementById('body').appendChild(box);
@@ -135,8 +137,7 @@ function createComponentConfigBox() {
             document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("innerMarginY").split("px")[0];
             document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("innerMarginY").split("px")[0] + "px";
             document.getElementById('innerMarginSlider').style.display = "inline-block";
-        }
-        else {
+        } else {
             configStyle.setInitialMargins();
             autoResizeAllComponents();
             document.getElementById('innerMarginSlider').style.display = "none";
@@ -144,6 +145,8 @@ function createComponentConfigBox() {
     });
     document.getElementById("descriptionSwitch").addEventListener("change", () => {
         if (document.getElementById("descriptionSwitch").checked) {
+            document.getElementById("descArea").style.display = "inline-block";
+            configStyle.descriptionEnabled = true;
             for (var x in layers.layerList) {
                 const layerItems = layers.itemMap.get(layers.layerList[x]._id);
                 for (var y in layerItems.itemList) {
@@ -152,6 +155,9 @@ function createComponentConfigBox() {
                 }
             }
         } else {
+            document.getElementById("descArea").style.display = "none";
+            configStyle.descriptionEnabled = false;
+
             for (var x in layers.layerList) {
                 const layerItems = layers.itemMap.get(layers.layerList[x]._id);
                 for (var y in layerItems.itemList) {
@@ -174,6 +180,11 @@ function addSettingsTabListeners() {
         if (configStyle.autoFit) {
             document.getElementById("autofitSwitch").checked = true;
             document.getElementById('innerMarginSlider').style.display = "inline-block";
+        }
+        if (configStyle.descriptionEnabled) {
+            document.getElementById("descriptionSwitch").checked = true;
+            document.getElementById('descArea').style.display = "inline-block";
+
         }
     });
     return;

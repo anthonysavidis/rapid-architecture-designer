@@ -20,7 +20,7 @@ function produceSizeForm(box, className, callBack) {
     const rsValue = rs.getPropertyValue('--' + className.toLowerCase() + 'TextSize');
     select.value = rsValue.charAt(0) === " " ? rsValue.slice(1) : rsValue;
     // (!select.value) ? select.value = "medium" : 1;
-    select.addEventListener("change", function () {
+    select.addEventListener("change", function() {
         callBack(className, 'textSize', select.value);
     })
     box.appendChild(select);
@@ -48,13 +48,13 @@ function produceFontFamilyForms(box, className, callBack) {
   <option value=\"Verdana\">Verdana</option>\
   <option value=\"Courier New\">Courier New</option>\
   <option value=\"Lucida Console\">Lucida Console</option>';
-    select.addEventListener("change", function () {
+    select.addEventListener("change", function() {
         callBack(className, 'textFamily', select.value);
     });
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
     select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextFamily');
-    (!select.value) ? select.value = "Arial, Helvetica, sans-serif" : 1;
+    (!select.value) ? select.value = "Arial, Helvetica, sans-serif": 1;
 
     box.appendChild(select);
 }
@@ -66,36 +66,33 @@ function produceStyleButtons(box, className, callBack) {
     boldButton.className = italicButton.className = underlinedButton.className = "styleButton";
     boldButton.innerText = "B";
     boldButton.style.fontWeight = "bold";
-    boldButton.addEventListener("click", function () {
+    boldButton.addEventListener("click", function() {
         if (boldButton.className === "styleButton") {
             callBack(className, 'fontWeight', "bold");
             boldButton.className = "styleButtonPressed";
-        }
-        else {
+        } else {
             callBack(className, 'fontWeight', "normal");
             boldButton.className = "styleButton";
         }
     })
     italicButton.innerText = "I";
     italicButton.style.fontStyle = "italic";
-    italicButton.addEventListener("click", function () {
+    italicButton.addEventListener("click", function() {
         if (italicButton.className === "styleButton") {
             callBack(className, 'fontStyle', "italic");
             italicButton.className = "styleButtonPressed";
-        }
-        else {
+        } else {
             callBack(className, 'fontStyle', "normal");
             italicButton.className = "styleButton";
         }
     })
     underlinedButton.innerText = "U";
     underlinedButton.style.textDecoration = "underline";
-    underlinedButton.addEventListener("click", function () {
+    underlinedButton.addEventListener("click", function() {
         if (underlinedButton.className === "styleButton") {
             callBack(className, 'textDecoration', "underline");
             underlinedButton.className = "styleButtonPressed";
-        }
-        else {
+        } else {
             callBack(className, 'textDecoration', "none");
             underlinedButton.className = "styleButton";
         }
@@ -117,7 +114,7 @@ function createPicker(txt, selected, callBack) {
     labelDiv.innerText = txt;
     var picker = document.createElement('input');
     picker.type = "color";
-    picker.addEventListener("change", function () {
+    picker.addEventListener("change", function() {
         callBack(picker.value);
     })
     picker.style.display = "inline-block";
@@ -243,7 +240,7 @@ function produceComponentConfigBox(box) {
     return;
 }
 
-function getSliderGroup(labelName, minVal, maxVal, defVal, callBack) {
+function getSliderGroup(labelName, minVal, maxVal, defVal, callBack, noPixels) {
     var sliderContainer = document.createElement('div');
     sliderContainer.className = "slidecontainer";
     var slider = document.createElement('input');
@@ -255,14 +252,14 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack) {
     var label = document.createElement('span');
     label.innerText = labelName;
     label.style.display = "inline-block";
-    label.style.marginLeft = 10+"px";
+    label.style.marginLeft = 10 + "px";
     sliderContainer.appendChild(label);
     var span = document.createElement('span');
-    span.innerText = defVal+"px";
-    span.style.marginLeft = 8+"px";
-    slider.style.marginLeft = 10+"px";
+    span.innerText = (!noPixels) ? defVal + "px" : defVal;
+    span.style.marginLeft = 8 + "px";
+    slider.style.marginLeft = 10 + "px";
     slider.addEventListener("change", () => {
-        span.innerText = slider.value+"px";
+        span.innerText = (!noPixels) ? slider.value + "px" : slider.value;
         callBack(slider.value);
     })
     sliderContainer.appendChild(slider);
@@ -273,20 +270,20 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack) {
 function produceSliders(box) {
     const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
     const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px"); };
-    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px");};
+    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px"); };
 
 
-    var borderWidthSlider = getSliderGroup("Component's border width:",1, 10, 2, borderSliderCallBack);
+    var borderWidthSlider = getSliderGroup("Component's border width:", 1, 10, 2, borderSliderCallBack);
     borderWidthSlider.style.float = "right";
     borderWidthSlider.style.marginRight = "20px";
     borderWidthSlider.style.marginTop = "17px";
 
     var innerMarginDiv = document.createElement('div');
-    var innerMarginX = getSliderGroup("Inner Margin X:",1, 50, configStyle.getJSONValue("innerMarginX").split("px")[0], innerMarginXCallBack);
-    var innerMarginY = getSliderGroup("Inner Margin Y:",1, 50, configStyle.getJSONValue("innerMarginY").split("px")[0], innerMarginYCallBack);
-    innerMarginY.style.width=innerMarginX.style.width = "100%";
-    innerMarginY.style.display =innerMarginX.style.display = "inline-block";
-    innerMarginDiv.id = "innerMarginSlider"; 
+    var innerMarginX = getSliderGroup("Inner Margin X:", 1, 50, configStyle.getJSONValue("innerMarginX").split("px")[0], innerMarginXCallBack);
+    var innerMarginY = getSliderGroup("Inner Margin Y:", 1, 50, configStyle.getJSONValue("innerMarginY").split("px")[0], innerMarginYCallBack);
+    innerMarginY.style.width = innerMarginX.style.width = "100%";
+    innerMarginY.style.display = innerMarginX.style.display = "inline-block";
+    innerMarginDiv.id = "innerMarginSlider";
     innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
     innerMarginDiv.style.marginTop = "17px";
     innerMarginDiv.style.width = "100%";
@@ -296,22 +293,22 @@ function produceSliders(box) {
     box.appendChild(borderWidthSlider);
     innerMarginDiv.appendChild(innerMarginX);
     innerMarginDiv.appendChild(innerMarginY);
-    box.appendChild (innerMarginDiv);
+    box.appendChild(innerMarginDiv);
     return;
 }
 
-function getSwitch(id,labelText) {
+function getSwitch(id, labelText) {
     var container = document.createElement('div');
     var label = document.createElement('span');
     label.innerText = labelText;
     label.style.display = "inline-block";
     label.style.float = "left";
-    label.style.marginLeft = 10+"px";
-    label.style.marginRight = 10+"px";
-    label.style.marginTop = 7+"px";
+    label.style.marginLeft = 10 + "px";
+    label.style.marginRight = 10 + "px";
+    label.style.marginTop = 7 + "px";
 
     container.appendChild(label);
-    container.innerHTML += '<input type="checkbox" id="'+id+'"class="checkbox" style="position:absolute;" /><label for="'+id+'" class="toggle">';
+    container.innerHTML += '<input type="checkbox" id="' + id + '"class="checkbox" style="position:absolute;" /><label for="' + id + '" class="toggle">';
     container.style.display = 'inline-block';
     container.style.width = "150px";
     container.style.height = "25px";
@@ -320,8 +317,8 @@ function getSwitch(id,labelText) {
 }
 
 function produceSwitches(box) {
-    
-    var switcher = getSwitch("autofitSwitch",constantNames["configBox"]["autoFitLabel"]);
+
+    var switcher = getSwitch("autofitSwitch", constantNames["configBox"]["autoFitLabel"]);
     switcher.style.marginLeft = "22px";
     switcher.style.marginTop = "12px";
     switcher.style.width = "auto";
@@ -338,14 +335,14 @@ function produceSubComponentForm(box) {
     labelDiv.innerText = "Subcomponent Settings";
     var div = document.createElement('div');
     div.className = "formContainer";
-    div.style.width="100%";
+    div.style.width = "100%";
     div.appendChild(labelDiv);
     var colorContainer = document.createElement('div');
     colorContainer.style.width = "100%";
     const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
-    // produceStyleButtons(div, "Component", callBack);
-    // produceFontFamilyForms(div, "Component", callBack);
-    // produceTextColor(colorContainer, "SubComponent", callBack);
+        // produceStyleButtons(div, "Component", callBack);
+        // produceFontFamilyForms(div, "Component", callBack);
+        // produceTextColor(colorContainer, "SubComponent", callBack);
 
     box.appendChild(div);
     box.appendChild(colorContainer);
@@ -354,4 +351,4 @@ function produceSubComponentForm(box) {
 
 
 
-export { produceSubComponentForm,produceComponentForm, produceOperationForm, produceLinkForm,getSwitch, produceComponentConfigBox, produceSliders,produceSwitches,createPicker,getSliderGroup };
+export { produceSubComponentForm, produceComponentForm, produceOperationForm, produceLinkForm, getSwitch, produceComponentConfigBox, produceSliders, produceSwitches, createPicker, getSliderGroup };
