@@ -253,15 +253,13 @@ function handleDescriptionExtension(component, lineNo) {
 
 function turnOnDescription(component) {
     const id = component._id;
-    if (document.getElementById(id + "subComponent0")) {
+    if (document.getElementById(id + "subComponent0") || document.getElementById(id + "Description")) {
         return;
     }
 
     document.getElementById(id).style.display = "block";
     closeTooltip(id);
-
     document.getElementById(id + "resizer").remove();
-
     // autoResizeDispatch["autoFit"](component);
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);

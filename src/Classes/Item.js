@@ -26,6 +26,8 @@ import { canMove } from "../Item/createComponent.js";
 import { moveAllNext, moveAllPrev, moveNext, movePrev } from "../Actions/inverseMovement.js";
 import { deleteOperationWithTrashBin } from "../UpTab/functionTab.js";
 import { setInitialSize } from "../Item/autoResize.js";
+import { configStyle } from "./Config.js";
+import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 
 class Item {
 
@@ -38,7 +40,7 @@ class Item {
         this._functions = [];
         var myId = this._id;
         $("#" + this._id).droppable({
-            drop: function (event, ui) {
+            drop: function(event, ui) {
                 try {
                     if (event.target.className === "selected")
                         return;
@@ -143,14 +145,15 @@ class Item {
                     var updatedItem = document.getElementById(dragIds[0]).getBoundingClientRect();
                     actions.saveCommand(moveNext, movePrev,
                         JSON.stringify(initialItem[dragIds[0]]["initialRec"]) + '@' + dragIds[0], JSON.stringify(updatedItem));
-                } this.updateBoundingRec();
+                }
+                this.updateBoundingRec();
             },
             click: (e) => {
                 appearComponentButtons();
             }
         });
         this.domElement = div;
-        document.getElementById(this._id + "name").addEventListener("dblclick", function () {
+        document.getElementById(this._id + "name").addEventListener("dblclick", function() {
             produceDoubleClickEditingName(editId);
             closeTooltip(editId);
         });
@@ -162,39 +165,44 @@ class Item {
             produceTooltip(e.clientX - 10, e.clientY - 10, "", editId);
         })
         this.domElement.ondrop = (event) => {
-            event.preventDefault();
-            try {
-                if (event.target.className === "selected")
-                    return;
-                console.log(event.target.id);
-                var functionId = event.dataTransfer.getData("text");
-                if (!this._functions.includes(functionId)) {
-                    var hasError = items.setFunctionToItem(this._id, functionId);
-                    if (hasError === -1)
+                event.preventDefault();
+                try {
+                    if (event.target.className === "selected")
                         return;
-                    if (hasError === 2) {
-                        moveCallBack(editId);
-                        return;
+                    console.log(event.target.id);
+                    var functionId = event.dataTransfer.getData("text");
+                    if (!this._functions.includes(functionId)) {
+                        var hasError = items.setFunctionToItem(this._id, functionId);
+                        if (hasError === -1)
+                            return;
+                        if (hasError === 2) {
+                            moveCallBack(editId);
+                            return;
+                        }
+                        var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
+                        var funcComp = [settingFunction, this];
+                        var str = itemFromListToObject(funcComp);
+                        actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
+                    } else {
+                        produceBox("updating", constantNames["messages"]["functionExists"]);
                     }
-                    var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
-                    var funcComp = [settingFunction, this];
-                    var str = itemFromListToObject(funcComp);
-                    actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
-                } else {
-                    produceBox("updating", constantNames["messages"]["functionExists"]);
+                } catch {
+
                 }
-            } catch {
 
             }
-
-        }
-        // this.domElement.ondragstart = (ev) => {
-        //     console.log("dragStart");
-        //     ev.dataTransfer.setData("text/plain", ev.target.id);
-        // }
-        // document.getElementById(this._id).style.width="100px";
-        // document.getElementById(this._id).style.height="50px";
+            // this.domElement.ondragstart = (ev) => {
+            //     console.log("dragStart");
+            //     ev.dataTransfer.setData("text/plain", ev.target.id);
+            // }
+            // document.getElementById(this._id).style.width="100px";
+            // document.getElementById(this._id).style.height="50px";
         setInitialSize(this._id, this._name);
+        setTimeout(() => {
+            if (configStyle.descriptionEnabled) {
+                turnOnDescription(this, 1);
+            }
+        }, 50);
     }
     spawnLink() {
         var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
@@ -220,24 +228,24 @@ class Item {
         this.domElement = div;
         const editId = this._id;
         document.getElementById(this._id + "name").style.outline = 0 + "px";
-        document.getElementById(this._id + "name").onblur = (function () {
+        document.getElementById(this._id + "name").onblur = (function() {
             items.itemList[items.itemList.findIndex(el => el._id === editId)]._name = this.innerText;
         });
         changeFunctionSelectState(this._id);
         // document.getElementById(this._id).addEventListener("dblclick", function() {
         //     var index = items.itemList.findIndex(((element) => element._id === editId));
         // });
-        document.getElementById(this._id + "ficon").addEventListener("click", function (ev) {
+        document.getElementById(this._id + "ficon").addEventListener("click", function(ev) {
             ev.preventDefault();
             cancelFunctionSelection();
             produceTooltip(ev.clientX, ev.clientY, "", editId);
             document.getElementById(editId).className = "selectedFunction";
         });
-        document.getElementById(this._id + "name").addEventListener("dblclick", function () {
+        document.getElementById(this._id + "name").addEventListener("dblclick", function() {
             produceDoubleClickEditingName(editId);
             closeTooltip(editId);
         });
-        document.getElementById(this._id).addEventListener("contextmenu", function (ev) {
+        document.getElementById(this._id).addEventListener("contextmenu", function(ev) {
             ev.preventDefault();
             if (document.getElementsByClassName("context-menu")[0])
                 document.getElementsByClassName("context-menu")[0].remove();
@@ -258,17 +266,17 @@ class Item {
             ev.dataTransfer.setData("text/plain", ev.target.id);
         }
         this.domElement.ondragend = (ev) => {
-            document.getElementById(curId).style.backgroundColor = prevColor;
-            prevColor = "";
-            // alert('operation dropped');
+                document.getElementById(curId).style.backgroundColor = prevColor;
+                prevColor = "";
+                // alert('operation dropped');
 
-            const trashRec = document.getElementById('trashBin').getBoundingClientRect();
-            const funcRec = document.getElementById(editId).getBoundingClientRect();
-            if (ev.clientX >= trashRec.x && ev.clientY >= (trashRec.y) && ev.clientX <= (trashRec.x + trashRec.width) && ev.clientY <= (trashRec.y + trashRec.height)) {
-                deleteOperationWithTrashBin();
+                const trashRec = document.getElementById('trashBin').getBoundingClientRect();
+                const funcRec = document.getElementById(editId).getBoundingClientRect();
+                if (ev.clientX >= trashRec.x && ev.clientY >= (trashRec.y) && ev.clientX <= (trashRec.x + trashRec.width) && ev.clientY <= (trashRec.y + trashRec.height)) {
+                    deleteOperationWithTrashBin();
+                }
             }
-        }
-        // ()
+            // ()
     }
     deleteLink(deletedItemId) {
         var deletedLineId = this.links.get(deletedItemId);
@@ -285,13 +293,13 @@ class Item {
     }
 
     isLinked(itemId) {
-        var getItemFun = (element) => element === itemId;
-        var res = this.linkedItems.findIndex(getItemFun);
-        if (res != -1)
-            return true;
-        return false;
-    }
-    // domElement;
+            var getItemFun = (element) => element === itemId;
+            var res = this.linkedItems.findIndex(getItemFun);
+            if (res != -1)
+                return true;
+            return false;
+        }
+        // domElement;
     updateDomName(newName) {
         document.getElementById(this._id + "name").innerText = (this._type === "Function") ? this._name : newName;
     }

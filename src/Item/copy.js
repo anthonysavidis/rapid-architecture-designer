@@ -115,13 +115,15 @@ function getAssociatedLayers(selectedItems) {
     var selectedSublayerIds = [];
     var hasNotLayers = true;
     for (var x in selectedItems) {
-        if (selectedItems[x]._type === "Component" && selectedItems[x].subLayers) {
+        if (selectedItems[x]._type === "Component" && selectedItems[x].subLayers[0]) {
             hasNotLayers = false;
             selectedSublayerIds.push(selectedItems[x].subLayers[0]);
             totalLayerIds.push(selectedItems[x].subLayers[0]);
+            console.log(getTreeData());
             recursiveChildrenFind(getTreeData(), selectedItems[x].subLayers[0] + 'branch');
         }
     }
+    console.log(totalLayerBranches);
     if (hasNotLayers || !totalLayerIds[0])
         return "";
     totalLayerBranches.forEach((el) => {

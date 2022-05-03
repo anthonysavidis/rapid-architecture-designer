@@ -11,6 +11,8 @@ function moveItem(id) {
 function deleteComponent(selectedIds) {
     var y = document.getElementsByClassName("selected");
     for (var i = 0; i < selectedIds.length; i++) {
+        if (document.getElementById(selectedIds[i] + 'resizer'))
+            document.getElementById(selectedIds[i] + 'resizer').remove();
         items.delete(selectedIds[i]);
     }
 }
