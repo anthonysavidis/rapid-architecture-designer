@@ -9,8 +9,8 @@ function moveSpecificDirection(index, componentId, boundingStr) {
     var currentBoundingRec = JSON.parse(boundingStr);
     document.getElementById(componentId).style.top = currentBoundingRec.top + "px";
     document.getElementById(componentId).style.left = currentBoundingRec.left + "px";
-    document.getElementById(componentId).style.width = currentBoundingRec.width + "px";
-    document.getElementById(componentId).style.height = currentBoundingRec.height + "px";
+    // document.getElementById(componentId).style.width = currentBoundingRec.width + "px";
+    // document.getElementById(componentId).style.height = currentBoundingRec.height + "px";
     items.itemList[index].boundingRec = currentBoundingRec;
 }
 

@@ -76,7 +76,6 @@ class ItemHolder {
         this.itemList[oldIndex].updateDomName(newName);
         if (document.getElementById("all").checked && this.itemList[oldIndex]._type === "Component") {
             showAllRefresh();
-            console.log('name update in list');
         }
         if (this.itemList[oldIndex]._type === "Component")
             autoResizeAutoFit(this.itemList[oldIndex]);
@@ -220,7 +219,7 @@ class ItemHolder {
         totalStr += '\"idList\":\" ' + this.idList + "\",";
         totalStr += '\"functionCounter\":\"' + this.functionCounter + "\",";
         var counter = 0;
-        this.itemList.forEach(function (item) {
+        this.itemList.forEach(function(item) {
             totalStr += '\"' + counter + '\":' + item.toString() + ",";
             counter++;
         });

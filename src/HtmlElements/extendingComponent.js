@@ -8,6 +8,7 @@ import { addResize, getTextDimensions, getCustomTextDimensions } from "../Item/r
 import { closeTooltip } from "./infoTooltip.js";
 import { autoResizeDispatch } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
+import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
 function getSubComponentWidth(text) {
     const textDims = getTextDimensions(text);
@@ -108,6 +109,7 @@ function resizeExtended(id, nameList) {
         }
         document.getElementById(id + "Description").style.height = heightAcc + 2 * offsetY + "px";
         document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
+        console.log('resizedDesc.');
     } else {
         nameList.forEach((el) => {
             var width = getTextDimensions(el).width;
@@ -124,8 +126,11 @@ function resizeExtended(id, nameList) {
 function turnOnExtension(id) {
     // var r = document.querySelector(':root');
     //     r.style.setProperty("--componentDisplay", "block");
-    document.getElementById(id).style.display = "block";
     const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
+    if (document.getElementById(id + "Description")) {
+        turnOffDescription(component);
+    }
+    document.getElementById(id).style.display = "block";
     const subComponentsName = calculateSubcomponents(id);
     addSubcomponents(id, subComponentsName);
     closeTooltip(id);
@@ -151,6 +156,13 @@ function turnOffExtension(id) {
     autoResizeDispatch["autoFit"](component);
     if (component.links)
         renderLine(id);
+    appearComponentButtons();
+    if (configStyle.descriptionEnabled) {
+        turnOffDescription(component);
+        turnOnDescription(component);
+        console.log("AKSONAS");
+        // autoResizeDispatch["autoFit"](component);
+    }
     return;
 }
 
@@ -167,7 +179,7 @@ function areAllExtendable(itemsList) {
 function areAllCollapsed(itemsList) {
     var collapsed = true;
     for (var x in itemsList) {
-        if (!document.getElementById(itemsList[x]._id + "resizer")) {
+        if (!document.getElementById(itemsList[x]._id + "resizer") && !document.getElementById(itemsList[x]._id + "Description")) {
             var collapsed = false;
         }
     }
@@ -177,7 +189,7 @@ function areAllCollapsed(itemsList) {
 function areAllExtended(itemsList) {
     var extended = true;
     for (var x in itemsList) {
-        if (document.getElementById(itemsList[x]._id + "resizer")) {
+        if (document.getElementById(itemsList[x]._id + "resizer") || document.getElementById(itemsList[x]._id + "Description")) {
             var extended = false;
         }
     }
@@ -242,6 +254,10 @@ function handleDescriptionExtension(component, lineNo) {
 
 function turnOnDescription(component) {
     const id = component._id;
+    if (document.getElementById(id + "subComponent0")) {
+        return;
+    }
+
     document.getElementById(id).style.display = "block";
     closeTooltip(id);
 

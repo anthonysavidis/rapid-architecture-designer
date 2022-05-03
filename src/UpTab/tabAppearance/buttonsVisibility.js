@@ -4,6 +4,14 @@ import { getSelectedFunctions, getSelectedFunctionIds } from "../../Item/selectF
 import { actions } from "../../Classes/Actions.js";
 import { areAllCollapsed, areAllExtendable, areAllExtended } from "../../HtmlElements/extendingComponent.js";
 
+function hasListSubarchitecture(itemList) {
+    for (var i in itemList) {
+        if (itemList[i].subLayers[0])
+            return true;
+    }
+    return false;
+}
+
 function appearComponentButtons() {
     const selectedItems = getSelectedItems();
     if (!selectedItems || !selectedItems[0]) {
@@ -58,7 +66,7 @@ function appearComponentButtons() {
         document.getElementById("unlinkButton").style.display = "none";
         document.getElementById("linkButton").style.display = "none";
     }
-    if (selectedItems.length >= 2) {
+    if (selectedItems.length >= 2 && !hasListSubarchitecture(selectedItems)) {
         document.getElementById("joinButton").style.display = "inline-block";
     } else {
         document.getElementById("joinButton").style.display = "none";

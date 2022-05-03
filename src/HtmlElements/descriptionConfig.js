@@ -39,7 +39,6 @@ function descriptionArea(box) {
         r.style.setProperty('--descriptionColor', value);
     };
     var lineNoSlider = getSliderGroup("Number of description lines:", 1, 5, parseInt(rs.getPropertyValue('--descriptionLines'), 10), lineNoCallBack, 1);
-    console.log(rs.getPropertyValue('--descriptionLines'));
     var descriptionColor = configStyle.getJSONValue("descriptionColor");
 
     var descriptionColorPicker = createPicker("Description Color:", descriptionColor, descriptionColorCallBack);
