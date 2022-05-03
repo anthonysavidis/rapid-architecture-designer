@@ -200,7 +200,7 @@ const getWidth = (txt) => {
 }
 
 function handleSplitDescription(description, lineNo) {
-    description = "Lorem ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
+    // description = "Lorem ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
     // var descDims = getCustomTextDimensions("Arial, Helvetica, sans-serif","small",description);
     var words = description.split(" ");
     var lines = [];

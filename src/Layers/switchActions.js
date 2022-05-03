@@ -1,3 +1,4 @@
+import { configStyle } from "../Classes/Config.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { turnOffExtension, turnOnExtension, turnOnDescription, turnOffDescription } from "../HtmlElements/extendingComponent.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
@@ -16,16 +17,25 @@ function refreshExtendedComponents(layersItems) {
     return;
 }
 
-function refreshDescriptionExtension(layersItems){
+function refreshDescriptionExtension(layersItems) {
     for (var x in layersItems) {
-        if (layersItems[x]._type === "Component" && document.getElementById(layersItems[x]._id + "Description")) {
-            console.log(layersItems[x]._name);
+        if (layersItems[x]._type === "Component" && configStyle.descriptionEnabled) {
             turnOffDescription(layersItems[x]);
             turnOnDescription(layersItems[x]);
         }
     }
     return;
 }
+
+function enableLayerDescriptionExtension(layersItems) {
+    for (var x in layersItems) {
+        if (layersItems[x]._type === "Component") {
+            turnOnDescription(layersItems[x]);
+        }
+    }
+    return;
+}
+
 
 function actionsOfNextLayer(layerId) {
     const layerItems = layers.itemMap.get(layerId);
@@ -45,4 +55,4 @@ function actionsOfNextLayer(layerId) {
     return;
 }
 
-export { actionsOfNextLayer };
+export { actionsOfNextLayer, enableLayerDescriptionExtension, refreshDescriptionExtension };

@@ -4,6 +4,7 @@ import { layers } from "../Classes/LayerHolder.js";
 import { configStyle } from "../Classes/Config.js";
 import { getTextDimensions } from "./resize.js";
 import { constantValues } from "../config/constantValues.js";
+import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
 
 
 function autoGrow(component) {
@@ -40,8 +41,6 @@ var autoResizeDispatch = {
     "autoGrow": autoGrow
 }
 
-// tin prwti fora 127
-// meta 98.
 
 function autoResizeAllComponents() {
     const currentLayerId = layers.selectedLayer._id;
@@ -54,6 +53,7 @@ function autoResizeAllComponents() {
             if (layerItems.itemList[y]._type === "Component") {
                 // if (!passAutoFitRestrictions(layerItems.itemList[y]._id))
                 autoResizeDispatch["autoFit"](layerItems.itemList[y]);
+
                 if (layerItems.itemList[y].links)
                     renderLine(layerItems.itemList[y]._id);
             }

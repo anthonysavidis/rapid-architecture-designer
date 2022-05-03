@@ -12,6 +12,9 @@ import { actions } from "../Classes/Actions.js";
 import { loadNext, loadPrev } from "../Actions/inverseFileActions.js";
 import { autoResizeAllComponents } from "../Item/autoResize.js";
 import { updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
+import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
+import { configStyle } from "../Classes/Config.js";
+import { enableLayerDescriptionExtension, refreshDescriptionExtension } from "../Layers/switchActions.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
@@ -25,7 +28,7 @@ function readTextFile(file) {
                     document.getElementById(layers.layerList[x]._id + "functions").remove();
                 }
                 var lh = new LayerHolder(allText);
-                    autoResizeAllComponents();
+                autoResizeAllComponents();
             }
         }
     }
@@ -73,6 +76,8 @@ function loadAction() {
             actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
             autoResizeAllComponents();
             updateFullPath(layers.layerList[0]._name);
+            console.log(configStyle)
+
         };
 
         reader.readAsText(e.target.files[0]);
