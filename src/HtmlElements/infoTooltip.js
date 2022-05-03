@@ -1,8 +1,10 @@
 import { alterItemsDetails, inverseItemsDetails } from "../Actions/inversePropertiesTab.js";
 import { actions } from "../Classes/Actions.js";
+import { configStyle } from "../Classes/Config.js";
 import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { chooseLineType } from "../Item/lineTypeListeners.js";
+import { turnOffDescription, turnOnDescription } from "./extendingComponent.js";
 
 function produceClosingButton(tooltip, id) {
     var closeTooltip = document.createElement('div');
@@ -90,10 +92,15 @@ function produceMainPart(tooltip, src, id, itemType, description, moreInfo) {
     descriptionDiv.style.outline = "0px";
     descriptionDiv.onblur = (function() {
         var itemIndex = items.itemList.findIndex(el => el._id === id);
-        var originalItemStr = items.itemList[itemIndex].toString();
-        items.itemList[itemIndex]._description = descriptionDiv.innerText;
-        var alteredItemStr = items.itemList[itemIndex].toString();
+        const item = items.itemList[itemIndex];
+        var originalItemStr = item.toString();
+        item._description = descriptionDiv.innerText;
+        var alteredItemStr = item.toString();
         actions.saveCommand(alterItemsDetails, inverseItemsDetails, originalItemStr, alteredItemStr);
+        if (item._type === "Component" && configStyle.descriptionEnabled) {
+            turnOffDescription(item);
+            turnOnDescription(item);
+        }
     });
 
 

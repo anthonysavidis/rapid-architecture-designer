@@ -109,7 +109,6 @@ function resizeExtended(id, nameList) {
         }
         document.getElementById(id + "Description").style.height = heightAcc + 2 * offsetY + "px";
         document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
-        console.log('resizedDesc.');
     } else {
         nameList.forEach((el) => {
             var width = getTextDimensions(el).width;

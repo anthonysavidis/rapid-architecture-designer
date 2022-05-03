@@ -23,7 +23,7 @@ function descriptionArea(box) {
     descDiv.style.backgroundColor = "rgb(237,237,237)";
     descDiv.style.marginTop = "17px";
     descDiv.style.width = "100%";
-    descDiv.style.height = "100px";
+    descDiv.style.height = "43px";
     descDiv.style.display = "none";
 
     var r = document.querySelector(':root');
@@ -47,7 +47,7 @@ function descriptionArea(box) {
     lineNoSlider.style.float = "left";
     descriptionColorPicker.style.display = "inline-block";
     descriptionColorPicker.style.float = "right";
-    descriptionColorPicker.style.marginRight = "25px";
+    descriptionColorPicker.style.marginRight = "32.5px";
     descDiv.appendChild(descriptionColorPicker);
     box.appendChild(descDiv);
     return;

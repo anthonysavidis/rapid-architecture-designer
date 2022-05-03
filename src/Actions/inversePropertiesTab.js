@@ -1,9 +1,10 @@
 import { items } from "../Classes/ItemArray.js";
 import { actions } from "../Classes/Actions.js";
-import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
+import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { autoResizeDispatch } from "../Item/autoResize.js";
+import { configStyle } from "../Classes/Config.js";
 
 
 var lastOriginalItem = null;
@@ -22,11 +23,14 @@ function changeDetails(actionItem) {
     var alteredItemObject = JSON.parse(actionItem);
     items.updateNameAndDescription(alteredItemObject._id, alteredItemObject._name, alteredItemObject._description);
     // items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)].moreInfo = alteredItemObject.moreInfo;
-    if (alteredItemObject._type === "Component"){
-        var component  = items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)]
+    if (alteredItemObject._type === "Component") {
+        var component = items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)]
         autoResizeDispatch["autoFit"](component);
-    }
-    else if (alteredItemObject._type === "Function") {
+        if (component._type === "Component" && configStyle.descriptionEnabled) {
+            turnOffDescription(component);
+            turnOnDescription(component);
+        }
+    } else if (alteredItemObject._type === "Function") {
         if (document.getElementById('all').checked) {
             showAllRefresh();
         } else {
