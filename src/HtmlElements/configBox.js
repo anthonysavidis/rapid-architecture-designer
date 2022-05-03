@@ -63,16 +63,16 @@ function produceStyleButtons(box, className, callBack) {
     var boldButton = document.createElement('div');
     var italicButton = document.createElement('div');
     var underlinedButton = document.createElement('div');
-    boldButton.className = italicButton.className = underlinedButton.className = "styleButton";
+    boldButton.className = italicButton.className = underlinedButton.className = "styleButton unselectableText";
     boldButton.innerText = "B";
     boldButton.style.fontWeight = "bold";
     boldButton.addEventListener("click", function() {
         if (boldButton.className === "styleButton") {
             callBack(className, 'fontWeight', "bold");
-            boldButton.className = "styleButtonPressed";
+            boldButton.className = "styleButtonPressed unselectableText";
         } else {
             callBack(className, 'fontWeight', "normal");
-            boldButton.className = "styleButton";
+            boldButton.className = "styleButton unselectableText";
         }
     })
     italicButton.innerText = "I";
@@ -80,10 +80,10 @@ function produceStyleButtons(box, className, callBack) {
     italicButton.addEventListener("click", function() {
         if (italicButton.className === "styleButton") {
             callBack(className, 'fontStyle', "italic");
-            italicButton.className = "styleButtonPressed";
+            italicButton.className = "styleButtonPressed unselectableText";
         } else {
             callBack(className, 'fontStyle', "normal");
-            italicButton.className = "styleButton";
+            italicButton.className = "styleButton unselectableText";
         }
     })
     underlinedButton.innerText = "U";
@@ -91,10 +91,10 @@ function produceStyleButtons(box, className, callBack) {
     underlinedButton.addEventListener("click", function() {
         if (underlinedButton.className === "styleButton") {
             callBack(className, 'textDecoration', "underline");
-            underlinedButton.className = "styleButtonPressed";
+            underlinedButton.className = "styleButtonPressed unselectableText";
         } else {
             callBack(className, 'textDecoration', "none");
-            underlinedButton.className = "styleButton";
+            underlinedButton.className = "styleButton unselectableText";
         }
     })
     var div = document.createElement('div');
@@ -109,7 +109,7 @@ function produceStyleButtons(box, className, callBack) {
 function createPicker(txt, selected, callBack) {
     var labelDiv = document.createElement('div');
     labelDiv.style.position = "";
-    labelDiv.className = "labelDiv";
+    labelDiv.className = "labelDiv unselectableText";
 
     labelDiv.innerText = txt;
     var picker = document.createElement('input');
@@ -154,7 +154,7 @@ function produceTextColor(box, className, callBack) {
 function produceComponentForm(box) {
     var labelDiv = document.createElement('div');
     labelDiv.style.position = "";
-    labelDiv.className = "tittleDiv";
+    labelDiv.className = "tittleDiv unselectableText";
     labelDiv.innerText = "Component Settings";
     var div = document.createElement('div');
     div.className = "formContainer";
@@ -171,7 +171,7 @@ function produceComponentForm(box) {
 
 function produceOperationForm(box) {
     var labelDiv = document.createElement('div');
-    labelDiv.className = "tittleDiv";
+    labelDiv.className = "tittleDiv unselectableText";
     labelDiv.style.position = "relative";
     labelDiv.innerText = "Operation Settings";
     labelDiv.style.marginTop = "10px";
@@ -193,7 +193,7 @@ function produceLinkForm(box) {
     var div = document.createElement('div');
     labelDiv.style.position = "";
 
-    labelDiv.className = "tittleDiv";
+    labelDiv.className = "tittleDiv unselectableText";
     labelDiv.innerText = "Link Settings";
     div.className = "formContainer";
 
@@ -250,11 +250,13 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack, noPixels) {
     slider.value = defVal;
     slider.className = "slider";
     var label = document.createElement('span');
+    label.className = "unselectableText";
     label.innerText = labelName;
     label.style.display = "inline-block";
     label.style.marginLeft = 10 + "px";
     sliderContainer.appendChild(label);
     var span = document.createElement('span');
+    span.className = "unselectableText";
     span.innerText = (!noPixels) ? defVal + "px" : defVal;
     span.style.marginLeft = 8 + "px";
     slider.style.marginLeft = 10 + "px";
@@ -301,6 +303,7 @@ function getSwitch(id, labelText) {
     var container = document.createElement('div');
     var label = document.createElement('span');
     label.innerText = labelText;
+    label.className = "unselectableText";
     label.style.display = "inline-block";
     label.style.float = "left";
     label.style.marginLeft = 10 + "px";

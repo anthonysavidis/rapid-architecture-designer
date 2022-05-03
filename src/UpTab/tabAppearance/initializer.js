@@ -9,7 +9,7 @@ import { addSettingsTabListeners } from "../settingsTab.js";
 
 function addButton(label, id, tab) {
     const imgName = label.includes(' ') ? label.replace(' ', '') : label;
-    var buttonHtml = '<div id="' + id + '" class="menubutton"><div class="buttonName">' + label + '</div><center><div style=\'background-image: url(./images/' + imgName + '.png);\' class="photo_rectangle"></div></center><div id="' + id + 'tooltiptext" style="padding:3px" class="tooltipText">' + buttonTooltips[tab][label] + ' </div></div>';
+    var buttonHtml = '<div id="' + id + '" class="menubutton"><div class="buttonName unselectableText">' + label + '</div><center><div style=\'background-image: url(./images/' + imgName + '.png);\' class="photo_rectangle"></div></center><div id="' + id + 'tooltiptext" style="padding:3px" class="tooltipText unselectableText">' + buttonTooltips[tab][label] + ' </div></div>';
     document.getElementById(tab).innerHTML += buttonHtml;
     document.getElementById(id + 'tooltiptext').style.top = 100 + "px";
     document.getElementById(id + 'tooltiptext').style.height = 25 + "px";

@@ -159,7 +159,6 @@ function turnOffExtension(id) {
     if (configStyle.descriptionEnabled) {
         turnOffDescription(component);
         turnOnDescription(component);
-        console.log("AKSONAS");
         // autoResizeDispatch["autoFit"](component);
     }
     return;
