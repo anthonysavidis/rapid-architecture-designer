@@ -12,7 +12,7 @@
     --componentBackgroundColor: #FFFFFF;
     --componentBorderColor: #000000;
     --componentBorderWidth: 2px;
-    --componentSelectedBorderColor: blue;
+    --componentSelectedBorderColor: #0000ff;
     --componentTextBorderWidth: 0px;
     /* Not functional*/
     --componentInnerMarginX: 4px;

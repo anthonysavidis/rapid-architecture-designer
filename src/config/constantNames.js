@@ -7,7 +7,7 @@ const constantNames = {
     "settingsTab": {
         "tabName": "Settings",
         "Configure": "Configure",
-        "Configure Component":"Configure Component"
+        "Configure Component": "Configure Component"
     },
     "editTab": {
         "tabName": "Edit",
@@ -84,17 +84,20 @@ const constantNames = {
         "Medium": "Medium",
         "Large": "Large",
         "xLarge": "x-Large",
-        "autoFitLabel":"Custom auto-fit:",
-        "descriptionLabel":"Show description:",
-        "componentColor":"Component color:",
-        "subcomponentColor":"Subcomponent background color:",
-        "subcomponentTextColor":"Subcomponent text color:",
-        "borderColor":"Border color:",
-        "selectedBorder":"Selected border color:",
-        "borderWidth":"Component's border width:",
-        "component":"Component Settings",
-        "link":"Link Settings",
-        "operation":"Operation Settings"
+        "autoFitLabel": "Custom auto-fit:",
+        "descriptionLabel": "Show description:",
+        "componentColor": "Component color:",
+        "subcomponentColor": "Subcomponent background color:",
+        "subcomponentTextColor": "Subcomponent text color:",
+        "borderColor": "Border color:",
+        "textColor": "Text color:",
+        "backgroundColor": "Background color:",
+        "selectedBorder": "Selected border color:",
+        "borderWidth": "Component's border width:",
+        "component": "Component Settings",
+        "link": "Link Settings",
+        "operation": "Operation Settings",
+        "subcomponentSettings": "Subcomponent Settings"
     },
     "inputBox": {
         "msg": "Insert name and description of ",

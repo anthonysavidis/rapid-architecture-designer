@@ -1,7 +1,7 @@
 import { renderLine } from "../Item/createLine.js";
 import { items } from "../Classes/ItemArray.js";
 import { actions } from "../Classes/Actions.js";
-import { moveNext, movePrev } from "../Actions/inverseMovement.js";
+import { moveNext, movePrev, resizeNext, resizePrev } from "../Actions/inverseMovement.js";
 import { renderInfoButton } from "../HtmlElements/componentInfo.js";
 import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { layers } from "../Classes/LayerHolder.js";
@@ -31,7 +31,8 @@ function getTextDimensions(str) {
     document.body.removeChild(text);
     return { width: width, height: height };
 }
-function getCustomTextDimensions(fontFamily,fontSize,str) {
+
+function getCustomTextDimensions(fontFamily, fontSize, str) {
     var text = document.createElement("span");
     document.body.appendChild(text);
     text.style.fontFamily = fontFamily;
@@ -90,11 +91,11 @@ function addResize(id) {
 
         document.onmouseup = null;
         document.onmousemove = null;
-        const possibleWidth =startWidth + e.clientX - startX ;
-        const possibleHeight =startHeight + e.clientY - startY ;
+        const possibleWidth = startWidth + e.clientX - startX;
+        const possibleHeight = startHeight + e.clientY - startY;
         if (canResizeAutofit(id, possibleWidth, possibleHeight)) {
-            p.style.width = possibleWidth+ "px";
-            p.style.height =possibleHeight  + "px";
+            p.style.width = possibleWidth + "px";
+            p.style.height = possibleHeight + "px";
             renderLine(id);
             // renderInfoButton(id);
         }
@@ -106,9 +107,10 @@ function addResize(id) {
         document.documentElement.removeEventListener("mousemove", doDrag, false);
         document.documentElement.removeEventListener("mouseup", stopDrag, false);
         var updatedBoundingRec = JSON.stringify(document.getElementById(id).getBoundingClientRect());
-        actions.saveCommand(moveNext, movePrev, initialBoundingRec, updatedBoundingRec);
+        actions.saveCommand(resizeNext, resizePrev, initialBoundingRec, updatedBoundingRec);
         // actions.saveCommand(moveNext,movePrev,initialBoundingRec,updatedBoundingRec);
-
+        console.log(initialBoundingRec);
+        console.log(updatedBoundingRec);
         var index = items.itemList.findIndex((e) => e._id === id);
         items.itemList[index].updateBoundingRec();
     }
@@ -118,4 +120,4 @@ function addResize(id) {
 //     p.removeChild(resizer);
 // }
 
-export { addResize, getTextDimensions,getCustomTextDimensions };
+export { addResize, getTextDimensions, getCustomTextDimensions };

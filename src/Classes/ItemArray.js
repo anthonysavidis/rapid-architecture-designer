@@ -68,7 +68,7 @@ class ItemHolder {
         document.getElementById(deletingItemId + 'external').remove();
 
     }
-    updateNameAndDescription(id, newName, newDescription) {
+    updateNameAndDescription(id, newName, newDescription, directlyFromLoad) {
         // console.log('Updating '+id+' with '+newName+' '+newDescription);
         var oldIndex = this.itemList.findIndex(((element) => element._id == id));
         this.itemList[oldIndex]._name = newName;
@@ -77,7 +77,7 @@ class ItemHolder {
         if (document.getElementById("all").checked && this.itemList[oldIndex]._type === "Component") {
             showAllRefresh();
         }
-        if (this.itemList[oldIndex]._type === "Component")
+        if (this.itemList[oldIndex]._type === "Component" && !directlyFromLoad)
             autoResizeAutoFit(this.itemList[oldIndex]);
     }
     addLink(lineId, id1, id2) {

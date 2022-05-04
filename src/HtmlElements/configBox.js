@@ -137,9 +137,9 @@ function produceTextColor(box, className, callBack) {
     const textCallBack = (value) => { callBack(className, "textColor", value); };
     const textBackgroundCallBack = (value) => { callBack(className, "textBackgroundColor", value); };
 
-
-    var textColor = createPicker("Text color:", selectedColor, textCallBack);
-    var backgroundColor = createPicker("Background color:", selectedBackgroundColor, textBackgroundCallBack);
+    console.log(selectedColor + "," + selectedBackgroundColor);
+    var textColor = createPicker(constantNames["configBox"]["textColor"], selectedColor, textCallBack);
+    var backgroundColor = createPicker(constantNames["configBox"]["backgroundColor"], selectedBackgroundColor, textBackgroundCallBack);
     textColor.style.float = "left";
 
     box.appendChild(textColor);
@@ -155,7 +155,7 @@ function produceComponentForm(box) {
     var labelDiv = document.createElement('div');
     labelDiv.style.position = "";
     labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.innerText = "Component Settings";
+    labelDiv.innerText = constantNames["configBox"]["component"];;
     var div = document.createElement('div');
     div.className = "formContainer";
     div.appendChild(labelDiv);
@@ -173,7 +173,7 @@ function produceOperationForm(box) {
     var labelDiv = document.createElement('div');
     labelDiv.className = "tittleDiv unselectableText";
     labelDiv.style.position = "relative";
-    labelDiv.innerText = "Operation Settings";
+    labelDiv.innerText = constantNames["configBox"]["operation"];
     labelDiv.style.marginTop = "10px";
 
     var div = document.createElement('div');
@@ -194,7 +194,7 @@ function produceLinkForm(box) {
     labelDiv.style.position = "";
 
     labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.innerText = "Link Settings";
+    labelDiv.innerText = constantNames["configBox"]["link"];
     div.className = "formContainer";
 
     div.appendChild(labelDiv);
@@ -219,7 +219,7 @@ function produceComponentConfigBox(box) {
     var selectedBackgroundColor = rs.getPropertyValue('--componentBackgroundColor');
     var borderColor = rs.getPropertyValue('--componentBorderColor');
     var selectedBorderColor = rs.getPropertyValue('--componentSelectedBorderColor');
-
+    console.log(borderColor.slice(1) + "," + selectedBackgroundColor.slice(1) + "," + selectedBorderColor.slice(1));
     selectedBackgroundColor = selectedBackgroundColor.charAt(0) === " " ? selectedBackgroundColor.slice(1) : selectedBackgroundColor;
     selectedBorderColor = selectedBorderColor.charAt(0) === " " ? selectedBorderColor.slice(1) : selectedBorderColor;
     borderColor = borderColor.charAt(0) === " " ? borderColor.slice(1) : borderColor;
@@ -335,7 +335,7 @@ function produceSubComponentForm(box) {
     labelDiv.style.position = "relative";
     labelDiv.style.marginTop = "10px";
     labelDiv.style.float = "left";
-    labelDiv.innerText = "Subcomponent Settings";
+    labelDiv.innerText = constantNames["configBox"]["subcomponentSettings"];
     var div = document.createElement('div');
     div.className = "formContainer";
     div.style.width = "100%";

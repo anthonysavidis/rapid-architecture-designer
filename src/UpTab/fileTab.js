@@ -100,7 +100,7 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
-    loadSpecific("problemDeletion.txt");
+    loadSpecific("extendTest.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

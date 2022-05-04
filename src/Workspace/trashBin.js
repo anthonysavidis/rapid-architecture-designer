@@ -70,19 +70,19 @@ function initializeTheTrashBin() {
     //     console.log(event.target.id);
     //     var functionId = event.dataTransfer.getData("text");
     // };
-    $("#trashBin").droppable({
-        drop: function(event, ui) {
-            var deletingItems = getSelectedItems();
-            if (deletingItems.length === 0)
-                return;
-            else {
-                const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + deletingItems.length + constantNames["confirmationBox"]["DeleteMsgEnd"];
-                produceBox("confirmation", msg + "@1", () => {
-                    deleteMultWithTrashBin(deletingItems);
-                });
-            }
-        }
-    });
+    // $("#trashBin").droppable({
+    //     drop: function(event, ui) {
+    //         var deletingItems = getSelectedItems();
+    //         if (deletingItems.length === 0)
+    //             return;
+    //         else {
+    //             const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + deletingItems.length + constantNames["confirmationBox"]["DeleteMsgEnd"];
+    //             produceBox("confirmation", msg + "@1", () => {
+    //                 deleteMultWithTrashBin(deletingItems);
+    //             });
+    //         }
+    //     }
+    // });
 }
 
 function fixTrashBinPosition() {
@@ -107,4 +107,4 @@ function createDraggableSpace() {
     createFullPath();
 }
 
-export { canBeDeleted, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, fixTrashBinPosition };
+export { canBeDeleted, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, deleteMultWithTrashBin, fixTrashBinPosition };

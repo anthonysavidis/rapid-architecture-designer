@@ -1,6 +1,6 @@
 import { moveItem } from "../Item/edit.js";
 import { items, itemFromListToObject } from "../Classes/ItemArray.js";
-import { getSelectedIds, cancelSelection, changeSelectState } from "../Item/selectComponent.js";
+import { getSelectedIds, cancelSelection, changeSelectState, getSelectedItems } from "../Item/selectComponent.js";
 import { cancelFunctionSelection, changeFunctionSelectState, keepOnlyLastSelectedFunction } from "../Item/selectFunction.js";
 import { linedraw, renderLine } from "../Item/createLine.js"
 import { layers } from "./LayerHolder.js";
@@ -28,6 +28,7 @@ import { deleteOperationWithTrashBin } from "../UpTab/functionTab.js";
 import { setInitialSize } from "../Item/autoResize.js";
 import { configStyle } from "./Config.js";
 import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
+import { deleteMultWithTrashBin } from "../Workspace/trashBin.js";
 
 class Item {
 
@@ -131,6 +132,7 @@ class Item {
             },
             stop: (e) => { //actionsSave item... apoi to move item
                 const dragIds = getSelectedIds();
+                const selectedIts = getSelectedItems();
                 const initialItem = movingObject;
                 if (dragIds.length > 1) {
                     var updatedItem = {};
@@ -145,6 +147,14 @@ class Item {
                     var updatedItem = document.getElementById(dragIds[0]).getBoundingClientRect();
                     actions.saveCommand(moveNext, movePrev,
                         JSON.stringify(initialItem[dragIds[0]]["initialRec"]) + '@' + dragIds[0], JSON.stringify(updatedItem));
+                }
+                var trashBinRec = document.getElementById("trashBin").getBoundingClientRect();
+
+                if (e.clientX >= trashBinRec.x && e.clientY >= trashBinRec.y && e.clientX <= (trashBinRec.x + trashBinRec.width) && e.clientY <= (trashBinRec.y + trashBinRec.height)) {
+                    const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + selectedIts.length + constantNames["confirmationBox"]["DeleteMsgEnd"];
+                    produceBox("confirmation", msg + "@1", () => {
+                        deleteMultWithTrashBin(selectedIts);
+                    });
                 }
                 this.updateBoundingRec();
             },
@@ -303,6 +313,10 @@ class Item {
     updateDomName(newName) {
         document.getElementById(this._id + "name").innerText = (this._type === "Function") ? this._name : newName;
     }
+    loadSizeWithBoundingRec(bRec) {
+        console.log(bRec);
+    }
+
     constructor(type, flag) {
         this._type = type;
         this.domElement = null;
@@ -326,7 +340,7 @@ class Item {
             this._toObject(type); //type is the object in string form
             if (!flag) {
                 items.add(this);
-                items.updateNameAndDescription(this._id, this._name, this._description);
+                items.updateNameAndDescription(this._id, this._name, this._description, 1);
             }
             // this._type === "Component" ? renderInfoButton(this._id) : 1;
             return;
@@ -415,6 +429,7 @@ class Item {
     }
 
     fixPositionAndDetails(itemObject, needsUpdate) {
+        console.log(itemObject.boundingRec);
         this._name = itemObject._name;
         this._description = itemObject._description;
         // fixing position and size.
@@ -443,7 +458,6 @@ class Item {
             this._type = "Component";
             this.linkedItems = JSON.parse(itemObject.linkedItems);
             this.fixPositionAndDetails(itemObject, 0);
-            //console.log(this.boundingRec);
             // for(var i=0;i<itemObject._functions.length)
             if (itemObject._functions) {
                 var functionList = [];
