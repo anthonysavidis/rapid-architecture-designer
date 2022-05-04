@@ -72,6 +72,27 @@ function setInitialSize(id, text) {
     return;
 }
 
+function checkAndResize() {
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+        // console.log(layerItems);
+
+        for (var y in layerItems.itemList) {
+            const it = layerItems.itemList[y];
+
+            if (it._type === "Component" && !passAutoFitRestrictions(it._id)) {
+                console.log(it._id);
+                autoResizeAutoFit(it);
+                // setInitialSize(it._id, it._name);
+            }
+        }
+    }
+    layers.changeLayer(layers.layerList[0]._id);
+    return;
+}
+
+
 function canResizeAutofit(id, possibleWidth, possibleHeight) {
     var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
@@ -93,4 +114,4 @@ function passAutoFitRestrictions(id) {
     return (componentRect.width >= widthOfName && componentRect.height >= heightOfName);
 }
 
-export { autoResizeDispatch, canResizeAutofit, autoResizeAllComponents, autoResizeAutoFit, setInitialSize, passAutoFitRestrictions };
+export { autoResizeDispatch, canResizeAutofit, checkAndResize, autoResizeAllComponents, autoResizeAutoFit, setInitialSize, passAutoFitRestrictions };

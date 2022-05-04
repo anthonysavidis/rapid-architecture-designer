@@ -10,7 +10,7 @@ import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 import { showAll } from "../Workspace/functionAppearance.js";
 import { actions } from "../Classes/Actions.js";
 import { loadNext, loadPrev } from "../Actions/inverseFileActions.js";
-import { autoResizeAllComponents } from "../Item/autoResize.js";
+import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 import { updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 import { configStyle } from "../Classes/Config.js";
@@ -74,7 +74,8 @@ function loadAction() {
             }
             var lh = new LayerHolder(allText);
             actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
-            autoResizeAllComponents();
+            // autoResizeAllComponents();
+            checkAndResize();
             updateFullPath(layers.layerList[0]._name);
             console.log(configStyle)
 
