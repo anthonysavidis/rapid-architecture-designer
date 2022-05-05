@@ -8,6 +8,7 @@ import { deletePastedItems, pasteAction } from "../Actions/inverseActions.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { getTreeData } from "../Layers/Tree.js";
+import { checkAndResize } from "./autoResize.js";
 
 ///einai lista me items! kai oxi nested!!!
 ///{"0":{},"1":{}} : this way
@@ -220,6 +221,7 @@ function pasteFromStr(result) {
     } else {
         showByComponent();
     }
+    checkAndResize();
 }
 
 async function pasteComponent() {
@@ -238,7 +240,6 @@ async function pasteComponent() {
             var pastingItemsJSON = JSON.parse(result);
             actions.saveCommand(pasteAction, deletePastedItems, result, "");
             pasteFromStr(result);
-
         } catch (error) {
             console.log('Not a valid item.');
         }

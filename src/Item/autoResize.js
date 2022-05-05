@@ -92,7 +92,6 @@ function checkAndResize() {
             }
             if (it._type === "Component")
                 bRecs.insertNewBoundingRec(layers.layerList[x]._id, it._id, document.getElementById(it._id).getBoundingClientRect());
-            console.log(bRecs);
         }
     }
     layers.changeLayer(layers.layerList[0]._id);

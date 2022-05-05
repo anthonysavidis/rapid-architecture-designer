@@ -126,6 +126,11 @@ function createPicker(txt, selected, callBack) {
     return labelDiv;
 }
 
+function getTransparentCheckBox(label, callBack) {
+    // <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+    /* <label for="vehicle1"> I have a bike</label><br></br> */
+}
+
 function produceTextColor(box, className, callBack) {
 
 
@@ -145,6 +150,7 @@ function produceTextColor(box, className, callBack) {
     box.appendChild(textColor);
     backgroundColor.style.float = "right";
     backgroundColor.style.marginRight = "186px";
+
     box.appendChild(backgroundColor);
     // box.appendChild(picker);
     return;
