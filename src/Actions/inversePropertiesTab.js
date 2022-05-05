@@ -63,8 +63,17 @@ function extendSubcomponentsAction(actionItems) {
 
 function collapseSubcomponentsAction(actionItems) {
     const collapseItems = JSON.parse(actionItems.initialItem);
-    for (var x in collapseItems)
+    const oldBRecs = actionItems.updatedItem;
+    for (var x in collapseItems) {
         turnOffExtension(collapseItems[x]._id);
+        if (oldBRecs !== "") {
+            const oldBRec = JSON.parse(oldBRecs[collapseItems[x]._id]);
+            document.getElementById(collapseItems[x]._id).style.top = oldBRec.top + "px";
+            document.getElementById(collapseItems[x]._id).style.left = oldBRec.left + "px";
+            document.getElementById(collapseItems[x]._id).style.width = oldBRec.width + "px";
+            document.getElementById(collapseItems[x]._id).style.height = oldBRec.height + "px";
+        }
+    }
     appearComponentButtons();
 }
 

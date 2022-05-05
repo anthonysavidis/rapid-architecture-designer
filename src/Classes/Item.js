@@ -429,7 +429,6 @@ class Item {
     }
 
     fixPositionAndDetails(itemObject, needsUpdate) {
-        console.log(itemObject.boundingRec);
         this._name = itemObject._name;
         this._description = itemObject._description;
         // fixing position and size.

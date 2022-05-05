@@ -34,6 +34,7 @@ function autoResizeAutoFit(component) {
     var heightOfName = dims.height;
     document.getElementById(component._id).style.width = widthOfName + 2 * offsetX + "px";
     document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
+    component.updateBoundingRec();
     return;
 }
 

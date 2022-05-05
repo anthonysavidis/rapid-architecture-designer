@@ -77,7 +77,6 @@ function loadAction() {
             // autoResizeAllComponents();
             checkAndResize();
             updateFullPath(layers.layerList[0]._name);
-            console.log(configStyle)
 
         };
 

@@ -94,7 +94,7 @@ function subdivideAction() {
 function askForDetails(type, extraInfo) {
     produceBox("input", type, (name, description) => {
         var it;
-        if(name){
+        if (name) {
             console.log(name);
         }
         if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"][type.toLowerCase()];
@@ -140,10 +140,12 @@ function collapseButton(extentableItems) {
 }
 
 function extendButton(extentableItems) {
+    var oldBRecs = {};
     for (var x in extentableItems) {
+        oldBRecs[extentableItems[x]._id] = JSON.stringify(extentableItems[x].boundingRec);
         turnOnExtension(extentableItems[x]._id);
     }
-    actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, JSON.stringify(extentableItems), "");
+    actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, JSON.stringify(extentableItems), oldBRecs);
     return;
 }
 

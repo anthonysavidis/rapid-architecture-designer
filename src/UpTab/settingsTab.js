@@ -147,7 +147,7 @@ function createComponentConfigBox() {
         }
     });
     document.getElementById("descriptionSwitch").addEventListener("change", () => {
-
+        var oldBRecs = {};
         const currentLayerId = layers.selectedLayer._id;
         if (document.getElementById("descriptionSwitch").checked) {
             document.getElementById("descArea").style.display = "inline-block";
@@ -156,12 +156,14 @@ function createComponentConfigBox() {
                 const layerItems = layers.itemMap.get(layers.layerList[x]._id);
                 layers.changeLayer(layers.layerList[x]._id);
                 for (var y in layerItems.itemList) {
-                    if (layerItems.itemList[y]._type === "Component")
+                    if (layerItems.itemList[y]._type === "Component") {
+                        oldBRecs[layerItems.itemList[y]._id] = (JSON.stringify(layerItems.itemList[y].boundingRec));
                         turnOnDescription(layerItems.itemList[y]);
+                    }
                 }
             }
-            // console.log(bRecs);
-            actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, "", "");
+            console.log(oldBRecs);
+            actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, oldBRecs, "");
         } else {
             document.getElementById("descArea").style.display = "none";
             configStyle.descriptionEnabled = false;
