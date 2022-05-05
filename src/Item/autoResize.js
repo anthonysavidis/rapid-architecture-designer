@@ -106,7 +106,7 @@ function canResizeAutofit(id, possibleWidth, possibleHeight) {
     var dims = getTextDimensions(document.getElementById(id + 'name').innerText);
     var widthOfName = dims.width + 2 * offsetX;
     var heightOfName = dims.height + 2 * offsetY;
-    return !(widthOfName > possibleWidth && heightOfName > possibleHeight);
+    return !(widthOfName > possibleWidth || heightOfName > possibleHeight);
 }
 
 

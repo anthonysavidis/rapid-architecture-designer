@@ -83,7 +83,7 @@ class Item {
     }
     spawnComponent() {
         var str = "<div droppable=\"true\" class=\"component\" id=\"" + this._id + "\">\
-        <div class=\"componentName\" style=\"text-align:center;\" id=\"" + this._id + "name\">" + this._name + "</div> \
+        <div class=\"componentName unselectableText\" style=\"text-align:center;\" id=\"" + this._id + "name\">" + this._name + "</div> \
         </div>";
         var div = document.createElement("div");
         div.innerHTML = str;
