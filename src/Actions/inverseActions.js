@@ -11,6 +11,8 @@ import { showAllRefresh } from "../Workspace/functionAppearance.js";
 import { selectAction } from "../Item/selectComponent.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
+import { configStyle } from "../Classes/Config.js";
+import { turnOffDescription, turnOnDescription } from "../HtmlElements/extendingComponent.js";
 
 
 function spawnSpecificItem(actionItems) {
@@ -162,4 +164,52 @@ function deletePastedItems(actionItems) {
         items.delete(itemToBeDeleted._id);
     }
 }
-export { spawnSpecificItem, deleteLatestItem, respawnDeletedItems, createNewLayer, deleteSpecificItems, linkItems, unlinkItems, splitAction, joinAction, createSpecificLayer, deleteSpecificLayer, pasteAction, deletePastedItems };
+
+function enableDescriptionInAllComponents(actionItems) {
+    // if (document.getElementById("descriptionSwitch").checked) {
+    const currentLayerId = layers.selectedLayer._id;
+
+    if (document.getElementById("descriptionSwitch")) {
+        document.getElementById("descriptionSwitch").checked = true;
+        document.getElementById("descArea").style.display = "inline-block";
+    }
+    configStyle.descriptionEnabled = true;
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+        for (var y in layerItems.itemList) {
+            if (layerItems.itemList[y]._type === "Component") {
+                // oldBrecs.push()
+                turnOnDescription(layerItems.itemList[y]);
+            }
+        }
+    }
+    // console.log(bRecs);
+    layers.changeLayer(currentLayerId);
+}
+
+function disableDescriptionInAllComponents(actionItems) {
+    // if (document.getElementById("descriptionSwitch").checked) {
+    const currentLayerId = layers.selectedLayer._id;
+
+    if (document.getElementById("descriptionSwitch")) {
+        document.getElementById("descriptionSwitch").checked = false;
+        document.getElementById("descArea").style.display = "none";
+    }
+    configStyle.descriptionEnabled = false;
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+        for (var y in layerItems.itemList) {
+            if (layerItems.itemList[y]._type === "Component") {
+                // oldBrecs.push()
+                turnOffDescription(layerItems.itemList[y]);
+            }
+        }
+    }
+    // console.log(bRecs);
+    layers.changeLayer(currentLayerId);
+}
+
+
+export { spawnSpecificItem, deleteLatestItem, respawnDeletedItems, createNewLayer, deleteSpecificItems, linkItems, unlinkItems, splitAction, joinAction, createSpecificLayer, deleteSpecificLayer, pasteAction, deletePastedItems, enableDescriptionInAllComponents, disableDescriptionInAllComponents };

@@ -1,5 +1,6 @@
 import { configStyle } from "../Classes/Config.js";
 import { LayerHolder, layers } from "../Classes/LayerHolder.js";
+import { checkAndResize } from "../Item/autoResize.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
 
 function loadPrev(actionItems) {
@@ -8,6 +9,7 @@ function loadPrev(actionItems) {
         document.getElementById(layers.layerList[x]._id + "functions").remove();
     }
     var lh = new LayerHolder(actionItems.initialItem);
+    checkAndResize();
 
 }
 
@@ -17,6 +19,7 @@ function loadNext(actionItems) {
         document.getElementById(layers.layerList[x]._id + "functions").remove();
     }
     var lh = new LayerHolder(actionItems.updatedItem);
+    checkAndResize();
 
 }
 

@@ -1,6 +1,7 @@
 import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
+import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { copyComponent, pasteComponent } from "../Item/copy.js";
 import { appearComponentButtons, appearEditButtons, appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
@@ -60,6 +61,7 @@ function detectMacros(params) {
                 }
             } else if (ctrlDown && (e.keyCode == 73)) {
                 console.log(items);
+                console.log(bRecs);
             } else if (ctrlDown && (e.keyCode == 77)) { //m
                 console.log(actions);
             } else if (ctrlDown && (e.keyCode == 66)) { //m

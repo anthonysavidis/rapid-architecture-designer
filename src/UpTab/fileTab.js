@@ -101,7 +101,7 @@ function saveAction() {
 }
 
 function addFileTabListeners() {
-    loadSpecific("extendTest.txt");
+    // loadSpecific("extendTest.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
         loadAction();
     });

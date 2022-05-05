@@ -8,6 +8,9 @@ import { turnOnDescription, turnOffDescription } from "../HtmlElements/extending
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { descriptionArea } from "../HtmlElements/descriptionConfig.js";
+import { bRecs } from "../Input/boundingRectanglesObserver.js";
+import { actions } from "../Classes/Actions.js";
+import { disableDescriptionInAllComponents, enableDescriptionInAllComponents } from "../Actions/inverseActions.js";
 
 
 
@@ -144,28 +147,35 @@ function createComponentConfigBox() {
         }
     });
     document.getElementById("descriptionSwitch").addEventListener("change", () => {
+
+        const currentLayerId = layers.selectedLayer._id;
         if (document.getElementById("descriptionSwitch").checked) {
             document.getElementById("descArea").style.display = "inline-block";
             configStyle.descriptionEnabled = true;
             for (var x in layers.layerList) {
                 const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+                layers.changeLayer(layers.layerList[x]._id);
                 for (var y in layerItems.itemList) {
                     if (layerItems.itemList[y]._type === "Component")
                         turnOnDescription(layerItems.itemList[y]);
                 }
             }
+            // console.log(bRecs);
+            actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, "", "");
         } else {
             document.getElementById("descArea").style.display = "none";
             configStyle.descriptionEnabled = false;
-
             for (var x in layers.layerList) {
                 const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+                layers.changeLayer(layers.layerList[x]._id);
                 for (var y in layerItems.itemList) {
                     if (layerItems.itemList[y]._type === "Component")
                         turnOffDescription(layerItems.itemList[y]);
                 }
             }
+            actions.saveCommand(disableDescriptionInAllComponents, enableDescriptionInAllComponents, "", "");
         }
+        layers.changeLayer(currentLayerId);
     });
     return;
 }

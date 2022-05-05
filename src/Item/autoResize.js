@@ -5,6 +5,7 @@ import { configStyle } from "../Classes/Config.js";
 import { getTextDimensions } from "./resize.js";
 import { constantValues } from "../config/constantValues.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
+import { bRecs } from "../Input/boundingRectanglesObserver.js";
 
 
 function autoGrow(component) {
@@ -82,10 +83,16 @@ function checkAndResize() {
             const it = layerItems.itemList[y];
 
             if (it._type === "Component" && !passAutoFitRestrictions(it._id)) {
-                console.log(it._id);
+                // console.log(it._id);
                 autoResizeAutoFit(it);
                 // setInitialSize(it._id, it._name);
+                if (it.links) {
+                    renderLine(it._id);
+                }
             }
+            if (it._type === "Component")
+                bRecs.insertNewBoundingRec(layers.layerList[x]._id, it._id, document.getElementById(it._id).getBoundingClientRect());
+            console.log(bRecs);
         }
     }
     layers.changeLayer(layers.layerList[0]._id);

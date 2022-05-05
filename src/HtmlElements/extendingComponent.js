@@ -119,6 +119,7 @@ function resizeExtended(id, nameList) {
             document.getElementById(id + 'subComponent' + i).style.height = getTextDimensions(nameList[i]).height + 2 * offsetY + "px";
         }
     }
+    renderLine(id);
     return;
 }
 
