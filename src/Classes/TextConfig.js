@@ -1,6 +1,6 @@
-import { autoResizeAllComponents } from "../Item/autoResize.js";
+import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 class TextConfig {
-    
+
     constructor() {
         this.textConfigJSON = {};
         this.textConfigJSON["textSize"] = "12pt";
@@ -17,15 +17,16 @@ class TextConfig {
         this.textConfigJSON[key] = value;
         return;
     }
-    
+
     handleChange(type, attributeChanged, value) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
         this.setJSONValue(attributeChanged, value);
         var r = document.querySelector(':root');
         r.style.setProperty(varName, value);
-        if (type === "Component") {
-            autoResizeAllComponents();
+        if (type === "Component" && attributeChanged !== "textColor" && attributeChanged !== "textBackgroundColor") {
+            // autoResizeAllComponents();
+            checkAndResize();
         }
         return;
     }
@@ -36,4 +37,4 @@ function capitalizeFirstLetter(str) {
     return str2;
 }
 
-export { TextConfig,capitalizeFirstLetter };
+export { TextConfig, capitalizeFirstLetter };

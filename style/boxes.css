@@ -203,6 +203,10 @@ select {
     margin-left: 5px;
 }
 
+.styleButton:hover {
+    cursor: pointer;
+}
+
 .styleButtonPressed {
     width: 100px;
     height: 50px;
@@ -215,6 +219,10 @@ select {
     padding-bottom: 2.5px;
     margin-top: 2px;
     margin-left: 5px;
+}
+
+.styleButtonPressed:hover {
+    cursor: pointer;
 }
 
 .styleButtonsContainer {

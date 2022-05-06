@@ -27,6 +27,8 @@ class ItemHolder {
     delete(deletingItemId) {
         const deleteById = (element) => element._id == deletingItemId;
         const itemListIndex = this.itemList.findIndex(deleteById);
+        // if (itemListIndex === -1)
+        //     return; //already deleted? TODO: better check.. this happens only in paste situations undo?
         if (this.itemList[itemListIndex]._type === "Component") {
             var toBeDeletedLinks = this.itemList[itemListIndex].linkedItems;
             var beingDeletedFromFunctions = this.itemList[itemListIndex]._functions;

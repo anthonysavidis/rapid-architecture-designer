@@ -96,6 +96,8 @@ const constantNames = {
         "borderWidth": "Component's border width:",
         "component": "Component Settings",
         "link": "Link Settings",
+        "descriptionColor": "Description Color:",
+        "lineNo": "Number of description lines:",
         "operation": "Operation Settings",
         "subcomponentSettings": "Subcomponent Settings"
     },

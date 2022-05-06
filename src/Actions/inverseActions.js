@@ -161,7 +161,8 @@ function deletePastedItems(actionItems) {
     const itemsToBeDeleted = pastedItemsJSON['ItemMap']['current'];
     for (var x in itemsToBeDeleted) {
         const itemToBeDeleted = JSON.parse(itemsToBeDeleted[x]);
-        items.delete(itemToBeDeleted._id);
+        if (items.itemList.findIndex(el => el._id === itemToBeDeleted._id) !== -1)
+            items.delete(itemToBeDeleted._id);
     }
 }
 

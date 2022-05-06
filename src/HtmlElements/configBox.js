@@ -63,16 +63,16 @@ function produceStyleButtons(box, className, callBack) {
     var boldButton = document.createElement('div');
     var italicButton = document.createElement('div');
     var underlinedButton = document.createElement('div');
-    boldButton.className = italicButton.className = underlinedButton.className = "styleButton unselectableText";
+    boldButton.className = italicButton.className = underlinedButton.className = "styleButton";
     boldButton.innerText = "B";
     boldButton.style.fontWeight = "bold";
     boldButton.addEventListener("click", function() {
         if (boldButton.className === "styleButton") {
             callBack(className, 'fontWeight', "bold");
-            boldButton.className = "styleButtonPressed unselectableText";
+            boldButton.className = "styleButtonPressed";
         } else {
             callBack(className, 'fontWeight', "normal");
-            boldButton.className = "styleButton unselectableText";
+            boldButton.className = "styleButton";
         }
     })
     italicButton.innerText = "I";
@@ -80,10 +80,10 @@ function produceStyleButtons(box, className, callBack) {
     italicButton.addEventListener("click", function() {
         if (italicButton.className === "styleButton") {
             callBack(className, 'fontStyle', "italic");
-            italicButton.className = "styleButtonPressed unselectableText";
+            italicButton.className = "styleButtonPressed";
         } else {
             callBack(className, 'fontStyle', "normal");
-            italicButton.className = "styleButton unselectableText";
+            italicButton.className = "styleButton";
         }
     })
     underlinedButton.innerText = "U";
@@ -91,10 +91,10 @@ function produceStyleButtons(box, className, callBack) {
     underlinedButton.addEventListener("click", function() {
         if (underlinedButton.className === "styleButton") {
             callBack(className, 'textDecoration', "underline");
-            underlinedButton.className = "styleButtonPressed unselectableText";
+            underlinedButton.className = "styleButtonPressed";
         } else {
             callBack(className, 'textDecoration', "none");
-            underlinedButton.className = "styleButton unselectableText";
+            underlinedButton.className = "styleButton";
         }
     })
     var div = document.createElement('div');
@@ -289,19 +289,24 @@ function produceSliders(box) {
     var innerMarginDiv = document.createElement('div');
     var innerMarginX = getSliderGroup("Inner Margin X:", 1, 50, configStyle.getJSONValue("innerMarginX").split("px")[0], innerMarginXCallBack);
     var innerMarginY = getSliderGroup("Inner Margin Y:", 1, 50, configStyle.getJSONValue("innerMarginY").split("px")[0], innerMarginYCallBack);
-    innerMarginY.style.width = innerMarginX.style.width = "100%";
+    innerMarginY.style.width = innerMarginX.style.width = "140%";
     innerMarginY.style.display = innerMarginX.style.display = "inline-block";
+    innerMarginX.style.float = innerMarginY.style.float = "left";
+    innerMarginX.style.marginLeft = innerMarginY.style.marginLeft = "15px";
+    innerMarginX.style.position = innerMarginY.style.position = "absolute";
+    innerMarginX.style.left = innerMarginY.style.left = -247 + "px";
     innerMarginDiv.id = "innerMarginSlider";
     innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
     innerMarginDiv.style.marginTop = "17px";
     innerMarginDiv.style.width = "100%";
-    innerMarginDiv.style.height = "100px";
+    innerMarginDiv.style.height = "94px";
     innerMarginDiv.style.display = "none";
 
     box.appendChild(borderWidthSlider);
     innerMarginDiv.appendChild(innerMarginX);
     innerMarginDiv.appendChild(innerMarginY);
     box.appendChild(innerMarginDiv);
+    innerMarginY.style.top = 205 + "px";
     return;
 }
 

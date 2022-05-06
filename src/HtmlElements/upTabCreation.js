@@ -29,9 +29,9 @@ function produceHR() {
 }
 
 function produceOperationRadioButtons() {
-    var innerStr = '<div style="float:left;margin-left:22px;"><input type="radio" id="byComponent" value="HTML">\
+    var innerStr = '<div style="float:left;margin-left:8%;"><input type="radio" id="byComponent" value="HTML">\
     <label for="html" class="unselectableText">' + constantNames["operationsArea"]["byComponent"] + '</label></div> \
-    <div style="float:right; margin-right:43%;"><input type="radio" id="all" value="CSS" checked> \
+    <div style="float:left;"><input type="radio" id="all" value="CSS" checked> \
     <label for="css" class="unselectableText">' + constantNames["operationsArea"]["all"] + '</label></div>';
     var radioButtons = document.createElement('div');
     radioButtons.style.height = '24.33px';

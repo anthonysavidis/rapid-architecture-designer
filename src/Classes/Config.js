@@ -1,4 +1,4 @@
-import { autoResizeAllComponents } from "../Item/autoResize.js";
+import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 import { capitalizeFirstLetter, TextConfig } from "./TextConfig.js";
 import { constantValues } from "../config/constantValues.js";
 
@@ -34,8 +34,9 @@ class Config {
         this.setJSONValue(attributeChanged, value);
         var r = document.querySelector(':root');
         r.style.setProperty(varName, value);
-        if (type === "Component") {
+        if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color"))) {
             autoResizeAllComponents();
+            // checkAndResize(); //?????????????????????????
         }
         return;
     }

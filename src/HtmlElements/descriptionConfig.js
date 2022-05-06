@@ -1,5 +1,6 @@
 import { configStyle } from "../Classes/Config.js";
 import { layers } from "../Classes/LayerHolder.js";
+import { constantNames } from "../config/constantNames.js";
 import { getSliderGroup, createPicker } from "./configBox.js";
 import { turnOffDescription, turnOnDescription } from "./extendingComponent.js";
 
@@ -23,7 +24,7 @@ function descriptionArea(box) {
     descDiv.style.backgroundColor = "rgb(237,237,237)";
     descDiv.style.marginTop = "17px";
     descDiv.style.width = "100%";
-    descDiv.style.height = "43px";
+    descDiv.style.height = "46px";
     descDiv.style.display = "none";
 
     var r = document.querySelector(':root');
@@ -38,13 +39,14 @@ function descriptionArea(box) {
         configStyle.setJSONValue('descriptionColor', value);
         r.style.setProperty('--descriptionColor', value);
     };
-    var lineNoSlider = getSliderGroup("Number of description lines:", 1, 5, parseInt(rs.getPropertyValue('--descriptionLines'), 10), lineNoCallBack, 1);
+    var lineNoSlider = getSliderGroup(constantNames["configBox"]["lineNo"], 1, 5, parseInt(rs.getPropertyValue('--descriptionLines'), 10), lineNoCallBack, 1);
     var descriptionColor = configStyle.getJSONValue("descriptionColor");
 
-    var descriptionColorPicker = createPicker("Description Color:", descriptionColor, descriptionColorCallBack);
+    var descriptionColorPicker = createPicker(constantNames["configBox"]["descriptionColor"], descriptionColor, descriptionColorCallBack);
     descDiv.appendChild(lineNoSlider);
     lineNoSlider.style.display = "inline-block";
     lineNoSlider.style.float = "left";
+    lineNoSlider.style.marginLeft = "12px";
     descriptionColorPicker.style.display = "inline-block";
     descriptionColorPicker.style.float = "right";
     descriptionColorPicker.style.marginRight = "32.5px";
