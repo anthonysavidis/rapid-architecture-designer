@@ -101,15 +101,16 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
         return;
     });
 
-
     var nameArea = document.createElement("div");
-    // nameArea.className = "linkName";
-    nameArea.contentEditable = true;
-    nameArea.style.marginLeft = length / 2 - 30 + "px";
-    nameArea.style.outline = 0 + "px";
     nameArea.id = lineId + "name";
-    nameArea.innerText = name;
     nameArea.className = "blurName";
+    nameArea.contentEditable = true;
+    nameArea.innerText = name;
+    nameArea.style.position = "relative";
+    nameArea.style.whiteSpace = "nowrap";
+    nameArea.style.width = lineLength + "px";
+    nameArea.style.outline = 0 + "px";
+
     nameArea.onfocus = () => {
         nameArea.className = "focusName";
     }
@@ -119,10 +120,27 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
         items.itemList[lIndex]._name = nameArea.innerText;
         detailChangeListener(lineId, originalItemStr);
         nameArea.className = "blurName";
-
+        linedraw(lineId, linkState, nameArea.innerText, rec1, rec2);
     });
-    document.getElementById(lineId).appendChild(nameArea);
-    document.getElementById(lineId + "name").style.margin = 0;
+    if (name === "") {
+        nameArea.style.width = 0.50 * lineLength + "px";
+        nameArea.style.backgroundColor = "transparent";
+    } else {
+        nameArea.style.width = "fit-content";
+        nameArea.innerText = name;
+    }
+    var nameContainer = document.createElement('div');
+    nameContainer.id = lineId + "nameContainer";
+    nameContainer.style.width = "90%";
+    nameContainer.style.marginLeft = "5%";
+    nameContainer.style.height = "auto";
+    nameContainer.style.alignItems = "center";
+    nameContainer.style.justifyContent = "center";
+    nameContainer.style.display = "flex";
+
+    document.getElementById(lineId).appendChild(nameContainer);
+    document.getElementById(lineId + "nameContainer").appendChild(nameArea);
+    // document.getElementById(lineId + "name")
     return div;
 }
 

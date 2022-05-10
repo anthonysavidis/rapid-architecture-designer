@@ -48,6 +48,13 @@ function getCustomTextDimensions(fontFamily, fontSize, str) {
     return { width: width, height: height };
 }
 
+const getLinkTextDims = (text) => {
+    var r = document.querySelector(':root');
+    var rs = getComputedStyle(r);
+    const textSize = rs.getPropertyValue('--linkTextSize');
+    const textFamily = rs.getPropertyValue('--linkTextFamily');
+    return getCustomTextDimensions(textFamily, textSize, text);
+}
 
 function canResize(id, pointerX, pointerY) { //NEEDS REDOING
     var textDim = getTextDimensions(document.getElementById(id + 'name').innerText);
@@ -120,4 +127,4 @@ function addResize(id) {
 //     p.removeChild(resizer);
 // }
 
-export { addResize, getTextDimensions, getCustomTextDimensions };
+export { addResize, getTextDimensions, getCustomTextDimensions, getLinkTextDims };
