@@ -74,8 +74,10 @@ function loadAction() {
             }
             var lh = new LayerHolder(allText);
             actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
-            // autoResizeAllComponents();
-            checkAndResize();
+            if (configStyle.autoFit)
+                autoResizeAllComponents();
+            else
+                checkAndResize();
             updateFullPath(layers.layerList[0]._name);
 
         };
