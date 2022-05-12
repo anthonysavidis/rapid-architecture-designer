@@ -13,6 +13,7 @@ import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
 import { configStyle } from "../Classes/Config.js";
 import { turnOffDescription, turnOnDescription } from "../HtmlElements/extendingComponent.js";
+import { renderLine } from "../Item/createLine.js";
 
 
 function spawnSpecificItem(actionItems) {
@@ -210,6 +211,9 @@ function disableDescriptionInAllComponents(actionItems) {
                     document.getElementById(layerItems.itemList[y]._id).style.left = oldBRec.left + "px";
                     document.getElementById(layerItems.itemList[y]._id).style.width = oldBRec.width + "px";
                     document.getElementById(layerItems.itemList[y]._id).style.height = oldBRec.height + "px";
+                    layerItems.itemList[y].updateBoundingRec();
+                    if (layerItems.itemList[y].links)
+                        renderLine(layerItems.itemList[y]._id);
                 }
             }
         }
