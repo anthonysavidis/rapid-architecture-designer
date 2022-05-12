@@ -30,6 +30,10 @@ function changeDetails(actionItem) {
             turnOffDescription(component);
             turnOnDescription(component);
         }
+        if (component._type === "Component" && !document.getElementById(component._id + "resizer") && !configStyle.descriptionEnabled) {
+            turnOffExtension(component._id);
+            turnOnExtension(component._id);
+        }
     } else if (alteredItemObject._type === "Function") {
         if (document.getElementById('all').checked) {
             showAllRefresh();

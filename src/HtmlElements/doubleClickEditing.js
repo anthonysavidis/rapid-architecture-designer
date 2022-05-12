@@ -10,6 +10,8 @@ import { removeLayerTabRod } from "./extendingSideTabs.js";
 import { replaceOnFullPath, updateFullPath } from "./pathAndLayerSpan.js";
 import { autoResizeDispatch } from "../Item/autoResize.js";
 import { renderLine } from "../Item/createLine.js";
+import { configStyle } from "../Classes/Config.js";
+import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "./extendingComponent.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -77,7 +79,15 @@ function produceDoubleClickEditingName(editId) {
         if (items.itemList[index].links) {
             renderLine(items.itemList[index]._id);
         }
-        detailChangeListener(editId, originalItemStr);
+        var nameChanged = detailChangeListener(editId, originalItemStr);
+        if (nameChanged && configStyle.descriptionEnabled) {
+            turnOffDescription(items.itemList[index]);
+            turnOnDescription(items.itemList[index]);
+        }
+        if (nameChanged && !document.getElementById(items.itemList[index]._id + "resizer") && !configStyle.descriptionEnabled) {
+            turnOffExtension(items.itemList[index]._id);
+            turnOnExtension(items.itemList[index]._id);
+        }
     });
     document.getElementById(editId + "name").innerText = "";
     if (itemType === "Function") {
