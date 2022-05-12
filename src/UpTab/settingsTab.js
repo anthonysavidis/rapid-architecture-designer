@@ -140,6 +140,8 @@ function createComponentConfigBox() {
             document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("innerMarginY").split("px")[0];
             document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("innerMarginY").split("px")[0] + "px";
             document.getElementById('innerMarginSlider').style.display = "inline-block";
+            autoResizeAllComponents();
+
         } else {
             configStyle.setInitialMargins();
             autoResizeAllComponents();
