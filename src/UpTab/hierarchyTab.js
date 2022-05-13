@@ -73,8 +73,9 @@ function addHierarchyTabListeners() {
             // actions.saveCommand(moveToNext, moveToPrev, initialItem, updatedItem);
             if (!itemLinks)
                 itemLinks = "";
-            setUpMoveAction(layerId, selectedItems, itemLinks);
-            moveItemsTo(layerId, selectedItems);
+            const nextSendingItem = moveItemsTo(layerId, selectedItems);
+            setUpMoveAction(layerId, selectedItems, itemLinks, nextSendingItem);
+            layers.changeLayer(layerId);
 
         });
         return;

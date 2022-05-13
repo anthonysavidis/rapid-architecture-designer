@@ -41,18 +41,20 @@ function createSendingLayer(selectedItem) {
 }
 
 
-function setUpMoveAction(layerId, selectedItemList, allLinks) {
+function setUpMoveAction(layerId, selectedItemList, allLinks, nextSendingItem) {
     const initialItem = [layers.selectedLayer._id, selectedItemList, itemFromListToObject(allLinks)];
-    const updatedItem = [layerId, selectedItemList];
+    const updatedItem = [layerId, selectedItemList, JSON.stringify(nextSendingItem)];
     actions.saveCommand(moveToNext, moveToPrev, initialItem, updatedItem);
 }
 
 function moveItemsTo(layerId, selectedItemList) {
     const sendedItem = createSendingItem(selectedItemList);
     removeFromCurrentLayer(selectedItemList);
+    const currentLayerId = layers.selectedLayer._id;
     layers.changeLayer(layerId);
     pasteFromStr(sendedItem);
-    return;
+
+    return sendedItem;
 }
 
 export { moveItemsTo, setUpMoveAction, createSendingLayer, removeFromCurrentLayer, createSendingItem };
