@@ -2,7 +2,7 @@ import { Item } from "../Classes/Item.js";
 import { items } from "../Classes/ItemArray.js";
 import { actions } from "../Classes/Actions.js";
 import { joinComponents, splitComponent } from "../Item/split.js";
-import { layers } from "../Classes/LayerHolder.js";
+import { layers, refreshAllLinks } from "../Classes/LayerHolder.js";
 import { Layer } from "../Classes/Layer.js";
 import { updateTree } from "../Layers/Tree.js";
 import { pasteComponentAction } from "../UpTab/componentTab.js";
@@ -154,6 +154,8 @@ function deleteSpecificLayer(actionItems) {
 function pasteAction(actionItems) {
     const pastingStr = actionItems.initialItem;
     pasteFromStr(pastingStr);
+    (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+
     return;
 }
 

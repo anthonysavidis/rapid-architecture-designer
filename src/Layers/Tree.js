@@ -30,7 +30,7 @@ function refreshTree() {
             'data': treeData
         }
     }).on('changed.jstree', function(e, data) {
-        createNodeFullPath(data)
+        createNodeFullPath(data);
         closeTheTooltip();
         cancelSelection();
         if (document.getElementById("selectedComponentsList"))

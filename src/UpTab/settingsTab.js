@@ -6,7 +6,7 @@ import { configStyle } from "../Classes/Config.js";
 import { autoResizeAllComponents } from "../Item/autoResize.js";
 import { turnOnDescription, turnOffDescription } from "../HtmlElements/extendingComponent.js";
 import { items } from "../Classes/ItemArray.js";
-import { layers } from "../Classes/LayerHolder.js";
+import { layers, refreshAllLinks } from "../Classes/LayerHolder.js";
 import { descriptionArea } from "../HtmlElements/descriptionConfig.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "../Classes/Actions.js";
@@ -164,7 +164,8 @@ function createComponentConfigBox() {
                     }
                 }
             }
-            console.log(oldBRecs);
+            // console.log(oldBRecs);
+            refreshAllLinks();
             actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, oldBRecs, "");
         } else {
             document.getElementById("descArea").style.display = "none";
@@ -178,6 +179,7 @@ function createComponentConfigBox() {
                 }
             }
             actions.saveCommand(disableDescriptionInAllComponents, enableDescriptionInAllComponents, "", "");
+            autoResizeAllComponents();
         }
         layers.changeLayer(currentLayerId);
     });

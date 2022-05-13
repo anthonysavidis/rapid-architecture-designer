@@ -1,13 +1,16 @@
 import { layers } from "../Classes/LayerHolder.js";
-import { replaceOnFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
+import { getCurrentFullPath, replaceOnFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { changeTreeName, updateTree } from "../Layers/Tree.js";
 
 function changeNextLayer(actionItems) {
     layers.changeLayer(actionItems.updatedItem);
+    updateFullPath(getCurrentFullPath());
 }
 
 function changePrevLayer(actionItems) {
     layers.changeLayer(actionItems.initialItem);
+    updateFullPath(getCurrentFullPath());
+
 }
 
 function changeLayerName(obj) {

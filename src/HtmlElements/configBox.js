@@ -1,4 +1,5 @@
 import { configStyle } from "../Classes/Config.js";
+import { refreshAllLinks } from "../Classes/LayerHolder.js";
 import { capitalizeFirstLetter } from "../Classes/TextConfig.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResizeAutoFit, autoResizeAllComponents } from "../Item/autoResize.js";
@@ -277,8 +278,15 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack, noPixels) {
 
 function produceSliders(box) {
     const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
-    const innerMarginXCallBack = (value) => { configStyle.handleChange('Component', "innerMarginX", value + "px"); };
-    const innerMarginYCallBack = (value) => { configStyle.handleChange('Component', "innerMarginY", value + "px"); };
+    const innerMarginXCallBack = (value) => {
+        configStyle.handleChange('Component', "innerMarginX", value + "px");
+        refreshAllLinks();
+
+    };
+    const innerMarginYCallBack = (value) => {
+        configStyle.handleChange('Component', "innerMarginY", value + "px");
+        refreshAllLinks();
+    };
 
 
     var borderWidthSlider = getSliderGroup("Component's border width:", 1, 10, 2, borderSliderCallBack);

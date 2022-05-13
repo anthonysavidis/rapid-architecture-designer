@@ -185,7 +185,8 @@ const buttonTooltips = {
         "Move To": "Move component to another layer."
     },
     "Settings": {
-        "Configure": "Configure text & font size"
+        "Configure": "Configure text & font size",
+        "Configure Component": "Configure component style",
     },
 }
 

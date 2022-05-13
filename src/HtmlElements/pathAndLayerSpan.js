@@ -1,3 +1,6 @@
+import { layers } from "../Classes/LayerHolder.js";
+import { getTreeData } from "../Layers/Tree.js";
+
 var currentText = 'Initial';
 
 function updateFullPath(text) {
@@ -52,4 +55,33 @@ function createFullPath() {
     return;
 }
 
-export { updateFullPath, createFullPath, replaceOnFullPath };
+function getTreeNodeFromJSON(id, treeData) {
+    const jsonId = (id.includes('branch') ? id : id + 'branch');
+    for (var x in treeData) {
+        if (treeData[x]["id"] === jsonId)
+            return treeData[x];
+    }
+    return null;
+}
+
+function getParentComponentName(lid) {
+    const componentId = layers.layerList[layers.layerList.findIndex(el => el._id === lid)].componentId;
+    const itemIndex = layers.itemMap.get(lid).itemList.findIndex(el => el._id === componentId);
+    return layers.itemMap.get(lid).itemList[itemIndex]._name;
+}
+
+function getCurrentFullPath() {
+    const treeData = getTreeData();
+    var path = "";
+    var treeNode = getTreeNodeFromJSON(layers.selectedLayer._id, treeData);
+    if (treeNode["parent"] === "#")
+        return layers.layerList[0]._name; //the first
+
+    while (treeNode["parent"] !== '#') {
+        path = (path === "") ? treeNode.text : treeNode.text + "/" + path;
+        treeNode = getTreeNodeFromJSON(treeNode["parent"], treeData);
+    }
+    return layers.layerList[0]._name + "/" + path;
+}
+
+export { updateFullPath, createFullPath, replaceOnFullPath, getCurrentFullPath };

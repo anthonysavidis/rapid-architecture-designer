@@ -1,6 +1,6 @@
 import { items } from "../Classes/ItemArray.js";
 import { showInputDialog } from "../Input/inputDialog.js";
-import { layers } from "../Classes/LayerHolder.js";
+import { layers, refreshAllLinks } from "../Classes/LayerHolder.js";
 import { LayerHolder } from "../Classes/LayerHolder.js";
 import { takeScreenshot } from "../Layers/preview.js";
 import { constantNames } from "../config/constantNames.js";
@@ -79,7 +79,7 @@ function loadAction() {
             else
                 checkAndResize();
             updateFullPath(layers.layerList[0]._name);
-
+            (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
         };
 
         reader.readAsText(e.target.files[0]);

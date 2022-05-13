@@ -1,3 +1,4 @@
+import { renderLine } from "../Item/createLine.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { restorePreviewImages, savePreviewImages } from "../Layers/Storage/localStorageRetrieval.js";
 import { actionsOfNextLayer } from "../Layers/switchActions.js";
@@ -176,6 +177,7 @@ class LayerHolder {
         // }
         // this.changeLayer(initialLayerId);
     }
+
 }
 
 var layers = new LayerHolder();
@@ -191,4 +193,22 @@ function createFirstLayer() {
     setUpFunctionDisplayListeners();
 }
 
-export { layers, LayerHolder, createFirstLayer };
+function refreshAllLinks() {
+    const currentLayerId = layers.selectedLayer._id;
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+        for (var y in layerItems.itemList) {
+            if (layerItems.itemList[y]._type === "Component") {
+                layerItems.itemList[y].updateBoundingRec();
+                if (layerItems.itemList[y].links) {
+                    renderLine(layerItems.itemList[y]._id);
+                }
+            }
+        }
+    }
+    layers.changeLayer(currentLayerId);
+    return;
+}
+
+export { layers, LayerHolder, createFirstLayer, refreshAllLinks };

@@ -1,7 +1,7 @@
 import { Item } from "../Classes/Item.js";
 import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js"
 import { items, ItemHolder } from "../Classes/ItemArray.js";
-import { layers } from "../Classes/LayerHolder.js";
+import { layers, refreshAllLinks } from "../Classes/LayerHolder.js";
 import { Layer } from "../Classes/Layer.js";
 import { actions } from "../Classes/Actions.js";
 import { deletePastedItems, pasteAction } from "../Actions/inverseActions.js";
@@ -9,6 +9,7 @@ import { imageStorage } from "../Classes/ImageHolder.js";
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { getTreeData } from "../Layers/Tree.js";
 import { checkAndResize } from "./autoResize.js";
+import { configStyle } from "../Classes/Config.js";
 
 ///einai lista me items! kai oxi nested!!!
 ///{"0":{},"1":{}} : this way
@@ -222,6 +223,7 @@ function pasteFromStr(result) {
         showByComponent();
     }
     checkAndResize();
+
 }
 
 async function pasteComponent() {
@@ -240,6 +242,8 @@ async function pasteComponent() {
             var pastingItemsJSON = JSON.parse(result);
             actions.saveCommand(pasteAction, deletePastedItems, result, "");
             pasteFromStr(result);
+            (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+
         } catch (error) {
             console.log('Not a valid item.');
         }

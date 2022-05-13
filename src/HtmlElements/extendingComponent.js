@@ -119,10 +119,24 @@ function resizeExtended(id, nameList) {
         for (var i = 0; i < nameList.length; i++) {
             document.getElementById(id + 'subComponent' + i).style.height = getTextDimensions(nameList[i]).height + 2 * offsetY + "px";
         }
+        renderLine(id);
     }
-    renderLine(id);
     return;
 }
+
+
+function getNameListArgument(component) {
+    const id = component._id;
+    if (document.getElementById(id + "Description")) {
+        var r = document.querySelector(':root');
+        var rs = getComputedStyle(r);
+        const lineNo = rs.getPropertyValue("--descriptionLines");
+        return handleSplitDescription(component._description, lineNo)
+    } else {
+        return calculateSubcomponents(id);
+    }
+}
+
 
 function turnOnExtension(id) {
     // var r = document.querySelector(':root');
@@ -266,9 +280,10 @@ function turnOnDescription(component) {
     var rs = getComputedStyle(r);
     const lineNo = rs.getPropertyValue("--descriptionLines");
     resizeExtended(id, handleDescriptionExtension(component, lineNo));
-    if (component.links)
-        renderLine(id);
+    // if (component.links)
+    // renderLine(id);
     document.getElementById(id).style.height = "fit-content";
+    component.updateBoundingRec();
     return;
 }
 
@@ -284,11 +299,13 @@ function turnOffDescription(component) {
     addResize(id);
     // const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
     autoResizeDispatch["autoFit"](component);
-    if (component.links)
-        renderLine(id);
+    component.updateBoundingRec();
+
+    // if (component.links)
+    // renderLine(id);
     return;
 }
 
 
 
-export { turnOnExtension, turnOffExtension, turnOnDescription, turnOffDescription, areAllExtendable, areAllCollapsed, areAllExtended };
+export { turnOnExtension, turnOffExtension, getNameListArgument, resizeExtended, turnOnDescription, turnOffDescription, areAllExtendable, areAllCollapsed, areAllExtended };

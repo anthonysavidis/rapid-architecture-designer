@@ -6,6 +6,7 @@ import { getTextDimensions } from "./resize.js";
 import { constantValues } from "../config/constantValues.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
+import { getNameListArgument, resizeExtended } from "../HtmlElements/extendingComponent.js";
 
 
 function autoGrow(component) {
@@ -54,10 +55,13 @@ function autoResizeAllComponents() {
         for (var y in layerItems.itemList) {
             if (layerItems.itemList[y]._type === "Component") {
                 // if (!passAutoFitRestrictions(layerItems.itemList[y]._id))
-                autoResizeDispatch["autoFit"](layerItems.itemList[y]);
-
-                if (layerItems.itemList[y].links)
-                    renderLine(layerItems.itemList[y]._id);
+                if (document.getElementById(layerItems.itemList[y]._id + 'Description')) {
+                    resizeExtended(layerItems.itemList[y]._id, getNameListArgument(layerItems.itemList[y]));
+                } else {
+                    autoResizeAutoFit(layerItems.itemList[y]);
+                    if (layerItems.itemList[y].links)
+                        renderLine(layerItems.itemList[y]._id);
+                }
             }
         }
     }
@@ -85,10 +89,13 @@ function checkAndResize() {
 
             if (it._type === "Component" && !passAutoFitRestrictions(it._id)) {
                 // console.log(it._id);
-                autoResizeAutoFit(it);
-                // setInitialSize(it._id, it._name);
-                if (it.links) {
-                    renderLine(it._id);
+                if (document.getElementById(it._id + 'Description')) {
+                    resizeExtended(it._id, getNameListArgument(it));
+                } else {
+                    autoResizeAutoFit(it);
+                    if (it.links) {
+                        renderLine(it._id);
+                    }
                 }
             }
             if (it._type === "Component")
