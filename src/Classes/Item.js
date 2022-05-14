@@ -157,6 +157,8 @@ class Item {
                     });
                 }
                 this.updateBoundingRec();
+                if (this.links)
+                    renderLine(this._id);
             },
             click: (e) => {
                 appearComponentButtons();

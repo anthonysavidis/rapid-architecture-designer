@@ -40,6 +40,16 @@ class Config {
         }
         return;
     }
+    getStyleButtonStates(className) {
+        // FontWeight,FontStyle,TextDecoration
+        var r = document.querySelector(':root');
+        var rs = getComputedStyle(r);
+        var buttonStates = [];
+        rs.getPropertyValue("--" + className.toLowerCase() + "FontWeight") === "bold" ? buttonStates.push("styleButtonPressed") : buttonStates.push("styleButton");
+        rs.getPropertyValue("--" + className.toLowerCase() + "FontStyle") === "italic" ? buttonStates.push("styleButtonPressed") : buttonStates.push("styleButton");
+        rs.getPropertyValue("--" + className.toLowerCase() + "TextDecoration") === "underline" ? buttonStates.push("styleButtonPressed") : buttonStates.push("styleButton");
+        return buttonStates;
+    }
 }
 
 var configStyle = new Config();

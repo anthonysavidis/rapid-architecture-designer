@@ -64,7 +64,7 @@ function produceStyleButtons(box, className, callBack) {
     var boldButton = document.createElement('div');
     var italicButton = document.createElement('div');
     var underlinedButton = document.createElement('div');
-    boldButton.className = italicButton.className = underlinedButton.className = "styleButton";
+    [boldButton.className, italicButton.className, underlinedButton.className] = configStyle.getStyleButtonStates(className);
     boldButton.innerText = "B";
     boldButton.style.fontWeight = "bold";
     boldButton.addEventListener("click", function() {
