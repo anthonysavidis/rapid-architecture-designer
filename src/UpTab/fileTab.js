@@ -81,7 +81,7 @@ function loadAction() {
             updateFullPath(layers.layerList[0]._name);
             (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
         };
-
+        console.log(e.target.files[0]);
         reader.readAsText(e.target.files[0]);
     }
 }
@@ -89,6 +89,12 @@ function loadAction() {
 function loadSpecific(name) {
     readTextFile("http://127.0.0.1:5500/tests/" + name);
     return;
+}
+
+function flushInputEvent() {
+    $("#file-input").click(function(e) {
+        $('#file-input').val('');
+    });
 }
 
 function saveAction() {
@@ -104,6 +110,7 @@ function saveAction() {
 function addFileTabListeners() {
     // loadSpecific("extendTest.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
+        flushInputEvent();
         loadAction();
     });
     document.getElementById("saveButton").addEventListener("click", function() {
