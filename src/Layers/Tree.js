@@ -15,6 +15,19 @@ function createNodeFullPath(data) {
     updateFullPath(path);
 }
 
+function addNameListener(id) {
+    document.getElementById(id).oncontextmenu = (e) => {
+        e.preventDefault();
+        const currentId = id.split("branch")[0];
+        const layerObject = layers.layerList[layers.layerList.findIndex(el => el._id === currentId)];
+        const oldName = layerObject._name;
+        const domId = id + "_anchor";
+        const rect = document.getElementById(domId).getBoundingClientRect();
+        produceDoubleClickEditingLayerName(domId, oldName, layerObject, rect);
+        // refreshTree();
+    }
+}
+
 function refreshTree() {
     document.getElementById('jstree').remove();
     var jsTreeDiv = document.createElement('div');
@@ -37,18 +50,24 @@ function refreshTree() {
             document.getElementById("selectedComponentsList").innerHTML = "";
         var oldLayerId = layers.selectedLayer._id;
         var currentId = data.node.id.split("branch")[0];
-        document.getElementById(data.node.id).ondblclick = (e) => {
-            const layerObject = layers.layerList[layers.layerList.findIndex(el => el._id === currentId)];
-            const oldName = layerObject._name;
-            const domId = data.node.id + "_anchor";
-            const rect = document.getElementById(domId).getBoundingClientRect();
-            produceDoubleClickEditingLayerName(domId, oldName, layerObject, rect, data);
-            // refreshTree();
-        }
+        addNameListener(data.node.id)
+        $('#' + data.node.id).on("contextmenu", '#jstree', function(e) {
+            // this fires even the #js-categories-container is not there yet 
+            e.preventDefault();
+            var node = $('#jstree').jstree().get_node(event.target);
+
+            console.log(node);
+
+        });
         layers.changeLayer(currentId);
         actions.saveCommand(changeNextLayer, changePrevLayer, oldLayerId, currentId);
         updateFullPath(getCurrentFullPath());
     });
+    // $('#jstree').on("click", function() {
+    //     // this never fires since the #js-categories-container is not there yet
+    //     // alert('start listening before creating tree');
+    // });
+
 }
 
 function openLayerTree() {
