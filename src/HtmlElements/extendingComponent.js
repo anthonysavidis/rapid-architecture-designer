@@ -183,7 +183,7 @@ function turnOffExtension(id) {
 function areAllExtendable(itemsList) {
     var extentable = true;
     for (var x in itemsList) {
-        if (itemsList[x].subLayers.length === 0) {
+        if (!itemsList[x].subLayers[0] || (itemsList[x].subLayers[0] && layers.getItems(itemsList[x].subLayers[0]).itemList.length === 0)) {
             var extentable = false;
         }
     }
@@ -308,4 +308,4 @@ function turnOffDescription(component) {
 
 
 
-export { turnOnExtension, turnOffExtension, getNameListArgument, resizeExtended, turnOnDescription, turnOffDescription, areAllExtendable, areAllCollapsed, areAllExtended };
+export { turnOnExtension, turnOffExtension, calculateSubcomponents, getNameListArgument, resizeExtended, turnOnDescription, turnOffDescription, areAllExtendable, areAllCollapsed, areAllExtended };

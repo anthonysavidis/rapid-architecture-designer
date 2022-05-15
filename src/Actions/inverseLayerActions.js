@@ -5,11 +5,13 @@ import { changeTreeName, updateTree } from "../Layers/Tree.js";
 function changeNextLayer(actionItems) {
     layers.changeLayer(actionItems.updatedItem);
     updateFullPath(getCurrentFullPath());
+    updateTree();
 }
 
 function changePrevLayer(actionItems) {
     layers.changeLayer(actionItems.initialItem);
     updateFullPath(getCurrentFullPath());
+    updateTree();
 
 }
 

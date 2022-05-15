@@ -3,7 +3,7 @@ import { actions } from "../Classes/Actions.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { cropName, produceDoubleClickEditingLayerName } from "../HtmlElements/doubleClickEditing.js";
 import { removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
-import { updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
+import { getCurrentFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 
@@ -30,7 +30,7 @@ function refreshTree() {
             'data': treeData
         }
     }).on('changed.jstree', function(e, data) {
-        createNodeFullPath(data);
+        // createNodeFullPath(data);
         closeTheTooltip();
         cancelSelection();
         if (document.getElementById("selectedComponentsList"))
@@ -47,6 +47,7 @@ function refreshTree() {
         }
         layers.changeLayer(currentId);
         actions.saveCommand(changeNextLayer, changePrevLayer, oldLayerId, currentId);
+        updateFullPath(getCurrentFullPath());
     });
 }
 

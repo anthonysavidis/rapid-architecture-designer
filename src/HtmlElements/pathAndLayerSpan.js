@@ -78,7 +78,12 @@ function getCurrentFullPath() {
         return layers.layerList[0]._name; //the first
 
     while (treeNode["parent"] !== '#') {
-        path = (path === "") ? treeNode.text : treeNode.text + "/" + path;
+        const layerId = treeNode["id"].split("branch")[0];
+        const componentId = layers.layerList[layers.layerList.findIndex(el => el._id === layerId)].componentId;
+        const parentLayerId = treeNode["parent"].split("branch")[0];
+        const componentName = layers.itemMap.get(parentLayerId).itemList[layers.itemMap.get(parentLayerId).itemList.findIndex(el => el._id === componentId)]._name;
+        const pathPart = layers.layerList[layers.layerList.findIndex(el => el._id === layerId)]._name + ' &lt;' + componentName + '&gt;';
+        path = (path === "") ? pathPart : pathPart + "/" + path;
         treeNode = getTreeNodeFromJSON(treeNode["parent"], treeData);
     }
     return layers.layerList[0]._name + "/" + path;

@@ -113,8 +113,10 @@ function produceDoubleClickEditingLayerName(domId, oldName, layerObject, branchR
         layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].updateLayerName(val);
         if (layers.idList[0] === layerObject._id)
             document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val;
-        else
-            document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val + " " + ' &lt;' + layerObject.componentId + '&gt;';
+        else {
+            const parentItemList = layers.getItems(layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].parentId).itemList;
+            document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val + " " + ' &lt;' + parentItemList[parentItemList.findIndex(el => el._id === layerObject.componentId)]._name + '&gt;';
+        }
         input.remove();
         if (oldName !== val) {
             const prevObj = JSON.stringify([domId, layerObject._id, oldName]);
