@@ -4,14 +4,14 @@ import { changeTreeName, updateTree } from "../Layers/Tree.js";
 
 function changeNextLayer(actionItems) {
     layers.changeLayer(actionItems.updatedItem);
-    updateFullPath(getCurrentFullPath());
     updateTree();
+    updateFullPath(getCurrentFullPath());
 }
 
 function changePrevLayer(actionItems) {
     layers.changeLayer(actionItems.initialItem);
-    updateFullPath(getCurrentFullPath());
     updateTree();
+    updateFullPath(getCurrentFullPath());
 
 }
 

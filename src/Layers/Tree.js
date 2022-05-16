@@ -50,24 +50,33 @@ function refreshTree() {
             document.getElementById("selectedComponentsList").innerHTML = "";
         var oldLayerId = layers.selectedLayer._id;
         var currentId = data.node.id.split("branch")[0];
-        addNameListener(data.node.id)
-        $('#' + data.node.id).on("contextmenu", '#jstree', function(e) {
-            // this fires even the #js-categories-container is not there yet 
-            e.preventDefault();
-            var node = $('#jstree').jstree().get_node(event.target);
+        // addNameListener(data.node.id)
+        // $('#' + data.node.id).on("contextmenu", '#jstree', function(e) {
+        //     // this fires even the #js-categories-container is not there yet 
+        //     e.preventDefault();
+        //     var node = $('#jstree').jstree().get_node(event.target);
 
-            console.log(node);
+        //     console.log(node);
 
-        });
+        // });
         layers.changeLayer(currentId);
         actions.saveCommand(changeNextLayer, changePrevLayer, oldLayerId, currentId);
         updateFullPath(getCurrentFullPath());
     });
-    // $('#jstree').on("click", function() {
-    //     // this never fires since the #js-categories-container is not there yet
-    //     // alert('start listening before creating tree');
-    // });
+    $('#jstree').bind("dblclick.jstree", function(event) {
+        try {
+            var node = $(event.target).closest("li");
+            const id = node[0].id;
+            const currentId = id.split("branch")[0];
+            const layerObject = layers.layerList[layers.layerList.findIndex(el => el._id === currentId)];
+            const oldName = layerObject._name;
+            const domId = id + "_anchor";
+            const rect = document.getElementById(domId).getBoundingClientRect();
+            produceDoubleClickEditingLayerName(domId, oldName, layerObject, rect);
+        } catch (error) {
 
+        }
+    });
 }
 
 function openLayerTree() {
@@ -127,9 +136,10 @@ function changeTreeName(id, name) {
 }
 
 function getTreeData() {
-    var v = $('#jstree').jstree(true).get_json('#', { flat: true })
-    var mytext = JSON.stringify(v);
-    return JSON.parse(mytext);
+    // var v = $('#jstree').jstree(true).get_json('#', { flat: true })
+    // var mytext = JSON.stringify(v);
+    // return JSON.parse(mytext);
+    return treeData;
 }
 
 export { initializeTree, getTreeData, searchForName, openLayerTree, createNodeFullPath, closeLayerTree, addToArchitectureList, treeData, changeTreeName, clearTree, updateTree };

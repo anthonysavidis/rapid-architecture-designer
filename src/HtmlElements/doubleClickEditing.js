@@ -119,10 +119,13 @@ function produceDoubleClickEditingLayerName(domId, oldName, layerObject, branchR
         }
         input.remove();
         if (oldName !== val) {
-            const parentItemList = layers.getItems(layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].parentId).itemList;
-            const compoenName = parentItemList[parentItemList.findIndex(el => el._id === layerObject.componentId)]._name;
-            const prevObj = JSON.stringify([domId, layerObject._id, oldName, compoenName]);
-            const nextObj = JSON.stringify([domId, layerObject._id, layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)]._name, compoenName]);
+            var parentItemList, componentName = "";
+            if (layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].parentId !== '#') {
+                parentItemList = layers.getItems(layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].parentId).itemList;
+                componentName = parentItemList[parentItemList.findIndex(el => el._id === layerObject.componentId)]._name;
+            }
+            const prevObj = JSON.stringify([domId, layerObject._id, oldName, componentName]);
+            const nextObj = JSON.stringify([domId, layerObject._id, layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)]._name, componentName]);
             actions.saveCommand(changeNextLayerName, changePrevLayerName, prevObj, nextObj);
             changeTreeName(layerObject._id, val);
             replaceOnFullPath(oldName, val);

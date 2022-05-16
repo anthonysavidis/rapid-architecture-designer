@@ -73,6 +73,7 @@ function getParentComponentName(lid) {
 function getCurrentFullPath() {
     const treeData = getTreeData();
     var path = "";
+    console.log(treeData);
     var treeNode = getTreeNodeFromJSON(layers.selectedLayer._id, treeData);
     if (treeNode["parent"] === "#")
         return layers.layerList[0]._name; //the first
