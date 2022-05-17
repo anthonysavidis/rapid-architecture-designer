@@ -7,6 +7,7 @@ import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { moveItemsTo, setUpMoveAction } from "../Layers/moveItem.js";
+import { closeLayerTree, openLayerTree } from "../Layers/Tree.js";
 
 
 // select.innerHTML = "<option value=\"id\">" + layerName + "</option>";
@@ -47,7 +48,15 @@ function createSelectElementsFromLayers(selectedItems) {
 
 // function moveTo(layerId, selectedItemList)
 
+var treeIsShown = true;
+
+function enableTreeFlag() {
+    treeIsShown = true;
+}
+
 function addHierarchyTabListeners() {
+    document.getElementById("toggleHierarchyTreeButton").style.display = "inline-block";
+
     document.getElementById("moveToLayerButton").style.display = "none";
     document.getElementById("moveToLayerButton").addEventListener("click", function() {
         const selectedItems = getSelectedItems();
@@ -79,6 +88,15 @@ function addHierarchyTabListeners() {
 
         });
         return;
+    });
+    document.getElementById("toggleHierarchyTreeButton").addEventListener("click", function() {
+        if (!treeIsShown) {
+            openLayerTree();
+            treeIsShown = true;
+        } else {
+            closeLayerTree();
+            treeIsShown = false;
+        }
     });
 }
 

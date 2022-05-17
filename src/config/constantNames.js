@@ -46,6 +46,7 @@ const constantNames = {
     "layersTab": {
         "tabName": "Hierarchy",
         "MoveTo": "Move To",
+        "ToggleHierarchy": "Toggle Tree",
         "Delete": "Delete",
         "InitialLayerName": "Initial",
         "moveBox": "Move item to:"
@@ -182,7 +183,8 @@ const buttonTooltips = {
         "Reset": "Detach selected operation from component."
     },
     "Hierarchy": {
-        "Move To": "Move component to another layer."
+        "Move To": "Move component to another layer.",
+        "Toggle Tree": "Show/Hide hierarchy tree."
     },
     "Settings": {
         "Configure": "Configure text & font size",

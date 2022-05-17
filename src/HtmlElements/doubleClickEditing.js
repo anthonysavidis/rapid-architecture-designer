@@ -8,7 +8,7 @@ import { changeTreeName, closeLayerTree, createNodeFullPath, treeData, updateTre
 import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
 import { removeLayerTabRod } from "./extendingSideTabs.js";
 import { replaceOnFullPath, updateFullPath } from "./pathAndLayerSpan.js";
-import { autoResizeDispatch } from "../Item/autoResize.js";
+import { autoResizeDispatch, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { renderLine } from "../Item/createLine.js";
 import { configStyle } from "../Classes/Config.js";
 import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "./extendingComponent.js";
@@ -74,8 +74,9 @@ function produceDoubleClickEditingName(editId) {
                 updateTree();
         }
         input.remove();
-        if (items.itemList[index]._type === "Component")
+        if (items.itemList[index]._type === "Component" && !passAutoFitRestrictions(items.itemList[index]._id)) {
             autoResizeDispatch["autoFit"](items.itemList[index]);
+        }
         if (items.itemList[index].links) {
             renderLine(items.itemList[index]._id);
         }

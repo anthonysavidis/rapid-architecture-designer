@@ -44,6 +44,7 @@ function addAllButtons() {
     addButton(constantNames["fileTab"]["Save"], "saveButton", constantNames["fileTab"]["tabName"]);
     addButton(constantNames["fileTab"]["Load"], "loadButton", constantNames["fileTab"]["tabName"]);
 
+    addButton(constantNames['layersTab']["ToggleHierarchy"], "toggleHierarchyTreeButton", constantNames['layersTab']['tabName']);
     addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
 
     addButton(constantNames['settingsTab']["Configure"], "configureButton", constantNames['settingsTab']['tabName']);

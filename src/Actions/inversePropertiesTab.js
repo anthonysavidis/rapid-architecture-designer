@@ -5,6 +5,7 @@ import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { autoResizeDispatch } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
+import { renderLine } from "../Item/createLine.js";
 
 
 var lastOriginalItem = null;
@@ -33,6 +34,9 @@ function changeDetails(actionItem) {
         if (component._type === "Component" && !document.getElementById(component._id + "resizer") && !configStyle.descriptionEnabled) {
             turnOffExtension(component._id);
             turnOnExtension(component._id);
+        }
+        if (component.links) {
+            renderLine(component._id);
         }
     } else if (alteredItemObject._type === "Function") {
         if (document.getElementById('all').checked) {
