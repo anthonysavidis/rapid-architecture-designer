@@ -29,9 +29,9 @@ function produceHR() {
 }
 
 function produceOperationRadioButtons() {
-    var innerStr = '<div style="float:left;margin-left:8%;"><input type="radio" id="byComponent" value="HTML">\
+    var innerStr = '<div class="unselectableText" style="float:left;margin-left:8%;"><input type="radio" id="byComponent" value="HTML">\
     <label for="html" class="unselectableText">' + constantNames["operationsArea"]["byComponent"] + '</label></div> \
-    <div style="float:left;"><input type="radio" id="all" value="CSS" checked> \
+    <div class="unselectableText" style="float:left;"><input type="radio" id="all" value="CSS" checked> \
     <label for="css" class="unselectableText">' + constantNames["operationsArea"]["all"] + '</label></div>';
     var radioButtons = document.createElement('div');
     radioButtons.style.height = '24.33px';
@@ -40,7 +40,7 @@ function produceOperationRadioButtons() {
 }
 
 function produceCurrentSelectedArea() {
-    const AreaStr = '<div style="height:20px;float:left;margin-left:8%;" class="unselectableText">' + constantNames["operationsArea"]["currentComponents"] + '</div>\
+    const AreaStr = '<div style="height:20px;float:left;margin-left:10%;" class="unselectableText">' + constantNames["operationsArea"]["currentComponents"] + '</div>\
     <div id="selectedComponentList" style="height:60px;float:left;margin-top:3px;margin-left:10%;width:78%;overflow-y:scroll;font-size:14px;color:gray;"></div>';
     var selectedArea = document.createElement('div');
     selectedArea.id = "currentSelectedArea";

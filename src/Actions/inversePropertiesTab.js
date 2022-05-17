@@ -31,7 +31,7 @@ function changeDetails(actionItem) {
             turnOffDescription(component);
             turnOnDescription(component);
         }
-        if (component._type === "Component" && !document.getElementById(component._id + "resizer") && !configStyle.descriptionEnabled) {
+        if (component._type === "Component" && document.getElementById(component._id + "subComponent0")) {
             turnOffExtension(component._id);
             turnOnExtension(component._id);
         }

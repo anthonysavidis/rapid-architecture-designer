@@ -81,13 +81,15 @@ function produceDoubleClickEditingName(editId) {
             renderLine(items.itemList[index]._id);
         }
         var nameChanged = detailChangeListener(editId, originalItemStr);
+        console.log(nameChanged);
+        if (nameChanged && document.getElementById(items.itemList[index]._id + "subComponent0")) {
+            turnOffExtension(items.itemList[index]._id);
+            turnOnExtension(items.itemList[index]._id);
+            return;
+        }
         if (nameChanged && configStyle.descriptionEnabled) {
             turnOffDescription(items.itemList[index]);
             turnOnDescription(items.itemList[index]);
-        }
-        if (nameChanged && !document.getElementById(items.itemList[index]._id + "resizer") && !configStyle.descriptionEnabled) {
-            turnOffExtension(items.itemList[index]._id);
-            turnOnExtension(items.itemList[index]._id);
         }
     });
     document.getElementById(editId + "name").innerText = "";
