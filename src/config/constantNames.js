@@ -2,12 +2,16 @@ const constantNames = {
     "fileTab": {
         "tabName": "File",
         "Save": "Save",
-        "Load": "Load"
+        "Load": "Load",
+        "New": "New Project"
     },
     "settingsTab": {
         "tabName": "Settings",
         "Configure": "Configure",
-        "Configure Component": "Configure Component"
+        "Configure Component": "Configure Component",
+        "Fullscreen": "Fullscreen",
+        "Configure Operation": "Configure Operation",
+        "Exit Fullscreen": "Exit Fullscreen",
     },
     "editTab": {
         "tabName": "Edit",
@@ -115,7 +119,7 @@ const constantNames = {
             "Component": "Description:",
             "Link": "Description:",
             "Function": "Description:"
-        },
+        }
     },
     "splittedBox": {
         "msg": "Parts split",
@@ -143,7 +147,8 @@ const constantNames = {
         "pngMsg": "Insert name of the current layer.",
         "functionExists": "Already attached to component!",
         "moveToMsg": "Cannot move items to another layer.",
-        "unsubdivideMsg": "Do you want to delete the subarchitecture of the selected Component?"
+        "unsubdivideMsg": "Do you want to delete the subarchitecture of the selected Component?",
+        "newProjectMsg": "Are you sure you want to create a new project and remove this from editor?"
     },
     "dot": ".",
     "ok": "OK",
@@ -167,6 +172,7 @@ const buttonTooltips = {
         "Collapse": "Collapse the selected component(s)."
     },
     "File": {
+        "New Project": "Creates a new architecture and optionally saves the last one.",
         "Save": "Save the current architecture.",
         "Load": "Load an architecture."
     },
@@ -187,8 +193,11 @@ const buttonTooltips = {
         "Toggle Tree": "Show/Hide hierarchy tree."
     },
     "Settings": {
-        "Configure": "Configure text & font size",
-        "Configure Component": "Configure component style",
+        "Configure": "Configure text & font size.",
+        "Configure Component": "Configure component style.",
+        "Configure Operation": "Configure operation style.",
+        "Fullscreen": "Emter fullscreen mode.",
+        "Exit Fullscreen": "Exit fullscreen mode."
     },
 }
 

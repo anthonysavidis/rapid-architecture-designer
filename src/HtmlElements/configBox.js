@@ -288,8 +288,9 @@ function produceSliders(box) {
         refreshAllLinks();
     };
 
-
-    var borderWidthSlider = getSliderGroup("Component's border width:", 1, 10, 2, borderSliderCallBack);
+    console.log(configStyle);
+    const defaultBorderSliderValue = (parseInt(configStyle.getJSONValue("borderWidth"))) ? parseInt(configStyle.getJSONValue("borderWidth"), 10) : 2;
+    var borderWidthSlider = getSliderGroup("Component's border width:", 1, 10, defaultBorderSliderValue, borderSliderCallBack);
     borderWidthSlider.style.float = "right";
     borderWidthSlider.style.marginRight = "20px";
     borderWidthSlider.style.marginTop = "17px";

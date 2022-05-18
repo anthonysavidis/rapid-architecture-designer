@@ -187,6 +187,7 @@ function createComponentConfigBox() {
 }
 
 
+
 function addSettingsTabListeners() {
     document.getElementById('configureButton').addEventListener('click', (e) => {
         createConfigBox();
@@ -203,7 +204,25 @@ function addSettingsTabListeners() {
 
         }
     });
+    document.getElementById("fullscreenButton").addEventListener('click', (e) => {
+        document.getElementById("fullscreenButton").style.display = "none";
+        document.getElementById("exitFullscreenButton").style.display = "inline-block";
+        document.documentElement.requestFullscreen();
+
+    });
+    document.getElementById("exitFullscreenButton").addEventListener('click', (e) => {
+        document.exitFullscreen();
+        document.getElementById("exitFullscreenButton").style.display = "none";
+        document.getElementById("fullscreenButton").style.display = "inline-block";
+    });
+    initialAppear();
     return;
+}
+
+function initialAppear() {
+    document.getElementById("exitFullscreenButton").style.display = "none";
+
+
 }
 
 export { addSettingsTabListeners };

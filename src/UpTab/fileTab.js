@@ -115,6 +115,20 @@ function addFileTabListeners() {
     document.getElementById("saveButton").addEventListener("click", function() {
         saveAction();
     });
+    document.getElementById("newProjectButton").addEventListener("click", function() {
+        console.log('clicked');
+        produceBox("confirmation", constantNames["messages"]["newProjectMsg"] + "@1", () => {
+            var callBack = (name, cancelled) => {
+                if (cancelled) {
+                    location.reload();
+                    return;
+                }
+                // name = "myArchitecture.txt";
+                download(name, layers.toString());
+            }
+            showInputDialog("Save", callBack);
+        });
+    });
 }
 
 

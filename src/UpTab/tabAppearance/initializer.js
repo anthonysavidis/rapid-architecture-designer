@@ -41,14 +41,18 @@ function addAllButtons() {
     addButton(constantNames["editTab"]["Redo"], "redoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Grid"], "gridButton", constantNames["editTab"]["tabName"]);
 
+    addButton(constantNames["fileTab"]["New"], "newProjectButton", constantNames["fileTab"]["tabName"]);
     addButton(constantNames["fileTab"]["Save"], "saveButton", constantNames["fileTab"]["tabName"]);
     addButton(constantNames["fileTab"]["Load"], "loadButton", constantNames["fileTab"]["tabName"]);
 
     addButton(constantNames['layersTab']["ToggleHierarchy"], "toggleHierarchyTreeButton", constantNames['layersTab']['tabName']);
     addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
 
+    addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['settingsTab']['tabName']);
+    addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure"], "configureButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Component"], "configureComponentButton", constantNames['settingsTab']['tabName']);
+    addButton(constantNames['settingsTab']["Configure Operation"], "configureOperationButton", constantNames['settingsTab']['tabName']);
 
 }
 
