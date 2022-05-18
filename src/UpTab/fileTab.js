@@ -81,7 +81,6 @@ function loadAction() {
             updateFullPath(layers.layerList[0]._name);
             (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
         };
-        console.log(e.target.files[0]);
         reader.readAsText(e.target.files[0]);
     }
 }

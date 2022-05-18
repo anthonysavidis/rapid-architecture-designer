@@ -4,6 +4,7 @@ import { actions } from "../Classes/Actions.js";
 import { itemFromListToObject } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
+import { produceLayerTabRod, removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { moveItemsTo, setUpMoveAction } from "../Layers/moveItem.js";
@@ -92,9 +93,11 @@ function addHierarchyTabListeners() {
     document.getElementById("toggleHierarchyTreeButton").addEventListener("click", function() {
         if (!treeIsShown) {
             openLayerTree();
+            produceLayerTabRod();
             treeIsShown = true;
         } else {
             closeLayerTree();
+            removeLayerTabRod();
             treeIsShown = false;
         }
     });

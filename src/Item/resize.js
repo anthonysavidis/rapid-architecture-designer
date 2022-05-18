@@ -17,11 +17,14 @@ function getTextDimensions(str) {
     var rs = getComputedStyle(r);
     var fontSize = rs.getPropertyValue('--componentTextSize');
     var fontFamily = rs.getPropertyValue('--componentTextFamily');
-
+    var fontWeight = rs.getPropertyValue('--componentFontWeight');
+    var fontStyle = rs.getPropertyValue('--componentFontStyle');
     text.style.fontFamily = fontFamily;
+    text.style.fontStyle = fontStyle;
     text.style.fontSize = fontSize;
     text.style.height = 'auto';
     text.style.width = 'auto';
+    text.style.fontWeight = fontWeight;
     text.style.position = 'absolute';
     text.style.whiteSpace = 'no-wrap';
     text.innerHTML = str;
