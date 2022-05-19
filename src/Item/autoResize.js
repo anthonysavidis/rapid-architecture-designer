@@ -28,8 +28,8 @@ function autoGrow(component) {
 
 
 function autoResizeAutoFit(component) {
-    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
-    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+    var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
     var dims = getTextDimensions(document.getElementById(component._id + 'name').innerText);
     var widthOfName = dims.width;
     var heightOfName = dims.height;
@@ -108,8 +108,8 @@ function checkAndResize() {
 
 
 function canResizeAutofit(id, possibleWidth, possibleHeight) {
-    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
-    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+    var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
     var dims = getTextDimensions(document.getElementById(id + 'name').innerText);
     var widthOfName = dims.width + 2 * offsetX;
     var heightOfName = dims.height + 2 * offsetY;
@@ -118,8 +118,8 @@ function canResizeAutofit(id, possibleWidth, possibleHeight) {
 
 
 function passAutoFitRestrictions(id) {
-    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
-    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+    var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
 
     var dims = getTextDimensions(document.getElementById(id + 'name').innerText);
     var widthOfName = dims.width + 2 * offsetX;

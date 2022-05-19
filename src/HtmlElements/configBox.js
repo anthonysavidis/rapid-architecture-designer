@@ -289,15 +289,15 @@ function produceSliders(box) {
     };
 
     console.log(configStyle);
-    const defaultBorderSliderValue = (parseInt(configStyle.getJSONValue("borderWidth"))) ? parseInt(configStyle.getJSONValue("borderWidth"), 10) : 2;
+    const defaultBorderSliderValue = (parseInt(configStyle.getJSONValue("componentBorderWidth"))) ? parseInt(configStyle.getJSONValue("componentBorderWidth"), 10) : 2;
     var borderWidthSlider = getSliderGroup("Component's border width:", 1, 10, defaultBorderSliderValue, borderSliderCallBack);
     borderWidthSlider.style.float = "right";
     borderWidthSlider.style.marginRight = "20px";
     borderWidthSlider.style.marginTop = "17px";
 
     var innerMarginDiv = document.createElement('div');
-    var innerMarginX = getSliderGroup("Inner Margin X:", 1, 50, configStyle.getJSONValue("innerMarginX").split("px")[0], innerMarginXCallBack);
-    var innerMarginY = getSliderGroup("Inner Margin Y:", 1, 50, configStyle.getJSONValue("innerMarginY").split("px")[0], innerMarginYCallBack);
+    var innerMarginX = getSliderGroup("Inner Margin X:", 1, 50, configStyle.getJSONValue("componentInnerMarginX").split("px")[0], innerMarginXCallBack);
+    var innerMarginY = getSliderGroup("Inner Margin Y:", 1, 50, configStyle.getJSONValue("componentInnerMarginY").split("px")[0], innerMarginYCallBack);
     innerMarginY.style.width = innerMarginX.style.width = "140%";
     innerMarginY.style.display = innerMarginX.style.display = "inline-block";
     innerMarginX.style.float = innerMarginY.style.float = "left";

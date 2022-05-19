@@ -135,10 +135,10 @@ function createComponentConfigBox() {
         configStyle.autoFit = document.getElementById("autofitSwitch").checked;
 
         if (document.getElementById("autofitSwitch").checked) {
-            document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("innerMarginX").split("px")[0];
-            document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("innerMarginX").split("px")[0] + "px";
-            document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("innerMarginY").split("px")[0];
-            document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("innerMarginY").split("px")[0] + "px";
+            document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
+            document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginX").split("px")[0] + "px";
+            document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
+            document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginY").split("px")[0] + "px";
             document.getElementById('innerMarginSlider').style.display = "inline-block";
             autoResizeAllComponents();
 

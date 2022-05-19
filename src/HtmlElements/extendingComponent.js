@@ -20,8 +20,8 @@ function getSubComponentWidth(text) {
 function addDoubleLine(id) {
     var l1 = document.createElement('div'),
         l2 = document.createElement('div');
-    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
-    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+    var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
 
     l1.className = l2.className = "seperativeLine";
     l1.style.marginTop = offsetY + "px";
@@ -94,8 +94,8 @@ function calculateSubcomponents(id) {
 }
 
 function resizeExtended(id, nameList) {
-    var offsetX = configStyle.getJSONValue("innerMarginX").split("px")[0];
-    var offsetY = configStyle.getJSONValue("innerMarginY").split("px")[0];
+    var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
+    var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
 
     var maxWidth = 0;
     // document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";

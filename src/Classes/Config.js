@@ -10,8 +10,8 @@ class Config {
         this.configJSON = {};
         this.autoFit = false;
         this.descriptionEnabled = false;
-        this.configJSON["innerMarginX"] = constantValues["initialOffsetWidth"] + "px";
-        this.configJSON["innerMarginY"] = constantValues["initialOffsetHeight"] + "px";
+        this.configJSON["componentInnerMarginX"] = constantValues["initialOffsetWidth"] + "px";
+        this.configJSON["componentInnerMarginY"] = constantValues["initialOffsetHeight"] + "px";
         this.configJSON["descriptionColor"] = "#545454";
         this.configJSON["descriptionLines"] = "3";
     }
@@ -31,7 +31,7 @@ class Config {
     handleChange(type, attributeChanged, value) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
-        this.setJSONValue(attributeChanged, value);
+        this.setJSONValue(textType + capitalizeFirstLetter(attributeChanged), value);
         var r = document.querySelector(':root');
         r.style.setProperty(varName, value);
         if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color"))) {

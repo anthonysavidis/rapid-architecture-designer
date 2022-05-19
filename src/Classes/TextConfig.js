@@ -21,7 +21,7 @@ class TextConfig {
     handleChange(type, attributeChanged, value) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
-        this.setJSONValue(attributeChanged, value);
+        this.setJSONValue(textType + capitalizeFirstLetter(attributeChanged), value);
         var r = document.querySelector(':root');
         r.style.setProperty(varName, value);
         if (type === "Component" && attributeChanged !== "textColor" && attributeChanged !== "textBackgroundColor") {
