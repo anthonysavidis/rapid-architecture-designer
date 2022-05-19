@@ -62,6 +62,9 @@ function initializeStyleAndOperations() {
     document.getElementById("settingsTab").addEventListener("click", function() {
         initializeTab(constantNames["settingsTab"]["tabName"], "settingsTab");
     });
+    document.getElementById("helpTab").addEventListener("click", function() {
+        initializeTab(constantNames["helpTab"]["tabName"], "helpTab");
+    });
     document.getElementById("layersTab").addEventListener("click", function() {
         changeToLayerTab();
     });

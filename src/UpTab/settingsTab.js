@@ -11,6 +11,7 @@ import { descriptionArea } from "../HtmlElements/descriptionConfig.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "../Classes/Actions.js";
 import { disableDescriptionInAllComponents, enableDescriptionInAllComponents } from "../Actions/inverseActions.js";
+import { createOperationColorPickers } from "../HtmlElements/operationsConfigBox.js";
 
 
 
@@ -186,7 +187,51 @@ function createComponentConfigBox() {
     return;
 }
 
+function produceOperationsConfigBox() {
+    var box = document.createElement('div');
+    box.className = 'configurationBox';
 
+    produceGrayLayer(box, "", "", "");
+    var closeBox = function() {
+        box.remove();
+        if (document.getElementById('grayLayer'))
+            document.getElementById('grayLayer').remove();
+    };
+
+    var closeButton = document.createElement('div');
+    closeButton.className = "closeBoxButton";
+    closeButton.onclick = closeBox;
+    closeButton.style.position = "absolute";
+    closeButton.style.left = 720 + "px";
+    produceMovingBar(box, 0);
+    box.appendChild(closeButton);
+
+    createOperationColorPickers(box);
+
+    var closeButton = document.createElement('div'),
+        confirmationButton = document.createElement('div');
+    closeButton.className = "cancelButton";
+    closeButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["close"] + "</p>";
+    closeButton.onclick = closeBox;
+    confirmationButton.className = "okButton";
+    confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
+    confirmationButton.onclick = function() {
+        closeBox();
+    }
+    var buttonsContainer = document.createElement('div');
+    buttonsContainer.style.position = "relative"
+    buttonsContainer.style.width = "100%";
+    buttonsContainer.style.height = 40 + "px";
+    buttonsContainer.style.display = "inline-block";
+
+    buttonsContainer.style.marginTop = 25 + "px";
+    buttonsContainer.appendChild(closeButton);
+    buttonsContainer.appendChild(confirmationButton);
+    box.appendChild(buttonsContainer);
+    document.getElementById('body').appendChild(box);
+    addMotion(box);
+    return;
+}
 
 function addSettingsTabListeners() {
     document.getElementById('configureButton').addEventListener('click', (e) => {
@@ -203,6 +248,9 @@ function addSettingsTabListeners() {
             document.getElementById('descArea').style.display = "inline-block";
 
         }
+    });
+    document.getElementById('configureOperationButton').addEventListener('click', (e) => {
+        produceOperationsConfigBox();
     });
     document.getElementById("fullscreenButton").addEventListener('click', (e) => {
         document.getElementById("fullscreenButton").style.display = "none";

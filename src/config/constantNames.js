@@ -13,6 +13,10 @@ const constantNames = {
         "Configure Operation": "Configure Operation",
         "Exit Fullscreen": "Exit Fullscreen",
     },
+    "helpTab": {
+        "tabName": "Help",
+        "Help": "Help"
+    },
     "editTab": {
         "tabName": "Edit",
         "Grid": "Grid",
