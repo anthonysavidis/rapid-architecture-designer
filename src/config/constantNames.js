@@ -202,9 +202,13 @@ const buttonTooltips = {
         "Configure Component": "Configure component style.",
         "Configure Operation": "Configure operation style.",
         "Configure Link": "Configure link style.",
+        "Configure Workspace": "Configure workspace style.",
         "Fullscreen": "Emter fullscreen mode.",
         "Exit Fullscreen": "Exit fullscreen mode."
     },
+    "Help": {
+        "Help": "Help"
+    }
 }
 
 export { constantNames, buttonTooltips };
