@@ -9,6 +9,7 @@ const constantNames = {
         "tabName": "Settings",
         "Configure": "Configure",
         "Configure Component": "Configure Component",
+        "Configure Link": "Configure Link",
         "Fullscreen": "Fullscreen",
         "Configure Operation": "Configure Operation",
         "Exit Fullscreen": "Exit Fullscreen",
@@ -200,6 +201,7 @@ const buttonTooltips = {
         "Configure": "Configure text & font size.",
         "Configure Component": "Configure component style.",
         "Configure Operation": "Configure operation style.",
+        "Configure Link": "Configure link style.",
         "Fullscreen": "Emter fullscreen mode.",
         "Exit Fullscreen": "Exit fullscreen mode."
     },

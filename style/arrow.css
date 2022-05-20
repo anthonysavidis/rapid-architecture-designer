@@ -24,7 +24,7 @@
     height: 10px;
     border-top: 7px solid transparent;
     border-bottom: 7px solid transparent;
-    border-left: 9.5px solid black;
+    border-left: 9.5px solid var(--linkArrowColor);
     /* position: absolute; */
     z-index: 14;
 }

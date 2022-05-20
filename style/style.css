@@ -41,6 +41,8 @@
     --operationDraggingColor: #009dff;
     --operationOrphanColor: transparent;
     --operationBorderWidth: 2px;
+    --linkArrowColor: #000000;
+    --linkColor: #000000;
 }
 
 
@@ -107,6 +109,11 @@
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
+}
+
+.connector {
+    height: 1px;
+    background-color: var(--linkColor);
 }
 
 .workspace {

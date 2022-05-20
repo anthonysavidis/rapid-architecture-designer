@@ -1,3 +1,4 @@
+import { configStyle } from "../Classes/Config.js";
 import { items } from "../Classes/ItemArray.js";
 import { placeArrow } from "./geometry.js";
 
@@ -104,11 +105,14 @@ function getComponentsRec(lineId, no) {
 //<div id=\"" + lineId + "point2\" style=\"float:left;margin-top:-7px; transform: rotate(180deg);\" class=\"point\"></div>
 //<div id=\"" + lineId + "point1\" style=\"float:right;margin-top:-7px;\" class=\"point\"></div> 
 function produceArrows(rec1, rec2, degree, lineId, state) {
+    const pointOffset = 0; //parseInt(configStyle.getJSONValue("linkHeight").split("px")[0], 10) - 1;
+    console.log(pointOffset);
     var point1 = document.createElement("div");
     point1.id = lineId + "point1";
     point1.className = "point";
     point1.style.float = "right";
-    point1.style.marginTop = -7 + "px";
+    point1.style.marginTop = -7 + pointOffset + "px";
+    point1.style.marginRight = -2 + pointOffset + "px";
     point1.style.display = "none";
 
     var point2 = document.createElement("div");
@@ -116,7 +120,8 @@ function produceArrows(rec1, rec2, degree, lineId, state) {
     point2.className = "point";
     point2.style.transform = "rotate(180deg)";
     point2.style.float = "left";
-    point2.style.marginTop = -7 + "px";
+    point2.style.marginTop = -7 + pointOffset + "px";
+    point2.style.marginLeft = -2 + pointOffset + "px";
     point2.style.display = "none";
 
     document.getElementById(lineId).appendChild(point1);

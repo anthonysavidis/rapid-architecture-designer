@@ -12,6 +12,7 @@ import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "../Classes/Actions.js";
 import { disableDescriptionInAllComponents, enableDescriptionInAllComponents } from "../Actions/inverseActions.js";
 import { createOperationColorPickers } from "../HtmlElements/operationsConfigBox.js";
+import { createLinkConfigBox } from "../HtmlElements/linkConfigBox.js";
 
 
 
@@ -187,7 +188,7 @@ function createComponentConfigBox() {
     return;
 }
 
-function produceOperationsConfigBox() {
+function produceAConfigBox(type) {
     var box = document.createElement('div');
     box.className = 'configurationBox';
 
@@ -205,9 +206,13 @@ function produceOperationsConfigBox() {
     closeButton.style.left = 720 + "px";
     produceMovingBar(box, 0);
     box.appendChild(closeButton);
-
-    createOperationColorPickers(box);
-
+    if (type === "Operation")
+        createOperationColorPickers(box);
+    else {
+        createLinkConfigBox(box);
+        closeButton.style.left = 685 + "px";
+        closeButton.style.top = 10 + "px";
+    }
     var closeButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
     closeButton.className = "cancelButton";
@@ -250,7 +255,10 @@ function addSettingsTabListeners() {
         }
     });
     document.getElementById('configureOperationButton').addEventListener('click', (e) => {
-        produceOperationsConfigBox();
+        produceAConfigBox("Operation");
+    });
+    document.getElementById('configureLinkButton').addEventListener('click', (e) => {
+        produceAConfigBox("Link");
     });
     document.getElementById("fullscreenButton").addEventListener('click', (e) => {
         document.getElementById("fullscreenButton").style.display = "none";

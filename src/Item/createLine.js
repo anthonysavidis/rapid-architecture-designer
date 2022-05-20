@@ -84,7 +84,7 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     if (lineLength === 0) {
         lineLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
-    var lineHtml = "<div id=\"" + lineId + "\" style='transform-origin: top left;text-align: center; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: 1px; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;z-index:14;'></div>";
+    var lineHtml = "<div id=\"" + lineId + "\" class=\"connector\" style='transform-origin: top left;text-align: center; transform: rotate(" + degree + "deg); width: " + lineLength + "px; position: absolute; top: " + y1 + "px; left: " + x1 + "px;z-index:14;'></div>";
     var div = document.createElement("div");
     div.innerHTML = lineHtml;
     div.id = lineId + 'external';
