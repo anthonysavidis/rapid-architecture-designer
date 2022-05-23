@@ -111,6 +111,18 @@ const constantNames = {
         "operation": "Operation Settings",
         "subcomponentSettings": "Subcomponent Settings"
     },
+    "operationConfig": {
+        "operationColor": "Operation color:",
+        "operationBorder": "Operation border:",
+        "operationSelectedBorder": "Operation selected border:",
+        "attachedColor": "Attached operation color:",
+        "draggingColor": "Dragging operation color:",
+        "operationBorderWidth": "Operation border width:",
+    },
+    "linkConfig": {
+        "linkColor": "Link color:",
+        "arrowColor": "Link arrow color:"
+    },
     "inputBox": {
         "msg": "Insert name and description of ",
         "nameLabel": {

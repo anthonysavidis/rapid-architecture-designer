@@ -1,4 +1,5 @@
 import { configStyle } from "../Classes/Config.js";
+import { constantNames } from "../config/constantNames.js";
 import { alterConstantValue } from "../config/functionStyle.js";
 import { showAllRefresh } from "../Workspace/functionAppearance.js";
 import { createPicker, getSliderGroup } from "./configBox.js";
@@ -19,9 +20,9 @@ function getSecondRowValues() {
 function createFirstRowPickers(box) {
     box.style.width = 760 + "px";
     var defaultValues = getFirstRowValues();
-    var operationColorPicker = createPicker("Operation Color:", defaultValues[0], (value) => { configStyle.handleChange("Operation", "color", value); })
-    var operationBorderPicker = createPicker("Operation Border:", defaultValues[1], (value) => { configStyle.handleChange("Operation", "borderColor", value); });
-    var selectedOperationBorderPicker = createPicker("Selected operation border:", defaultValues[2], (value) => { configStyle.handleChange("Operation", "selectedBorderColor", value); });
+    var operationColorPicker = createPicker(constantNames["operationConfig"]["operationColor"], defaultValues[0], (value) => { configStyle.handleChange("Operation", "color", value); })
+    var operationBorderPicker = createPicker(constantNames["operationConfig"]["operationBorder"], defaultValues[1], (value) => { configStyle.handleChange("Operation", "borderColor", value); });
+    var selectedOperationBorderPicker = createPicker(constantNames["operationConfig"]["operationSelectedBorder"], defaultValues[2], (value) => { configStyle.handleChange("Operation", "selectedBorderColor", value); });
     operationColorPicker.style.float = "left";
     operationBorderPicker.style.float = "left";
     selectedOperationBorderPicker.style.float = "right";
@@ -39,14 +40,14 @@ function createFirstRowPickers(box) {
 
 function createSecondRowPickers(box) {
     var defaultValues = getSecondRowValues();
-    var settedOperationPicker = createPicker("Attached operation color:", defaultValues[0], (value) => {
+    var settedOperationPicker = createPicker(constantNames["operationConfig"]["attachedColor"], defaultValues[0], (value) => {
         const finalValue = (value.charAt(0) === " ") ? value.slice(1) : value;
         configStyle.handleChange("Operation", "settedColor", finalValue);
         alterConstantValue("attached", finalValue);
         if (document.getElementById("all").checked)
             showAllRefresh();
     });
-    var dragOperationPicker = createPicker("Dragging operation color:", defaultValues[1], (value) => {
+    var dragOperationPicker = createPicker(constantNames["operationConfig"]["draggingColor"], defaultValues[1], (value) => {
         const finalValue = (value.charAt(0) === " ") ? value.slice(1) : value;
         configStyle.handleChange("Operation", "draggingColor", finalValue);
         alterConstantValue("ondrag", finalValue);
@@ -68,7 +69,7 @@ function createSecondRowPickers(box) {
 
 function createThirdRow(box) {
     var borderDefaultValue = (configStyle.getJSONValue("operationBorderWidth")) ? configStyle.getJSONValue("operationBorderWidth").split("px")[0] : 2;
-    var borderSlider = getSliderGroup("Operation Border Width:", 1, 8, borderDefaultValue, (value) => {
+    var borderSlider = getSliderGroup(constantNames["operationConfig"]["operationBorderWidth"], 1, 8, borderDefaultValue, (value) => {
         configStyle.handleChange("Operation", "borderWidth", value + "px");
     });
     borderSlider.style.marginLeft = "2px";
