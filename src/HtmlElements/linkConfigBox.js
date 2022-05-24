@@ -5,6 +5,7 @@ import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js
 import { addMotion } from "../Input/movingModal.js";
 import { createOperationColorPickers, produceOperationForm } from "../HtmlElements/operationsConfigBox.js";
 
+var textContainer;
 
 function produceLinkForm(box) {
     var labelDiv = document.createElement('div');
@@ -17,12 +18,17 @@ function produceLinkForm(box) {
 
     div.appendChild(labelDiv);
     const callBack = (type, attributeChanged, value) => { configStyle.linkText.handleChange(type, attributeChanged, value) };
-    produceSizeForm(div, "Link", callBack);
-    produceStyleButtons(div, "Link", callBack);
-    produceFontFamilyForms(div, "Link", callBack);
-    produceTextColor(div, "Link", callBack);
-    div.style.marginBottom = "30px";
+    var sizeStyleContainer = document.createElement('div');
+    textContainer = document.createElement('div');
+    sizeStyleContainer.className = textContainer.className = "formContainer";
+    sizeStyleContainer.style.marginTop = 5 + "px";
+    produceSizeForm(sizeStyleContainer, "Link", callBack);
+    produceStyleButtons(sizeStyleContainer, "Link", callBack);
+    produceFontFamilyForms(sizeStyleContainer, "Link", callBack);
+    produceTextColor(textContainer, "Link", callBack);
     box.appendChild(div);
+    box.appendChild(sizeStyleContainer);
+    box.appendChild(textContainer);
     return;
 }
 
@@ -37,25 +43,18 @@ function createFirstRow(box) {
     const linkArrowColorPicker = createPicker(constantNames["linkConfig"]["arrowColor"], linkArrowColorValue, (value) => {
         configStyle.handleChange("Link", "arrowColor", value);
     });
-    var container = document.createElement("div");
     linkColorPicker.style.float = linkArrowColorPicker.style.float = "left";
-    container.style.marginTop = "10px";
-    container.style.width = "626.17px";
-    container.style.float = "left";
-    container.style.display = "inline-block";
-    container.style.marginTop = "10px";
-    container.style.marginLeft = "7px";
-    container.appendChild(linkColorPicker);
-    container.appendChild(linkArrowColorPicker);
-    box.appendChild(container);
+    textContainer.appendChild(linkColorPicker);
+    var secondContainer = document.createElement('div');
+    secondContainer.className = "formContainer";
+    secondContainer.appendChild(linkArrowColorPicker);
+    box.appendChild(secondContainer);
     return;
 }
-
 
 function createLinkConfigBox(box) {
     createFirstRow(box);
     return;
-
 }
 
 function produceAConfigBox(type) {

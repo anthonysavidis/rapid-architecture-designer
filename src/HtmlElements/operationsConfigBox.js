@@ -16,6 +16,7 @@ function getSecondRowValues() {
     const draggingColorValue = (configStyle.getJSONValue("operationDraggingColor")) ? configStyle.getJSONValue("operationDraggingColor") : "#009dff";
     return [settedColorValue, draggingColorValue];
 }
+var secondContainer;
 
 function createFirstRowPickers(box) {
     box.style.width = 760 + "px";
@@ -25,17 +26,14 @@ function createFirstRowPickers(box) {
     var selectedOperationBorderPicker = createPicker(constantNames["operationConfig"]["operationSelectedBorder"], defaultValues[2], (value) => { configStyle.handleChange("Operation", "selectedBorderColor", value); });
     operationColorPicker.style.float = "left";
     operationBorderPicker.style.float = "left";
-    selectedOperationBorderPicker.style.float = "right";
-    selectedOperationBorderPicker.style.marginRight = "40px";
-    var container = document.createElement('div');
-    container.appendChild(operationColorPicker);
-    container.appendChild(operationBorderPicker);
-    container.appendChild(selectedOperationBorderPicker);
-    container.style.width = "97%";
-    container.style.height = "fit-content";
-    container.style.display = "inline-block";
-    container.style.marginTop = "30px";
-    box.appendChild(container);
+    selectedOperationBorderPicker.style.float = "left";
+    var secondContainer = document.createElement('div');
+    textContainer.appendChild(operationColorPicker);
+    secondContainer.className = "formContainer";
+    secondContainer.appendChild(operationBorderPicker);
+    secondContainer.appendChild(selectedOperationBorderPicker);
+    secondContainer.appendChild(createWidthSlider());
+    box.appendChild(secondContainer);
     return;
 }
 
@@ -55,38 +53,32 @@ function createSecondRowPickers(box) {
     });
     var container = document.createElement('div');
     settedOperationPicker.style.float = "left";
-    dragOperationPicker.style.float = "right";
-    dragOperationPicker.style.marginRight = "40px";
+    dragOperationPicker.style.float = "left";
 
     container.appendChild(settedOperationPicker);
     container.appendChild(dragOperationPicker);
-    container.style.width = "97%";
-    container.style.float = "left";
-    container.style.display = "inline-block";
-    container.style.marginTop = "10px";
-    container.style.marginLeft = "7px";
+    container.className = "formContainer";
     box.appendChild(container);
 }
 
-function createThirdRow(box) {
+function createWidthSlider() {
     var borderDefaultValue = (configStyle.getJSONValue("operationBorderWidth")) ? configStyle.getJSONValue("operationBorderWidth").split("px")[0] : 2;
     var borderSlider = getSliderGroup(constantNames["operationConfig"]["operationBorderWidth"], 1, 8, borderDefaultValue, (value) => {
         configStyle.handleChange("Operation", "borderWidth", value + "px");
     });
-    borderSlider.style.marginLeft = "2px";
-    borderSlider.style.marginTop = "20px";
+    borderSlider.firstChild.style.marginLeft = "-79px";
+    borderSlider.style.width = "381px";
+    borderSlider.style.marginTop = "12px";
     borderSlider.style.float = "left";
-    box.appendChild(borderSlider);
-    return;
+    return borderSlider;
 }
 
 function createOperationColorPickers(box) {
-    // createFirstRowPickers(box);
     createFirstRowPickers(box);
     createSecondRowPickers(box);
-    createThirdRow(box);
     return;
 }
+var textContainer;
 
 function produceOperationForm(box) {
     var labelDiv = document.createElement('div');
@@ -98,11 +90,18 @@ function produceOperationForm(box) {
     div.className = "formContainer";
     div.appendChild(labelDiv);
     const callBack = (type, attributeChanged, value) => { configStyle.operationsText.handleChange(type, attributeChanged, value) };
-    produceSizeForm(div, "Operation", callBack);
-    produceStyleButtons(div, "Operation", callBack);
-    produceFontFamilyForms(div, "Operation", callBack);
-    produceTextColor(div, "Operation", callBack);
+    var sizeStyleContainer = document.createElement('div');
+    textContainer = document.createElement('div');
+    sizeStyleContainer.className = textContainer.className = "formContainer";
+    sizeStyleContainer.style.marginTop = 5 + "px";
+    produceSizeForm(sizeStyleContainer, "Operation", callBack);
+    produceStyleButtons(sizeStyleContainer, "Operation", callBack);
+    produceFontFamilyForms(sizeStyleContainer, "Operation", callBack);
+    produceTextColor(textContainer, "Operation", callBack);
+
     box.appendChild(div);
+    box.appendChild(sizeStyleContainer);
+    box.appendChild(textContainer);
     return;
 }
 

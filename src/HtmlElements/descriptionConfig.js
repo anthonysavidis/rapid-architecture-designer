@@ -46,11 +46,13 @@ function descriptionArea(box) {
     descDiv.appendChild(lineNoSlider);
     lineNoSlider.style.display = "inline-block";
     lineNoSlider.style.float = "left";
-    lineNoSlider.style.marginLeft = "12px";
+    lineNoSlider.firstChild.style.marginLeft = -46 + "px";
+    lineNoSlider.style.marginTop = 12 + "px";
     descriptionColorPicker.style.display = "inline-block";
-    descriptionColorPicker.style.float = "right";
-    descriptionColorPicker.style.marginRight = "32.5px";
+    descriptionColorPicker.style.float = "left";
+    // descriptionColorPicker.style.marginRight = "32.5px";
     descDiv.appendChild(descriptionColorPicker);
+    descriptionColorPicker.style.marginLeft = -50 + "px";
     box.appendChild(descDiv);
     return;
 }

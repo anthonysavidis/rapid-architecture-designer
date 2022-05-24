@@ -101,7 +101,7 @@ const constantNames = {
         "subcomponentTextColor": "Subcomponent text:",
         "borderColor": "Border:",
         "textColor": "Text:",
-        "backgroundColor": "Text Background:",
+        "backgroundColor": "Text background:",
         "selectedBorder": "Focused border:",
         "borderWidth": "Border width:",
         "component": "Component Settings",
@@ -112,12 +112,12 @@ const constantNames = {
         "subcomponentSettings": "Subcomponent Settings"
     },
     "operationConfig": {
-        "operationColor": "Operation color:",
-        "operationBorder": "Operation border:",
-        "operationSelectedBorder": "Operation selected border:",
-        "attachedColor": "Attached operation color:",
-        "draggingColor": "Dragging operation color:",
-        "operationBorderWidth": "Operation border width:",
+        "operationColor": "Background:",
+        "operationBorder": "Border:",
+        "operationSelectedBorder": "Focus border:",
+        "attachedColor": "Attached:",
+        "draggingColor": "Dragging:",
+        "operationBorderWidth": "Border width:",
     },
     "linkConfig": {
         "linkColor": "Link color:",
