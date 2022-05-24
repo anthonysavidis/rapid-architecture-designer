@@ -81,9 +81,6 @@
     font: 95% Arial, Helvetica, sans-serif;
 }
 
-
-
-
 .form-style-6 input[type="text"]:focus,
 .form-style-6 input[type="date"]:focus,
 .form-style-6 input[type="datetime"]:focus,
@@ -103,7 +100,6 @@
     /* box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box; */
-
     width: 40%;
     padding: 2%;
     background: #909090;
@@ -189,16 +185,19 @@ input[type=submit]:hover {
     margin-left: 10px;
 }
 
+
 /* Clear floats after the columns */
+
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
 
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
 
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+
+@media screen and (max-width: 600px) {
     .col-25,
     .col-75,
     input[type=submit] {
@@ -213,7 +212,6 @@ input[type=submit]:hover {
     text-align: center;
     cursor: grab;
     /* position: absolute; */
-
     line-height: 170%;
     background-color: #909090;
     border: 1px solid black;
@@ -257,9 +255,9 @@ input[type=submit]:hover {
 
 .tittleDiv {
     font-size: x-large;
-    margin-top: 7px;
+    margin-bottom: 7px;
     padding-bottom: 1px;
-    margin-left: 20px;
+    margin-left: 252px;
     text-align: left;
 }
 
@@ -289,7 +287,6 @@ input[type=submit]:hover {
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-
     width: 15px;
     height: 15px;
     border-radius: 50%;
@@ -305,13 +302,13 @@ input[type=submit]:hover {
     cursor: pointer;
 }
 
-
-
 .h1Text {
     color: lightblue;
 }
 
+
 /* toggle in label designing */
+
 .toggle {
     position: absolute;
     display: inline-block;
@@ -322,7 +319,9 @@ input[type=submit]:hover {
     border: 2px solid #FFFFFF;
 }
 
+
 /* After slide changes */
+
 .toggle:after {
     content: '';
     position: absolute;
@@ -335,23 +334,31 @@ input[type=submit]:hover {
     transition: all 0.5s;
 }
 
+
 /* Toggle text */
+
 .pText {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
 
+
 /* Checkbox checked effect */
+
 .checkbox:checked+.toggle::after {
     left: 30px;
 }
 
+
 /* Checkbox checked toggle label bg color */
+
 .checkbox:checked+.toggle {
     background-color: deepskyblue;
 }
 
+
 /* Checkbox vanished */
+
 .checkbox {
     display: none;
 }

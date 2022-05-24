@@ -234,9 +234,9 @@ select {
 }
 
 .formContainer {
-    width: 665px;
+    width: 98%;
     height: auto;
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: -8px;
     display: inline-block;
 }

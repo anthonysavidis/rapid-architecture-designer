@@ -1,4 +1,5 @@
 :root {
+    /*------------------Components------------------*/
     --componentTextSize: 12pt;
     --componentTextFamily: Arial, Helvetica, sans-serif;
     --componentFontWeight: "normal";
@@ -6,18 +7,19 @@
     --componentTextDecoration: "none";
     --componentTextBackgroundColor: transparent;
     --componentTextColor: #000000;
-    --subcomponentTextSize: 12pt;
-    --subcomponentTextColor: #000000;
-    --subcomponentBackgroundColor: #FFFFFF;
     --componentBackgroundColor: #FFFFFF;
     --componentBorderColor: #000000;
     --componentBorderWidth: 2px;
     --componentSelectedBorderColor: #0000ff;
     --componentTextBorderWidth: 0px;
-    /* Not functional*/
-    --componentInnerMarginX: 4px;
-    --componentInnerMarginY: 4px;
-    /* End off non functional*/
+    --componentInnerMarginX: 19px;
+    --componentInnerMarginY: 19px;
+    --subcomponentTextSize: 12pt;
+    --subcomponentTextColor: #000000;
+    --subcomponentBackgroundColor: #FFFFFF;
+    --descriptionColor: #545454;
+    --descriptionLines: 2;
+    /*------------------Operations------------------*/
     --operationTextSize: 12pt;
     --operationTextFamily: Arial, Helvetica, sans-serif;
     --operationFontWeight: "normal";
@@ -25,15 +27,6 @@
     --operationTextDecoration: "none";
     --operationTextBackgroundColor: transparent;
     --operationTextColor: #000000;
-    --linkTextSize: 12pt;
-    --linkTextFamily: Arial, Helvetica, sans-serif;
-    --linkFontWeight: "normal";
-    --linkFontStyle: "normal";
-    --linkTextDecoration: "none";
-    --linkTextBackgroundColor: transparent;
-    --linkTextColor: #000000;
-    --descriptionColor: #545454;
-    --descriptionLines: 2;
     --operationColor: transparent;
     --operationBorderColor: transparent;
     --operationSelectedBorderColor: #0000FF;
@@ -41,6 +34,14 @@
     --operationDraggingColor: #009dff;
     --operationOrphanColor: transparent;
     --operationBorderWidth: 2px;
+    /*------------------Links------------------*/
+    --linkTextSize: 12pt;
+    --linkTextFamily: Arial, Helvetica, sans-serif;
+    --linkFontWeight: "normal";
+    --linkFontStyle: "normal";
+    --linkTextDecoration: "none";
+    --linkTextBackgroundColor: transparent;
+    --linkTextColor: #000000;
     --linkArrowColor: #000000;
     --linkColor: #000000;
 }

@@ -193,6 +193,21 @@ function createFirstLayer() {
     setUpFunctionDisplayListeners();
 }
 
+function applyToEachComponent(callBack) {
+    const currentLayerId = layers.selectedLayer._id;
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
+        for (var y in layerItems.itemList) {
+            if (layerItems.itemList[y]._type === "Component") {
+                callBack(layerItems.itemList[y]);
+            }
+        }
+    }
+    layers.changeLayer(currentLayerId);
+    return;
+}
+
 function refreshAllLinks() {
     const currentLayerId = layers.selectedLayer._id;
     for (var x in layers.layerList) {
@@ -211,4 +226,4 @@ function refreshAllLinks() {
     return;
 }
 
-export { layers, LayerHolder, createFirstLayer, refreshAllLinks };
+export { layers, LayerHolder, createFirstLayer, refreshAllLinks, applyToEachComponent };

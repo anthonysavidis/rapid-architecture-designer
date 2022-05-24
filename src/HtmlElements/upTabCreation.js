@@ -7,8 +7,7 @@ function insertUpTabs() {
     <button id="componentTab" class="tablinks unselectableText">' + constantNames['componentsTab']['tabName'] + '</button>\
     <button id="functionTab" class="tablinks unselectableText">' + constantNames['functionsTab']['tabName'] + '</button>\
     <button id="layersTab" class="tablinks unselectableText">' + constantNames['layersTab']['tabName'] + '</button>\
-    <button id="settingsTab" class="tablinks unselectableText">' + constantNames['settingsTab']['tabName'] + '</button>\
-    <button id="helpTab" class="tablinks unselectableText">' + constantNames['helpTab']['tabName'] + '</button>';
+    <button id="settingsTab" class="tablinks unselectableText">' + constantNames['settingsTab']['tabName'] + '</button>';
     document.getElementById('tabArea').innerHTML = tabsStr;
     return;
 }

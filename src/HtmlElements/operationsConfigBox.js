@@ -2,7 +2,7 @@ import { configStyle } from "../Classes/Config.js";
 import { constantNames } from "../config/constantNames.js";
 import { alterConstantValue } from "../config/functionStyle.js";
 import { showAllRefresh } from "../Workspace/functionAppearance.js";
-import { createPicker, getSliderGroup } from "./configBox.js";
+import { createPicker, getSliderGroup, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 
 function getFirstRowValues() {
     const operationColorValue = (configStyle.getJSONValue("operationColor")) ? configStyle.getJSONValue("operationColor") : "#FFFFFF";
@@ -31,7 +31,8 @@ function createFirstRowPickers(box) {
     container.appendChild(operationColorPicker);
     container.appendChild(operationBorderPicker);
     container.appendChild(selectedOperationBorderPicker);
-    container.style.width = container.style.height = "fit-content";
+    container.style.width = "97%";
+    container.style.height = "fit-content";
     container.style.display = "inline-block";
     container.style.marginTop = "30px";
     box.appendChild(container);
@@ -59,7 +60,7 @@ function createSecondRowPickers(box) {
 
     container.appendChild(settedOperationPicker);
     container.appendChild(dragOperationPicker);
-    container.style.width = "746.17px";
+    container.style.width = "97%";
     container.style.float = "left";
     container.style.display = "inline-block";
     container.style.marginTop = "10px";
@@ -80,10 +81,31 @@ function createThirdRow(box) {
 }
 
 function createOperationColorPickers(box) {
+    // createFirstRowPickers(box);
     createFirstRowPickers(box);
     createSecondRowPickers(box);
     createThirdRow(box);
     return;
 }
 
-export { createOperationColorPickers };
+function produceOperationForm(box) {
+    var labelDiv = document.createElement('div');
+    labelDiv.className = "tittleDiv unselectableText";
+    labelDiv.style.position = "relative";
+    labelDiv.innerText = constantNames["configBox"]["operation"];
+
+    var div = document.createElement('div');
+    div.className = "formContainer";
+    div.appendChild(labelDiv);
+    const callBack = (type, attributeChanged, value) => { configStyle.operationsText.handleChange(type, attributeChanged, value) };
+    produceSizeForm(div, "Operation", callBack);
+    produceStyleButtons(div, "Operation", callBack);
+    produceFontFamilyForms(div, "Operation", callBack);
+    produceTextColor(div, "Operation", callBack);
+    box.appendChild(div);
+    return;
+}
+
+
+
+export { createOperationColorPickers, produceOperationForm };

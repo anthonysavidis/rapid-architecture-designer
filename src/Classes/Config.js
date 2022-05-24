@@ -1,6 +1,7 @@
 import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 import { capitalizeFirstLetter, TextConfig } from "./TextConfig.js";
 import { constantValues } from "../config/constantValues.js";
+import { ConfigActions } from "./ConfigActions.js";
 
 class Config {
     constructor() {
@@ -10,6 +11,13 @@ class Config {
         this.configJSON = {};
         this.autoFit = false;
         this.descriptionEnabled = false;
+        this.actionDispatch = {
+            "Link": new ConfigActions("Link"),
+            "Operation": new ConfigActions("Operation"),
+            "Component": new ConfigActions("Component"),
+            "Subcomponent": new ConfigActions("Subcomponent"),
+            "Description": new ConfigActions("Description"),
+        }
         this.configJSON["componentInnerMarginX"] = constantValues["initialOffsetWidth"] + "px";
         this.configJSON["componentInnerMarginY"] = constantValues["initialOffsetHeight"] + "px";
         this.configJSON["descriptionColor"] = "#545454";

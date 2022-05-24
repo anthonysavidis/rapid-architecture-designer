@@ -51,12 +51,11 @@ function addAllButtons() {
 
     addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['settingsTab']['tabName']);
-    addButton(constantNames['settingsTab']["Configure"], "configureButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Component"], "configureComponentButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Operation"], "configureOperationButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Link"], "configureLinkButton", constantNames['settingsTab']['tabName']);
 
-    addButton(constantNames['helpTab']["tabName"], "helpButton", constantNames['helpTab']['tabName']);
+    // addButton(constantNames['helpTab']["tabName"], "helpButton", constantNames['helpTab']['tabName']);
 }
 
 function initButtons() {
@@ -67,7 +66,6 @@ function initButtons() {
     addEditTabListeners();
     addHierarchyTabListeners();
     addSettingsTabListeners();
-    addHelpTabListeners();
 }
 
 export { initButtons };

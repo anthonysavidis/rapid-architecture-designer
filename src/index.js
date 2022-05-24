@@ -10,6 +10,7 @@ import { constantNames } from "./config/constantNames.js";
 import { createDraggableSpace, fixTrashBinPosition, initializeTheTrashBin } from "./Workspace/trashBin.js";
 import { produceLayerTabRod, produceRightTabRod } from "./HtmlElements/extendingSideTabs.js";
 import { createFullPath } from "./HtmlElements/pathAndLayerSpan.js";
+import { getAllCssVars } from "./Classes/ConfigActions.js";
 
 
 

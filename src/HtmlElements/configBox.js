@@ -143,109 +143,25 @@ function produceTextColor(box, className, callBack) {
     const textCallBack = (value) => { callBack(className, "textColor", value); };
     const textBackgroundCallBack = (value) => { callBack(className, "textBackgroundColor", value); };
 
-    console.log(selectedColor + "," + selectedBackgroundColor);
     var textColor = createPicker(constantNames["configBox"]["textColor"], selectedColor, textCallBack);
     var backgroundColor = createPicker(constantNames["configBox"]["backgroundColor"], selectedBackgroundColor, textBackgroundCallBack);
     textColor.style.float = "left";
-
-    box.appendChild(textColor);
-    backgroundColor.style.float = "right";
-    backgroundColor.style.marginRight = "186px";
-
-    box.appendChild(backgroundColor);
-    // box.appendChild(picker);
+    backgroundColor.style.float = "left";
+    var container = document.createElement('div');
+    container.style.width = container.style.height = "auto-fit";
+    container.style.display = "inline-block";
+    container.style.float = "left";
+    container.appendChild(textColor);
+    container.appendChild(backgroundColor);
+    box.appendChild(container);
     return;
 }
 //----------------------============================================================================================================----------------------------------------------------------------------
 
-function produceComponentForm(box) {
-    var labelDiv = document.createElement('div');
-    labelDiv.style.position = "";
-    labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.innerText = constantNames["configBox"]["component"];;
-    var div = document.createElement('div');
-    div.className = "formContainer";
-    div.appendChild(labelDiv);
-    const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
-    produceSizeForm(div, "Component", callBack);
-    produceStyleButtons(div, "Component", callBack);
-    produceFontFamilyForms(div, "Component", callBack);
-    produceTextColor(div, "Component", callBack);
-    box.appendChild(div);
-    return;
-}
 
 
-function produceOperationForm(box) {
-    var labelDiv = document.createElement('div');
-    labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.style.position = "relative";
-    labelDiv.innerText = constantNames["configBox"]["operation"];
-    labelDiv.style.marginTop = "10px";
-
-    var div = document.createElement('div');
-    div.className = "formContainer";
-    div.appendChild(labelDiv);
-    const callBack = (type, attributeChanged, value) => { configStyle.operationsText.handleChange(type, attributeChanged, value) };
-    produceSizeForm(div, "Operation", callBack);
-    produceStyleButtons(div, "Operation", callBack);
-    produceFontFamilyForms(div, "Operation", callBack);
-    produceTextColor(div, "Operation", callBack);
-    box.appendChild(div);
-    return;
-}
-
-function produceLinkForm(box) {
-    var labelDiv = document.createElement('div');
-    var div = document.createElement('div');
-    labelDiv.style.position = "";
-
-    labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.innerText = constantNames["configBox"]["link"];
-    div.className = "formContainer";
-
-    div.appendChild(labelDiv);
-    const callBack = (type, attributeChanged, value) => { configStyle.linkText.handleChange(type, attributeChanged, value) };
-    produceSizeForm(div, "Link", callBack);
-    produceStyleButtons(div, "Link", callBack);
-    produceFontFamilyForms(div, "Link", callBack);
-    produceTextColor(div, "Link", callBack);
-    div.style.marginBottom = "30px";
-    box.appendChild(div);
-    return;
-}
 
 //----------------------============================================================================================================----------------------------------------------------------------------
-function produceComponentConfigBox(box) {
-
-    const backgroundCallBack = (value) => { configStyle.handleChange('Component', "backgroundColor", value); };
-    const borderCallBack = (value) => { configStyle.handleChange('Component', "borderColor", value); };
-    const selectedBorderCallBack = (value) => { configStyle.handleChange('Component', "selectedBorderColor", value); };
-    var r = document.querySelector(':root');
-    var rs = getComputedStyle(r);
-    var selectedBackgroundColor = rs.getPropertyValue('--componentBackgroundColor');
-    var borderColor = rs.getPropertyValue('--componentBorderColor');
-    var selectedBorderColor = rs.getPropertyValue('--componentSelectedBorderColor');
-    console.log(borderColor.slice(1) + "," + selectedBackgroundColor.slice(1) + "," + selectedBorderColor.slice(1));
-    selectedBackgroundColor = selectedBackgroundColor.charAt(0) === " " ? selectedBackgroundColor.slice(1) : selectedBackgroundColor;
-    selectedBorderColor = selectedBorderColor.charAt(0) === " " ? selectedBorderColor.slice(1) : selectedBorderColor;
-    borderColor = borderColor.charAt(0) === " " ? borderColor.slice(1) : borderColor;
-    var backgroundColorPicker = createPicker(constantNames["configBox"]["componentColor"], selectedBackgroundColor, backgroundCallBack);
-    var selectedBorderColorPicker = createPicker(constantNames["configBox"]["selectedBorder"], selectedBorderColor, selectedBorderCallBack);
-    var borderColorPicker = createPicker(constantNames["configBox"]["borderColor"], borderColor, borderCallBack);
-
-    backgroundColorPicker.style.float = "left";
-    borderColorPicker.style.float = "right";
-    selectedBorderColorPicker.style.float = "right";
-    borderColorPicker.style.marginRight = 25 + "px";
-    selectedBorderColorPicker.style.marginRight = 30 + "px";
-    selectedBorderColorPicker.style.marginTop = backgroundColorPicker.style.marginTop = borderColorPicker.style.marginTop = 40 + "px";
-    selectedBorderColorPicker.style.marginBottom = backgroundColorPicker.style.marginBottom = borderColorPicker.style.marginBottom = 20 + "px";
-    box.appendChild(backgroundColorPicker);
-    box.appendChild(selectedBorderColorPicker);
-    box.appendChild(borderColorPicker);
-    return;
-}
 
 function getSliderGroup(labelName, minVal, maxVal, defVal, callBack, noPixels) {
     var sliderContainer = document.createElement('div');
@@ -276,48 +192,6 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack, noPixels) {
     return sliderContainer;
 }
 
-function produceSliders(box) {
-    const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
-    const innerMarginXCallBack = (value) => {
-        configStyle.handleChange('Component', "innerMarginX", value + "px");
-        refreshAllLinks();
-
-    };
-    const innerMarginYCallBack = (value) => {
-        configStyle.handleChange('Component', "innerMarginY", value + "px");
-        refreshAllLinks();
-    };
-
-    console.log(configStyle);
-    const defaultBorderSliderValue = (parseInt(configStyle.getJSONValue("componentBorderWidth"))) ? parseInt(configStyle.getJSONValue("componentBorderWidth"), 10) : 2;
-    var borderWidthSlider = getSliderGroup("Component's border width:", 1, 10, defaultBorderSliderValue, borderSliderCallBack);
-    borderWidthSlider.style.float = "right";
-    borderWidthSlider.style.marginRight = "20px";
-    borderWidthSlider.style.marginTop = "17px";
-
-    var innerMarginDiv = document.createElement('div');
-    var innerMarginX = getSliderGroup("Inner Margin X:", 1, 50, configStyle.getJSONValue("componentInnerMarginX").split("px")[0], innerMarginXCallBack);
-    var innerMarginY = getSliderGroup("Inner Margin Y:", 1, 50, configStyle.getJSONValue("componentInnerMarginY").split("px")[0], innerMarginYCallBack);
-    innerMarginY.style.width = innerMarginX.style.width = "140%";
-    innerMarginY.style.display = innerMarginX.style.display = "inline-block";
-    innerMarginX.style.float = innerMarginY.style.float = "left";
-    innerMarginX.style.marginLeft = innerMarginY.style.marginLeft = "15px";
-    innerMarginX.style.position = innerMarginY.style.position = "absolute";
-    innerMarginX.style.left = innerMarginY.style.left = -247 + "px";
-    innerMarginDiv.id = "innerMarginSlider";
-    innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
-    innerMarginDiv.style.marginTop = "17px";
-    innerMarginDiv.style.width = "100%";
-    innerMarginDiv.style.height = "94px";
-    innerMarginDiv.style.display = "none";
-
-    box.appendChild(borderWidthSlider);
-    innerMarginDiv.appendChild(innerMarginX);
-    innerMarginDiv.appendChild(innerMarginY);
-    box.appendChild(innerMarginDiv);
-    innerMarginY.style.top = 205 + "px";
-    return;
-}
 
 function getSwitch(id, labelText) {
     var container = document.createElement('div');
@@ -339,39 +213,8 @@ function getSwitch(id, labelText) {
     return container;
 }
 
-function produceSwitches(box) {
-
-    var switcher = getSwitch("autofitSwitch", constantNames["configBox"]["autoFitLabel"]);
-    switcher.style.marginLeft = "22px";
-    switcher.style.marginTop = "12px";
-    switcher.style.width = "auto";
-    box.appendChild(switcher);
-    return;
-}
-
-function produceSubComponentForm(box) {
-    var labelDiv = document.createElement('div');
-    labelDiv.className = "tittleDiv";
-    labelDiv.style.position = "relative";
-    labelDiv.style.marginTop = "10px";
-    labelDiv.style.float = "left";
-    labelDiv.innerText = constantNames["configBox"]["subcomponentSettings"];
-    var div = document.createElement('div');
-    div.className = "formContainer";
-    div.style.width = "100%";
-    div.appendChild(labelDiv);
-    var colorContainer = document.createElement('div');
-    colorContainer.style.width = "100%";
-    const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
-        // produceStyleButtons(div, "Component", callBack);
-        // produceFontFamilyForms(div, "Component", callBack);
-        // produceTextColor(colorContainer, "SubComponent", callBack);
-
-    box.appendChild(div);
-    box.appendChild(colorContainer);
-    return;
-}
 
 
 
-export { produceSubComponentForm, produceComponentForm, produceOperationForm, produceLinkForm, getSwitch, produceComponentConfigBox, produceSliders, produceSwitches, createPicker, getSliderGroup };
+
+export { produceSizeForm, produceFontFamilyForms, produceStyleButtons, produceTextColor, getSwitch, createPicker, getSliderGroup };
