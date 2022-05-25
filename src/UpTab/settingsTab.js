@@ -5,14 +5,7 @@ import { createComponentConfigBox } from "../HtmlElements/componentConfig.js";
 function addSettingsTabListeners() {
     document.getElementById('configureComponentButton').addEventListener('click', (e) => {
         createComponentConfigBox();
-        if (configStyle.autoFit) {
-            document.getElementById("autofitSwitch").checked = true;
-            document.getElementById('innerMarginSlider').style.display = "inline-block";
-        }
-        if (configStyle.descriptionEnabled) {
-            document.getElementById("descriptionSwitch").checked = true;
-            document.getElementById('descArea').style.display = "inline-block";
-        }
+
     });
     document.getElementById('configureOperationButton').addEventListener('click', (e) => {
         produceAConfigBox("Operation");

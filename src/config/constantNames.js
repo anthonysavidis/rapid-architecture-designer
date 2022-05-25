@@ -170,7 +170,8 @@ const constantNames = {
     "dot": ".",
     "ok": "OK",
     "cancel": "Cancel",
-    "close": "Close"
+    "close": "Close",
+    "restore": "Restore Default Settings"
 }
 
 const buttonTooltips = {

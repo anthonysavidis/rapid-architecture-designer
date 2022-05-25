@@ -89,7 +89,7 @@ function produceOperationForm(box) {
     var div = document.createElement('div');
     div.className = "formContainer";
     div.appendChild(labelDiv);
-    const callBack = (type, attributeChanged, value) => { configStyle.operationsText.handleChange(type, attributeChanged, value) };
+    const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value) };
     var sizeStyleContainer = document.createElement('div');
     textContainer = document.createElement('div');
     sizeStyleContainer.className = textContainer.className = "formContainer";

@@ -1,6 +1,6 @@
 import { configStyle } from "../Classes/Config.js";
 import { constantNames } from "../config/constantNames.js";
-import { createPicker, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
+import { createPicker, createRestoreButton, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
 import { createOperationColorPickers, produceOperationForm } from "../HtmlElements/operationsConfigBox.js";
@@ -17,7 +17,7 @@ function produceLinkForm(box) {
     div.className = "formContainer";
 
     div.appendChild(labelDiv);
-    const callBack = (type, attributeChanged, value) => { configStyle.linkText.handleChange(type, attributeChanged, value) };
+    const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value); };
     var sizeStyleContainer = document.createElement('div');
     textContainer = document.createElement('div');
     sizeStyleContainer.className = textContainer.className = "formContainer";
@@ -48,6 +48,7 @@ function createFirstRow(box) {
     var secondContainer = document.createElement('div');
     secondContainer.className = "formContainer";
     secondContainer.appendChild(linkArrowColorPicker);
+
     box.appendChild(secondContainer);
     return;
 }
@@ -87,7 +88,7 @@ function produceAConfigBox(type) {
     var closeButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
     closeButton.className = "cancelButton";
-    closeButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["close"] + "</p>";
+    closeButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["cancel"] + "</p>";
     closeButton.onclick = closeBox;
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
@@ -99,9 +100,12 @@ function produceAConfigBox(type) {
     buttonsContainer.style.width = "100%";
     buttonsContainer.style.height = 40 + "px";
     buttonsContainer.style.display = "inline-block";
+    var restoreButton = createRestoreButton(type, closeBox, () => { produceAConfigBox(type); });
 
     buttonsContainer.style.marginTop = 25 + "px";
+
     buttonsContainer.appendChild(closeButton);
+    buttonsContainer.appendChild(restoreButton);
     buttonsContainer.appendChild(confirmationButton);
     box.appendChild(buttonsContainer);
     document.getElementById('body').appendChild(box);

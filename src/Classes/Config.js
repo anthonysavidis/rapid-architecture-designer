@@ -36,7 +36,7 @@ class Config {
         return this.configJSON[key];
     }
 
-    handleChange(type, attributeChanged, value) {
+    handleChange(type, attributeChanged, value, ignoreCurrent) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
         this.setJSONValue(textType + capitalizeFirstLetter(attributeChanged), value);
@@ -46,6 +46,8 @@ class Config {
             autoResizeAllComponents();
             // checkAndResize(); //?????????????????????????
         }
+        if (!ignoreCurrent)
+            this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, value);
         return;
     }
     getStyleButtonStates(className) {

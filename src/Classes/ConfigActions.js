@@ -1,4 +1,9 @@
+import { turnOffDescription } from "../HtmlElements/extendingComponent.js";
+import { autoResizeAllComponents } from "../Item/autoResize.js";
+import { renderLine } from "../Item/createLine.js";
 import { configStyle } from "./Config.js";
+import { applyToEachComponent, refreshAllLinks } from "./LayerHolder.js";
+import { capitalizeFirstLetter } from "./TextConfig.js";
 
 class ConfigActions {
     constructor(category) {
@@ -13,17 +18,20 @@ class ConfigActions {
         var initialJSON = {};
         for (var x in categoryNames) {
             initialJSON[categoryNames[x]] = {};
-            initialJSON[categoryNames[x]] = rs.getPropertyValue("--" + categoryNames[x]);
+            initialJSON[categoryNames[x]] = rs.getPropertyValue(categoryNames[x]).slice(1);
         }
-        return;
+        return initialJSON;
     }
     applyToConfig(changesJSON) {
         for (var x in changesJSON) {
-            const type = x.split(/(?=[A-Z])/)[0];
-            const attributeChanged = x.replace(type, "");
-            configStyle.handleChange(type, attributeChanged, changesJSON[x]);
+            const value = changesJSON[x];
+            const type = x.split(/(?=[A-Z])/)[0].slice(2);
+            const attributeChanged = x.replace(type, "").slice(2);
+            // console.log(type + " " + attributeChanged + " " + value);
+            configStyle.handleChange(capitalizeFirstLetter(type), attributeChanged, value, 1);
         }
         this.clearCurrenntOldSettings();
+        refreshAllLinks();
         return;
     }
 
@@ -33,6 +41,19 @@ class ConfigActions {
     }
 
     resetToDefault() {
+        if (this.category === "Component") {
+            configStyle.setInitialMargins();
+            document.getElementById('innerMarginSlider').style.display = "none";
+            configStyle.autoFit = document.getElementById("autofitSwitch").checked = false;
+            document.getElementById("descArea").style.display = "none";
+            document.getElementById("descriptionSwitch").checked = configStyle.descriptionEnabled = false;
+            applyToEachComponent((component) => {
+                turnOffDescription(component);
+                if (component.links)
+                    renderLine(component._id);
+            });
+            // autoResizeAllComponents();
+        }
         this.applyToConfig(this.initialSettings);
         return;
     }
@@ -42,7 +63,7 @@ class ConfigActions {
     }
 
     clearCurrenntOldSettings() {
-        this.currentOldSettings[key] = {};
+        this.currentOldSettings = {};
     }
 }
 
@@ -61,7 +82,7 @@ function getAllCssVars() {
                                 if (prop.length == 2 && prop[0].indexOf('--') == 1) {
                                     // console.log('Property name: ', prop[0]);
                                     // console.log('Property value:', prop[1]);
-                                    cssVarNames.push(prop[0].replace(' --', ''));
+                                    cssVarNames.push(prop[0].replace(' --', '--'));
                                 }
                             }
                         }

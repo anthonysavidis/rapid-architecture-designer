@@ -1,4 +1,5 @@
 import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
+import { configStyle } from "./Config.js";
 class TextConfig {
 
     constructor() {
@@ -28,6 +29,7 @@ class TextConfig {
             // autoResizeAllComponents();
             checkAndResize();
         }
+        configStyle.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, value);
         return;
     }
 }

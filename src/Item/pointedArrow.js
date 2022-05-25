@@ -106,7 +106,6 @@ function getComponentsRec(lineId, no) {
 //<div id=\"" + lineId + "point1\" style=\"float:right;margin-top:-7px;\" class=\"point\"></div> 
 function produceArrows(rec1, rec2, degree, lineId, state) {
     const pointOffset = 0; //parseInt(configStyle.getJSONValue("linkHeight").split("px")[0], 10) - 1;
-    console.log(pointOffset);
     var point1 = document.createElement("div");
     point1.id = lineId + "point1";
     point1.className = "point";

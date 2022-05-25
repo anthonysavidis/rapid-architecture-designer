@@ -159,7 +159,28 @@ function produceTextColor(box, className, callBack) {
 //----------------------============================================================================================================----------------------------------------------------------------------
 
 
-
+function createRestoreButton(category, closeBoxCallBack, openBoxCallBack) {
+    var restoreButton = document.createElement('div');
+    restoreButton.className = "cancelButton";
+    restoreButton.style.width = "auto";
+    restoreButton.style.float = "left";
+    restoreButton.style.marginRight = "26px";
+    restoreButton.style.borderRadius = "0%";
+    restoreButton.style.backgroundColor = "#cccccc";
+    restoreButton.style.paddingLeft = restoreButton.style.paddingRight = "7px";
+    restoreButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["restore"] + "</p>";
+    restoreButton.onclick = () => {
+        console.log('clicked');
+        configStyle.actionDispatch[category].resetToDefault();
+        if (category == "Component") {
+            configStyle.actionDispatch["Description"].resetToDefault();
+            configStyle.actionDispatch["Subcomponent"].resetToDefault();
+        }
+        closeBoxCallBack();
+        openBoxCallBack();
+    }
+    return restoreButton;
+}
 
 //----------------------============================================================================================================----------------------------------------------------------------------
 
@@ -217,4 +238,4 @@ function getSwitch(id, labelText) {
 
 
 
-export { produceSizeForm, produceFontFamilyForms, produceStyleButtons, produceTextColor, getSwitch, createPicker, getSliderGroup };
+export { produceSizeForm, createRestoreButton, produceFontFamilyForms, produceStyleButtons, produceTextColor, getSwitch, createPicker, getSliderGroup };

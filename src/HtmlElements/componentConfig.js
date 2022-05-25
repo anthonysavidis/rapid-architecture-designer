@@ -1,7 +1,7 @@
 import { configStyle } from "../Classes/Config.js";
 import { applyToEachComponent, refreshAllLinks } from "../Classes/LayerHolder.js";
 import { autoResizeAllComponents } from "../Item/autoResize.js";
-import { createPicker, getSliderGroup, getSwitch, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
+import { createPicker, createRestoreButton, getSliderGroup, getSwitch, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
@@ -10,6 +10,8 @@ import { layers } from "../Classes/LayerHolder.js";
 import { descriptionArea } from "../HtmlElements/descriptionConfig.js";
 import { actions } from "../Classes/Actions.js";
 import { disableDescriptionInAllComponents, enableDescriptionInAllComponents } from "../Actions/inverseActions.js";
+import { canBeDeleted } from "../Workspace/trashBin.js";
+import { renderLine } from "../Item/createLine.js";
 
 
 function produceComponentForm(box) {
@@ -21,7 +23,7 @@ function produceComponentForm(box) {
     var div = document.createElement('div');
     div.className = "formContainer";
     div.appendChild(labelDiv);
-    const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
+    const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value); }
     var sizeStyleContainer = document.createElement('div');
     var textContainer = document.createElement('div');
     sizeStyleContainer.className = textContainer.className = "formContainer";
@@ -65,30 +67,6 @@ function produceComponentConfigBox(box) {
     borderContainer.appendChild(borderColorPicker);
     borderContainer.appendChild(selectedBorderColorPicker);
     box.appendChild(borderContainer);
-    return;
-}
-
-//unused
-function produceSubComponentForm(box) {
-    var labelDiv = document.createElement('div');
-    labelDiv.className = "tittleDiv";
-    labelDiv.style.position = "relative";
-    labelDiv.style.marginTop = "10px";
-    labelDiv.style.float = "left";
-    labelDiv.innerText = constantNames["configBox"]["subcomponentSettings"];
-    var div = document.createElement('div');
-    div.className = "formContainer";
-    div.style.width = "100%";
-    div.appendChild(labelDiv);
-    var colorContainer = document.createElement('div');
-    colorContainer.style.width = "100%";
-    const callBack = (type, attributeChanged, value) => { configStyle.componentsText.handleChange(type, attributeChanged, value); }
-        // produceStyleButtons(div, "Component", callBack);
-        // produceFontFamilyForms(div, "Component", callBack);
-        // produceTextColor(colorContainer, "SubComponent", callBack);
-
-    box.appendChild(div);
-    box.appendChild(colorContainer);
     return;
 }
 
@@ -174,16 +152,24 @@ function produceSubcomponentSettings(box) {
 function createComponentConfigBox() {
     var box = document.createElement('div');
     box.className = 'configurationBox';
-    produceGrayLayer(box, "", "", "");
     var closeBox = function() {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
+
     };
+    var cancelChanges = () => {
+        closeBox();
+        configStyle.actionDispatch["Component"].clearCurrenntOldSettings();
+        configStyle.actionDispatch["Description"].clearCurrenntOldSettings();
+        configStyle.actionDispatch["Subcomponent"].clearCurrenntOldSettings();
+    }
+    produceGrayLayer(box, "", cancelChanges, "");
+
 
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
-    closeButton.onclick = closeBox;
+    closeButton.onclick = cancelChanges;
     closeButton.style.position = "absolute";
     closeButton.style.left = 680 + "px";
     produceMovingBar(box, 0);
@@ -207,7 +193,7 @@ function createComponentConfigBox() {
         confirmationButton = document.createElement('div');
     closeButton.className = "cancelButton";
     closeButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["close"] + "</p>";
-    closeButton.onclick = closeBox;
+    closeButton.onclick = cancelChanges;
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
     confirmationButton.onclick = function() {
@@ -218,9 +204,10 @@ function createComponentConfigBox() {
     buttonsContainer.style.width = "100%";
     buttonsContainer.style.height = 40 + "px";
     buttonsContainer.style.display = "inline-block";
-
+    var restoreButton = createRestoreButton("Component", closeBox, createComponentConfigBox);
     buttonsContainer.style.marginTop = 25 + "px";
     buttonsContainer.appendChild(closeButton);
+    buttonsContainer.appendChild(restoreButton);
     buttonsContainer.appendChild(confirmationButton);
     descriptionArea(box);
     box.appendChild(buttonsContainer);
@@ -252,8 +239,10 @@ function createComponentConfigBox() {
             applyToEachComponent((component) => {
                 oldBRecs[component._id] = (JSON.stringify(component.boundingRec));
                 turnOnDescription(component);
+                if (component.links)
+                    renderLine(component._id);
             });
-            refreshAllLinks();
+            // refreshAllLinks();
             actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, oldBRecs, "");
         } else {
             document.getElementById("descArea").style.display = "none";
@@ -266,7 +255,15 @@ function createComponentConfigBox() {
         }
         layers.changeLayer(currentLayerId);
     });
+    if (configStyle.autoFit) {
+        document.getElementById("autofitSwitch").checked = true;
+        document.getElementById('innerMarginSlider').style.display = "inline-block";
+    }
+    if (configStyle.descriptionEnabled) {
+        document.getElementById("descriptionSwitch").checked = true;
+        document.getElementById('descArea').style.display = "inline-block";
+    }
     return;
 }
 
-export { produceComponentForm, createComponentConfigBox, produceComponentConfigBox, produceSubComponentForm, produceSliders, produceSwitches };
+export { produceComponentForm, createComponentConfigBox, produceComponentConfigBox, produceSliders, produceSwitches };
