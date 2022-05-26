@@ -97,7 +97,7 @@ const constantNames = {
         "autoFitLabel": "Custom margins:",
         "descriptionLabel": "Description:",
         "componentColor": "Background:",
-        "subcomponentColor": "Subcomponent background:",
+        "subcomponentColor": "Subcomponent:",
         "subcomponentTextColor": "Subcomponent text:",
         "borderColor": "Border:",
         "textColor": "Text:",
@@ -106,7 +106,7 @@ const constantNames = {
         "borderWidth": "Border width:",
         "component": "Component Settings",
         "link": "Link Settings",
-        "descriptionColor": "Description:",
+        "descriptionColor": "Description text:",
         "lineNo": "Description lines:",
         "operation": "Operation Settings",
         "subcomponentSettings": "Subcomponent Settings"
@@ -169,6 +169,7 @@ const constantNames = {
     },
     "dot": ".",
     "ok": "OK",
+    "apply": "Apply",
     "cancel": "Cancel",
     "close": "Close",
     "restore": "Restore Default Settings"

@@ -112,7 +112,7 @@ function createPicker(txt, selected, callBack) {
     labelDiv.style.position = "";
     labelDiv.className = "labelDiv unselectableText";
 
-    labelDiv.innerText = txt;
+    labelDiv.innerHTML = '<div style="float:left;">' + txt + '</div>';
     var picker = document.createElement('input');
     picker.type = "color";
     picker.addEventListener("change", function() {
@@ -120,6 +120,9 @@ function createPicker(txt, selected, callBack) {
     })
     picker.style.display = "inline-block";
     picker.style.marginLeft = "10px";
+    picker.style.marginTop = "-6px";
+    picker.style.float = "right";
+    labelDiv.style.width = "100%";
     picker.value = selected.charAt(0) === " " ? selected.slice(1) : selected;
     // picker.value= rs.getPropertyValue('--' + className.toLowerCase() + capitalizeFirstLetter(selected));
     labelDiv.appendChild(picker);
@@ -145,15 +148,11 @@ function produceTextColor(box, className, callBack) {
 
     var textColor = createPicker(constantNames["configBox"]["textColor"], selectedColor, textCallBack);
     var backgroundColor = createPicker(constantNames["configBox"]["backgroundColor"], selectedBackgroundColor, textBackgroundCallBack);
-    textColor.style.float = "left";
-    backgroundColor.style.float = "left";
-    var container = document.createElement('div');
-    container.style.width = container.style.height = "auto-fit";
-    container.style.display = "inline-block";
-    container.style.float = "left";
-    container.appendChild(textColor);
-    container.appendChild(backgroundColor);
-    box.appendChild(container);
+    textColor.style.float = backgroundColor.style.float = "left";
+    textColor.className += " item1";
+    backgroundColor.className += " item2";
+    box.appendChild(textColor);
+    box.appendChild(backgroundColor);
     return;
 }
 //----------------------============================================================================================================----------------------------------------------------------------------

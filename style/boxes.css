@@ -236,6 +236,14 @@ select {
 .formContainer {
     width: 97%;
     height: auto;
+    margin-top: 9px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.gridElement {
+    width: 33%;
+    height: auto;
     margin-top: 20px;
     margin-bottom: 5px;
     display: inline-block;

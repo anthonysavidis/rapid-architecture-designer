@@ -41,13 +41,15 @@ class Config {
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
         this.setJSONValue(textType + capitalizeFirstLetter(attributeChanged), value);
         var r = document.querySelector(':root');
+        var rs = getComputedStyle(r);
+        const oldValue = rs.getPropertyValue(varName);
         r.style.setProperty(varName, value);
         if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color"))) {
             autoResizeAllComponents();
             // checkAndResize(); //?????????????????????????
         }
         if (!ignoreCurrent)
-            this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, value);
+            this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
         return;
     }
     getStyleButtonStates(className) {

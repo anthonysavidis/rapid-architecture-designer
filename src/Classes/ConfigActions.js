@@ -36,6 +36,7 @@ class ConfigActions {
     }
 
     resetCurrentChanges() {
+        console.log(this.currentOldSettings);
         this.applyToConfig(this.currentOldSettings);
         return;
     }
