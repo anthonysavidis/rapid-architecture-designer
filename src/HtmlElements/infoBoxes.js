@@ -2,6 +2,7 @@ import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { addMotion, dragModalHandler } from "../Input/movingModal.js";
 import { unlink } from "../Item/Link.js";
+import { closeInfo } from "./layerInfo.js";
 
 
 function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
@@ -21,6 +22,9 @@ function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
 }
 
 function produceMovingBar(box, isMsgBox) {
+    if (closeInfo) {
+        closeInfo();
+    }
     var bar = document.createElement('div');
     bar.className = "movingBar";
     if (isMsgBox)

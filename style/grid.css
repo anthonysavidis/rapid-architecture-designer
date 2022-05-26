@@ -44,3 +44,11 @@
 .item10 {
     grid-area: 4 / 1 / 5 / 2;
 }
+
+.item11 {
+    grid-area: 4 / 2 / 5 / 3;
+}
+
+.item12 {
+    grid-area: 4 / 3 / 5 / 4;
+}
