@@ -123,7 +123,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         form.id = "inputForm";
         var nameFormExternal = document.createElement('div');
         var nameLabelDiv = document.createElement('div');
-        nameLabelDiv.className = "labelDiv";
+        nameLabelDiv.className = "labelModalDiv";
         nameLabelDiv.innerHTML = constantNames["inputBox"]["nameLabel"][extraInfo];
         var nameFormDiv = document.createElement('div');
         nameFormDiv.style.marginTop = 2.5 + "px";
@@ -135,7 +135,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
 
         var descriptionFormExternal = document.createElement('div');
         var descriptionLabelDiv = document.createElement('div');
-        descriptionLabelDiv.className = "labelDiv";
+        descriptionLabelDiv.className = "labelModalDiv";
         descriptionLabelDiv.innerHTML = constantNames["inputBox"]["descriptionLabel"][extraInfo];
         var descriptionFormDiv = document.createElement('div');
         descriptionFormDiv.style.marginTop = 2.5 + "px";

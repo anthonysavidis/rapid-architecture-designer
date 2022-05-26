@@ -17,7 +17,7 @@ function createDialog(type, callBack) {
     var confirmationButton = document.createElement('div');
     var nameFormExternal = document.createElement('div');
     var nameLabelDiv = document.createElement('div');
-    nameLabelDiv.className = "labelDiv";
+    nameLabelDiv.className = "labelModalDiv";
     nameLabelDiv.innerHTML = constantNames["inputBox"]["nameLabel"]["Component"];
     var nameFormDiv = document.createElement('div');
     nameFormDiv.style.marginTop = 2.5 + "px";

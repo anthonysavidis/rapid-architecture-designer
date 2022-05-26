@@ -121,6 +121,9 @@ function produceAConfigBox(type) {
         document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "left";
     } else if (type === "Link") {
         document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginRight = "41px";
+        document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "90%";
+        document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "90%";
+        document.getElementsByClassName("labelDiv unselectableText item4")[0].style.width = "90%";
 
     }
     return;

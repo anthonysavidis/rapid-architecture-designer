@@ -58,7 +58,8 @@ const constantNames = {
         "ToggleHierarchy": "Toggle Tree",
         "Delete": "Delete",
         "InitialLayerName": "Initial",
-        "moveBox": "Move item to:"
+        "moveBox": "Move item to:",
+        "Info": "Layer Info"
     },
     "operationsArea": {
         "title": "Operations",
@@ -209,7 +210,8 @@ const buttonTooltips = {
     },
     "Hierarchy": {
         "Move To": "Move component to another layer.",
-        "Toggle Tree": "Show/Hide hierarchy tree."
+        "Toggle Tree": "Show/Hide hierarchy tree.",
+        "Info": "Layer Info"
     },
     "Settings": {
         "Configure": "Configure text & font size.",
