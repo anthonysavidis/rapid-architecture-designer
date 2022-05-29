@@ -10,6 +10,7 @@ import { cancelSelection } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { autoResizeAutoFit } from "../Item/autoResize.js";
+import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 class ItemHolder {
 
     constructor(str) {
@@ -68,7 +69,7 @@ class ItemHolder {
         }
         this.deleteFromLists(deletingItemId);
         document.getElementById(deletingItemId + 'external').remove();
-
+        updateLayerInfoBox();
     }
     updateNameAndDescription(id, newName, newDescription, directlyFromLoad) {
         // console.log('Updating '+id+' with '+newName+' '+newDescription);

@@ -6,6 +6,7 @@ import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { hideCurrentFunctions, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
+import { updateLayerInfoBox } from "./layerInfoFunctions.js";
 
 function refreshExtendedComponents(layersItems) {
     for (var x in layersItems) {
@@ -54,6 +55,7 @@ function actionsOfNextLayer(layerId) {
     else
         showByComponent();
     // resetOwner()
+    updateLayerInfoBox();
     return;
 }
 

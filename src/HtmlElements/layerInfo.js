@@ -1,5 +1,5 @@
-import { addMotion } from "../Input/movingModal.js";
-import { countEmptyComponents, countOrphanOperations } from "../Layers/layerInfoFunctions.js";
+import { addMotion, addMotionToLayerInfo } from "../Input/movingModal.js";
+import { countEmptyComponents, countOrphanOperations, getComponentWithTheLeastOperations, getComponentWithTheMostOperations, updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { produceMovingBar } from "./infoBoxes.js";
 
 var closeInfo = null;
@@ -12,7 +12,7 @@ function createLabels(box, infoGrid) {
     orphanOperationLabel.className = componentLabel.className = componentMostOperationsLabel.className = componentLeastOperationsLabel.className = "labelDiv unselectableText";
     infoGrid.style.marginBottom = "15px";
     orphanOperationLabel.innerText = "Orphan Operations:";
-    componentLabel.innerText = "Component zero operations:";
+    componentLabel.innerText = "Component with 0 operations:";
     componentMostOperationsLabel.innerText = "Component with most operations:";
     componentLeastOperationsLabel.innerText = "Component with least operations:";
     orphanOperationLabel.className += " item1";
@@ -38,11 +38,10 @@ function createValues(box, infoGrid) {
     componentLeastOperationsValue.id = "componentLeastOperationsValue";
 
     infoGrid.style.marginBottom = "15px";
-    orphanOperationValue.innerText = countOrphanOperations();
-    componentValue.innerText = countEmptyComponents();
-    componentMostOperationsValue.innerText = "Parser";
-    componentLeastOperationsValue.innerText = "Program";
-
+    // orphanOperationValue.innerText = countOrphanOperations();
+    // componentValue.innerText = countEmptyComponents();
+    // componentMostOperationsValue.innerText = getComponentWithTheMostOperations()._name;
+    // componentLeastOperationsValue.innerText = getComponentWithTheLeastOperations()._name;
     orphanOperationValue.className += " item2";
     componentValue.className += " item5";
     componentMostOperationsValue.className += " item8";
@@ -75,6 +74,7 @@ function createLayerInfoModal() {
     tittleDiv.innerHTML = "Layer Info";
     var box = document.createElement('div');
     box.className = "layerInfoBox";
+    box.id = "layerInfo";
     closeInfo = function() {
         box.remove();
         closeInfo = null;
@@ -83,13 +83,13 @@ function createLayerInfoModal() {
     closeButton.className = "closeBoxButton";
     closeButton.style.marginTop = "-11px";
     closeButton.onclick = closeInfo;
-    produceMovingBar(box, 0);
     box.appendChild(closeButton);
     box.appendChild(tittleDiv);
 
     produceLayerInfoContent(box);
     document.getElementById("body").appendChild(box);
-    addMotion(box);
+    addMotionToLayerInfo(box);
+    updateLayerInfoBox();
     return;
 }
 

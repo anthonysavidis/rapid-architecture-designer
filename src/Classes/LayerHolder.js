@@ -1,5 +1,6 @@
 import { renderLine } from "../Item/createLine.js";
 import { cancelSelection } from "../Item/selectComponent.js";
+import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { restorePreviewImages, savePreviewImages } from "../Layers/Storage/localStorageRetrieval.js";
 import { actionsOfNextLayer } from "../Layers/switchActions.js";
 import { clearTree, addToArchitectureList, updateTree } from "../Layers/Tree.js";
@@ -19,6 +20,7 @@ class LayerHolder {
         if (str) {
             this.toObject(str);
             setLayers(this);
+            updateLayerInfoBox();
         }
     }
     add(layer) {

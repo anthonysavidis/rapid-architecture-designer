@@ -31,7 +31,6 @@ function produceMovingBar(box, isMsgBox) {
         bar.style.backgroundColor = "#cedff7";
     bar.id = "movingBar";
     box.appendChild(bar);
-
     return;
 }
 

@@ -29,6 +29,7 @@ import { setInitialSize } from "../Item/autoResize.js";
 import { configStyle } from "./Config.js";
 import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 import { deleteMultWithTrashBin } from "../Workspace/trashBin.js";
+import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 
 class Item {
 
@@ -345,9 +346,12 @@ class Item {
                 items.updateNameAndDescription(this._id, this._name, this._description, 1);
             }
             // this._type === "Component" ? renderInfoButton(this._id) : 1;
+            updateLayerInfoBox();
+
             return;
         }
         items.add(this);
+        updateLayerInfoBox();
     }
 
     setFunction(fid) {
@@ -361,6 +365,7 @@ class Item {
         showOwner(items.itemList[fIndex]);
         if (document.getElementById("byComponent").checked)
             showByComponent();
+        updateLayerInfoBox();
         return;
     }
 
@@ -371,6 +376,8 @@ class Item {
         }
         if (document.getElementById("byComponent").checked)
             showByComponent();
+        updateLayerInfoBox();
+
         return;
     }
     deleteOwner(id) {
@@ -378,6 +385,7 @@ class Item {
         if (itemListIndex > -1) {
             this.owners.splice(itemListIndex, 1);
         }
+        updateLayerInfoBox();
         return;
     }
 

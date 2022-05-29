@@ -73,6 +73,7 @@
 
 .layerInfoBox {
     padding-bottom: 5px;
+    padding-top: 15px;
     width: 500px;
     height: auto;
     text-align: center;
@@ -199,8 +200,9 @@ select {
     /* background-color: #FF00FF; */
     height: 15px;
     width: 100%;
-    margin-top: -3px;
+    position: relative;
     cursor: all-scroll;
+    z-index: -20;
 }
 
 .styleButton {

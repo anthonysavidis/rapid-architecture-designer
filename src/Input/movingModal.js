@@ -55,6 +55,11 @@ function addMotion(elmnt) {
     }
 
     return elmnt;
+
 }
 
-export { addMotion, dragModalHandler };
+function addMotionToLayerInfo(box) {
+    $('#' + box.id).draggable({});
+}
+
+export { addMotion, dragModalHandler, addMotionToLayerInfo };
