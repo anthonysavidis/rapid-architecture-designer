@@ -1,4 +1,11 @@
+import { configStyle } from "../Classes/Config.js";
+import { ConfigActions } from "../Classes/ConfigActions.js";
 import { items } from "../Classes/ItemArray.js";
+import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
+import { closeTheTooltip } from "../Input/clickInputObserver.js";
+import { cancelSelection, selectAction } from "../Item/selectComponent.js";
+import { cancelFunctionSelection } from "../Item/selectFunction.js";
+import { showAll, showAllRefresh, showByComponent, updateSelectedList } from "../Workspace/functionAppearance.js";
 
 function countOrphanOperations() {
     const orphanOperations = items.itemList.filter((el) => el._type === "Function" && !el.owners[0]);
@@ -19,7 +26,18 @@ function getComponentWithTheMostOperations() {
 function getComponentWithTheLeastOperations() {
     const components = items.itemList.filter((el) => el._type === "Component");
     var componentSort = components.sort((a, b) => { return a._functions.length - b._functions.length; });
-    return (componentSort[0] && componentSort[0]._functions.length) ? componentSort[0] : "-";
+    for (var x in componentSort) {
+        if (componentSort[x] && componentSort[x]._functions.length)
+            return componentSort[x];
+    }
+    return "-";
+}
+
+function checkAndActivateHint(id, callBack) {
+    if (document.getElementById(id).className.includes("Pressed")) {
+        document.getElementById(id).className = "layerInfoHint";
+        callBack(id);
+    }
 }
 
 function updateLayerInfoBox() {
@@ -32,6 +50,143 @@ function updateLayerInfoBox() {
     document.getElementById("componentValue").innerText = componentValue + "/" + componentsCount;
     document.getElementById("componentMostOperationsValue").innerText = (mostOperationsValue === "-") ? "-" : mostOperationsValue._name;
     document.getElementById("componentLeastOperationsValue").innerText = (leastOperationsValue === "-") ? "-" : leastOperationsValue._name;
+    setTimeout(() => {
+        checkAndActivateHint('functionHint', (id) => { highlightOrphanOperations(document.getElementById(id)); });
+        checkAndActivateHint('roleHint', (id) => { highlightEmptyComponents(document.getElementById(id)); });
+        checkAndActivateHint('maxHint', (id) => { highlightMostOperationalComponent(document.getElementById('maxHint'), document.getElementById("minHint")); });
+        checkAndActivateHint('minHint', (id) => { highlightLeastOperationalComponent(document.getElementById('minHint'), document.getElementById("maxHint")); });
+    }, 300);
 }
 
-export { countOrphanOperations, countEmptyComponents, getComponentWithTheMostOperations, getComponentWithTheLeastOperations, updateLayerInfoBox }
+function alterHintState(elmnt) {
+    const gridClass = elmnt.className.split(" ")[1];
+    const prefix = (elmnt.className.includes("layerInfoHintPressed")) ? "layerInfoHint" : "layerInfoHintPressed";
+    elmnt.className = prefix + " " + gridClass;
+    return (elmnt.className.includes("layerInfoHintPressed"));
+}
+
+function highlightOrphanOperations(elmnt) {
+    showAllRefresh();
+
+    const orphanOperations = items.itemList.filter((el) => el._type === "Function" && !el.owners[0]);
+    // highlightItems(elmnt, orphanOperations, "--operationBorderColor");
+    const active = alterHintState(elmnt);
+    if (active)
+        orphanOperations.forEach((el) => { document.getElementById(el._id).className = "selectedFunction"; })
+    else
+        cancelFunctionSelection();
+    return;
+}
+
+function highlightEmptyComponents(elmnt) {
+    const oldClass = elmnt.className;
+    resetComponentHints();
+    elmnt.className = oldClass;
+    const emptyComponents = items.itemList.filter((el) => el._type === "Component" && !el._functions.length);
+    const active = alterHintState(elmnt);
+    if (active)
+        emptyComponents.forEach(el => { selectAction(el._id); });
+    else
+        cancelSelection();
+    return;
+}
+
+function focusOnSpecificComponent(component) {
+    cancelSelection();
+    document.getElementById("all").checked = false;
+    document.getElementById("currentSelectedArea").style.display = "block";
+    document.getElementById("functionArea").style.height = "57%";
+    document.getElementById("byComponent").checked = true;
+    cancelFunctionSelection();
+    showByComponent();
+    updateSelectedList();
+    closeTheTooltip();
+    selectAction(component._id);
+}
+
+function unfocusOnSpecificComponent(component) {
+    cancelFunctionSelection();
+    cancelSelection();
+    document.getElementById("all").checked = true;
+    document.getElementById("byComponent").checked = false;
+    showAll();
+    document.getElementById("currentSelectedArea").style.display = "none";
+    document.getElementById("functionArea").style.height = "70%";
+    closeTheTooltip();
+}
+
+function resetButtons() {
+    document.getElementById("roleHint").className = "layerInfoHint item6";
+    document.getElementById("maxHint").className = "layerInfoHint item9";
+    document.getElementById("minHint").className = "layerInfoHint item12";
+    document.getElementById("functionHint").className = "layerInfoHint item3";
+    document.getElementById("currentSelectedArea").style.display = "none";
+    document.getElementById("functionArea").style.height = "70%";
+    showAllRefresh();
+    document.getElementById("all").checked = true;
+    document.getElementById("byComponent").checked = false;
+    return;
+}
+
+function resetComponentHints() {
+    document.getElementById("roleHint").className = "layerInfoHint item6";
+    document.getElementById("maxHint").className = "layerInfoHint item9";
+    document.getElementById("minHint").className = "layerInfoHint item12";
+    document.getElementById("currentSelectedArea").style.display = "none";
+    document.getElementById("functionArea").style.height = "70%";
+    document.getElementById("all").checked = true;
+    document.getElementById("byComponent").checked = false;
+    cancelSelection();
+    showAllRefresh();
+}
+
+function resetHighlightedHints() {
+    document.getElementById("functionHint").className = "layerInfoHint item3";
+    resetComponentHints();
+    cancelFunctionSelection();
+    return;
+}
+
+function highlightMostOperationalComponent(elmnt, elmntMin) {
+    const oldClass = elmnt.className;
+    resetComponentHints();
+    elmnt.className = oldClass;
+    const active = alterHintState(elmnt);
+    const component = getComponentWithTheMostOperations();
+    const minComponent = getComponentWithTheLeastOperations();
+    if (component === "-")
+        return;
+    if (active) {
+        if (elmntMin.className.includes("layerInfoHintPressed") && minComponent !== "-") {
+            alterHintState(elmntMin);
+            unfocusOnSpecificComponent(minComponent);
+        }
+        focusOnSpecificComponent(component);
+    } else {
+        unfocusOnSpecificComponent(component);
+    }
+    return;
+}
+
+function highlightLeastOperationalComponent(elmnt, elmntMax) {
+    const oldClass = elmnt.className;
+    resetComponentHints();
+    elmnt.className = oldClass;
+    const active = alterHintState(elmnt);
+    const component = getComponentWithTheLeastOperations();
+    const maxComponent = getComponentWithTheMostOperations();
+    if (component === "-")
+        return;
+    if (active) {
+        if (elmntMax.className.includes("layerInfoHintPressed") && maxComponent !== "-") {
+            alterHintState(elmntMax);
+            unfocusOnSpecificComponent(maxComponent);
+        }
+        focusOnSpecificComponent(component);
+    } else
+        unfocusOnSpecificComponent(component);
+    return;
+}
+
+
+export { countOrphanOperations, countEmptyComponents, resetButtons, resetHighlightedHints, highlightLeastOperationalComponent, highlightMostOperationalComponent, highlightEmptyComponents, highlightOrphanOperations, getComponentWithTheMostOperations, getComponentWithTheLeastOperations, updateLayerInfoBox }

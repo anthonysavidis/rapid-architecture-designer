@@ -22,7 +22,7 @@ function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
 }
 
 function produceMovingBar(box, isMsgBox) {
-    if (closeInfo) {
+    if (closeInfo && !isMsgBox) {
         closeInfo();
     }
     var bar = document.createElement('div');

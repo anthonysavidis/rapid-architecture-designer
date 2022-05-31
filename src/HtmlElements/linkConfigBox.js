@@ -78,6 +78,7 @@ function produceAConfigBox(type) {
     produceMovingBar(box, 0);
     var configGrid = document.createElement('div');
     configGrid.className = "configGrid";
+    configGrid.style.gap = "25px";
     box.appendChild(closeButton);
     if (type === "Operation") {
         produceOperationForm(box, configGrid);
@@ -120,7 +121,7 @@ function produceAConfigBox(type) {
         document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
         document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "left";
     } else if (type === "Link") {
-        document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginRight = "41px";
+        document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginRight = "31px";
         document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "90%";
         document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "90%";
         document.getElementsByClassName("labelDiv unselectableText item4")[0].style.width = "90%";

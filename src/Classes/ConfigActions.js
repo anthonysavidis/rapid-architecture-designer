@@ -66,6 +66,15 @@ class ConfigActions {
     clearCurrenntOldSettings() {
         this.currentOldSettings = {};
     }
+    setCurrentSettings(varName) {
+        var r = document.querySelector(':root');
+        var rs = getComputedStyle(r);
+        const value = (rs.getPropertyValue("--" + varName).charAt(0) === " ") ? rs.getPropertyValue("--" + varName).slice(1) : rs.getPropertyValue("--" + varName);
+        const type = varName.split(/(?=[A-Z])/)[0];
+        const attributeChanged = varName.replace(type, "");
+        configStyle.handleChange(capitalizeFirstLetter(type), attributeChanged, value, 1);
+        return;
+    }
 }
 
 function getAllCssVars() {

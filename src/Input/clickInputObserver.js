@@ -7,6 +7,7 @@ import { spawnHelper } from "../Item/geometry.js";
 import { cancelSelection, getSelectedIds, keepOnlyLastSelectedItem } from "../Item/selectComponent.js";
 import { cancelFunctionSelection, keepOnlyLastSelectedFunction } from "../Item/selectFunction.js";
 import { cancelSelectedLinks } from "../Item/selectLink.js";
+import { resetButtons } from "../Layers/layerInfoFunctions.js";
 import { appearComponentButtons, appearFunctionButtons, appearEditButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { initializeTab, lastPressed } from "../UpTab/tabAppearance/tabInitializer.js";
 import { hideCurrentFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
@@ -89,6 +90,14 @@ function hasClickedOnWorkspace(id) {
     return false;
 }
 
+function handleLayerInfoAppearance(x, y) {
+    if (!document.getElementById("layerInfo"))
+        return;
+    if (isInsideRec(x, y, document.getElementById("space").getBoundingClientRect()) &&
+        !isInsideRec(x, y, document.getElementById("layerInfo").getBoundingClientRect()))
+        resetButtons();
+}
+
 function selectionHandler(e, targ) {
     const isInsideComponent = bRecs.isInsideComponent(layers.selectedLayer._id, e.clientX, e.clientY);
     //OLD CONDITION !isInsideComponent && !isIconOrName(tname, e.target.id) && !isFunction(e.target.id, e.clientX, e.clientY)
@@ -129,6 +138,7 @@ function whichElement(e) {
 
     // if(targ)
     selectionHandler(e, targ);
+    handleLayerInfoAppearance(e.clientX, e.clientY);
     appearComponentButtons();
     appearFunctionButtons();
     appearEditButtons();

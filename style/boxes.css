@@ -74,14 +74,14 @@
 .layerInfoBox {
     padding-bottom: 5px;
     padding-top: 15px;
-    width: 500px;
+    width: fit-content;
     height: auto;
     text-align: center;
     color: #525252;
     background-color: #e7e5e5;
     font-family: Arial, Helvetica, sans-serif;
     left: 32.5%;
-    top: 75%;
+    top: 60%;
     position: absolute;
     z-index: 48;
 }
@@ -263,4 +263,18 @@ select {
     margin-top: 20px;
     margin-bottom: 5px;
     display: inline-block;
+}
+
+.layerInfoHint {
+    width: 40px;
+    height: 40px;
+    background-image: url(../images/circleHelp.png);
+    background-size: contain;
+}
+
+.layerInfoHintPressed {
+    width: 40px;
+    height: 40px;
+    background-image: url(../images/greenHelp.png);
+    background-size: contain;
 }

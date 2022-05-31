@@ -1,5 +1,5 @@
 import { addMotion, addMotionToLayerInfo } from "../Input/movingModal.js";
-import { countEmptyComponents, countOrphanOperations, getComponentWithTheLeastOperations, getComponentWithTheMostOperations, updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
+import { countEmptyComponents, countOrphanOperations, getComponentWithTheLeastOperations, getComponentWithTheMostOperations, highlightEmptyComponents, highlightLeastOperationalComponent, highlightMostOperationalComponent, highlightOrphanOperations, resetHighlightedHints, updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { produceMovingBar } from "./infoBoxes.js";
 
 var closeInfo = null;
@@ -19,6 +19,8 @@ function createLabels(box, infoGrid) {
     componentLabel.className += " item4";
     componentMostOperationsLabel.className += " item7";
     componentLeastOperationsLabel.className += " item10";
+    orphanOperationLabel.style.whiteSpace = componentLabel.style.whiteSpace = componentMostOperationsLabel.style.whiteSpace = componentLeastOperationsLabel.style.whiteSpace = "nowrap";
+
     infoGrid.appendChild(orphanOperationLabel);
     infoGrid.appendChild(componentLabel);
     infoGrid.appendChild(componentMostOperationsLabel);
@@ -52,12 +54,41 @@ function createValues(box, infoGrid) {
     infoGrid.appendChild(componentLeastOperationsValue);
 }
 
+function produceHints(infoGrid) {
+    var roleHint, functionHint, maxHint, minHint;
+    roleHint = document.createElement('div');
+    functionHint = document.createElement('div');
+    maxHint = document.createElement('div');
+    minHint = document.createElement('div');
+    roleHint.className = functionHint.className = maxHint.className = minHint.className = "layerInfoHint";
+    functionHint.id = "functionHint";
+    roleHint.id = "roleHint";
+    maxHint.id = "maxHint";
+    minHint.id = "minHint";
+    functionHint.className += " item3";
+    roleHint.className += " item6";
+    maxHint.className += " item9";
+    minHint.className += " item12";
+    infoGrid.appendChild(roleHint);
+    infoGrid.appendChild(functionHint);
+    infoGrid.appendChild(maxHint);
+    infoGrid.appendChild(minHint);
+
+    functionHint.onclick = () => { highlightOrphanOperations(functionHint); }
+    roleHint.onclick = () => { highlightEmptyComponents(roleHint); }
+    maxHint.onclick = () => { highlightMostOperationalComponent(maxHint, minHint); }
+    minHint.onclick = () => { highlightLeastOperationalComponent(minHint, maxHint); }
+    return;
+}
 
 function produceLayerInfoContent(box) {
     var infoGrid = document.createElement('div');
     infoGrid.className = "configGrid";
+    infoGrid.style.marginLeft = "0px";
+    infoGrid.style.paddingLeft = infoGrid.style.paddingRight = "10px";
     createLabels(box, infoGrid);
     createValues(box, infoGrid);
+    produceHints(infoGrid);
     box.appendChild(infoGrid);
     return;
 }
@@ -69,24 +100,26 @@ function createLayerInfoModal() {
     }
     var tittleDiv = document.createElement('div');
     tittleDiv.className = "tittleDiv unselectableText";
-    tittleDiv.style.marginLeft = "196px";
-    tittleDiv.style.marginTop = "-5px";
+    tittleDiv.style.marginLeft = "32px";
+    tittleDiv.style.textAlign = "center";
     tittleDiv.innerHTML = "Layer Info";
     var box = document.createElement('div');
     box.className = "layerInfoBox";
     box.id = "layerInfo";
     closeInfo = function() {
+        resetHighlightedHints();
         box.remove();
         closeInfo = null;
     }
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
-    closeButton.style.marginTop = "-11px";
+    closeButton.style.marginTop = "-10px";
     closeButton.onclick = closeInfo;
     box.appendChild(closeButton);
     box.appendChild(tittleDiv);
 
     produceLayerInfoContent(box);
+
     document.getElementById("body").appendChild(box);
     addMotionToLayerInfo(box);
     updateLayerInfoBox();
