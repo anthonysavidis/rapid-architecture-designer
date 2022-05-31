@@ -169,7 +169,6 @@ function createRestoreButton(category, closeBoxCallBack, openBoxCallBack) {
     restoreButton.style.paddingLeft = restoreButton.style.paddingRight = "7px";
     restoreButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["restore"] + "</p>";
     restoreButton.onclick = () => {
-        console.log('clicked');
         configStyle.actionDispatch[category].resetToDefault();
         if (category == "Component") {
             configStyle.actionDispatch["Description"].resetToDefault();

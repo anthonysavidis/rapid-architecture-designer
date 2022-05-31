@@ -27,11 +27,10 @@ class ConfigActions {
             const value = changesJSON[x];
             const type = x.split(/(?=[A-Z])/)[0].slice(2);
             const attributeChanged = x.replace(type, "").slice(2);
-            // console.log(type + " " + attributeChanged + " " + value);
             configStyle.handleChange(capitalizeFirstLetter(type), attributeChanged, value, 1);
         }
         this.clearCurrenntOldSettings();
-        refreshAllLinks();
+        // refreshAllLinks();
         return;
     }
 
@@ -42,6 +41,7 @@ class ConfigActions {
     }
 
     resetToDefault() {
+        this.applyToConfig(this.initialSettings);
         if (this.category === "Component") {
             configStyle.setInitialMargins();
             document.getElementById('innerMarginSlider').style.display = "none";
@@ -53,9 +53,8 @@ class ConfigActions {
                 if (component.links)
                     renderLine(component._id);
             });
-            // autoResizeAllComponents();
+            autoResizeAllComponents();
         }
-        this.applyToConfig(this.initialSettings);
         return;
     }
 

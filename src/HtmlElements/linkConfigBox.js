@@ -68,7 +68,7 @@ function produceAConfigBox(type) {
         configStyle.actionDispatch[type].clearCurrenntOldSettings();
     };
 
-    produceGrayLayer(box, "", cancelChanges, "");
+    produceGrayLayer(box, "", "", cancelChanges);
 
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
@@ -98,6 +98,11 @@ function produceAConfigBox(type) {
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["apply"] + "</p>";
     confirmationButton.onclick = function() {
+        if (type === "Operation") {
+            configStyle.actionDispatch["Operation"].clearCurrenntOldSettings();
+        } else if (type === "Link") {
+            configStyle.actionDispatch["Link"].clearCurrenntOldSettings();
+        }
         closeBox();
     }
     var buttonsContainer = document.createElement('div');

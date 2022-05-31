@@ -44,7 +44,7 @@ class Config {
         var rs = getComputedStyle(r);
         const oldValue = rs.getPropertyValue(varName);
         r.style.setProperty(varName, value);
-        if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color"))) {
+        if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color")) && !ignoreCurrent) {
             autoResizeAllComponents();
             // checkAndResize(); //?????????????????????????
         }

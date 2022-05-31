@@ -200,11 +200,14 @@ function applyToEachComponent(callBack) {
     for (var x in layers.layerList) {
         layers.changeLayer(layers.layerList[x]._id);
         const layerItems = layers.itemMap.get(layers.layerList[x]._id);
-        for (var y in layerItems.itemList) {
-            if (layerItems.itemList[y]._type === "Component") {
-                callBack(layerItems.itemList[y]);
-            }
-        }
+        layerItems.itemList.forEach((el) => {
+            (el._type === "Component") ? callBack(el): 1
+        });
+        // for (var y in layerItems.itemList) {
+        //     if (layerItems.itemList[y]._type === "Component") {
+        //         callBack(layerItems.itemList[y]);
+        //     }
+        // }
     }
     layers.changeLayer(currentLayerId);
     return;

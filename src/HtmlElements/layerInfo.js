@@ -85,7 +85,7 @@ function produceLayerInfoContent(box) {
     var infoGrid = document.createElement('div');
     infoGrid.className = "configGrid";
     infoGrid.style.marginLeft = "0px";
-    infoGrid.style.paddingLeft = infoGrid.style.paddingRight = "10px";
+    infoGrid.style.paddingLeft = infoGrid.style.paddingRight = "28px";
     createLabels(box, infoGrid);
     createValues(box, infoGrid);
     produceHints(infoGrid);

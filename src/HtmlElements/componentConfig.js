@@ -169,7 +169,7 @@ function createComponentConfigBox() {
         configStyle.actionDispatch["Description"].clearCurrenntOldSettings();
         configStyle.actionDispatch["Subcomponent"].clearCurrenntOldSettings();
     }
-    produceGrayLayer(box, "", cancelChanges, "");
+    produceGrayLayer(box, "", "", cancelChanges);
 
 
     var closeButton = document.createElement('div');
@@ -195,6 +195,9 @@ function createComponentConfigBox() {
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["apply"] + "</p>";
     confirmationButton.onclick = function() {
+        configStyle.actionDispatch["Component"].clearCurrenntOldSettings();
+        configStyle.actionDispatch["Description"].clearCurrenntOldSettings();
+        configStyle.actionDispatch["Subcomponent"].clearCurrenntOldSettings();
         closeBox();
     }
     var buttonsContainer = document.createElement('div');
