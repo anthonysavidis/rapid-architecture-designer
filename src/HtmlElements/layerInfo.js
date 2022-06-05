@@ -74,10 +74,26 @@ function produceHints(infoGrid) {
     infoGrid.appendChild(maxHint);
     infoGrid.appendChild(minHint);
 
-    functionHint.onclick = () => { highlightOrphanOperations(functionHint); }
-    roleHint.onclick = () => { highlightEmptyComponents(roleHint); }
-    maxHint.onclick = () => { highlightMostOperationalComponent(maxHint, minHint); }
-    minHint.onclick = () => { highlightLeastOperationalComponent(minHint, maxHint); }
+    functionHint.onclick = () => {
+        if (functionHint.className.includes("disabled"))
+            return;
+        highlightOrphanOperations(functionHint);
+    }
+    roleHint.onclick = () => {
+        if (roleHint.className.includes("disabled"))
+            return;
+        highlightEmptyComponents(roleHint);
+    }
+    maxHint.onclick = () => {
+        if (maxHint.className.includes("disabled"))
+            return;
+        highlightMostOperationalComponent(maxHint, minHint);
+    }
+    minHint.onclick = () => {
+        if (minHint.className.includes("disabled"))
+            return;
+        highlightLeastOperationalComponent(minHint, maxHint);
+    }
     return;
 }
 

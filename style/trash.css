@@ -20,3 +20,13 @@
     left: 930px;
     top: 453px;
 }
+
+.helpButton {
+    /* url('../images/arrowDown.png') 96% / 8% no-repeat */
+    /* background-image: url('../images/helpButton.png'); */
+    /* width: 96px; */
+    /* height: 96px; */
+    position: absolute;
+    left: 930px;
+    top: 323px;
+}

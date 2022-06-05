@@ -40,6 +40,28 @@ function checkAndActivateHint(id, callBack) {
     }
 }
 
+function toggleEnablement(value, classNameStr, itemClass) {
+    if (value !== 0 && value !== "-")
+        document.getElementById(classNameStr).className = "layerInfoHint " + itemClass;
+    else
+        document.getElementById(classNameStr).className = "disabledInfoHint " + itemClass;
+    console.log(value);
+    return;
+}
+
+function handleZeroValues(orphanValue, componentValue, mostOperationsValue, leastOperationsValue) {
+    // var functionsCount = (items.itemList.filter((el) => el._type === "Function")).length;
+
+    toggleEnablement(orphanValue, "functionHint", "item3");
+    toggleEnablement(componentValue, "roleHint", "item6");
+    toggleEnablement(mostOperationsValue, "maxHint", "item9");
+    toggleEnablement(leastOperationsValue, "minHint", "item12");
+    // document.getElementById("functionHint").className = (orphanValue === 0) ? "disabledInfoHint item3" : document.getElementById("functionHint").className;
+    // document.getElementById("roleHint").className = componentValue + "/" + componentsCount;
+    // document.getElementById("maxHint").className = (mostOperationsValue === "-") ? "disabledInfoHint item9" : document.getElementById("maxHint").className;
+    // document.getElementById("minHint").className = (leastOperationsValue === "-") ? "disabledInfoHint item12" : document.getElementById("minHint").className;
+}
+
 function updateLayerInfoBox() {
     if (!document.getElementById("orphanOperationValue"))
         return;
@@ -55,10 +77,13 @@ function updateLayerInfoBox() {
         checkAndActivateHint('roleHint', (id) => { highlightEmptyComponents(document.getElementById(id)); });
         checkAndActivateHint('maxHint', (id) => { highlightMostOperationalComponent(document.getElementById('maxHint'), document.getElementById("minHint")); });
         checkAndActivateHint('minHint', (id) => { highlightLeastOperationalComponent(document.getElementById('minHint'), document.getElementById("maxHint")); });
-    }, 300);
+        handleZeroValues(orphanValue, componentValue, mostOperationsValue, leastOperationsValue);
+    }, 20);
 }
 
 function alterHintState(elmnt) {
+    if (elmnt.className.includes("disabled"))
+        return;
     const gridClass = elmnt.className.split(" ")[1];
     const prefix = (elmnt.className.includes("layerInfoHintPressed")) ? "layerInfoHint" : "layerInfoHintPressed";
     elmnt.className = prefix + " " + gridClass;
@@ -66,6 +91,8 @@ function alterHintState(elmnt) {
 }
 
 function highlightOrphanOperations(elmnt) {
+    if (elmnt.className.includes("disabled"))
+        return;
     showAllRefresh();
 
     const orphanOperations = items.itemList.filter((el) => el._type === "Function" && !el.owners[0]);
@@ -79,6 +106,8 @@ function highlightOrphanOperations(elmnt) {
 }
 
 function highlightEmptyComponents(elmnt) {
+    if (elmnt.className.includes("disabled"))
+        return;
     const oldClass = elmnt.className;
     resetComponentHints();
     elmnt.className = oldClass;
@@ -116,10 +145,10 @@ function unfocusOnSpecificComponent(component) {
 }
 
 function resetButtons() {
-    document.getElementById("roleHint").className = "layerInfoHint item6";
-    document.getElementById("maxHint").className = "layerInfoHint item9";
-    document.getElementById("minHint").className = "layerInfoHint item12";
-    document.getElementById("functionHint").className = "layerInfoHint item3";
+    document.getElementById("roleHint").className = (document.getElementById("roleHint").className.includes("disabled")) ? document.getElementById("roleHint").className : "layerInfoHint item6";
+    document.getElementById("maxHint").className = (document.getElementById("maxHint").className.includes("disabled")) ? document.getElementById("maxHint").className : "layerInfoHint item9";
+    document.getElementById("minHint").className = (document.getElementById("minHint").className.includes("disabled")) ? document.getElementById("minHint").className : "layerInfoHint item12";
+    document.getElementById("functionHint").className = (document.getElementById("functionHint").className.includes("disabled")) ? document.getElementById("functionHint").className : "layerInfoHint item3";
     document.getElementById("currentSelectedArea").style.display = "none";
     document.getElementById("functionArea").style.height = "70%";
     showAllRefresh();
@@ -129,9 +158,9 @@ function resetButtons() {
 }
 
 function resetComponentHints() {
-    document.getElementById("roleHint").className = "layerInfoHint item6";
-    document.getElementById("maxHint").className = "layerInfoHint item9";
-    document.getElementById("minHint").className = "layerInfoHint item12";
+    document.getElementById("roleHint").className = (document.getElementById("roleHint").className.includes("disabled")) ? document.getElementById("roleHint").className : "layerInfoHint item6";
+    document.getElementById("maxHint").className = (document.getElementById("maxHint").className.includes("disabled")) ? document.getElementById("maxHint").className : "layerInfoHint item9";
+    document.getElementById("minHint").className = (document.getElementById("minHint").className.includes("disabled")) ? document.getElementById("minHint").className : "layerInfoHint item12";
     document.getElementById("currentSelectedArea").style.display = "none";
     document.getElementById("functionArea").style.height = "70%";
     document.getElementById("all").checked = true;
@@ -148,6 +177,8 @@ function resetHighlightedHints() {
 }
 
 function highlightMostOperationalComponent(elmnt, elmntMin) {
+    if (elmnt.className.includes("disabled"))
+        return;
     const oldClass = elmnt.className;
     resetComponentHints();
     elmnt.className = oldClass;
@@ -169,6 +200,8 @@ function highlightMostOperationalComponent(elmnt, elmntMin) {
 }
 
 function highlightLeastOperationalComponent(elmnt, elmntMax) {
+    if (elmnt.className.includes("disabled"))
+        return;
     const oldClass = elmnt.className;
     resetComponentHints();
     elmnt.className = oldClass;
@@ -189,4 +222,4 @@ function highlightLeastOperationalComponent(elmnt, elmntMax) {
 }
 
 
-export { countOrphanOperations, countEmptyComponents, resetButtons, resetHighlightedHints, highlightLeastOperationalComponent, highlightMostOperationalComponent, highlightEmptyComponents, highlightOrphanOperations, getComponentWithTheMostOperations, getComponentWithTheLeastOperations, updateLayerInfoBox }
+export { countOrphanOperations, handleZeroValues, countEmptyComponents, resetButtons, resetHighlightedHints, highlightLeastOperationalComponent, highlightMostOperationalComponent, highlightEmptyComponents, highlightOrphanOperations, getComponentWithTheMostOperations, getComponentWithTheLeastOperations, updateLayerInfoBox }

@@ -278,3 +278,10 @@ select {
     background-image: url(../images/greenHelp.png);
     background-size: contain;
 }
+
+.disabledInfoHint {
+    width: 40px;
+    height: 40px;
+    background-image: url(../images/disabledCircleHelp.png);
+    background-size: contain;
+}

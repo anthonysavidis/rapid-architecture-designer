@@ -4,6 +4,7 @@ import { actions } from "../Classes/Actions.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
+import { createLayerInfoModal } from "../HtmlElements/layerInfo.js";
 import { createFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
@@ -65,6 +66,9 @@ function deleteMultWithTrashBin(itemElmnts) {
 
 
 function initializeTheTrashBin() {
+    document.getElementById('helpButton').addEventListener("click", (e) => {
+        createLayerInfoModal();
+    });
     // document.getElementById('trashBin').ondrop = (event) => {
     //     event.preventDefault();
     //     console.log(event.target.id);
@@ -86,6 +90,8 @@ function initializeTheTrashBin() {
 }
 
 function fixTrashBinPosition() {
+    document.getElementById("helpButton").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 120 + "px";
+    document.getElementById("helpButton").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 160 + "px";
     document.getElementById("trashBin").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";
     document.getElementById("trashBin").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 30 + "px";
     return;

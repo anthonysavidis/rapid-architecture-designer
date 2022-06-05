@@ -102,10 +102,10 @@ function addHierarchyTabListeners() {
             treeIsShown = false;
         }
     });
-    document.getElementById("infoLayerButton").addEventListener("click", () => {
+    // document.getElementById("infoLayerButton").addEventListener("click", () => {
 
-        createLayerInfoModal();
-    });
+    //     createLayerInfoModal();
+    // });
 }
 
 export { addHierarchyTabListeners };
