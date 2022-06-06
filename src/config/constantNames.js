@@ -121,8 +121,8 @@ const constantNames = {
         "operationBorderWidth": "Border width:",
     },
     "linkConfig": {
-        "linkColor": "Link color:",
-        "arrowColor": "Link arrow color:"
+        "linkColor": "Link:",
+        "arrowColor": "Link arrow:"
     },
     "inputBox": {
         "msg": "Insert name and description of ",

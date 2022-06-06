@@ -45,7 +45,6 @@ function toggleEnablement(value, classNameStr, itemClass) {
         document.getElementById(classNameStr).className = "layerInfoHint " + itemClass;
     else
         document.getElementById(classNameStr).className = "disabledInfoHint " + itemClass;
-    console.log(value);
     return;
 }
 

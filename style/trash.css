@@ -19,6 +19,12 @@
     position: absolute;
     left: 930px;
     top: 453px;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .helpButton {
@@ -29,4 +35,10 @@
     position: absolute;
     left: 930px;
     top: 323px;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }

@@ -84,7 +84,8 @@ var textContainer;
 function produceOperationForm(box, configGrid) {
     var labelDiv = document.createElement('div');
     labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.style.position = "relative";
+    labelDiv.style.marginLeft = "0px";
+    labelDiv.style.textAlign = "center";
     labelDiv.innerText = constantNames["configBox"]["operation"];
 
     var div = document.createElement('div');

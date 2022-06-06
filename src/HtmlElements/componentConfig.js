@@ -176,7 +176,7 @@ function createComponentConfigBox() {
     closeButton.className = "closeBoxButton";
     closeButton.onclick = cancelChanges;
     closeButton.style.position = "absolute";
-    closeButton.style.left = 680 + "px";
+    // closeButton.style.left = 680 + "px";
     produceMovingBar(box, 0);
     box.appendChild(closeButton);
     produceComponentForm(box, configGrid);
@@ -267,6 +267,8 @@ function createComponentConfigBox() {
 
     document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "left";
     document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "80px";
+    closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
+    closeButton.style.top = 5 + "px";
     return;
 }
 

@@ -13,6 +13,8 @@ function produceLinkForm(box, configGrid) {
     labelDiv.style.position = "";
 
     labelDiv.className = "tittleDiv unselectableText";
+    labelDiv.style.marginLeft = "0px";
+    labelDiv.style.textAlign = "center";
     labelDiv.innerText = constantNames["configBox"]["link"];
     div.className = "formContainer";
 
@@ -74,7 +76,7 @@ function produceAConfigBox(type) {
     closeButton.className = "closeBoxButton";
     closeButton.onclick = cancelChanges;
     closeButton.style.position = "absolute";
-    closeButton.style.left = 720 + "px";
+
     produceMovingBar(box, 0);
     var configGrid = document.createElement('div');
     configGrid.className = "configGrid";
@@ -86,8 +88,8 @@ function produceAConfigBox(type) {
     } else {
         produceLinkForm(box, configGrid);
         createLinkConfigBox(box, configGrid);
-        closeButton.style.left = 685 + "px";
-        closeButton.style.top = 10 + "px";
+        // closeButton.style.left = 685 + "px";
+        // closeButton.style.top = 10 + "px";
     }
     box.appendChild(configGrid);
     var cancelButton = document.createElement('div'),
@@ -132,6 +134,8 @@ function produceAConfigBox(type) {
         document.getElementsByClassName("labelDiv unselectableText item4")[0].style.width = "90%";
 
     }
+    closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
+    closeButton.style.top = 5 + "px";
     return;
 }
 

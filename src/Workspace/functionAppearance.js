@@ -42,7 +42,7 @@ function showOwner(functionItem) {
     var newName = functionItem._name + '  <' + ownerName + '>';
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name + '  <' + ownerName + '>';
     setTimeout(() => { //due to listeners...
-        if (!document.getElementById("byComponent").checked)
+        if (!document.getElementById("byComponent").checked && document.getElementById(functionItem._id))
             document.getElementById(functionItem._id).style.backgroundColor = functionColors["attached"];
     }, 50)
 

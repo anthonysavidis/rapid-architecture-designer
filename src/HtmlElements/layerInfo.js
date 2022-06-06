@@ -1,3 +1,4 @@
+import { layers } from "../Classes/LayerHolder.js";
 import { addMotion, addMotionToLayerInfo } from "../Input/movingModal.js";
 import { countEmptyComponents, countOrphanOperations, getComponentWithTheLeastOperations, getComponentWithTheMostOperations, highlightEmptyComponents, highlightLeastOperationalComponent, highlightMostOperationalComponent, highlightOrphanOperations, resetHighlightedHints, updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { produceMovingBar } from "./infoBoxes.js";
@@ -118,7 +119,7 @@ function createLayerInfoModal() {
     tittleDiv.className = "tittleDiv unselectableText";
     tittleDiv.style.marginLeft = "32px";
     tittleDiv.style.textAlign = "center";
-    tittleDiv.innerHTML = "Layer Info";
+    tittleDiv.innerHTML = layers.selectedLayer._name + " Info";
     var box = document.createElement('div');
     box.className = "layerInfoBox";
     box.id = "layerInfo";
