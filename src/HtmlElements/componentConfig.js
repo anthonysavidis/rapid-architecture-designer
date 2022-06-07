@@ -88,7 +88,8 @@ function produceSliders(box, configGrid) {
     borderWidthSlider.style.float = "right";
     borderWidthSlider.style.marginTop = "7px";
     // borderWidthSlider.style.marginLeft = "-5px";
-    borderWidthSlider.firstChild.style.marginLeft = -38 + "px";
+    borderWidthSlider.firstChild.style.marginLeft = -72 + "px";
+    borderWidthSlider.children[2].style.position = "absolute";
 
     var innerMarginDiv = document.createElement('div');
     var innerMarginX = getSliderGroup("Inner Margin X:", 1, 50, configStyle.getJSONValue("componentInnerMarginX").split("px")[0], innerMarginXCallBack);

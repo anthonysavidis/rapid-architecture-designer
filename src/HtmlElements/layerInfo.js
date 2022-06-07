@@ -1,4 +1,5 @@
 import { layers } from "../Classes/LayerHolder.js";
+import { constantNames } from "../config/constantNames.js";
 import { addMotion, addMotionToLayerInfo } from "../Input/movingModal.js";
 import { countEmptyComponents, countOrphanOperations, getComponentWithTheLeastOperations, getComponentWithTheMostOperations, highlightEmptyComponents, highlightLeastOperationalComponent, highlightMostOperationalComponent, highlightOrphanOperations, resetHighlightedHints, updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { produceMovingBar } from "./infoBoxes.js";
@@ -12,10 +13,10 @@ function createLabels(box, infoGrid) {
     var componentLeastOperationsLabel = document.createElement('div');
     orphanOperationLabel.className = componentLabel.className = componentMostOperationsLabel.className = componentLeastOperationsLabel.className = "labelDiv unselectableText";
     infoGrid.style.marginBottom = "15px";
-    orphanOperationLabel.innerText = "Orphan Operations:";
-    componentLabel.innerText = "Component with 0 operations:";
-    componentMostOperationsLabel.innerText = "Component with most operations:";
-    componentLeastOperationsLabel.innerText = "Component with least operations:";
+    orphanOperationLabel.innerText = constantNames["layerInfo"]["orphanOperations"];
+    componentLabel.innerText = constantNames["layerInfo"]["component"];
+    componentMostOperationsLabel.innerText = constantNames["layerInfo"]["componentMostOperations"];
+    componentLeastOperationsLabel.innerText = constantNames["layerInfo"]["componentLeastOperations"];
     orphanOperationLabel.className += " item1";
     componentLabel.className += " item4";
     componentMostOperationsLabel.className += " item7";

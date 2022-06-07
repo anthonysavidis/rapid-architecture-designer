@@ -10,7 +10,7 @@ function produceRightTabRod() {
     rightTabRod.className = 'rod';
     document.getElementById('body').appendChild(rightTabRod);
     document.getElementById('rightTabRod').style.top = 110 + "px";
-    document.getElementById('rightTabRod').style.height = 500 + "px";
+    document.getElementById('rightTabRod').style.height = document.getElementById("right_tab").getBoundingClientRect().height + "px";
     document.getElementById('rightTabRod').style.left = document.getElementById("right_tab").getBoundingClientRect().left + "px";
     addRightTabRodListener();
 }
@@ -21,7 +21,7 @@ function produceLayerTabRod() {
     layerTabRod.className = 'rod';
     document.getElementById('body').appendChild(layerTabRod);
     document.getElementById('layerTabRod').style.top = 125 + "px";
-    document.getElementById('layerTabRod').style.height = 500 + "px";
+    document.getElementById('layerTabRod').style.height = document.getElementById("fSidebar").getBoundingClientRect().height + "px";
     document.getElementById('layerTabRod').style.left = document.getElementById("fSidebar").getBoundingClientRect().right - 10 + "px";
     addLayerRodListener();
 }

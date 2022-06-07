@@ -124,6 +124,12 @@ const constantNames = {
         "linkColor": "Link:",
         "arrowColor": "Link arrow:"
     },
+    "layerInfo": {
+        "orphanOperations": "Orphan Operations:",
+        "component": "Component with no operations:",
+        "componentMostOperations": "Component with most operations:",
+        "componentLeastOperations": "Component with least operations:"
+    },
     "inputBox": {
         "msg": "Insert name and description of ",
         "nameLabel": {
