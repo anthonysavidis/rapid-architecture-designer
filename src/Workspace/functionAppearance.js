@@ -131,4 +131,36 @@ function setUpFunctionDisplayListeners() {
     return;
 }
 
-export { setUpFunctionDisplayListeners, configAppearance, showAllRefresh, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
+function forceActivateAll() {
+    cancelFunctionSelection();
+    document.getElementById("all").checked = true;
+    document.getElementById("byComponent").checked = false;
+    showAll();
+    if (document.getElementById("currentSelectedArea").style.display !== "none")
+        toggleSelectedComponents();
+    closeTheTooltip();
+    return;
+}
+
+function forceActivateByComponent() {
+    document.getElementById("byComponent").checked = true;
+    cancelFunctionSelection();
+    document.getElementById("all").checked = false;
+    showByComponent();
+    if (document.getElementById("currentSelectedArea").style.display === "none")
+        toggleSelectedComponents();
+    updateSelectedList();
+    closeTheTooltip();
+    return;
+}
+
+function refreshOperationList() {
+    if (document.getElementById("all").checked) {
+        forceActivateAll();
+    } else if (document.getElementById("byComponent").checked) {
+        forceActivateByComponent();
+    }
+    return;
+}
+
+export { setUpFunctionDisplayListeners, refreshOperationList, forceActivateAll, forceActivateByComponent, configAppearance, showAllRefresh, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };

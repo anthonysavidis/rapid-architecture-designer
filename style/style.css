@@ -33,7 +33,7 @@
     --operationSettedColor: #99ff00;
     --operationDraggingColor: #009dff;
     --operationOrphanColor: transparent;
-    --operationBorderWidth: 2px;
+    --operationBorderWidth: 3px;
     /*------------------Links------------------*/
     --linkTextSize: 12pt;
     --linkTextFamily: Arial, Helvetica, sans-serif;
@@ -321,13 +321,15 @@ body {
     text-align: right;
     line-height: 170%;
     padding-right: 14px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     box-sizing: border-box;
     margin-left: 5px;
-    margin-top: 5px;
+    margin-top: calc(var(--operationBorderWidth)+7px);
     z-index: 11;
     display: inline-block;
     background-color: var(--operationColor);
-    border: var(--operationBorderWidth) solid var(--operationBorderColor);
+    outline: var(--operationBorderWidth) solid var(--operationBorderColor);
 }
 
 .fName {
@@ -367,15 +369,17 @@ body {
     padding-right: 14px;
     text-align: center;
     cursor: grab;
+    padding-top: 4px;
+    padding-bottom: 4px;
     /* position: absolute; */
     line-height: 170%;
-    border: var(--operationBorderWidth) solid blue;
+    outline: var(--operationBorderWidth) solid blue;
     /* border: 2px  solid rgba(0,0,0,0.5);  */
     box-sizing: border-box;
     z-index: 11;
     margin-left: 5px;
     display: inline-block;
-    margin-top: 5px;
+    margin-top: calc(var(--operationBorderWidth)+7px);
     background-color: var(--operationColor);
     border-color: var(--operationSelectedBorderColor);
 }

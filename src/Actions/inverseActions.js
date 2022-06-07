@@ -185,6 +185,8 @@ function enableDescriptionInAllComponents(actionItems) {
             if (layerItems.itemList[y]._type === "Component") {
                 // oldBrecs.push()
                 turnOnDescription(layerItems.itemList[y]);
+                if (layerItems.itemList[y].links)
+                    renderLine(layerItems.itemList[y]._id);
             }
         }
     }
@@ -207,16 +209,16 @@ function disableDescriptionInAllComponents(actionItems) {
             if (layerItems.itemList[y]._type === "Component") {
                 // oldBrecs.push()
                 turnOffDescription(layerItems.itemList[y]);
-                if (actionItems.initialItem !== "") {
-                    const oldBRec = JSON.parse(actionItems.initialItem[layerItems.itemList[y]._id]);
-                    document.getElementById(layerItems.itemList[y]._id).style.top = oldBRec.top + "px";
-                    document.getElementById(layerItems.itemList[y]._id).style.left = oldBRec.left + "px";
-                    document.getElementById(layerItems.itemList[y]._id).style.width = oldBRec.width + "px";
-                    document.getElementById(layerItems.itemList[y]._id).style.height = oldBRec.height + "px";
-                    layerItems.itemList[y].updateBoundingRec();
-                    if (layerItems.itemList[y].links)
-                        renderLine(layerItems.itemList[y]._id);
-                }
+                // if (actionItems.initialItem !== "") {
+                //     const oldBRec = JSON.parse(actionItems.initialItem[layerItems.itemList[y]._id]);
+                //     document.getElementById(layerItems.itemList[y]._id).style.top = oldBRec.top + "px";
+                //     document.getElementById(layerItems.itemList[y]._id).style.left = oldBRec.left + "px";
+                //     document.getElementById(layerItems.itemList[y]._id).style.width = oldBRec.width + "px";
+                //     document.getElementById(layerItems.itemList[y]._id).style.height = oldBRec.height + "px";
+                //     layerItems.itemList[y].updateBoundingRec();
+                if (layerItems.itemList[y].links)
+                    renderLine(layerItems.itemList[y]._id);
+                // }
             }
         }
     }

@@ -1,7 +1,5 @@
-import { configStyle } from "../Classes/Config.js";
-import { ConfigActions } from "../Classes/ConfigActions.js";
 import { items } from "../Classes/ItemArray.js";
-import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
+import { layers } from "../Classes/LayerHolder.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
@@ -49,16 +47,10 @@ function toggleEnablement(value, classNameStr, itemClass) {
 }
 
 function handleZeroValues(orphanValue, componentValue, mostOperationsValue, leastOperationsValue) {
-    // var functionsCount = (items.itemList.filter((el) => el._type === "Function")).length;
-
     toggleEnablement(orphanValue, "functionHint", "item3");
     toggleEnablement(componentValue, "roleHint", "item6");
     toggleEnablement(mostOperationsValue, "maxHint", "item9");
     toggleEnablement(leastOperationsValue, "minHint", "item12");
-    // document.getElementById("functionHint").className = (orphanValue === 0) ? "disabledInfoHint item3" : document.getElementById("functionHint").className;
-    // document.getElementById("roleHint").className = componentValue + "/" + componentsCount;
-    // document.getElementById("maxHint").className = (mostOperationsValue === "-") ? "disabledInfoHint item9" : document.getElementById("maxHint").className;
-    // document.getElementById("minHint").className = (leastOperationsValue === "-") ? "disabledInfoHint item12" : document.getElementById("minHint").className;
 }
 
 function updateLayerInfoBox() {
@@ -72,10 +64,13 @@ function updateLayerInfoBox() {
     document.getElementById("componentMostOperationsValue").innerText = (mostOperationsValue === "-") ? "-" : mostOperationsValue._name;
     document.getElementById("componentLeastOperationsValue").innerText = (leastOperationsValue === "-") ? "-" : leastOperationsValue._name;
     setTimeout(() => {
+        document.getElementById('layerInfoTittle').innerHTML = layers.selectedLayer._name + " Info";
+        resetButtons();
         checkAndActivateHint('functionHint', (id) => { highlightOrphanOperations(document.getElementById(id)); });
         checkAndActivateHint('roleHint', (id) => { highlightEmptyComponents(document.getElementById(id)); });
         checkAndActivateHint('maxHint', (id) => { highlightMostOperationalComponent(document.getElementById('maxHint'), document.getElementById("minHint")); });
         checkAndActivateHint('minHint', (id) => { highlightLeastOperationalComponent(document.getElementById('minHint'), document.getElementById("maxHint")); });
+
         handleZeroValues(orphanValue, componentValue, mostOperationsValue, leastOperationsValue);
     }, 20);
 }

@@ -1,7 +1,7 @@
 import { configStyle } from "../Classes/Config.js";
 import { constantNames } from "../config/constantNames.js";
 import { alterConstantValue } from "../config/functionStyle.js";
-import { showAllRefresh } from "../Workspace/functionAppearance.js";
+import { refreshOperationList, showAllRefresh } from "../Workspace/functionAppearance.js";
 import { createPicker, getSliderGroup, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 
 function getFirstRowValues() {
@@ -62,8 +62,9 @@ function createSecondRowPickers(box, configGrid) {
 
 function createWidthSlider() {
     var borderDefaultValue = (configStyle.getJSONValue("operationBorderWidth")) ? configStyle.getJSONValue("operationBorderWidth").split("px")[0] : 2;
-    var borderSlider = getSliderGroup(constantNames["operationConfig"]["operationBorderWidth"], 1, 8, borderDefaultValue, (value) => {
+    var borderSlider = getSliderGroup(constantNames["operationConfig"]["operationBorderWidth"], 1, 6, borderDefaultValue, (value) => {
         configStyle.handleChange("Operation", "borderWidth", value + "px");
+        // refreshOperationList();
     });
     borderSlider.firstChild.style.marginLeft = "-102px";
     borderSlider.style.width = "345px";

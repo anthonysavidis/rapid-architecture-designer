@@ -116,6 +116,7 @@ function createLayerInfoModal() {
         closeInfo = null;
     }
     var tittleDiv = document.createElement('div');
+    tittleDiv.id = "layerInfoTittle";
     tittleDiv.className = "tittleDiv unselectableText";
     tittleDiv.style.marginLeft = "32px";
     tittleDiv.style.textAlign = "center";

@@ -9,6 +9,8 @@ import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
 import { showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 
+
+//eee
 const moveCallBack = (compId) => {
     const selectedFuncs = getSelectedFunctions();
     const initialFuncsStr = itemFromListToObject(selectedFuncs);

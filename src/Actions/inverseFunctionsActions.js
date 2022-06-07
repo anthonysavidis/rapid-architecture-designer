@@ -118,6 +118,11 @@ function massiveSet(actionItems) {
         items.unparentFunction(initialFunctionList[x]._id);
         items.setFunctionToItem(componentId, initialFunctionList[x]._id);
     }
+    if (document.getElementById("byComponent").checked) {
+        showByComponent();
+        console.log('set');
+
+    }
 }
 
 function massiveMove(actionItems) {
@@ -126,6 +131,10 @@ function massiveMove(actionItems) {
         items.unparentFunction(initialFunctionList[x]._id);
         if (initialFunctionList[x].owners)
             items.setFunctionToItem(initialFunctionList[x].owners, initialFunctionList[x]._id);
+    }
+    if (document.getElementById("byComponent").checked) {
+        showByComponent();
+        console.log('move');
     }
 }
 
