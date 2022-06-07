@@ -1,9 +1,8 @@
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
-import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
-import { showAll, showAllRefresh, showByComponent, updateSelectedList } from "../Workspace/functionAppearance.js";
+import { forceActivateAll, forceActivateByComponent } from "../Workspace/functionAppearance.js";
 
 function countOrphanOperations() {
     const orphanOperations = items.itemList.filter((el) => el._type === "Function" && !el.owners[0]);
@@ -70,7 +69,6 @@ function updateLayerInfoBox() {
         checkAndActivateHint('roleHint', (id) => { highlightEmptyComponents(document.getElementById(id)); });
         checkAndActivateHint('maxHint', (id) => { highlightMostOperationalComponent(document.getElementById('maxHint'), document.getElementById("minHint")); });
         checkAndActivateHint('minHint', (id) => { highlightLeastOperationalComponent(document.getElementById('minHint'), document.getElementById("maxHint")); });
-
         handleZeroValues(orphanValue, componentValue, mostOperationsValue, leastOperationsValue);
     }, 20);
 }
@@ -84,17 +82,20 @@ function alterHintState(elmnt) {
     return (elmnt.className.includes("layerInfoHintPressed"));
 }
 
+
+
 function highlightOrphanOperations(elmnt) {
     if (elmnt.className.includes("disabled"))
         return;
-    showAllRefresh();
-
+    if (document.getElementById("maxHint").className.includes("Pressed") || document.getElementById("minHint").className.includes("Pressed")) {
+        resetComponentHints();
+    }
     const orphanOperations = items.itemList.filter((el) => el._type === "Function" && !el.owners[0]);
-    // highlightItems(elmnt, orphanOperations, "--operationBorderColor");
     const active = alterHintState(elmnt);
-    if (active)
+    if (active) {
+        cancelFunctionSelection();
         orphanOperations.forEach((el) => { document.getElementById(el._id).className = "selectedFunction"; })
-    else
+    } else
         cancelFunctionSelection();
     return;
 }
@@ -102,40 +103,26 @@ function highlightOrphanOperations(elmnt) {
 function highlightEmptyComponents(elmnt) {
     if (elmnt.className.includes("disabled"))
         return;
-    const oldClass = elmnt.className;
-    resetComponentHints();
-    elmnt.className = oldClass;
+    if (document.getElementById("maxHint").className.includes("Pressed") || document.getElementById("minHint").className.includes("Pressed")) {
+        resetComponentHints();
+    }
     const emptyComponents = items.itemList.filter((el) => el._type === "Component" && !el._functions.length);
     const active = alterHintState(elmnt);
-    if (active)
+    if (active) {
+        cancelSelection();
         emptyComponents.forEach(el => { selectAction(el._id); });
-    else
+    } else
         cancelSelection();
     return;
 }
 
 function focusOnSpecificComponent(component) {
-    cancelSelection();
-    document.getElementById("all").checked = false;
-    document.getElementById("currentSelectedArea").style.display = "block";
-    document.getElementById("functionArea").style.height = "57%";
-    document.getElementById("byComponent").checked = true;
-    cancelFunctionSelection();
-    showByComponent();
-    updateSelectedList();
-    closeTheTooltip();
+    forceActivateByComponent();
     selectAction(component._id);
 }
 
 function unfocusOnSpecificComponent(component) {
-    cancelFunctionSelection();
-    cancelSelection();
-    document.getElementById("all").checked = true;
-    document.getElementById("byComponent").checked = false;
-    showAll();
-    document.getElementById("currentSelectedArea").style.display = "none";
-    document.getElementById("functionArea").style.height = "70%";
-    closeTheTooltip();
+    forceActivateAll();
 }
 
 function resetButtons() {
@@ -143,11 +130,7 @@ function resetButtons() {
     document.getElementById("maxHint").className = (document.getElementById("maxHint").className.includes("disabled")) ? document.getElementById("maxHint").className : "layerInfoHint item9";
     document.getElementById("minHint").className = (document.getElementById("minHint").className.includes("disabled")) ? document.getElementById("minHint").className : "layerInfoHint item12";
     document.getElementById("functionHint").className = (document.getElementById("functionHint").className.includes("disabled")) ? document.getElementById("functionHint").className : "layerInfoHint item3";
-    document.getElementById("currentSelectedArea").style.display = "none";
-    document.getElementById("functionArea").style.height = "70%";
-    showAllRefresh();
-    document.getElementById("all").checked = true;
-    document.getElementById("byComponent").checked = false;
+    forceActivateAll();
     return;
 }
 
@@ -155,12 +138,9 @@ function resetComponentHints() {
     document.getElementById("roleHint").className = (document.getElementById("roleHint").className.includes("disabled")) ? document.getElementById("roleHint").className : "layerInfoHint item6";
     document.getElementById("maxHint").className = (document.getElementById("maxHint").className.includes("disabled")) ? document.getElementById("maxHint").className : "layerInfoHint item9";
     document.getElementById("minHint").className = (document.getElementById("minHint").className.includes("disabled")) ? document.getElementById("minHint").className : "layerInfoHint item12";
-    document.getElementById("currentSelectedArea").style.display = "none";
-    document.getElementById("functionArea").style.height = "70%";
-    document.getElementById("all").checked = true;
-    document.getElementById("byComponent").checked = false;
     cancelSelection();
-    showAllRefresh();
+    forceActivateAll();
+    return;
 }
 
 function resetHighlightedHints() {
@@ -174,7 +154,8 @@ function highlightMostOperationalComponent(elmnt, elmntMin) {
     if (elmnt.className.includes("disabled"))
         return;
     const oldClass = elmnt.className;
-    resetComponentHints();
+    resetButtons();
+    cancelSelection();
     elmnt.className = oldClass;
     const active = alterHintState(elmnt);
     const component = getComponentWithTheMostOperations();
@@ -197,7 +178,8 @@ function highlightLeastOperationalComponent(elmnt, elmntMax) {
     if (elmnt.className.includes("disabled"))
         return;
     const oldClass = elmnt.className;
-    resetComponentHints();
+    resetButtons();
+    cancelSelection();
     elmnt.className = oldClass;
     const active = alterHintState(elmnt);
     const component = getComponentWithTheLeastOperations();

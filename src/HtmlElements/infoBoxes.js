@@ -2,6 +2,7 @@ import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { addMotion, dragModalHandler } from "../Input/movingModal.js";
 import { unlink } from "../Item/Link.js";
+import { addToArchitectureList } from "../Layers/Tree.js";
 import { closeInfo } from "./layerInfo.js";
 
 
@@ -52,8 +53,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
     closeButton.onclick = cancelAction;
-
-    box.appendChild(closeButton);
+    if (type !== "updating")
+        box.appendChild(closeButton);
 
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
@@ -77,9 +78,13 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         }
         produceGrayLayer(box, "", "", cancelCallBack);
     } else if (type === "updating") {
+        title.style.textAlign = "center";
+        title.style.marginRight = "0px";
+        title.style.paddingRight = title.style.paddingLeft = "10px";
+        // title.style.paddingRight=title.style.paddingLeft="15px";
         title.innerText = extraInfo;
-        produceMovingBar(box, 1);
-        title.style.marginTop = -3 + "px";
+        // produceMovingBar(box, 1);
+        title.style.marginTop = -5 + "px";
         box.appendChild(title);
 
         document.getElementById("body").appendChild(box);

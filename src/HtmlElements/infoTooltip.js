@@ -170,20 +170,19 @@ function fixPositionAndArrow(tooltip, id, itemType, itemRect, x, y) {
     return;
 }
 
-function closeOthers() {
+function closeOthers(ownId) {
     const otherTooltip = document.getElementsByClassName("tooltiptext")[0];
-    if (!otherTooltip)
+    if (!otherTooltip || ownId === otherTooltip.id)
         return;
     const arrowId = otherTooltip.id + 'Arrow';
     otherTooltip.remove();
     if (document.getElementById(arrowId))
         document.getElementById(arrowId).remove();
-
     return;
 }
 
 function produceTooltip(x, y, src, id) {
-    closeOthers();
+    closeOthers(id + "tooltip");
     var description = items.itemList[items.itemList.findIndex((el) => el._id === id)]._description;
     var itemType = items.itemList[items.itemList.findIndex((el) => el._id === id)]._type;
     var moreInfo = items.itemList[items.itemList.findIndex((el) => el._id === id)].moreInfo;

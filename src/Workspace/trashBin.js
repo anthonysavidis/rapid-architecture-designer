@@ -90,7 +90,7 @@ function initializeTheTrashBin() {
 }
 
 function fixTrashBinPosition() {
-    document.getElementById("helpButton").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 120 + "px";
+    document.getElementById("helpButton").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";
     document.getElementById("helpButton").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 160 + "px";
     document.getElementById("trashBin").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";
     document.getElementById("trashBin").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 30 + "px";
