@@ -165,7 +165,6 @@ function turnOffExtension(id) {
     document.getElementById(id + 'name').style.marginTop = "0";
 
     collapseSubcomponents(id);
-    // closeTooltip(id);
     addResize(id);
     const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
     autoResizeDispatch["autoFit"](component);

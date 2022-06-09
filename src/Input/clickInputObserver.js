@@ -93,8 +93,10 @@ function hasClickedOnWorkspace(id) {
 function handleLayerInfoAppearance(x, y) {
     if (!document.getElementById("layerInfo"))
         return;
+    const tooltip = document.getElementsByClassName('tooltiptext')[0];
+    const clickedInsideTooltip = tooltip && isInsideRec(x, y, tooltip.getBoundingClientRect());
     if (isInsideRec(x, y, document.getElementById("space").getBoundingClientRect()) &&
-        !isInsideRec(x, y, document.getElementById("layerInfo").getBoundingClientRect()))
+        !isInsideRec(x, y, document.getElementById("layerInfo").getBoundingClientRect()) && !clickedInsideTooltip)
         resetButtons();
 }
 
@@ -151,6 +153,7 @@ function initializeObserver() {
 }
 
 function closeTheTooltip() {
+    // console.trace();
     const tooltip = document.getElementsByClassName('tooltiptext')[0];
     const fArrow = document.getElementsByClassName('fInfoArrow')[0];
     if (fArrow)

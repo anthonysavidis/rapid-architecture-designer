@@ -42,10 +42,6 @@ function createValues(box, infoGrid) {
     componentLeastOperationsValue.id = "componentLeastOperationsValue";
 
     infoGrid.style.marginBottom = "15px";
-    // orphanOperationValue.innerText = countOrphanOperations();
-    // componentValue.innerText = countEmptyComponents();
-    // componentMostOperationsValue.innerText = getComponentWithTheMostOperations()._name;
-    // componentLeastOperationsValue.innerText = getComponentWithTheLeastOperations()._name;
     orphanOperationValue.className += " item2";
     componentValue.className += " item5";
     componentMostOperationsValue.className += " item8";

@@ -195,8 +195,7 @@ function produceTooltip(x, y, src, id) {
     var externalDiv = produceExternal(tooltip, id);
 
     var layerExists = !(src === './images/noSub.png' || itemType !== "Component");
-    console.log(layerExists);
-    console.log(src);
+
     setUpTooltipListeners(id, layerExists);
     fixPositionAndArrow(tooltip, id, itemType, itemRect, x, y);
     return;
