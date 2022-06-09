@@ -35,6 +35,12 @@ class Config {
     getJSONValue(key) {
         return this.configJSON[key];
     }
+    handleChangeVar(varName, value) {
+        this.setJSONValue(varName.slice(2), value);
+        var r = document.querySelector(':root');
+        r.style.setProperty(varName, value);
+        return;
+    }
 
     handleChange(type, attributeChanged, value, ignoreCurrent) {
         var textType = type.toLowerCase();
@@ -48,8 +54,8 @@ class Config {
             autoResizeAllComponents();
             // checkAndResize(); //?????????????????????????
         }
-        if (!ignoreCurrent)
-            this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
+        // if (!ignoreCurrent)
+        //     this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
         return;
     }
     getStyleButtonStates(className) {

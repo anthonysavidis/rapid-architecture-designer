@@ -1,5 +1,5 @@
 import { configStyle } from "../Classes/Config.js";
-import { applyToEachComponent, refreshAllLinks } from "../Classes/LayerHolder.js";
+import { applyToEachComponent, getAllBoundingRectMap, refreshAllLinks, setBoundingRectMap } from "../Classes/LayerHolder.js";
 import { autoResizeAllComponents } from "../Item/autoResize.js";
 import { createPicker, createRestoreButton, getSliderGroup, getSwitch, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 import { constantNames } from "../config/constantNames.js";
@@ -150,6 +150,71 @@ function produceSubcomponentSettings(box, configGrid) {
     return;
 }
 
+function descriptionHandler() {
+    var oldBRecs = {};
+    const currentLayerId = layers.selectedLayer._id;
+    if (document.getElementById("descriptionSwitch").checked) {
+        document.getElementById("descArea").style.display = "inline-block";
+        configStyle.descriptionEnabled = true;
+        applyToEachComponent((component) => {
+            oldBRecs[component._id] = (JSON.stringify(component.boundingRec));
+            turnOnDescription(component);
+            if (component.links)
+                renderLine(component._id);
+        });
+        // refreshAllLinks();
+        actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, oldBRecs, "");
+    } else {
+        document.getElementById("descArea").style.display = "none";
+        configStyle.descriptionEnabled = false;
+        applyToEachComponent((component) => {
+            turnOffDescription(component);
+        });
+        actions.saveCommand(disableDescriptionInAllComponents, enableDescriptionInAllComponents, "", "");
+        autoResizeAllComponents();
+    }
+    layers.changeLayer(currentLayerId);
+}
+
+function autoFitHandler() {
+    configStyle.autoFit = document.getElementById("autofitSwitch").checked;
+    if (document.getElementById("autofitSwitch").checked) {
+        document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
+        document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginX").split("px")[0] + "px";
+        document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
+        document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginY").split("px")[0] + "px";
+        document.getElementById('innerMarginSlider').style.display = "inline-block";
+        autoResizeAllComponents();
+
+    } else {
+        configStyle.setInitialMargins();
+        autoResizeAllComponents();
+        document.getElementById('innerMarginSlider').style.display = "none";
+    }
+}
+
+function storeInitialSettings() {
+    configStyle.actionDispatch["Component"].currentOldSettings = configStyle.actionDispatch["Component"].getCategoryInitialValue("Component");
+    configStyle.actionDispatch["Description"].currentOldSettings = configStyle.actionDispatch["Description"].getCategoryInitialValue("Description");
+    configStyle.actionDispatch["Subcomponent"].currentOldSettings = configStyle.actionDispatch["Subcomponent"].getCategoryInitialValue("Subcomponent");
+    configStyle.actionDispatch["Component"].currentOldSettings["_oldRecs"] = getAllBoundingRectMap();
+    configStyle.actionDispatch["Component"].currentOldSettings["_descOn"] = configStyle.descriptionEnabled;
+    configStyle.actionDispatch["Component"].currentOldSettings["_autoFit"] = configStyle.autoFit;
+    return;
+}
+
+function loadInitialSettings() {
+    const oldBRecs = configStyle.actionDispatch["Component"].currentOldSettings["_oldRecs"];
+    document.getElementById("descriptionSwitch").checked = configStyle.actionDispatch["Component"].currentOldSettings["_descOn"];
+    document.getElementById("autofitSwitch").checked = configStyle.actionDispatch["Component"].currentOldSettings["_autoFit"];
+    configStyle.descriptionEnabled = configStyle.actionDispatch["Component"].currentOldSettings["_descOn"];
+    configStyle.autoFit = configStyle.actionDispatch["Component"].currentOldSettings["_autoFit"];
+    descriptionHandler();
+    autoFitHandler();
+    setBoundingRectMap(oldBRecs);
+    return;
+}
+
 function createComponentConfigBox() {
     var box = document.createElement('div');
     box.className = 'configurationBox';
@@ -161,14 +226,18 @@ function createComponentConfigBox() {
             document.getElementById('grayLayer').remove();
 
     };
+    storeInitialSettings();
     var cancelChanges = () => {
+        loadInitialSettings();
         closeBox();
         configStyle.actionDispatch["Description"].resetCurrentChanges();
         configStyle.actionDispatch["Subcomponent"].resetCurrentChanges();
         configStyle.actionDispatch["Component"].resetCurrentChanges();
-        configStyle.actionDispatch["Component"].clearCurrenntOldSettings();
-        configStyle.actionDispatch["Description"].clearCurrenntOldSettings();
-        configStyle.actionDispatch["Subcomponent"].clearCurrenntOldSettings();
+
+        configStyle.actionDispatch["Component"].clearCurrentOldSettings();
+        configStyle.actionDispatch["Description"].clearCurrentOldSettings();
+        configStyle.actionDispatch["Subcomponent"].clearCurrentOldSettings();
+        refreshAllLinks();
     }
     produceGrayLayer(box, "", "", cancelChanges);
 
@@ -196,9 +265,9 @@ function createComponentConfigBox() {
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["apply"] + "</p>";
     confirmationButton.onclick = function() {
-        configStyle.actionDispatch["Component"].clearCurrenntOldSettings();
-        configStyle.actionDispatch["Description"].clearCurrenntOldSettings();
-        configStyle.actionDispatch["Subcomponent"].clearCurrenntOldSettings();
+        configStyle.actionDispatch["Component"].clearCurrentOldSettings();
+        configStyle.actionDispatch["Description"].clearCurrentOldSettings();
+        configStyle.actionDispatch["Subcomponent"].clearCurrentOldSettings();
         closeBox();
     }
     var buttonsContainer = document.createElement('div');
@@ -217,45 +286,10 @@ function createComponentConfigBox() {
     document.getElementById('body').appendChild(box);
     addMotion(box);
     document.getElementById("autofitSwitch").addEventListener("change", () => {
-        configStyle.autoFit = document.getElementById("autofitSwitch").checked;
-        if (document.getElementById("autofitSwitch").checked) {
-            document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
-            document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginX").split("px")[0] + "px";
-            document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
-            document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginY").split("px")[0] + "px";
-            document.getElementById('innerMarginSlider').style.display = "inline-block";
-            autoResizeAllComponents();
-
-        } else {
-            configStyle.setInitialMargins();
-            autoResizeAllComponents();
-            document.getElementById('innerMarginSlider').style.display = "none";
-        }
+        autoFitHandler();
     });
     document.getElementById("descriptionSwitch").addEventListener("change", () => {
-        var oldBRecs = {};
-        const currentLayerId = layers.selectedLayer._id;
-        if (document.getElementById("descriptionSwitch").checked) {
-            document.getElementById("descArea").style.display = "inline-block";
-            configStyle.descriptionEnabled = true;
-            applyToEachComponent((component) => {
-                oldBRecs[component._id] = (JSON.stringify(component.boundingRec));
-                turnOnDescription(component);
-                if (component.links)
-                    renderLine(component._id);
-            });
-            // refreshAllLinks();
-            actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, oldBRecs, "");
-        } else {
-            document.getElementById("descArea").style.display = "none";
-            configStyle.descriptionEnabled = false;
-            applyToEachComponent((component) => {
-                turnOffDescription(component);
-            });
-            actions.saveCommand(disableDescriptionInAllComponents, enableDescriptionInAllComponents, "", "");
-            autoResizeAllComponents();
-        }
-        layers.changeLayer(currentLayerId);
+        descriptionHandler();
     });
     if (configStyle.autoFit) {
         document.getElementById("autofitSwitch").checked = true;
@@ -270,6 +304,8 @@ function createComponentConfigBox() {
     document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "80px";
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
     closeButton.style.top = 5 + "px";
+
+    console.log(configStyle.actionDispatch["Component"].currentOldSettings);
     return;
 }
 

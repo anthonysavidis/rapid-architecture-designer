@@ -18,24 +18,20 @@ class ConfigActions {
         var initialJSON = {};
         for (var x in categoryNames) {
             initialJSON[categoryNames[x]] = {};
-            initialJSON[categoryNames[x]] = rs.getPropertyValue(categoryNames[x]).slice(1);
+            initialJSON[categoryNames[x]] = (rs.getPropertyValue(categoryNames[x]).charAt(0) === " ") ? rs.getPropertyValue(categoryNames[x]).slice(1) : rs.getPropertyValue(categoryNames[x]);
         }
         return initialJSON;
     }
     applyToConfig(changesJSON) {
         for (var x in changesJSON) {
-            const value = changesJSON[x];
-            const type = x.split(/(?=[A-Z])/)[0].slice(2);
-            const attributeChanged = x.replace(type, "").slice(2);
-            configStyle.handleChange(capitalizeFirstLetter(type), attributeChanged, value, 1);
+            configStyle.handleChangeVar(x, changesJSON[x]);
         }
-        this.clearCurrenntOldSettings();
+        this.clearCurrentOldSettings();
         // refreshAllLinks();
         return;
     }
 
     resetCurrentChanges() {
-        console.log(this.currentOldSettings);
         this.applyToConfig(this.currentOldSettings);
         return;
     }
@@ -62,16 +58,14 @@ class ConfigActions {
         this.currentOldSettings[key] = value;
     }
 
-    clearCurrenntOldSettings() {
+    clearCurrentOldSettings() {
         this.currentOldSettings = {};
     }
-    setCurrentSettings(varName) {
+    setCurrentStetings(varName) {
         var r = document.querySelector(':root');
         var rs = getComputedStyle(r);
         const value = (rs.getPropertyValue("--" + varName).charAt(0) === " ") ? rs.getPropertyValue("--" + varName).slice(1) : rs.getPropertyValue("--" + varName);
-        const type = varName.split(/(?=[A-Z])/)[0];
-        const attributeChanged = varName.replace(type, "");
-        configStyle.handleChange(capitalizeFirstLetter(type), attributeChanged, value, 1);
+        configStyle.handleChangeVar(varName, value);
         return;
     }
 }

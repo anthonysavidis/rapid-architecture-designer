@@ -72,7 +72,7 @@ function toggleSelectedComponents() {
         document.getElementById("functionArea").style.height = "57%";
     } else {
         document.getElementById("currentSelectedArea").style.display = "none";
-        document.getElementById("functionArea").style.height = "70%";
+        document.getElementById("functionArea").style.height = "80%";
 
     }
     return;

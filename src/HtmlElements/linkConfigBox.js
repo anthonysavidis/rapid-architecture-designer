@@ -4,6 +4,8 @@ import { createPicker, createRestoreButton, produceFontFamilyForms, produceSizeF
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
 import { createOperationColorPickers, produceOperationForm } from "../HtmlElements/operationsConfigBox.js";
+import { alterConstantValue } from "../config/functionStyle.js";
+import { refreshOperationList } from "../Workspace/functionAppearance.js";
 
 var textContainer;
 
@@ -56,6 +58,28 @@ function createLinkConfigBox(box, configGrid) {
     return;
 }
 
+function storeInitialSettings(type) {
+    configStyle.actionDispatch[type].currentOldSettings = configStyle.actionDispatch[type].getCategoryInitialValue(type);
+    console.log(configStyle.actionDispatch[type].currentOldSettings);
+    return;
+}
+
+function loadInitialSettings(type) {
+    configStyle.actionDispatch[type].resetCurrentChanges();
+    configStyle.actionDispatch[type].clearCurrentOldSettings();
+    if (type === "Operation") {
+        var r = document.querySelector(':root');
+        var rs = getComputedStyle(r);
+        const attachedValue = rs.getPropertyValue('--operationSettedColor');
+        const draggedValue = rs.getPropertyValue('--operationDraggingColor');
+        console.log(attachedValue + " " + draggedValue);
+        alterConstantValue("attached", attachedValue);
+        alterConstantValue("ondrag", draggedValue);
+        refreshOperationList();
+    }
+    return;
+}
+
 function produceAConfigBox(type) {
     var box = document.createElement('div');
     box.className = 'configurationBox';
@@ -64,10 +88,11 @@ function produceAConfigBox(type) {
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
     };
+    storeInitialSettings(type);
     var cancelChanges = function() {
+        console.log(type);
+        loadInitialSettings(type);
         closeBox();
-        configStyle.actionDispatch[type].resetCurrentChanges();
-        configStyle.actionDispatch[type].clearCurrenntOldSettings();
     };
 
     produceGrayLayer(box, "", "", cancelChanges);
@@ -85,9 +110,12 @@ function produceAConfigBox(type) {
     if (type === "Operation") {
         produceOperationForm(box, configGrid);
         createOperationColorPickers(box, configGrid);
+        configStyle.actionDispatch["Operation"].currentOldSettings = configStyle.actionDispatch["Operation"].getCategoryInitialValue("Operation");
+
     } else {
         produceLinkForm(box, configGrid);
         createLinkConfigBox(box, configGrid);
+        configStyle.actionDispatch["Link"].currentOldSettings = configStyle.actionDispatch["Link"].getCategoryInitialValue("Link");
         // closeButton.style.left = 685 + "px";
         // closeButton.style.top = 10 + "px";
     }
@@ -101,9 +129,9 @@ function produceAConfigBox(type) {
     confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["apply"] + "</p>";
     confirmationButton.onclick = function() {
         if (type === "Operation") {
-            configStyle.actionDispatch["Operation"].clearCurrenntOldSettings();
+            configStyle.actionDispatch["Operation"].clearCurrentOldSettings();
         } else if (type === "Link") {
-            configStyle.actionDispatch["Link"].clearCurrenntOldSettings();
+            configStyle.actionDispatch["Link"].clearCurrentOldSettings();
         }
         closeBox();
     }

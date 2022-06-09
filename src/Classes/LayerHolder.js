@@ -199,9 +199,9 @@ function applyToEachComponent(callBack) {
     const currentLayerId = layers.selectedLayer._id;
     for (var x in layers.layerList) {
         layers.changeLayer(layers.layerList[x]._id);
-        const layerItems = layers.itemMap.get(layers.layerList[x]._id);
-        layerItems.itemList.forEach((el) => {
-            (el._type === "Component") ? callBack(el): 1
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id).itemList.filter((el) => el._type === "Component");
+        layerItems.forEach((el) => {
+            callBack(el);
         });
         // for (var y in layerItems.itemList) {
         //     if (layerItems.itemList[y]._type === "Component") {
@@ -231,4 +231,23 @@ function refreshAllLinks() {
     return;
 }
 
-export { layers, LayerHolder, createFirstLayer, refreshAllLinks, applyToEachComponent };
+function getAllBoundingRectMap() {
+    var brectsJSON = {};
+    const callBack = (component) => {
+        brectsJSON[component._id] = document.getElementById(component._id).getBoundingClientRect();
+    };
+    applyToEachComponent(callBack);
+    return brectsJSON;
+}
+
+function setBoundingRectMap(brectsJSON) {
+    const callBack = (component) => {
+        document.getElementById(component._id).style.width = brectsJSON[component._id].width + "px";
+        document.getElementById(component._id).style.height = brectsJSON[component._id].height + "px";
+        document.getElementById(component._id).style.top = brectsJSON[component._id].top + "px";
+        document.getElementById(component._id).style.left = brectsJSON[component._id].left + "px";
+    };
+    applyToEachComponent(callBack);
+}
+
+export { layers, LayerHolder, createFirstLayer, refreshAllLinks, applyToEachComponent, setBoundingRectMap, getAllBoundingRectMap };

@@ -11,12 +11,12 @@ function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
     grayLayer.className = "closingLayer";
     grayLayer.id = "grayLayer";
     grayLayer.onclick = () => {
+        if (cancelCallBack)
+            cancelCallBack();
         box.remove();
         grayLayer.remove();
         // if (callBack)
         //     callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
-        if (cancelCallBack)
-            cancelCallBack();
     }
     document.getElementById('body').appendChild(grayLayer);
     return;
