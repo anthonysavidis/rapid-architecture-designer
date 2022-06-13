@@ -53,13 +53,14 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
     closeButton.onclick = cancelAction;
+
     if (type !== "updating")
         box.appendChild(closeButton);
 
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
-    cancelButton.className = "cancelButton";
-    cancelButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["cancel"] + "</p>";
+    cancelButton.className = "cancelConfigButton unselectableText";
+    cancelButton.innerHTML = constantNames["cancel"];
 
     var title = document.createElement('h3');
     title.className = "boxTitle";
@@ -68,10 +69,17 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
 
         var params = extraInfo.split('@');
         title.innerText = params[0];
+        title.style.marginRight = "0px";
+        title.style.marginTop = "-2px";
+        title.style.marginBottom = "22px";
+        title.style.marginLeft = "15px";
+        title.style.textAlign = "center";
         produceMovingBar(box);
         box.appendChild(title);
-        confirmationButton.className = "deleteButton";
-        (params[1] === '1') ? confirmationButton.innerHTML = "<p style=\"margin-top:9px\">OK</p>": confirmationButton.innerHTML = "<p style=\"margin-top:9px\">Delete</p>";
+        confirmationButton.className = "okButton";
+        confirmationButton.style.backgroundColor = "#ff6464";
+
+        (params[1] === '1') ? confirmationButton.innerHTML = "OK": confirmationButton.innerHTML = "Delete";
         confirmationButton.onclick = function() {
             callBack();
             closeBox();
@@ -99,7 +107,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
 
         box.style.width = "300px";
         box.style.height = "200px";
-        closeButton.style.left = closeButton.getBoundingClientRect().x + 220 + "px";
+        closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
+        closeButton.style.top = 5 + "px";
         title.innerText = extraInfo[0];
         produceMovingBar(box);
         box.appendChild(title);
@@ -117,7 +126,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         cancelButton.onclick = cancelAction;
 
         confirmationButton.className = "okButton";
-        confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["ok"] + "</p>";
+        confirmationButton.innerHTML = constantNames["ok"];
         confirmationButton.onclick = function() {
             callBack(select.value);
             closeBox();
@@ -153,8 +162,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         form.appendChild(descriptionFormExternal);
 
         box.appendChild(form);
-        confirmationButton.className = "okButton";
-        confirmationButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["ok"] + "</p>";
+        confirmationButton.className = "okButton unselectableText";
+        confirmationButton.innerHTML = constantNames["ok"];
         cancelButton.onclick = function() {
             // callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
             cancelCallBack();
@@ -177,6 +186,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     box.appendChild(buttons);
     document.getElementById("body").appendChild(box);
     addMotion(box);
+    closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
+    closeButton.style.top = 5 + "px";
     return;
 }
 

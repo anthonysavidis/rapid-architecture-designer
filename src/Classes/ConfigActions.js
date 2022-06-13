@@ -26,7 +26,7 @@ class ConfigActions {
         for (var x in changesJSON) {
             configStyle.handleChangeVar(x, changesJSON[x]);
         }
-        this.clearCurrentOldSettings();
+        // this.clearCurrentOldSettings();
         // refreshAllLinks();
         return;
     }

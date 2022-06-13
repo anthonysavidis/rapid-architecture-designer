@@ -160,22 +160,26 @@ function produceTextColor(box, className, callBack) {
 
 function createRestoreButton(category, closeBoxCallBack, openBoxCallBack) {
     var restoreButton = document.createElement('div');
-    restoreButton.className = "cancelButton";
-    restoreButton.style.width = "auto";
-    restoreButton.style.float = "left";
-    restoreButton.style.marginRight = "26px";
-    restoreButton.style.borderRadius = "0%";
-    restoreButton.style.backgroundColor = "#cccccc";
-    restoreButton.style.paddingLeft = restoreButton.style.paddingRight = "7px";
-    restoreButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["restore"] + "</p>";
+    restoreButton.className = "cancelConfigButton unselectableText";
+    // restoreButton.style.width = "auto";
+    // restoreButton.style.float = "left";
+    // restoreButton.style.marginRight = "26px";
+    restoreButton.style.borderRadius = "5px";
+    // restoreButton.style.backgroundColor = "#FFFFFF";
+    // restoreButton.style.fontWeight = "bold";
+    // restoreButton.style.border = "#969696 solid 1px";
+    // restoreButton.style.color = "#1c5299";
+    // restoreButton.style.paddingLeft = restoreButton.style.paddingRight = "7px";
+    // restoreButton.style.boxShadow = "4px 6px 3px rgb(0 0 0 / 40%)";
+    restoreButton.innerHTML = constantNames["restore"];
     restoreButton.onclick = () => {
-        configStyle.actionDispatch[category].resetToDefault();
         if (category == "Component") {
             configStyle.actionDispatch["Description"].resetToDefault();
             configStyle.actionDispatch["Subcomponent"].resetToDefault();
         }
-        closeBoxCallBack();
-        openBoxCallBack();
+        configStyle.actionDispatch[category].resetToDefault();
+        // closeBoxCallBack();
+        // openBoxCallBack();
     }
     return restoreButton;
 }

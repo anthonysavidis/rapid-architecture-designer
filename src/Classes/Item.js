@@ -21,7 +21,7 @@ import { showAll, showByComponent, showOwner } from "../Workspace/functionAppear
 import { moveCallBack } from "../Input/contextMenuCallbacks.js";
 import { functionColors } from "../config/functionStyle.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
-import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { appearComponentButtons, appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { canMove } from "../Item/createComponent.js";
 import { moveAllNext, moveAllPrev, moveNext, movePrev } from "../Actions/inverseMovement.js";
 import { deleteOperationWithTrashBin } from "../UpTab/functionTab.js";
@@ -89,6 +89,7 @@ class Item {
         var div = document.createElement("div");
         div.innerHTML = str;
         div.id = this._id + "external";
+        div.title = this._description;
 
         // div.style.transition = "width 1s, height 1s, transform 1s";
         document.getElementById(layers.selectedLayer._id).appendChild(div);
@@ -229,10 +230,11 @@ class Item {
         this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
     }
     spawnFunction() {
-        var str = "<div draggable=\"true\" class=\"function\" id=\"" + this._id + "\"><div id=\"" + this._id + "ficon\" class=\"ficon\"></div><div class=\"fName\" id=\"" + this._id + "name\">" + this._name + "</div></div>";
+        var str = "<div draggable=\"true\"  class=\"function\" id=\"" + this._id + "\"><div id=\"" + this._id + "ficon\" class=\"ficon\"></div><div class=\"fName\" id=\"" + this._id + "name\">" + this._name + "</div></div>";
         var div = document.createElement("div");
         div.innerHTML = str;
         div.id = this._id + 'external';
+        div.title = this._description;
         document.getElementById(layers.selectedLayer._id + "functions").appendChild(div);
         this.x = document.getElementById(this._id).getBoundingClientRect().left;
         this.y = document.getElementById(this._id).getBoundingClientRect().top;
@@ -264,7 +266,10 @@ class Item {
                 document.getElementsByClassName("context-menu")[0].remove();
 
             produceContextMenu(editId, ev.clientX, ev.clientY);
-        })
+        });
+        // document.getElementById(this._id + 'external').addEventListener("click", (e) => {
+        //     // appearFunctionButtons();
+        // });
         var prevColor = "";
         const curId = this._id;
         this.domElement.ondragstart = (ev) => {

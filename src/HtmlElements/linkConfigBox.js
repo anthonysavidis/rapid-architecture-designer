@@ -122,11 +122,11 @@ function produceAConfigBox(type) {
     box.appendChild(configGrid);
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
-    cancelButton.className = "cancelButton";
-    cancelButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["cancel"] + "</p>";
+    cancelButton.className = "cancelConfigButton unselectable";
+    cancelButton.innerHTML = constantNames["cancel"];
     cancelButton.onclick = cancelChanges;
     confirmationButton.className = "okButton";
-    confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["apply"] + "</p>";
+    confirmationButton.innerHTML = constantNames["apply"];
     confirmationButton.onclick = function() {
         if (type === "Operation") {
             configStyle.actionDispatch["Operation"].clearCurrentOldSettings();

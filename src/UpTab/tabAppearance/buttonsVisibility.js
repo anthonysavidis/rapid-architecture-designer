@@ -97,10 +97,15 @@ function appearFunctionButtons() {
         var functionList = getSelectedFunctions();
         var canReset = true;
         functionList.forEach((el, index, arr) => {
-            (!el.owners) ? canReset = false: 1;
+            (!el.owners[0]) ? canReset = false: 1;
         });
+        console.log(canReset);
         if (canReset) {
+            document.getElementById("splitButton").style.display = "inline-block";
             document.getElementById("resetFunctionButton").style.display = "inline-block";
+        } else {
+            document.getElementById("resetFunctionButton").style.display = "none";
+            document.getElementById("splitButton").style.display = "none";
         }
     } else {
         document.getElementById("resetFunctionButton").style.display = "none";

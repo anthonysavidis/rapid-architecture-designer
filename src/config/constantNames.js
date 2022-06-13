@@ -121,7 +121,7 @@ const constantNames = {
         "operationBorderWidth": "Border width:",
     },
     "linkConfig": {
-        "linkColor": "Link:",
+        "linkColor": "Link line segment:",
         "arrowColor": "Link arrow:"
     },
     "layerInfo": {

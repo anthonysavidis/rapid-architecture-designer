@@ -25,10 +25,10 @@ function createDialog(type, callBack) {
     nameFormExternal.appendChild(nameLabelDiv);
     nameFormExternal.appendChild(nameFormDiv);
     nameFormExternal.style.marginBottom = "10px";
-    confirmationButton.className = "okButton";
-    confirmationButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["ok"] + "</p>";
-    cancelButton.className = "cancelButton";
-    cancelButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["cancel"] + "</p>";
+    confirmationButton.className = "okButton unselectable";
+    confirmationButton.innerHTML = constantNames["ok"];
+    cancelButton.className = "cancelConfigButton";
+    cancelButton.innerHTML = constantNames["cancel"];
 
     cancelButton.onclick = function() {
         callBack(constantNames["emptyNames"][type], 1);

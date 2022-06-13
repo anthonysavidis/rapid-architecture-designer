@@ -99,7 +99,9 @@ function produceSliders(box, configGrid) {
     innerMarginX.style.float = innerMarginY.style.float = "left";
     innerMarginX.style.marginLeft = innerMarginY.style.marginLeft = "15px";
     innerMarginX.style.position = innerMarginY.style.position = "absolute";
-    innerMarginX.style.left = innerMarginY.style.left = -247 + "px";
+    innerMarginX.style.left = innerMarginY.style.left = -259 + "px";
+    innerMarginX.style.left = -265 + "px";
+    innerMarginX.children[2].style.position = innerMarginY.children[2].style.position = "absolute";
     innerMarginY.style.top = 345 + "px";
     innerMarginDiv.id = "innerMarginSlider";
     innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
@@ -107,6 +109,7 @@ function produceSliders(box, configGrid) {
     innerMarginDiv.style.width = "100%";
     innerMarginDiv.style.height = "94px";
     innerMarginDiv.style.display = "none";
+    innerMarginY.style.marginLeft = "8px";
     borderWidthSlider.style.width = 254 + "px";
     borderWidthSlider.className += " item6";
     configGrid.appendChild(borderWidthSlider);
@@ -228,6 +231,7 @@ function createComponentConfigBox() {
     };
     storeInitialSettings();
     var cancelChanges = () => {
+        console.log(configStyle.actionDispatch["Component"].currentOldSettings);
         loadInitialSettings();
         closeBox();
         configStyle.actionDispatch["Description"].resetCurrentChanges();
@@ -259,11 +263,11 @@ function createComponentConfigBox() {
 
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
-    cancelButton.className = "cancelButton";
-    cancelButton.innerHTML = "<p style=\"margin-top:9px\" class=\"unselectable\">" + constantNames["cancel"] + "</p>";
+    cancelButton.className = "cancelConfigButton unselectableText";
+    cancelButton.innerHTML = constantNames["cancel"];
     cancelButton.onclick = cancelChanges;
-    confirmationButton.className = "okButton";
-    confirmationButton.innerHTML = "<p style=\"margin-top:9px\">" + constantNames["apply"] + "</p>";
+    confirmationButton.className = "okButton unselectableText";
+    confirmationButton.innerHTML = constantNames["apply"];
     confirmationButton.onclick = function() {
         configStyle.actionDispatch["Component"].clearCurrentOldSettings();
         configStyle.actionDispatch["Description"].clearCurrentOldSettings();
@@ -305,7 +309,6 @@ function createComponentConfigBox() {
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
     closeButton.style.top = 5 + "px";
 
-    console.log(configStyle.actionDispatch["Component"].currentOldSettings);
     return;
 }
 
