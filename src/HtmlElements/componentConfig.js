@@ -218,7 +218,20 @@ function loadInitialSettings() {
     return;
 }
 
-function createComponentConfigBox() {
+function createComponentFields(box, configGrid) {
+    produceComponentForm(box, configGrid);
+    produceComponentConfigBox(box, configGrid);
+    produceSubcomponentSettings(box, configGrid);
+    box.appendChild(configGrid);
+    produceSwitches(box, configGrid);
+    produceSliders(box, configGrid);
+    descriptionArea(box);
+    return;
+}
+
+var refreshComponentConfigContents;
+
+function createComponentConfigBox(refresh) {
     var box = document.createElement('div');
     box.className = 'configurationBox';
     var configGrid = document.createElement('div');
@@ -229,7 +242,8 @@ function createComponentConfigBox() {
             document.getElementById('grayLayer').remove();
 
     };
-    storeInitialSettings();
+    if (!refresh)
+        storeInitialSettings();
     var cancelChanges = () => {
         console.log(configStyle.actionDispatch["Component"].currentOldSettings);
         loadInitialSettings();
@@ -253,13 +267,15 @@ function createComponentConfigBox() {
     // closeButton.style.left = 680 + "px";
     produceMovingBar(box, 0);
     box.appendChild(closeButton);
-    produceComponentForm(box, configGrid);
-    produceComponentConfigBox(box, configGrid);
-    produceSubcomponentSettings(box, configGrid);
-    box.appendChild(configGrid);
-    produceSwitches(box, configGrid);
-    produceSliders(box, configGrid);
+    var fields = document.createElement('div');
+    createComponentFields(fields, configGrid);
+    box.append(fields);
+    refreshComponentConfigContents = () => {
+        for (var i = 0; i < fields.childNodes.length; i++)
+            fields.childNodes[i].remove();
+        createComponentFields(fields, configGrid);
 
+    }
 
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
@@ -284,7 +300,6 @@ function createComponentConfigBox() {
     buttonsContainer.appendChild(cancelButton);
     buttonsContainer.appendChild(restoreButton);
     buttonsContainer.appendChild(confirmationButton);
-    descriptionArea(box);
     box.appendChild(buttonsContainer);
 
     document.getElementById('body').appendChild(box);
@@ -312,4 +327,4 @@ function createComponentConfigBox() {
     return;
 }
 
-export { produceComponentForm, createComponentConfigBox, produceComponentConfigBox, produceSliders, produceSwitches };
+export { produceComponentForm, createComponentConfigBox, refreshComponentConfigContents, produceComponentConfigBox, produceSliders, produceSwitches };

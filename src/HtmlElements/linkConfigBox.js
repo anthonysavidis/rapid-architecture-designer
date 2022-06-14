@@ -80,7 +80,7 @@ function loadInitialSettings(type) {
     return;
 }
 
-function produceAConfigBox(type) {
+function produceAConfigBox(type, refresh) {
     var box = document.createElement('div');
     box.className = 'configurationBox';
     var closeBox = function() {
@@ -88,9 +88,9 @@ function produceAConfigBox(type) {
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
     };
-    storeInitialSettings(type);
+    if (!refresh)
+        storeInitialSettings(type);
     var cancelChanges = function() {
-        console.log(type);
         loadInitialSettings(type);
         closeBox();
     };
@@ -140,7 +140,7 @@ function produceAConfigBox(type) {
     buttonsContainer.style.width = "100%";
     buttonsContainer.style.height = 40 + "px";
     buttonsContainer.style.display = "inline-block";
-    var restoreButton = createRestoreButton(type, closeBox, () => { produceAConfigBox(type); });
+    var restoreButton = createRestoreButton(type, closeBox, () => { produceAConfigBox(type, true); });
 
     buttonsContainer.style.marginTop = 25 + "px";
 

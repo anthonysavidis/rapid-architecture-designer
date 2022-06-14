@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from "../Classes/TextConfig.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResizeAutoFit, autoResizeAllComponents } from "../Item/autoResize.js";
 import { refreshOperationList } from "../Workspace/functionAppearance.js";
+import { refreshComponentConfigContents } from "./componentConfig.js";
 
 function produceSizeForm(box, className, callBack) {
     var select = document.createElement('select');
@@ -166,14 +167,18 @@ function createRestoreButton(category, closeBoxCallBack, openBoxCallBack) {
     restoreButton.innerHTML = constantNames["restore"];
     restoreButton.onclick = () => {
         if (category == "Component") {
+            configStyle.actionDispatch["Component"].resetToDefault();
             configStyle.actionDispatch["Description"].resetToDefault();
             configStyle.actionDispatch["Subcomponent"].resetToDefault();
+
         } else if (category === "Operation") {
             configStyle.actionDispatch["Operation"].resetToDefault();
             refreshOperationList();
         } else if (category === "Link") {
             configStyle.actionDispatch["Link"].resetToDefault();
         }
+        closeBoxCallBack();
+        openBoxCallBack(true);
         // configStyle.actionDispatch[category].resetToDefault();
     }
     return restoreButton;
