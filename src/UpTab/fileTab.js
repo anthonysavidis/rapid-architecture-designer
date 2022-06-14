@@ -125,6 +125,11 @@ function addFileTabListeners() {
                 }
                 // name = "myArchitecture.txt";
                 download(name, layers.toString());
+                setTimeout(
+                    () => {
+                        location.reload();
+                    }, 20);
+
             }
             showInputDialog("Save", callBack);
         });

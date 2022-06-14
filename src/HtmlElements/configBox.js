@@ -3,6 +3,7 @@ import { refreshAllLinks } from "../Classes/LayerHolder.js";
 import { capitalizeFirstLetter } from "../Classes/TextConfig.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResizeAutoFit, autoResizeAllComponents } from "../Item/autoResize.js";
+import { refreshOperationList } from "../Workspace/functionAppearance.js";
 
 function produceSizeForm(box, className, callBack) {
     var select = document.createElement('select');
@@ -161,25 +162,19 @@ function produceTextColor(box, className, callBack) {
 function createRestoreButton(category, closeBoxCallBack, openBoxCallBack) {
     var restoreButton = document.createElement('div');
     restoreButton.className = "cancelConfigButton unselectableText";
-    // restoreButton.style.width = "auto";
-    // restoreButton.style.float = "left";
-    // restoreButton.style.marginRight = "26px";
     restoreButton.style.borderRadius = "5px";
-    // restoreButton.style.backgroundColor = "#FFFFFF";
-    // restoreButton.style.fontWeight = "bold";
-    // restoreButton.style.border = "#969696 solid 1px";
-    // restoreButton.style.color = "#1c5299";
-    // restoreButton.style.paddingLeft = restoreButton.style.paddingRight = "7px";
-    // restoreButton.style.boxShadow = "4px 6px 3px rgb(0 0 0 / 40%)";
     restoreButton.innerHTML = constantNames["restore"];
     restoreButton.onclick = () => {
         if (category == "Component") {
             configStyle.actionDispatch["Description"].resetToDefault();
             configStyle.actionDispatch["Subcomponent"].resetToDefault();
+        } else if (category === "Operation") {
+            configStyle.actionDispatch["Operation"].resetToDefault();
+            refreshOperationList();
+        } else if (category === "Link") {
+            configStyle.actionDispatch["Link"].resetToDefault();
         }
-        configStyle.actionDispatch[category].resetToDefault();
-        // closeBoxCallBack();
-        // openBoxCallBack();
+        // configStyle.actionDispatch[category].resetToDefault();
     }
     return restoreButton;
 }

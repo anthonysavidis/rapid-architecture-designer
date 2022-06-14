@@ -73,8 +73,8 @@ function loadInitialSettings(type) {
         const attachedValue = rs.getPropertyValue('--operationSettedColor');
         const draggedValue = rs.getPropertyValue('--operationDraggingColor');
         console.log(attachedValue + " " + draggedValue);
-        alterConstantValue("attached", attachedValue);
-        alterConstantValue("ondrag", draggedValue);
+        // alterConstantValue("attached", attachedValue);
+        // alterConstantValue("ondrag", draggedValue);
         refreshOperationList();
     }
     return;

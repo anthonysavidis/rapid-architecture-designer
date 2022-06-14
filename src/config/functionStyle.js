@@ -1,6 +1,6 @@
 var functionColors = {
-    "ondrag": "#009dff",
-    "attached": "#99ff00"
+    "ondrag": "var(--operationDraggingColor)",
+    "attached": "var(--operationSettedColor)"
 }
 
 function alterConstantValue(key, value) {

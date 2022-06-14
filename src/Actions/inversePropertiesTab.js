@@ -3,7 +3,7 @@ import { actions } from "../Classes/Actions.js";
 import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
-import { autoResizeDispatch } from "../Item/autoResize.js";
+import { autoResizeDispatch, checkAndResize, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
 import { renderLine } from "../Item/createLine.js";
 
@@ -25,8 +25,9 @@ function changeDetails(actionItem) {
     items.updateNameAndDescription(alteredItemObject._id, alteredItemObject._name, alteredItemObject._description);
     // items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)].moreInfo = alteredItemObject.moreInfo;
     if (alteredItemObject._type === "Component") {
-        var component = items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)]
-        autoResizeDispatch["autoFit"](component);
+        var component = items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)];
+        if (!passAutoFitRestrictions(component._id))
+            autoResizeDispatch["autoFit"](component);
         if (component._type === "Component" && configStyle.descriptionEnabled) {
             turnOffDescription(component);
             turnOnDescription(component);

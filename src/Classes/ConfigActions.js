@@ -38,6 +38,7 @@ class ConfigActions {
 
     resetToDefault() {
         this.applyToConfig(this.initialSettings);
+        console.log(this.initialSettings);
         if (this.category === "Component") {
             configStyle.setInitialMargins();
             document.getElementById('innerMarginSlider').style.display = "none";

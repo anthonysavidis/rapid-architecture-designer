@@ -171,6 +171,10 @@ class Item {
             produceDoubleClickEditingName(editId);
             closeTooltip(editId);
         });
+        document.getElementById(this._id).addEventListener("mouseover", (e) => {
+            div.title = this._description;
+            // appearFunctionButtons();
+        });
         this.domElement.ondragover = (event) => {
             event.preventDefault();
         }
@@ -267,9 +271,10 @@ class Item {
 
             produceContextMenu(editId, ev.clientX, ev.clientY);
         });
-        // document.getElementById(this._id + 'external').addEventListener("click", (e) => {
-        //     // appearFunctionButtons();
-        // });
+        document.getElementById(this._id + 'external').addEventListener("mouseover", (e) => {
+            div.title = this._description;
+            // appearFunctionButtons();
+        });
         var prevColor = "";
         const curId = this._id;
         this.domElement.ondragstart = (ev) => {

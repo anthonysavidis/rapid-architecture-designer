@@ -42,14 +42,14 @@ function createSecondRowPickers(box, configGrid) {
     var settedOperationPicker = createPicker(constantNames["operationConfig"]["attachedColor"], defaultValues[0], (value) => {
         const finalValue = (value.charAt(0) === " ") ? value.slice(1) : value;
         configStyle.handleChange("Operation", "settedColor", finalValue);
-        alterConstantValue("attached", finalValue);
+        // alterConstantValue("attached", finalValue);
         if (document.getElementById("all").checked)
             showAllRefresh();
     });
     var dragOperationPicker = createPicker(constantNames["operationConfig"]["draggingColor"], defaultValues[1], (value) => {
         const finalValue = (value.charAt(0) === " ") ? value.slice(1) : value;
         configStyle.handleChange("Operation", "draggingColor", finalValue);
-        alterConstantValue("ondrag", finalValue);
+        // alterConstantValue("ondrag", finalValue);
     });
     var container = document.createElement('div');
     settedOperationPicker.style.float = "left";

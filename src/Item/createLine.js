@@ -100,7 +100,11 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
         contextLineMenu(ev, lineId);
         return;
     });
-
+    document.getElementById(lineId).addEventListener("mouseover", (e) => {
+        const description = items.itemList[items.itemList.findIndex(el => el._id === lineId)]._description;
+        div.title = description;
+        // appearFunctionButtons();
+    });
     var nameArea = document.createElement("div");
     nameArea.id = lineId + "name";
     nameArea.className = "blurName";
