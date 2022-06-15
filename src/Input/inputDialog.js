@@ -18,7 +18,7 @@ function createDialog(type, callBack) {
     var nameFormExternal = document.createElement('div');
     var nameLabelDiv = document.createElement('div');
     nameLabelDiv.className = "labelModalDiv";
-    nameLabelDiv.innerHTML = constantNames["inputBox"]["nameLabel"]["Component"];
+    nameLabelDiv.innerHTML = constantNames["fileTab"]["savemsg"];
     var nameFormDiv = document.createElement('div');
     nameFormDiv.style.marginTop = 2.5 + "px";
     nameFormDiv.innerHTML = '<input type="text" style="width: 75%;" name="firstname">';

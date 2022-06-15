@@ -554,4 +554,13 @@ function getAllLayersString(counter, objectList) {
     totalStr = totalStr.slice(0, -1);
     return totalStr;
 }
-export { Item };
+
+function setComponentsRec(component, brec) {
+    document.getElementById(component._id).style.width = brec.width + "px";
+    document.getElementById(component._id).style.height = brec.height + "px";
+    document.getElementById(component._id).style.left = brec.left + "px";
+    document.getElementById(component._id).style.top = brec.top + "px";
+    component.updateBoundingRec();
+}
+
+export { Item, setComponentsRec };

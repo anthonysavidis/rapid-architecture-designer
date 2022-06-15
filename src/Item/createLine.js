@@ -109,6 +109,7 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     nameArea.id = lineId + "name";
     nameArea.className = "blurName";
     nameArea.contentEditable = true;
+    nameArea.style.paddingLeft = nameArea.style.paddingRight = "5px";
     nameArea.innerText = name;
     nameArea.style.position = "relative";
     nameArea.style.whiteSpace = "nowrap";

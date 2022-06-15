@@ -3,7 +3,8 @@ const constantNames = {
         "tabName": "File",
         "Save": "Save",
         "Load": "Load",
-        "New": "New Project"
+        "New": "New Project",
+        "savemsg": "Architecture's file name:"
     },
     "settingsTab": {
         "tabName": "Settings",

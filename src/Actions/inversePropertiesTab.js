@@ -6,6 +6,7 @@ import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance
 import { autoResizeDispatch, checkAndResize, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
 import { renderLine } from "../Item/createLine.js";
+import { setComponentsRec } from "../Classes/Item.js";
 
 
 var lastOriginalItem = null;
@@ -22,12 +23,13 @@ function detailChangeListener(id, originalItemStr) {
 
 function changeDetails(actionItem) {
     var alteredItemObject = JSON.parse(actionItem);
-    items.updateNameAndDescription(alteredItemObject._id, alteredItemObject._name, alteredItemObject._description);
+    items.updateNameAndDescription(alteredItemObject._id, alteredItemObject._name, alteredItemObject._description, true); //if an error occurs can be replaced with false
     // items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)].moreInfo = alteredItemObject.moreInfo;
     if (alteredItemObject._type === "Component") {
         var component = items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)];
-        if (!passAutoFitRestrictions(component._id))
-            autoResizeDispatch["autoFit"](component);
+        // if (!passAutoFitRestrictions(component._id))
+        //     autoResizeDispatch["autoFit"](component);
+        setComponentsRec(component, alteredItemObject.boundingRec);
         if (component._type === "Component" && configStyle.descriptionEnabled) {
             turnOffDescription(component);
             turnOnDescription(component);
