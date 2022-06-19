@@ -13,6 +13,7 @@ function produceSizeForm(box, className, callBack) {
 
     select.style.marginLeft = "30px";
     select.style.float = "left";
+    select.style.fontSize = "small";
     var selectStr = "";
     for (var i = 4; i <= 24; i += 2) {
         selectStr += "<option value=\"" + i + "pt\">" + i + "pt" + "</option>"
@@ -36,6 +37,7 @@ function produceFontFamilyForms(box, className, callBack) {
     select.style.width = "350px";
     select.style.display = "inline-block";
     select.style.marginRight = "25px";
+    select.style.fontSize = "small";
     select.style.marginLeft = "5px";
     select.innerHTML = ' <option value=\"Georgia\">Georgia</option>   \
   <option value=\"Palatino\">Palatino Linotype</option>\
@@ -58,7 +60,8 @@ function produceFontFamilyForms(box, className, callBack) {
     var rs = getComputedStyle(r);
     select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextFamily');
     (!select.value) ? select.value = "Arial, Helvetica, sans-serif": 1;
-
+    select.style.float = "left";
+    select.style.width = 315 + "px";
     box.appendChild(select);
 }
 
@@ -101,10 +104,11 @@ function produceStyleButtons(box, className, callBack) {
         }
     })
     var div = document.createElement('div');
-    div.className = "styleButtonsContainer";
+    div.className = "styleButtonsContainer unselectableText";
     div.appendChild(boldButton);
     div.appendChild(italicButton);
     div.appendChild(underlinedButton);
+    div.style.float = "left";
     box.appendChild(div);
     return;
 }

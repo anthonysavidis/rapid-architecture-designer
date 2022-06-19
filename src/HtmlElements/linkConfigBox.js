@@ -28,7 +28,10 @@ function produceLinkForm(box, configGrid) {
     produceSizeForm(sizeStyleContainer, "Link", callBack);
     produceStyleButtons(sizeStyleContainer, "Link", callBack);
     produceFontFamilyForms(sizeStyleContainer, "Link", callBack);
+    sizeStyleContainer.lastChild.style.width = "363px";
+
     produceTextColor(configGrid, "Link", callBack);
+    sizeStyleContainer.style.marginLeft = "11px";
     box.appendChild(div);
     box.appendChild(sizeStyleContainer);
     return;
@@ -151,7 +154,8 @@ function produceAConfigBox(type, refresh) {
     document.getElementById('body').appendChild(box);
     addMotion(box);
     if (type === "Operation") {
-        document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "191px";
+        configGrid.style.marginLeft = "64px";
+        document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "155px";
         document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "191px";
         document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
         document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "left";
@@ -161,6 +165,12 @@ function produceAConfigBox(type, refresh) {
         document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "90%";
         document.getElementsByClassName("labelDiv unselectableText item4")[0].style.width = "90%";
 
+    }
+    for (var i = 1; i <= 8; i++) {
+        if (document.getElementsByClassName("labelDiv unselectableText item" + i)[0]) {
+            document.getElementsByClassName("labelDiv unselectableText item" + i)[0].style.fontSize = "small";
+            console.log(document.getElementsByClassName("labelDiv unselectableText item" + i)[0]);
+        }
     }
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
     closeButton.style.top = 5 + "px";

@@ -326,7 +326,7 @@ body {
     padding-bottom: 4px;
     box-sizing: border-box;
     margin-left: 5px;
-    margin-top: calc(var(--operationBorderWidth)+7px);
+    margin-top: calc(var(--operationBorderWidth) + 7px);
     z-index: 11;
     display: inline-block;
     background-color: var(--operationColor);
@@ -346,6 +346,7 @@ body {
     margin-left: 40px;
     white-space: nowrap;
     overflow: hidden;
+    padding-right: 4px;
 }
 
 .ficon {
@@ -380,7 +381,7 @@ body {
     z-index: 11;
     margin-left: 5px;
     display: inline-block;
-    margin-top: calc(var(--operationBorderWidth)+7px);
+    margin-top: calc(var(--operationBorderWidth) + 7px);
     background-color: var(--operationColor);
     border-color: var(--operationSelectedBorderColor);
 }

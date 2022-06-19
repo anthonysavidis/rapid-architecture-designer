@@ -25,12 +25,15 @@ function descriptionArea(box) {
     descriptionSwitchContainer.className = "formContainer";
 
     var switcher = getSwitch("descriptionSwitch", constantNames["configBox"]["descriptionLabel"]);
+    switcher.firstChild.style.fontSize = "small";
     switcher.firstChild.style.marginLeft = "0px";
+    switcher.firstChild.style.marginRight = "0px";
     switcher.style.marginTop = "12px";
     switcher.style.width = "147px";
+    // switcher.style.marginLeft = "18px";
     switcher.className += " item1";
     descriptionGrid.appendChild(switcher);
-
+    descriptionGrid.style.marginLeft = "61px";
     var descDiv = document.createElement('div');
     descDiv.id = "descArea";
     descDiv.style.backgroundColor = "rgb(237,237,237)";
@@ -60,16 +63,18 @@ function descriptionArea(box) {
     lineNoSlider.style.float = "left";
     lineNoSlider.firstChild.style.marginLeft = -49 + "px";
     lineNoSlider.style.marginTop = 12 + "px";
-    lineNoSlider.style.marginLeft = 5 + "px";
+    lineNoSlider.style.marginLeft = 13.5 + "px";
+    lineNoSlider.style.fontSize = "small";
     lineNoSlider.className += " item4";
     descriptionColorPicker.style.display = "inline-block";
     descriptionColorPicker.style.float = "right";
+    descriptionColorPicker.style.fontSize = "small";
     descriptionColorPicker.style.width = "200px";
-    descriptionColorPicker.firstChild.style.marginLeft = "-8px";
-    descriptionColorPicker.lastChild.style.marginRight = "-12px";
+    // descriptionColorPicker.firstChild.style.marginLeft = "61.7px";
+    descriptionColorPicker.lastChild.style.marginRight = "-2px";
     descriptionColorPicker.style.marginTop = 12 + "px";
     descriptionColorPicker.style.marginRight = 50 + "px";
-    // descriptionColorPicker.style.marginRight = "32.5px";
+    descriptionColorPicker.style.marginRight = "67.8px";
     descDiv.appendChild(descriptionColorPicker);
     descriptionColorPicker.style.marginLeft = -50 + "px";
     descriptionColorPicker.className += " item6";

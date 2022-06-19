@@ -66,7 +66,8 @@ function createWidthSlider() {
         configStyle.handleChange("Operation", "borderWidth", value + "px");
         // refreshOperationList();
     });
-    borderSlider.firstChild.style.marginLeft = "-102px";
+    borderSlider.style.fontSize = "small";
+    borderSlider.firstChild.style.marginLeft = "-123px";
     borderSlider.style.width = "345px";
     borderSlider.style.marginTop = "7px";
     borderSlider.style.float = "left";
@@ -99,8 +100,10 @@ function produceOperationForm(box, configGrid) {
     produceSizeForm(sizeStyleContainer, "Operation", callBack);
     produceStyleButtons(sizeStyleContainer, "Operation", callBack);
     produceFontFamilyForms(sizeStyleContainer, "Operation", callBack);
+    sizeStyleContainer.lastChild.style.width = "351px";
     produceTextColor(configGrid, "Operation", callBack);
 
+    sizeStyleContainer.style.marginLeft = "39px";
     box.appendChild(div);
     box.appendChild(sizeStyleContainer);
     return;
