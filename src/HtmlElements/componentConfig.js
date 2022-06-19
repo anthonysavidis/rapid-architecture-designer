@@ -12,6 +12,7 @@ import { actions } from "../Classes/Actions.js";
 import { disableDescriptionInAllComponents, enableDescriptionInAllComponents } from "../Actions/inverseActions.js";
 import { canBeDeleted } from "../Workspace/trashBin.js";
 import { renderLine } from "../Item/createLine.js";
+import { detectBrowser } from "../Workspace/browserDetection.js";
 
 
 function produceComponentForm(box, configGrid) {
@@ -60,6 +61,12 @@ function produceComponentConfigBox(box, configGrid) {
     borderColorPicker.style.float = "left";
     selectedBorderColorPicker.style.float = "left";
     backgroundColorPicker.className += " item3";
+    if (detectBrowser() === "Firefox")
+        backgroundColorPicker.style.width = "195px";
+    else
+        backgroundColorPicker.style.width = "205px";
+    backgroundColorPicker.lastChild.style.float = "right";
+    backgroundColorPicker.lastChild.style.marginLeft = "0px";
     configGrid.appendChild(backgroundColorPicker);
     borderContainer = document.createElement('div');
     borderContainer.className = "formContainer";
@@ -132,7 +139,10 @@ function produceSwitches(box, configGrid) {
     switcher.style.position = "relative";
     switcher.firstChild.style.marginLeft = "0px";
     switcher.firstChild.style.marginTop = "0px";
-    switcher.lastChild.style.left = "150px";
+    if (detectBrowser() === "Firefox")
+        switcher.lastChild.style.left = "140px";
+    else
+        switcher.lastChild.style.left = "150px";
     switcher.lastChild.style.top = "-7px";
     configGrid.appendChild(switcher);
     return;
@@ -331,8 +341,8 @@ function createComponentConfigBox(refresh) {
         document.getElementById('descArea').style.display = "inline-block";
     }
 
-    document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "left";
-    document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "80px";
+    document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "right";
+    // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "80px";
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
     closeButton.style.top = 5 + "px";
     for (var i = 1; i <= 9; i++) {
@@ -340,7 +350,7 @@ function createComponentConfigBox(refresh) {
         console.log(document.getElementsByClassName("labelDiv unselectableText item" + i)[0]);
     }
     // labelDiv.style.fontSize = "small";
-
+    configGrid.style.gap = "16px";
     return;
 }
 

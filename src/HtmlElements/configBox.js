@@ -3,6 +3,7 @@ import { refreshAllLinks } from "../Classes/LayerHolder.js";
 import { capitalizeFirstLetter } from "../Classes/TextConfig.js";
 import { constantNames } from "../config/constantNames.js";
 import { autoResizeAutoFit, autoResizeAllComponents } from "../Item/autoResize.js";
+import { detectBrowser } from "../Workspace/browserDetection.js";
 import { refreshOperationList } from "../Workspace/functionAppearance.js";
 import { refreshComponentConfigContents } from "./componentConfig.js";
 
@@ -213,7 +214,9 @@ function getSliderGroup(labelName, minVal, maxVal, defVal, callBack, noPixels) {
     slider.addEventListener("change", () => {
         span.innerText = (!noPixels) ? slider.value + "px" : slider.value;
         callBack(slider.value);
-    })
+    });
+    if (detectBrowser() === "Firefox")
+        slider.style.height = "5px";
     sliderContainer.appendChild(slider);
     sliderContainer.appendChild(span);
     return sliderContainer;

@@ -1,6 +1,7 @@
 import { configStyle } from "../Classes/Config.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
+import { detectBrowser } from "../Workspace/browserDetection.js";
 import { getSliderGroup, createPicker, getSwitch } from "./configBox.js";
 import { turnOffDescription, turnOnDescription } from "./extendingComponent.js";
 
@@ -77,6 +78,9 @@ function descriptionArea(box) {
     descriptionColorPicker.style.marginRight = "67.8px";
     descDiv.appendChild(descriptionColorPicker);
     descriptionColorPicker.style.marginLeft = -50 + "px";
+    if (detectBrowser() === "Firefox")
+        descriptionColorPicker.firstChild.style.marginLeft = 6 + "px";
+
     descriptionColorPicker.className += " item6";
     box.appendChild(descriptionGrid);
 

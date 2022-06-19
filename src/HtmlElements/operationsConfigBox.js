@@ -1,6 +1,7 @@
 import { configStyle } from "../Classes/Config.js";
 import { constantNames } from "../config/constantNames.js";
 import { alterConstantValue } from "../config/functionStyle.js";
+import { detectBrowser } from "../Workspace/browserDetection.js";
 import { refreshOperationList, showAllRefresh } from "../Workspace/functionAppearance.js";
 import { createPicker, getSliderGroup, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 
@@ -30,6 +31,10 @@ function createFirstRowPickers(box, configGrid) {
     operationBorderPicker.className += " item4";
     selectedOperationBorderPicker.className += " item5";
     operationColorPicker.className += " item3";
+    if (detectBrowser() === "Firefox") {
+        operationColorPicker.lastChild.style.float = "right";
+        operationColorPicker.style.width = "228px";
+    }
     configGrid.appendChild(operationColorPicker);
     configGrid.appendChild(operationBorderPicker);
     configGrid.appendChild(selectedOperationBorderPicker);

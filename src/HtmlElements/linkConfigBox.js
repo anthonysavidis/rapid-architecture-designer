@@ -157,8 +157,8 @@ function produceAConfigBox(type, refresh) {
         configGrid.style.marginLeft = "64px";
         document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "155px";
         document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "191px";
-        document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
-        document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "left";
+        // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
+        document.getElementsByClassName("labelDiv unselectableText item3")[0].style.width = "228px";
     } else if (type === "Link") {
         document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginRight = "31px";
         document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "90%";
