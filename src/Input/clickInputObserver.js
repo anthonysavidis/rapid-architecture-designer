@@ -96,8 +96,16 @@ function handleLayerInfoAppearance(x, y) {
     const tooltip = document.getElementsByClassName('tooltiptext')[0];
     const clickedInsideTooltip = tooltip && isInsideRec(x, y, tooltip.getBoundingClientRect());
     if (isInsideRec(x, y, document.getElementById("space").getBoundingClientRect()) &&
-        !isInsideRec(x, y, document.getElementById("layerInfo").getBoundingClientRect()) && !clickedInsideTooltip)
-        resetButtons();
+        !isInsideRec(x, y, document.getElementById("layerInfo").getBoundingClientRect()) && !clickedInsideTooltip) {
+        document.getElementById("roleHint").className = (document.getElementById("roleHint").className.includes("disabled")) ? document.getElementById("roleHint").className : "layerInfoHint item6";
+        document.getElementById("maxHint").className = (document.getElementById("maxHint").className.includes("disabled")) ? document.getElementById("maxHint").className : "layerInfoHint item9";
+        document.getElementById("minHint").className = (document.getElementById("minHint").className.includes("disabled")) ? document.getElementById("minHint").className : "layerInfoHint item12";
+        document.getElementById("functionHint").className = (document.getElementById("functionHint").className.includes("disabled")) ? document.getElementById("functionHint").className : "layerInfoHint item3";
+        //forceSelectall
+    }
+    if (isInsideRec(x, y, document.getElementById('right_tab').getBoundingClientRect())) {
+        document.getElementById("functionHint").className = (document.getElementById("functionHint").className.includes("disabled")) ? document.getElementById("functionHint").className : "layerInfoHint item3";
+    }
 }
 
 function selectionHandler(e, targ) {

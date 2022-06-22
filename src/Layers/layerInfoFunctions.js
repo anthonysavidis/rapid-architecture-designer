@@ -63,6 +63,8 @@ function updateLayerInfoBox() {
     document.getElementById("componentMostOperationsValue").innerText = (mostOperationsValue === "-") ? "-" : mostOperationsValue._name;
     document.getElementById("componentLeastOperationsValue").innerText = (leastOperationsValue === "-") ? "-" : leastOperationsValue._name;
     setTimeout(() => {
+        if (!document.getElementById('layerInfoTittle'))
+            return;
         document.getElementById('layerInfoTittle').innerHTML = layers.selectedLayer._name + " Info";
         resetButtons();
         checkAndActivateHint('functionHint', (id) => { highlightOrphanOperations(document.getElementById(id)); });

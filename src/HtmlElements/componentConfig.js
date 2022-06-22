@@ -347,7 +347,6 @@ function createComponentConfigBox(refresh) {
     closeButton.style.top = 5 + "px";
     for (var i = 1; i <= 9; i++) {
         document.getElementsByClassName("labelDiv unselectableText item" + i)[0].style.fontSize = "small";
-        console.log(document.getElementsByClassName("labelDiv unselectableText item" + i)[0]);
     }
     // labelDiv.style.fontSize = "small";
     configGrid.style.gap = "16px";

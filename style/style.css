@@ -380,6 +380,7 @@ body {
     box-sizing: border-box;
     z-index: 11;
     margin-left: 5px;
+    margin-right: 5px;
     display: inline-block;
     margin-top: calc(var(--operationBorderWidth) + 7px);
     background-color: var(--operationColor);
@@ -429,7 +430,7 @@ hr.solid {
 
 .customHr {
     width: 80%;
-    height: 2px;
+    height: 1px;
     background-color: gray;
     margin-left: 10%;
     margin-top: 10px;

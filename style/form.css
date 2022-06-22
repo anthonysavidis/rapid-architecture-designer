@@ -319,7 +319,7 @@ input[type=submit]:hover {
     position: absolute;
     display: inline-block;
     width: 55px;
-    height: 27px;
+    height: 26px;
     background-color: #ccc;
     border-radius: 30px;
     border: 2px solid #FFFFFF;
@@ -335,9 +335,32 @@ input[type=submit]:hover {
     height: 20px;
     border-radius: 50%;
     background-color: #FFFFFF;
-    top: 1.3px;
+    top: 1px;
     left: 1px;
     transition: all 0.5s;
+}
+
+@-moz-document url-prefix() {
+    .toggle {
+        position: absolute;
+        display: inline-block;
+        width: 54px;
+        height: 27px;
+        background-color: #ccc;
+        border-radius: 30px;
+        border: 2px solid #FFFFFF;
+    }
+    .toggle:after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #FFFFFF;
+        top: 1.8px;
+        left: 1px;
+        transition: all 0.5s;
+    }
 }
 
 
