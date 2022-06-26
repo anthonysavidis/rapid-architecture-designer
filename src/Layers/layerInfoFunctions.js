@@ -96,6 +96,7 @@ function highlightOrphanOperations(elmnt) {
     const active = alterHintState(elmnt);
     if (active) {
         cancelFunctionSelection();
+        forceActivateAll();
         orphanOperations.forEach((el) => { document.getElementById(el._id).className = "selectedFunction"; })
     } else
         cancelFunctionSelection();
