@@ -170,7 +170,7 @@ function produceSubcomponentSettings(box, configGrid) {
     return;
 }
 
-function descriptionHandler() {
+function descriptionHandler(noActionSave) {
     var oldBRecs = {};
     const currentLayerId = layers.selectedLayer._id;
     if (document.getElementById("descriptionSwitch").checked) {
@@ -183,14 +183,16 @@ function descriptionHandler() {
                 renderLine(component._id);
         });
         // refreshAllLinks();
-        actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, oldBRecs, "");
+        if (!noActionSave)
+            actions.saveCommand(enableDescriptionInAllComponents, disableDescriptionInAllComponents, oldBRecs, "");
     } else {
         document.getElementById("descArea").style.display = "none";
         configStyle.descriptionEnabled = false;
         applyToEachComponent((component) => {
             turnOffDescription(component);
         });
-        actions.saveCommand(disableDescriptionInAllComponents, enableDescriptionInAllComponents, "", "");
+        if (!noActionSave)
+            actions.saveCommand(disableDescriptionInAllComponents, enableDescriptionInAllComponents, "", "");
         autoResizeAllComponents();
     }
     layers.changeLayer(currentLayerId);
@@ -229,7 +231,7 @@ function loadInitialSettings() {
     document.getElementById("autofitSwitch").checked = configStyle.actionDispatch["Component"].currentOldSettings["_autoFit"];
     configStyle.descriptionEnabled = configStyle.actionDispatch["Component"].currentOldSettings["_descOn"];
     configStyle.autoFit = configStyle.actionDispatch["Component"].currentOldSettings["_autoFit"];
-    descriptionHandler();
+    descriptionHandler(true); //call me flag i opoia simainei oti den tha ginei save sto action stack.
     autoFitHandler();
     setBoundingRectMap(oldBRecs);
     return;
