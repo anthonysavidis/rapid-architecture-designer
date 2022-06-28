@@ -12,6 +12,7 @@ import { autoResizeDispatch, passAutoFitRestrictions } from "../Item/autoResize.
 import { renderLine } from "../Item/createLine.js";
 import { configStyle } from "../Classes/Config.js";
 import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "./extendingComponent.js";
+import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -134,6 +135,10 @@ function produceDoubleClickEditingLayerName(domId, oldName, layerObject, branchR
             replaceOnFullPath(oldName, val);
         }
         updateTree();
+        if (document.getElementById("layerInfo")) {
+            updateLayerInfoBox();
+
+        }
     });
     document.getElementById(domId).innerHTML = "";
     document.getElementById('body').appendChild(input);

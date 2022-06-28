@@ -129,7 +129,8 @@ const constantNames = {
         "orphanOperations": "Orphan Operations:",
         "component": "Component with no operations:",
         "componentMostOperations": "Component with most operations:",
-        "componentLeastOperations": "Component with least operations:"
+        "componentLeastOperations": "Component with least operations:",
+        "tittleSuffix": "'s Info"
     },
     "inputBox": {
         "msg": "Insert name and description of ",

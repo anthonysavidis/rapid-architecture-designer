@@ -1,5 +1,6 @@
 import { layers } from "../Classes/LayerHolder.js";
 import { getCurrentFullPath, replaceOnFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
+import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { changeTreeName, updateTree } from "../Layers/Tree.js";
 
 function changeNextLayer(actionItems) {
@@ -28,6 +29,9 @@ function changeLayerName(obj) {
     changeTreeName(lid, name);
     replaceOnFullPath(oldName, name);
     updateTree();
+    if (document.getElementById("layerInfo")) {
+        updateLayerInfoBox();
+    }
     return;
 }
 

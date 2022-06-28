@@ -87,6 +87,8 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     var lineHtml = "<div id=\"" + lineId + "\" class=\"connector\" style='transform-origin: top left;text-align: center; transform: rotate(" + degree + "deg); width: " + lineLength + "px; position: absolute; top: " + y1 + "px; left: " + x1 + "px;z-index:14;'></div>";
     var div = document.createElement("div");
     div.innerHTML = lineHtml;
+    // div.firstChild.style.background = "repeating-linear-gradient(to right,red 0,red 5px,transparent 5px,transparent 7px)";
+
     div.id = lineId + 'external';
     document.getElementById(layers.selectedLayer._id).appendChild(div);
     var lb = document.getElementById(lineId).getBoundingClientRect();

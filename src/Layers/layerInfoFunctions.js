@@ -1,5 +1,6 @@
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
+import { constantNames } from "../config/constantNames.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { forceActivateAll, forceActivateByComponent } from "../Workspace/functionAppearance.js";
@@ -65,7 +66,7 @@ function updateLayerInfoBox() {
     setTimeout(() => {
         if (!document.getElementById('layerInfoTittle'))
             return;
-        document.getElementById('layerInfoTittle').innerHTML = layers.selectedLayer._name + " Info";
+        document.getElementById('layerInfoTittle').innerHTML = layers.selectedLayer._name + constantNames["layerInfo"]["tittleSuffix"];
         resetButtons();
         checkAndActivateHint('functionHint', (id) => { highlightOrphanOperations(document.getElementById(id)); });
         checkAndActivateHint('roleHint', (id) => { highlightEmptyComponents(document.getElementById(id)); });

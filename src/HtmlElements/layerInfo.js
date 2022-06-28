@@ -12,6 +12,8 @@ function createLabels(box, infoGrid) {
     var componentMostOperationsLabel = document.createElement('div');
     var componentLeastOperationsLabel = document.createElement('div');
     orphanOperationLabel.className = componentLabel.className = componentMostOperationsLabel.className = componentLeastOperationsLabel.className = "labelDiv unselectableText";
+    orphanOperationLabel.style.marginTop = componentLabel.style.marginTop = componentMostOperationsLabel.style.marginTop = componentLeastOperationsLabel.style.marginTop = "12.5px";
+
     infoGrid.style.marginBottom = "15px";
     orphanOperationLabel.innerText = constantNames["layerInfo"]["orphanOperations"];
     componentLabel.innerText = constantNames["layerInfo"]["component"];
@@ -35,6 +37,7 @@ function createValues(box, infoGrid) {
     var componentMostOperationsValue = document.createElement('div');
     var componentLeastOperationsValue = document.createElement('div');
     orphanOperationValue.className = componentValue.className = componentMostOperationsValue.className = componentLeastOperationsValue.className = "labelDiv unselectableText";
+    orphanOperationValue.style.marginTop = componentValue.style.marginTop = componentMostOperationsValue.style.marginTop = componentLeastOperationsValue.style.marginTop = "12.5px";
 
     orphanOperationValue.id = "orphanOperationValue";
     componentValue.id = "componentValue";
@@ -100,6 +103,7 @@ function produceLayerInfoContent(box) {
     infoGrid.className = "configGrid";
     infoGrid.style.marginLeft = "0px";
     infoGrid.style.paddingLeft = infoGrid.style.paddingRight = "28px";
+    // infoGrid.style.fontSize = "small";
     createLabels(box, infoGrid);
     createValues(box, infoGrid);
     produceHints(infoGrid);
@@ -117,7 +121,7 @@ function createLayerInfoModal() {
     tittleDiv.className = "tittleDiv unselectableText";
     tittleDiv.style.marginLeft = "32px";
     tittleDiv.style.textAlign = "center";
-    tittleDiv.innerHTML = layers.selectedLayer._name + " Info";
+    tittleDiv.innerHTML = layers.selectedLayer._name + constantNames["layerInfo"]["tittleSuffix"];
     var box = document.createElement('div');
     box.className = "layerInfoBox";
     box.id = "layerInfo";
