@@ -30,7 +30,7 @@ function descriptionArea(box) {
     switcher.firstChild.style.marginLeft = "0px";
     switcher.firstChild.style.marginRight = "0px";
     switcher.style.marginTop = "12px";
-    switcher.style.width = "147px";
+    switcher.style.width = "152px";
     // switcher.style.marginLeft = "18px";
     switcher.className += " item1";
     descriptionGrid.appendChild(switcher);

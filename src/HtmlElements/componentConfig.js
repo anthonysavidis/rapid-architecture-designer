@@ -142,7 +142,7 @@ function produceSwitches(box, configGrid) {
     if (detectBrowser() === "Firefox")
         switcher.lastChild.style.left = "140px";
     else
-        switcher.lastChild.style.left = "150px";
+        switcher.lastChild.style.left = "153px";
     switcher.lastChild.style.top = "-7px";
     configGrid.appendChild(switcher);
     return;
