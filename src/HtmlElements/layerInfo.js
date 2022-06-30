@@ -121,7 +121,7 @@ function createLayerInfoModal() {
     tittleDiv.className = "tittleDiv unselectableText";
     tittleDiv.style.marginLeft = "32px";
     tittleDiv.style.textAlign = "center";
-    tittleDiv.innerHTML = layers.selectedLayer._name + constantNames["layerInfo"]["tittleSuffix"];
+    tittleDiv.innerHTML = constantNames["layerInfo"]["tittle"];
     var box = document.createElement('div');
     box.className = "layerInfoBox";
     box.id = "layerInfo";

@@ -1,9 +1,9 @@
 const constantNames = {
     "fileTab": {
-        "tabName": "File",
+        "tabName": "Project",
         "Save": "Save",
         "Load": "Load",
-        "New": "New Project",
+        "New": "New",
         "savemsg": "Architecture's file name:"
     },
     "settingsTab": {
@@ -60,7 +60,7 @@ const constantNames = {
         "Delete": "Delete",
         "InitialLayerName": "Initial",
         "moveBox": "Move item to:",
-        "Info": "Layer Info"
+        "Info": "Info"
     },
     "operationsArea": {
         "title": "Operations",
@@ -130,7 +130,7 @@ const constantNames = {
         "component": "Component with no operations:",
         "componentMostOperations": "Component with most operations:",
         "componentLeastOperations": "Component with least operations:",
-        "tittleSuffix": "'s Info"
+        "tittle": "Brief Info"
     },
     "inputBox": {
         "msg": "Insert name and description of ",
@@ -181,7 +181,7 @@ const constantNames = {
     "apply": "Apply",
     "cancel": "Cancel",
     "close": "Close",
-    "restore": "Restore Default Settings"
+    "restore": "Reset"
 }
 
 const buttonTooltips = {
@@ -199,8 +199,8 @@ const buttonTooltips = {
         "Extend": "Extend selected component(s) to their subcomponents.",
         "Collapse": "Collapse the selected component(s)."
     },
-    "File": {
-        "New Project": "Creates a new architecture and optionally saves the last one.",
+    "Project": {
+        "New": "Creates a new architecture and optionally saves the last one.",
         "Save": "Save the current architecture.",
         "Load": "Load an architecture."
     },

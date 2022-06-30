@@ -123,6 +123,8 @@ function produceAConfigBox(type, refresh) {
         // closeButton.style.top = 10 + "px";
     }
     box.appendChild(configGrid);
+
+
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');
     cancelButton.className = "cancelConfigButton unselectable";
@@ -145,11 +147,12 @@ function produceAConfigBox(type, refresh) {
     buttonsContainer.style.display = "inline-block";
     var restoreButton = createRestoreButton(type, closeBox, () => { produceAConfigBox(type, true); });
 
-    buttonsContainer.style.marginTop = 25 + "px";
+    buttonsContainer.style.marginTop = confirmationButton.style.marginLeft = 25 + "px";
+    cancelButton.style.float = restoreButton.style.float = confirmationButton.style.float = "right";
 
-    buttonsContainer.appendChild(cancelButton);
-    buttonsContainer.appendChild(restoreButton);
     buttonsContainer.appendChild(confirmationButton);
+    buttonsContainer.appendChild(restoreButton);
+    buttonsContainer.appendChild(cancelButton);
     box.appendChild(buttonsContainer);
     document.getElementById('body').appendChild(box);
     addMotion(box);

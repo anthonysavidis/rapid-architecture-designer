@@ -251,6 +251,37 @@ function createComponentFields(box, configGrid) {
     return;
 }
 
+function addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConfigBox) {
+
+    var cancelButton = document.createElement('div'),
+        confirmationButton = document.createElement('div');
+    cancelButton.className = "cancelConfigButton unselectableText";
+    cancelButton.innerHTML = constantNames["cancel"];
+    cancelButton.onclick = cancelChanges;
+    confirmationButton.className = "okButton unselectableText";
+    confirmationButton.innerHTML = constantNames["apply"];
+    confirmationButton.onclick = function() {
+        configStyle.actionDispatch["Component"].clearCurrentOldSettings();
+        configStyle.actionDispatch["Description"].clearCurrentOldSettings();
+        configStyle.actionDispatch["Subcomponent"].clearCurrentOldSettings();
+        closeBox();
+    }
+    var buttonsContainer = document.createElement('div');
+    buttonsContainer.style.position = "relative"
+    buttonsContainer.style.width = "100%";
+    buttonsContainer.style.height = 40 + "px";
+    buttonsContainer.style.display = "inline-block";
+    var restoreButton = createRestoreButton("Component", closeBox, createComponentConfigBox);
+    buttonsContainer.style.marginTop = 25 + "px";
+    cancelButton.style.float = restoreButton.style.float = confirmationButton.style.float = "right";
+    confirmationButton.style.marginLeft = "25px";
+    buttonsContainer.appendChild(confirmationButton);
+    buttonsContainer.appendChild(restoreButton);
+    buttonsContainer.appendChild(cancelButton);
+    box.appendChild(buttonsContainer);
+    return;
+}
+
 var refreshComponentConfigContents;
 
 function createComponentConfigBox(refresh) {
@@ -301,31 +332,7 @@ function createComponentConfigBox(refresh) {
     }
 
 
-    var cancelButton = document.createElement('div'),
-        confirmationButton = document.createElement('div');
-    cancelButton.className = "cancelConfigButton unselectableText";
-    cancelButton.innerHTML = constantNames["cancel"];
-    cancelButton.onclick = cancelChanges;
-    confirmationButton.className = "okButton unselectableText";
-    confirmationButton.innerHTML = constantNames["apply"];
-    confirmationButton.onclick = function() {
-        configStyle.actionDispatch["Component"].clearCurrentOldSettings();
-        configStyle.actionDispatch["Description"].clearCurrentOldSettings();
-        configStyle.actionDispatch["Subcomponent"].clearCurrentOldSettings();
-        closeBox();
-    }
-    var buttonsContainer = document.createElement('div');
-    buttonsContainer.style.position = "relative"
-    buttonsContainer.style.width = "100%";
-    buttonsContainer.style.height = 40 + "px";
-    buttonsContainer.style.display = "inline-block";
-    var restoreButton = createRestoreButton("Component", closeBox, createComponentConfigBox);
-    buttonsContainer.style.marginTop = 25 + "px";
-    buttonsContainer.appendChild(cancelButton);
-    buttonsContainer.appendChild(restoreButton);
-    buttonsContainer.appendChild(confirmationButton);
-    box.appendChild(buttonsContainer);
-
+    addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConfigBox);
     document.getElementById('body').appendChild(box);
     addMotion(box);
     document.getElementById("autofitSwitch").addEventListener("change", () => {

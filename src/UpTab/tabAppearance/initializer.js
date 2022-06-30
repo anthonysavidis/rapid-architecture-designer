@@ -48,7 +48,8 @@ function addAllButtons() {
 
     addButton(constantNames['layersTab']["ToggleHierarchy"], "toggleHierarchyTreeButton", constantNames['layersTab']['tabName']);
     addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
-    // addButton(constantNames['layersTab']["Info"], "infoLayerButton", constantNames['layersTab']['tabName']);
+    addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
+    addButton(constantNames['layersTab']["Info"], "infoLayerButton", constantNames['layersTab']['tabName']);
 
     addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['settingsTab']['tabName']);

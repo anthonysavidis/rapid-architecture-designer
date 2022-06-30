@@ -66,7 +66,7 @@ function updateLayerInfoBox() {
     setTimeout(() => {
         if (!document.getElementById('layerInfoTittle'))
             return;
-        document.getElementById('layerInfoTittle').innerHTML = layers.selectedLayer._name + constantNames["layerInfo"]["tittleSuffix"];
+        document.getElementById('layerInfoTittle').innerHTML = constantNames["layerInfo"]["tittle"];
         resetButtons();
         checkAndActivateHint('functionHint', (id) => { highlightOrphanOperations(document.getElementById(id)); });
         checkAndActivateHint('roleHint', (id) => { highlightEmptyComponents(document.getElementById(id)); });
