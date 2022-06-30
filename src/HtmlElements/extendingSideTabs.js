@@ -44,7 +44,6 @@ function addRightTabRodListener() {
     var initialPosition = {};
     var rodInitialPos = {};
     var trashBinInitialPos = {};
-    var helpButtonInitialPos = {};
     const buttonsRec = document.getElementById('tabButtons').getBoundingClientRect();
     document.getElementById('rightTabRod').addEventListener('mouseup', (e) => {
         document.getElementById('rightTabRod').style.left = document.getElementById('right_tab').getBoundingClientRect().left + "px";
@@ -55,7 +54,7 @@ function addRightTabRodListener() {
             initialPosition = document.getElementById('right_tab').getBoundingClientRect();
             rodInitialPos = document.getElementById('rightTabRod').getBoundingClientRect();
             trashBinInitialPos = document.getElementById('trashBin').getBoundingClientRect();
-            helpButtonInitialPos = document.getElementById('helpButton').getBoundingClientRect();
+            // helpButtonInitialPos = document.getElementById('helpButton').getBoundingClientRect();
             document.getElementById('body').style.overflow = "hidden";
         },
         drag: (e) => { //prepei na ginei handle & to trash bin & AN VRISKEI COMP STOP.
@@ -77,7 +76,7 @@ function addRightTabRodListener() {
                 document.getElementById('right_tab').style.left = document.getElementById('rightTabRod').getBoundingClientRect().left + "px";
                 fixFunctionsWidth();
                 document.getElementById('trashBin').style.left = trashBinInitialPos.left + dP + "px";
-                document.getElementById('helpButton').style.left = helpButtonInitialPos.left + dP + "px";
+                // document.getElementById('helpButton').style.left = helpButtonInitialPos.left + dP + "px";
 
             } else {
                 document.getElementById('rightTabRod').style.left = document.getElementById('right_tab').getBoundingClientRect().left + "px";

@@ -119,7 +119,7 @@ function produceDoubleClickEditingLayerName(domId, oldName, layerObject, branchR
             document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val;
         else {
             const parentItemList = layers.getItems(layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].parentId).itemList;
-            document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val + " " + ' &lt;' + parentItemList[parentItemList.findIndex(el => el._id === layerObject.componentId)]._name + '&gt;';
+            document.getElementById(domId).innerHTML = '<i class="jstree-icon jstree-themeicon" role="presentation"></i>' + val;
         }
         input.remove();
         if (oldName !== val) {

@@ -43,7 +43,8 @@ function showOwner(functionItem) {
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name + '  <' + ownerName + '>';
     setTimeout(() => { //due to listeners...
         if (!document.getElementById("byComponent").checked && document.getElementById(functionItem._id))
-            document.getElementById(functionItem._id).style.backgroundColor = functionColors["attached"];
+            document.getElementById(functionItem._id).firstChild.className = "fIconSetted";
+
     }, 50)
 
     return;
@@ -51,7 +52,7 @@ function showOwner(functionItem) {
 
 function resetOwner(functionItem) {
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name;
-    document.getElementById(functionItem._id).style.backgroundColor = "";
+    document.getElementById(functionItem._id).firstChild.className = "ficon";
     return;
 }
 

@@ -38,7 +38,7 @@ function readTextFile(file) {
 function download(filename, text) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
+    element.setAttribute('download', filename + ".prj");
 
     element.style.display = 'none';
     document.body.appendChild(element);
@@ -117,22 +117,20 @@ function addFileTabListeners() {
     });
     document.getElementById("newProjectButton").addEventListener("click", function() {
         console.log('clicked');
-        produceBox("confirmation", constantNames["messages"]["newProjectMsg"] + "@1", () => {
-            var callBack = (name, cancelled) => {
-                if (cancelled) {
-                    location.reload();
-                    return;
-                }
-                // name = "myArchitecture.txt";
-                download(name, layers.toString());
-                setTimeout(
-                    () => {
-                        location.reload();
-                    }, 20);
-
+        var callBack = (name, cancelled) => {
+            if (cancelled) {
+                location.reload();
+                return;
             }
-            showInputDialog("Save", callBack);
-        });
+            // name = "myArchitecture.txt";
+            download(name, layers.toString());
+            setTimeout(
+                () => {
+                    location.reload();
+                }, 20);
+
+        }
+        showInputDialog("Save", callBack);
     });
 }
 

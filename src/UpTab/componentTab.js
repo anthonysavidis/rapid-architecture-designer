@@ -215,6 +215,7 @@ function addComponentTabListeners() {
     });
     document.getElementById("subdivideButton").addEventListener("click", function() {
         const sid = getSelectedIds()[0];
+        const component = getSelectedItems()[0];
         var callBack = (name, cancelled) => {
             // console.log(sid);
             if (cancelled)
@@ -222,7 +223,7 @@ function addComponentTabListeners() {
             var layerCreated = produceNewLayer(sid, name);
             actions.saveCommand(createNewLayer, deleteSpecificLayer, layerCreated._id, layerCreated.toString());
         }
-        showInputDialog("layer", callBack);
+        callBack(component._name, 0);
 
     });
     document.getElementById("unsubdivideButton").addEventListener("click", function() {

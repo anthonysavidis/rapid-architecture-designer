@@ -123,8 +123,8 @@ function updateTree() {
     treeData = [];
     for (var i = 0; i < layers.layerList.length; i++) {
         var obj = JSON.parse(layers.layerList[i].treeObj);
-        if (i != 0)
-            obj.text = obj.text + ' &lt;' + searchForName(layers.layerList[i].componentId, layers.layerList[i].parentId) + '&gt;';
+        // if (i != 0)
+        //     obj.text = obj.text + searchForName(layers.layerList[i].componentId, layers.layerList[i].parentId);
         treeData.push(obj);
     }
     refreshTree();

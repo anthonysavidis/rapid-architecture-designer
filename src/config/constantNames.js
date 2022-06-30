@@ -161,7 +161,7 @@ const constantNames = {
         "line": "Line(New)",
         "description": "No description added.",
         "info": "No info added.",
-        "save": "myArchitecture.txt"
+        "save": "myArchitecture.prj",
     },
     "functionsContext": {
         "move": "Move to",
@@ -175,6 +175,10 @@ const constantNames = {
         "moveToMsg": "Cannot move items to another layer.",
         "unsubdivideMsg": "Do you want to delete the subarchitecture of the selected Component?",
         "newProjectMsg": "Are you sure you want to create a new project and remove this from editor?"
+    },
+    "singleFormMessages": {
+        "layer": "Sub layer name:",
+        "save": "Architecture's name:"
     },
     "dot": ".",
     "ok": "OK",
