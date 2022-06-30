@@ -153,10 +153,17 @@ function whichElement(e) {
     appearFunctionButtons();
     appearEditButtons();
     appearHierarchyButtons();
+    // console.log(e.clientX + " " + e.clientY + " " + tname);
+    console.log(targ.className)
+    if (document.getElementsByClassName("helper")[0] && targ.className !== "focusName" && !isInsideRec(e.clientX, e.clientY, document.getElementsByClassName("helper")[0].getBoundingClientRect())) {
+        // alert('closingHelper');
+        document.getElementsByClassName("helper")[0].remove();
+    }
 }
 
 function initializeObserver() {
-    document.getElementById("html1").addEventListener("click", whichElement);
+    document.getElementById("html1").addEventListener("mousedown", whichElement);
+    // document.getElementById("html1").addEventListener("", whichElement);
     return;
 }
 
@@ -196,6 +203,8 @@ function checkToClose(cX, cY, e) {
     if (!(funcContextX <= cX && cX <= (funcContextWidth + funcContextX) && funcContextY <= cY && cY <= (funcContextHeight + funcContextY))) {
         funcContext.remove();
     }
+
+
 }
 
 export { whichElement, initializeObserver, closeTheTooltip };

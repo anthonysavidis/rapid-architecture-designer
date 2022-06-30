@@ -41,21 +41,23 @@ function indentifyPosition(constantRec, movingRec) {
 function spawnHelper(id, left, top, width, height) {
     if (document.getElementById(id + 'helper'))
         document.getElementById(id + 'helper').remove();
+
+    if (document.getElementsByClassName("helper")[0])
+        document.getElementsByClassName("helper")[0].remove();
     var helper = document.createElement('div');
+    helper.className = "helper";
     helper.id = id + 'helper';
     helper.style.left = left + "px";
     helper.style.top = top + "px";
     helper.style.width = width + "px";
     helper.style.height = height + "px";
-    helper.style.backgroundColor = "transparent";
-    helper.style.border = "1px solid blue";
-    helper.style.position = "absolute";
-    helper.style.zIndex = "0";
+
     document.getElementById(layers.selectedLayer._id).appendChild(helper);
     document.getElementById(helper.id).addEventListener("contextmenu", function(ev) {
         console.log(ev);
         contextLineMenu(ev, id);
     });
+    console.log(helper.getBoundingClientRect());
 
 }
 

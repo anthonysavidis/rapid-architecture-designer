@@ -519,3 +519,10 @@ hr.solid {
     user-select: none;
     white-space: nowrap;
 }
+
+.helper {
+    background-color: transparent;
+    border: 1px solid blue;
+    position: absolute;
+    z-index: 1;
+}

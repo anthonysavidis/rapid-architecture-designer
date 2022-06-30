@@ -3,7 +3,7 @@ import { layers } from "../Classes/LayerHolder.js";
 import { changeLinkSelectState, forceSelectLink, cancelSelectedLinks } from "./selectLink.js";
 import { produceArrows, placeArrow, changeDisplayedArrow } from "./pointedArrow.js";
 import { produceTooltip, closeTooltip } from "../HtmlElements/infoTooltip.js";
-import { computeDirectionChangeAngle, spawnDot } from "./geometry.js";
+import { computeDirectionChangeAngle, spawnDot, spawnHelper } from "./geometry.js";
 import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
 
 function contextLineMenu(ev, lineId) {
@@ -145,6 +145,11 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     nameContainer.style.justifyContent = "center";
     nameContainer.style.display = "flex";
 
+    nameContainer.onclick = () => {
+        const lineRec = document.getElementById(lineId).getBoundingClientRect();
+        spawnHelper(lineId, lineRec.x, lineRec.y, lineRec.width, lineRec.height);
+
+    }
     document.getElementById(lineId).appendChild(nameContainer);
     document.getElementById(lineId + "nameContainer").appendChild(nameArea);
     // document.getElementById(lineId + "name")
