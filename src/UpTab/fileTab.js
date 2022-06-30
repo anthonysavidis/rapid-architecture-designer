@@ -1,5 +1,5 @@
 import { items } from "../Classes/ItemArray.js";
-import { showInputDialog } from "../Input/inputDialog.js";
+import { createDialog, showInputDialog } from "../Input/inputDialog.js";
 import { layers, refreshAllLinks } from "../Classes/LayerHolder.js";
 import { LayerHolder } from "../Classes/LayerHolder.js";
 import { takeScreenshot } from "../Layers/preview.js";
@@ -130,7 +130,8 @@ function addFileTabListeners() {
                 }, 20);
 
         }
-        showInputDialog("Save", callBack);
+        createDialog("newProj", callBack);
+        // showInputDialog("Save", callBack);
     });
 }
 
