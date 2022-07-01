@@ -56,7 +56,7 @@ function createDialog(type, callBack) {
     closeButton.style.marginTop = -15 + "px";
     closeButton.style.marginRight = "5px";
     closeButton.onclick = () => { closeBox(); }
-    box.appendChild(closeButton);
+        // box.appendChild(closeButton);
     var title = document.createElement('h3');
     // title.className = "boxTitle";
     title.style.marginTop = "-10px";

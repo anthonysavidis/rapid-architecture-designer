@@ -133,7 +133,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    box-shadow: 4px 6px 3px rgb(0 0 0 / 40%);
+    /* box-shadow: 4px 6px 3px rgb(0 0 0 / 40%); */
 }
 
 .closeBoxButton {
@@ -306,7 +306,7 @@ select {
     float: left;
     border-radius: 10%;
     margin-left: 25px;
-    box-shadow: 4px 6px 3px rgb(0 0 0 / 40%);
+    /* box-shadow: 4px 6px 3px rgb(0 0 0 / 40%); */
     padding-top: 7px;
     padding-left: 10px;
     padding-right: 10px;
