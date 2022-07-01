@@ -154,7 +154,7 @@ function whichElement(e) {
     appearEditButtons();
     appearHierarchyButtons();
     // console.log(e.clientX + " " + e.clientY + " " + tname);
-    console.log(targ.className)
+    // console.log(targ.className)
     if (document.getElementsByClassName("helper")[0] && targ.className !== "focusName" && !isInsideRec(e.clientX, e.clientY, document.getElementsByClassName("helper")[0].getBoundingClientRect())) {
         // alert('closingHelper');
         document.getElementsByClassName("helper")[0].remove();

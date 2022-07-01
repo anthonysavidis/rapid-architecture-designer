@@ -55,7 +55,7 @@
     z-index: 29;
     width: 150px;
     background: #ffffff;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 
 .context-menu .item {

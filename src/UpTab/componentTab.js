@@ -24,6 +24,7 @@ import { imageStorage } from "../Classes/ImageHolder.js";
 import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
 import { createSendingItem, createSendingLayer } from "../Layers/moveItem.js";
 import { newFunctionAction } from "./functionTab.js";
+import { appearComponentButtons } from "./tabAppearance/buttonsVisibility.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -94,9 +95,7 @@ function subdivideAction() {
 function askForDetails(type, extraInfo) {
     produceBox("input", type, (name, description) => {
         var it;
-        if (name) {
-            console.log(name);
-        }
+
         if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"][type.toLowerCase()];
         if (description === "" || !description.replace(/\s/g, '').length) description = constantNames["emptyNames"]["description"];
         if (type === "Component") {
@@ -224,19 +223,18 @@ function addComponentTabListeners() {
             actions.saveCommand(createNewLayer, deleteSpecificLayer, layerCreated._id, layerCreated.toString());
         }
         callBack(component._name, 0);
+        appearComponentButtons();
 
     });
     document.getElementById("unsubdivideButton").addEventListener("click", function() {
         const unsubdivideCallBack = () => {
             var itemToBeUnsubdivided = getSelectedItems()[0];
             var layerBeingDeleted = layers.layerList[layers.layerList.findIndex((el) => itemToBeUnsubdivided.subLayers[0] === el._id)];
-            const layerImage = imageStorage.get(layerBeingDeleted._id + "_LAYER_PREVIEW");
-            console.log(layerImage);
-            // var layerStr = layerBeingDeleted.toString();
             var str = createSendingLayer(itemToBeUnsubdivided);
             layers.deleteLayer(layerBeingDeleted._id);
             updateTree();
             actions.saveCommand(deleteSpecificLayer, createSpecificLayer, layerBeingDeleted._id, str);
+            appearComponentButtons();
         }
         var msg = constantNames['messages']['unsubdivideMsg'];
         produceBox("confirmation", msg + "@1", unsubdivideCallBack);

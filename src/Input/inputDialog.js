@@ -44,6 +44,7 @@ function produceConfirmationButtons(box, type, closeBox, saveCallBack, projectNa
 function createDialog(type, callBack) {
     var box = document.createElement('div');
     box.className = "inputBox";
+    box.style.paddingLeft = box.style.paddingRight = "0px";
     var closeBox = function() {
         box.remove();
         if (document.getElementById('grayLayer'))

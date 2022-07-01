@@ -57,23 +57,22 @@ function produceTextArea(descriptionFormDiv) {
 function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     var box = document.createElement('div');
     box.className = type + "Box";
+    var closeBox = function() {
+        box.remove();
+        if (document.getElementById('grayLayer'))
+            document.getElementById('grayLayer').remove();
+    }
     var cancelAction = () => {
         if (cancelCallBack)
             cancelCallBack();
         closeBox();
     }
 
-    var closeBox = function() {
-        box.remove();
-        if (document.getElementById('grayLayer'))
-            document.getElementById('grayLayer').remove();
-    }
 
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
     closeButton.onclick = cancelAction;
-
-    if (type !== "updating")
+    if (type !== "updating" && type !== "selecting")
         box.appendChild(closeButton);
 
     var cancelButton = document.createElement('div'),
@@ -123,28 +122,41 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
 
         return;
     } else if (type === "selecting") {
+        closeButton.style.zIndex = 330;
 
-        box.style.width = "300px";
+        box.style.width = "310px";
         box.style.height = "200px";
+        box.style.paddingLeft = "10px";
         closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
         closeButton.style.top = 5 + "px";
         title.innerText = extraInfo[0];
+        title.style.marginTop = "-10px";
+        // title.style.marginLeft = "27px";
+        title.style.width = "100%";
+        title.style.display = "flex";
+        title.style.justifyContent = "center";
+        title.style.position = "absolute";
+        title.style.marginBottom = "8px";
+        box.style.height = "172px";
         produceMovingBar(box);
         box.appendChild(title);
-
         var selectExternal = document.createElement('div');
         selectExternal.style.alignContent = "center";
         selectExternal.style.margin = 0;
         selectExternal.style.width = 200 + "px";
         var select = document.createElement('select');
         select.innerHTML = extraInfo[1];
+        select.style.width = "250px";
         selectExternal.appendChild(select);
-        select.style.marginLeft = 47 + "px";
+        select.style.marginLeft = 25 + "px";
         select.style.marginBottom = 24 + "px";
+        select.style.marginTop = 34 + "px";
         box.appendChild(selectExternal);
         cancelButton.onclick = cancelAction;
-
+        cancelButton.style.float = "right";
         confirmationButton.className = "okButton";
+        confirmationButton.style.marginLeft = "25px";
+        confirmationButton.style.marginRight = "25px";
         confirmationButton.innerHTML = constantNames["ok"];
         confirmationButton.onclick = function() {
             callBack(select.value);

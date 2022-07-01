@@ -5,6 +5,7 @@ import { produceArrows, placeArrow, changeDisplayedArrow } from "./pointedArrow.
 import { produceTooltip, closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { computeDirectionChangeAngle, spawnDot, spawnHelper } from "./geometry.js";
 import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
+import { produceLinkContextMenu } from "../HtmlElements/linkContextMenu.js";
 
 function contextLineMenu(ev, lineId) {
     ev.preventDefault();
@@ -97,9 +98,12 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
 
     document.getElementById(lineId).addEventListener("contextmenu", function(ev) {
         ev.preventDefault();
-        if (document.getElementById(lineId + "tooltipExternal"))
-            document.getElementById(lineId + "tooltipExternal").remove();
-        contextLineMenu(ev, lineId);
+        // if (document.getElementById(lineId + "tooltipExternal"))
+        //     document.getElementById(lineId + "tooltipExternal").remove();
+        // contextLineMenu(ev, lineId);
+        const lineRec = document.getElementById(lineId).getBoundingClientRect();
+        spawnHelper(lineId, lineRec.x, lineRec.y, lineRec.width, lineRec.height);
+        produceLinkContextMenu(lineId, ev.clientX, ev.clientY);
         return;
     });
     document.getElementById(lineId).addEventListener("mouseover", (e) => {

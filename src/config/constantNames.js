@@ -59,7 +59,7 @@ const constantNames = {
         "ToggleHierarchy": "Toggle Tree",
         "Delete": "Delete",
         "InitialLayerName": "Initial",
-        "moveBox": "Move item to:",
+        "moveBox": "Move item",
         "Info": "Info"
     },
     "operationsArea": {
