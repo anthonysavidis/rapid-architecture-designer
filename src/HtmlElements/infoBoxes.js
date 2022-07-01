@@ -4,7 +4,7 @@ import { addMotion, dragModalHandler } from "../Input/movingModal.js";
 import { unlink } from "../Item/Link.js";
 import { addToArchitectureList } from "../Layers/Tree.js";
 import { closeInfo } from "./layerInfo.js";
-
+import { keyCodes } from "../config/keyboardButtons.js";
 
 function produceGrayLayer(box, extraInfo, callBack, cancelCallBack) {
     var grayLayer = document.createElement('div');
@@ -34,6 +34,25 @@ function produceMovingBar(box, isMsgBox) {
     box.appendChild(bar);
     return;
 }
+
+function produceTextArea(descriptionFormDiv) {
+
+    var descriptionTextArea = document.createElement('textarea');
+    descriptionTextArea.id = "itemDescription";
+    descriptionTextArea.name = 'subject';
+    descriptionTextArea.style.width = "375px";
+    descriptionTextArea.style.height = "100px";
+    // descriptionTextArea.style.marginLeft = "-70px";
+
+    descriptionTextArea.onkeydown = (e) => {
+        if (e.code === "Enter") {
+            descriptionTextArea.value += "\n";
+        }
+    }
+    descriptionFormDiv.appendChild(descriptionTextArea);
+    return;
+}
+
 
 function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     var box = document.createElement('div');
@@ -134,6 +153,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         produceGrayLayer(box, extraInfo, "");
     } else if (type === "input") {
         produceMovingBar(box);
+        closeButton.style.marginRight = "-15px";
+        box.style.width = "420px";
         // title.innerText = constantNames["inputBox"]["msg"] + extraInfo + constantNames["dot"];
         // box.appendChild(title);
         var form = document.createElement('form');
@@ -144,7 +165,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         nameLabelDiv.innerHTML = constantNames["inputBox"]["nameLabel"][extraInfo];
         var nameFormDiv = document.createElement('div');
         nameFormDiv.style.marginTop = 2.5 + "px";
-        nameFormDiv.innerHTML = '<input type="text" style="width: 75%;" name="firstname">';
+        nameFormDiv.innerHTML = '<input type="text" style="width: 375px;" name="firstname">';
+        // nameFormDiv.firstChild.style.marginLeft = "-70px";
         nameFormExternal.appendChild(nameLabelDiv);
         nameFormExternal.appendChild(nameFormDiv);
 
@@ -156,13 +178,17 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         descriptionLabelDiv.innerHTML = constantNames["inputBox"]["descriptionLabel"][extraInfo];
         var descriptionFormDiv = document.createElement('div');
         descriptionFormDiv.style.marginTop = 2.5 + "px";
-        descriptionFormDiv.innerHTML = '<textarea id="itemDescription" name="subject" style="width: 75%;height:100px"></textarea>';
+        nameLabelDiv.style.marginLeft = descriptionLabelDiv.style.marginLeft = "3px";
+        produceTextArea(descriptionFormDiv);
         descriptionFormExternal.appendChild(descriptionLabelDiv);
         descriptionFormExternal.appendChild(descriptionFormDiv);
         form.appendChild(descriptionFormExternal);
 
         box.appendChild(form);
         confirmationButton.className = "okButton unselectableText";
+        confirmationButton.style.marginRight = "3px";
+        confirmationButton.style.marginLeft = "25px";
+        cancelButton.style.float = confirmationButton.style.float = "right";
         confirmationButton.innerHTML = constantNames["ok"];
         cancelButton.onclick = function() {
             // callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
@@ -181,8 +207,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     }
     var buttons = document.createElement('div');
     buttons.className = "buttonTeam";
-    buttons.appendChild(cancelButton);
     buttons.appendChild(confirmationButton);
+    buttons.appendChild(cancelButton);
     box.appendChild(buttons);
     document.getElementById("body").appendChild(box);
     addMotion(box);
