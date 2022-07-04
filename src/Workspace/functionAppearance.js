@@ -52,7 +52,7 @@ function showOwner(functionItem) {
 
 function resetOwner(functionItem) {
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name;
-    document.getElementById(functionItem._id).firstChild.className = "ficon";
+    // document.getElementById(functionItem._id).firstChild.className = "ficon";
     return;
 }
 
@@ -86,7 +86,10 @@ function hideCurrentFunctions() {
     for (var i in allItemList) {
         if (allItemList[i]._type === "Function") {
             document.getElementById(allItemList[i]._id + 'name').innerText = allItemList[i]._name;
-            document.getElementById(allItemList[i]._id).style.backgroundColor = "";
+            // document.getElementById(allItemList[i]._id).style.backgroundColor = "";
+            if (allItemList[i].owners[0])
+                document.getElementById(allItemList[i]._id).firstChild.className = "fIconSetted";
+
         }
     }
     configAppearance("none");

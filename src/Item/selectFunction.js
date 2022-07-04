@@ -1,8 +1,10 @@
 import { items } from "../Classes/ItemArray.js";
 
+
 function changeFunctionSelectState(id) {
-    document.getElementById(id).addEventListener("mousedown", function() {
-        document.getElementById(id).className = "selectedFunction";
+    document.getElementById(id).addEventListener("mousedown", function(e) {
+        if (e.button !== 2)
+            document.getElementById(id).className = "selectedFunction";
         return;
     });
 
@@ -59,6 +61,5 @@ function keepOnlyLastSelectedFunction(id) {
         y[i].className = "function";
     }
 }
-
 
 export { changeFunctionSelectState, cancelFunctionSelection, getSelectedFunctionIds, getSelectedFunctions, keepOnlyLastSelectedFunction };

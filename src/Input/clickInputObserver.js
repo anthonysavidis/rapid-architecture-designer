@@ -124,7 +124,7 @@ function selectionHandler(e, targ) {
             keepOnlyLastSelectedItem(componentId[0]);
     } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
         const functionId = targ.id.match(/\d+/);
-        if (functionId && !targ.id.includes('L'))
+        if (functionId && !targ.id.includes('L') && e.button !== 2)
             keepOnlyLastSelectedFunction(functionId[0]);
     }
     // checkToSwitchTabs(e);
@@ -145,7 +145,6 @@ function whichElement(e) {
     var tname;
     tname = targ.tagName;
     checkToClose(e.clientX, e.clientY, e);
-
     // if(targ)
     selectionHandler(e, targ);
     handleLayerInfoAppearance(e.clientX, e.clientY);
@@ -163,6 +162,7 @@ function whichElement(e) {
 
 function initializeObserver() {
     document.getElementById("html1").addEventListener("mousedown", whichElement);
+    document.getElementById("html1").addEventListener("contextmenu", (e) => { e.preventDefault(); });
     // document.getElementById("html1").addEventListener("", whichElement);
     return;
 }

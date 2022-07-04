@@ -132,7 +132,8 @@ class ItemHolder {
 
         if (!c)
             return;
-        console.log('unparent ' + functionId);
+        // console.log('unparent ' + functionId);
+        document.getElementById(functionId).firstChild.className = "ficon";
         this.unlinkOwnerFunction(c, functionId);
         return;
     }
@@ -161,6 +162,8 @@ class ItemHolder {
         this.deleteOwnerFromFunction(id, fid);
         if (document.getElementById("byComponent").checked)
             showByComponent();
+        document.getElementById(fid).firstChild.className = "ficon";
+
         return;
     }
     compareObjects(originalStr, alteredStr) {

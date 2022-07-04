@@ -213,6 +213,19 @@ function applyToEachComponent(callBack) {
     return;
 }
 
+function applyToEachOperation(callBack) {
+    const currentLayerId = layers.selectedLayer._id;
+    for (var x in layers.layerList) {
+        layers.changeLayer(layers.layerList[x]._id);
+        const layerItems = layers.itemMap.get(layers.layerList[x]._id).itemList.filter((el) => el._type === "Function");
+        layerItems.forEach((el) => {
+            callBack(el);
+        });
+    }
+    layers.changeLayer(currentLayerId);
+    return;
+}
+
 function refreshAllLinks() {
     const currentLayerId = layers.selectedLayer._id;
     for (var x in layers.layerList) {
@@ -250,4 +263,4 @@ function setBoundingRectMap(brectsJSON) {
     applyToEachComponent(callBack);
 }
 
-export { layers, LayerHolder, createFirstLayer, refreshAllLinks, applyToEachComponent, setBoundingRectMap, getAllBoundingRectMap };
+export { layers, LayerHolder, applyToEachOperation, createFirstLayer, refreshAllLinks, applyToEachComponent, setBoundingRectMap, getAllBoundingRectMap };

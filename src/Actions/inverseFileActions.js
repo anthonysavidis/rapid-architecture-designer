@@ -4,6 +4,7 @@ import { createFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan
 import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
 import { updateTree } from "../Layers/Tree.js";
+import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 
 function loadPrev(actionItems) {
     for (var x in layers.layerList) {
@@ -18,6 +19,8 @@ function loadPrev(actionItems) {
     (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
     // updateTree();
     updateFullPath(layers.layerList[0]._name);
+    measureAllLayersOperations();
+
 
 }
 
@@ -34,6 +37,7 @@ function loadNext(actionItems) {
     (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
     // updateTree();
     updateFullPath(layers.layerList[0]._name);
+    measureAllLayersOperations();
 
 
 }

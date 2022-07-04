@@ -5,7 +5,9 @@ function addToParentContext(funcId, parent, childName, callBack, componentId) {
     var child = document.createElement('div');
     child.className = "item";
     child.innerText = childName;
-    child.onclick = function() { callBack(componentId) };
+    child.onmousedown = function() {
+        callBack(componentId);
+    };
     parent.appendChild(child);
     return;
 }

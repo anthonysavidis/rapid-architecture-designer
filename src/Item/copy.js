@@ -239,10 +239,12 @@ async function pasteComponent() {
     }
     setTimeout(() => {
         try {
+            const currentLayerId = layers.selectedLayer._id;
             var pastingItemsJSON = JSON.parse(result);
             actions.saveCommand(pasteAction, deletePastedItems, result, "");
             pasteFromStr(result);
             (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+            layers.changeLayer(currentLayerId);
 
         } catch (error) {
             console.log('Not a valid item.');

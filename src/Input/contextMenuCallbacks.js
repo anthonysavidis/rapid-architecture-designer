@@ -20,10 +20,11 @@ const moveCallBack = (compId) => {
         items.setFunctionToItem(compId, funcId);
     }
     actions.saveCommand(massiveSet, massiveMove, initialFuncsStr, JSON.stringify(compId));
-    closeContext();
     if (document.getElementById("byComponent").checked) {
         showByComponent();
     }
+    // closeContext();
+
     return;
 }
 
@@ -49,7 +50,7 @@ const splitCallBack = () => {
     setTimeout(() => {
         selectAction(it._id);
 
-    }, 400);
+    }, 40);
 
 
     actions.saveCommand(standardSplitAction, inverseSplitAction, funcsStr, it.toString());
@@ -88,7 +89,7 @@ const deleteCallBack = () => {
 
 function addAllPossibleMovingComponents(funcId, parentDiv) {
     for (var x in items.itemList) {
-        if (items.itemList[x]._type === "Component" && !items.itemList[x]._functions.includes(funcId)) {
+        if (items.itemList[x]._type === "Component") {
             addToParentContext(funcId, parentDiv, items.itemList[x]._name, moveCallBack, items.itemList[x]._id);
         }
     }

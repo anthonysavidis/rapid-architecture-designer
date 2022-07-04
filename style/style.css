@@ -34,6 +34,8 @@
     --operationDraggingColor: #009dff;
     --operationOrphanColor: transparent;
     --operationBorderWidth: 3px;
+    --operationBorderWidth: 3px;
+    --selectedOperationsWidth: fit-content;
     /*------------------Links------------------*/
     --linkTextSize: 12pt;
     --linkTextFamily: Arial, Helvetica, sans-serif;
@@ -66,7 +68,7 @@
     cursor: pointer;
     padding: 9px 11px;
     transition: 0.3s;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 .hoveredTab {
@@ -217,7 +219,7 @@
     outline-color: black;
     width: 30px;
     height: 30px;
-    margin-top: 1.5px;
+    /* margin-top: 1.5px; */
     border: 1px solid transparent;
 }
 
@@ -362,10 +364,10 @@ body {
 
 .fIconSetted {
     float: left;
-    margin-right: 14px;
+    margin-right: 5px;
     margin-top: 1.35px;
     margin-left: 5px;
-    width: 24px;
+    width: 33px;
     height: 25px;
     background: no-repeat;
     background-image: url('../images/fIconSetted.png');

@@ -254,6 +254,8 @@ class Item {
         // document.getElementById(this._id).addEventListener("dblclick", function() {
         //     var index = items.itemList.findIndex(((element) => element._id === editId));
         // });
+        const fid = this._id;
+
         document.getElementById(this._id + "ficon").addEventListener("click", function(ev) {
             ev.preventDefault();
             cancelFunctionSelection();
@@ -268,6 +270,10 @@ class Item {
             ev.preventDefault();
             if (document.getElementsByClassName("context-menu")[0])
                 document.getElementsByClassName("context-menu")[0].remove();
+            if (document.getElementById(fid).className !== "selectedFunction") {
+                cancelFunctionSelection();
+                document.getElementById(fid).className = "selectedFunction";
+            }
 
             produceContextMenu(editId, ev.clientX, ev.clientY);
         });

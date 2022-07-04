@@ -242,10 +242,14 @@ function addComponentTabListeners() {
     document.getElementById("extendButton").addEventListener("click", function() {
         const extentableItems = getSelectedItems();
         extendButton(extentableItems);
+        appearComponentButtons();
+
     });
     document.getElementById("collapseButton").addEventListener("click", function() {
         const extentableItems = getSelectedItems();
         collapseButton(extentableItems);
+        appearComponentButtons();
+
     });
     initialAppear();
     return;
