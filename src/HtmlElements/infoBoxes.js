@@ -212,8 +212,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         cancelButton.style.float = confirmationButton.style.float = "right";
         confirmationButton.innerHTML = constantNames["ok"];
         cancelButton.onclick = function() {
-            // callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
-            cancelCallBack();
+            callBack("", constantNames["emptyNames"]["description"]);
+            // cancelCallBack();
             closeBox();
         }
         confirmationButton.onclick = function() {

@@ -13,6 +13,7 @@ import { renderLine } from "../Item/createLine.js";
 import { configStyle } from "../Classes/Config.js";
 import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "./extendingComponent.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
+import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -58,10 +59,12 @@ function produceDoubleClickEditingName(editId) {
         const originalItemStr = items.itemList[index].toString();
         items.itemList[index]._name = val;
         //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
-
+        // if (itemType === "Function")
+        //     measureSelectedView(editId);
         if (itemType === "Function" && items.itemList[index].owners[0] && document.getElementById("all").checked) {
-            // showOwner(items.itemList[index]);
             showAllRefresh();
+            // showOwner(items.itemList[index]);
+
         } else
             document.getElementById(items.itemList[index]._id + "name").innerHTML = val;
 

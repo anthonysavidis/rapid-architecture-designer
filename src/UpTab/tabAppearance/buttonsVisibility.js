@@ -99,7 +99,6 @@ function appearFunctionButtons() {
         functionList.forEach((el, index, arr) => {
             (!el.owners[0]) ? canReset = false: 1;
         });
-        console.log(canReset);
         if (canReset) {
             document.getElementById("splitButton").style.display = "inline-block";
             document.getElementById("resetFunctionButton").style.display = "inline-block";

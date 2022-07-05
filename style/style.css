@@ -53,8 +53,8 @@
 
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    /* border: 1px solid #ccc; */
+    background-color: #ffffff;
 }
 
 
@@ -72,7 +72,7 @@
 }
 
 .hoveredTab {
-    background: #ccc !important;
+    background: #f1f1f1 !important;
 }
 
 
@@ -95,6 +95,8 @@
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 #up_tab {
@@ -133,7 +135,7 @@
     height: 100%;
     overflow: hidden;
     position: absolute;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     background-color: #f1f1f1;
 }
 
@@ -219,7 +221,7 @@
     outline-color: black;
     width: 30px;
     height: 30px;
-    /* margin-top: 1.5px; */
+    margin-top: 1.5px;
     border: 1px solid transparent;
 }
 
@@ -319,7 +321,7 @@ body {
 
 .function {
     height: fit-content;
-    width: fit-content;
+    width: var(--selectedOperationsWidth);
     cursor: grab;
     text-align: right;
     line-height: 170%;
@@ -379,7 +381,7 @@ body {
 
 .selectedFunction {
     height: fit-content;
-    width: fit-content;
+    width: var(--selectedOperationsWidth);
     /*29px to height*/
     padding-right: 14px;
     text-align: center;

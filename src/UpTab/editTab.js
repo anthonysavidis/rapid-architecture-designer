@@ -1,5 +1,6 @@
 import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
+import { appearEditButtons } from "./tabAppearance/buttonsVisibility.js";
 
 function initialAppear() {
     document.getElementById("undoButton").style.display = "block";
@@ -38,10 +39,13 @@ function addEditTabListeners() {
     document.getElementById("undoButton").addEventListener("click", function() {
         if (actions.undoStack.length !== 0)
             actions.undo();
+        appearEditButtons();
     });
     document.getElementById("redoButton").addEventListener("click", function() {
         if (actions.redoStack.length !== 0)
             actions.redo();
+        appearEditButtons();
+
     });
     initialAppear();
 }

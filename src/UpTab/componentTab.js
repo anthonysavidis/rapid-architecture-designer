@@ -25,6 +25,7 @@ import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovem
 import { createSendingItem, createSendingLayer } from "../Layers/moveItem.js";
 import { newFunctionAction } from "./functionTab.js";
 import { appearComponentButtons } from "./tabAppearance/buttonsVisibility.js";
+import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -116,6 +117,7 @@ function askForDetails(type, extraInfo) {
         } else if (type === "Function") {
             var it = newFunctionAction()
             items.updateNameAndDescription(it._id, name, description);
+            measureSelectedView(it._id, 1);
 
             actions.saveCommand(createSpecificFunction, deleteSpecificFunction, "", it.toString());
         }

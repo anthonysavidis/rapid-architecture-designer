@@ -5,6 +5,7 @@ import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
+import { changeMaxWidth, getSelectedFunctionWidth, measureSelectedView, resetWidthToDefault } from "./selectedOperationsHandler.js";
 
 var lastSelected = "";
 
@@ -58,19 +59,28 @@ function resetOwner(functionItem) {
 
 
 function showAll() {
+    resetWidthToDefault();
     configAppearance("block");
     const allItemList = items.itemList;
+    var maxWidth = 0;
     for (var i in allItemList) {
         if (allItemList[i]._type === "Function") {
             showOwner(allItemList[i]);
+            const fWidth = getSelectedFunctionWidth(allItemList[i]._id);
+            (maxWidth < fWidth) ? maxWidth = fWidth: 1;
         }
     }
+    changeMaxWidth(maxWidth);
     return;
 }
+var maxCurrentOperationsWidth = 0;
 
 function updateSelectedList() {
+    if (document.getElementById('all').checked)
+        return;
     const componentsIdList = getSelectedIds();
     const componentItems = getSelectedItems()
+    maxCurrentOperationsWidth = 0;
     document.getElementById("selectedComponentList").innerHTML = "";
     for (var x in componentsIdList) {
         showSpecificFunctions(componentsIdList[x]);
@@ -79,6 +89,7 @@ function updateSelectedList() {
         else
             document.getElementById("selectedComponentList").innerHTML += ", " + componentItems[x]._name;
     }
+    changeMaxWidth(maxCurrentOperationsWidth);
 }
 
 function hideCurrentFunctions() {
@@ -100,6 +111,9 @@ function showSpecificFunctions(id) {
     var component = items.itemList[items.itemList.findIndex(el => el._id === id)];
     for (var i in component._functions) {
         document.getElementById(component._functions[i] + 'external').style.display = "block";
+        const fWidth = getSelectedFunctionWidth(component._functions[i]);
+        if (fWidth > maxCurrentOperationsWidth)
+            maxCurrentOperationsWidth = fWidth;
     }
     return;
 }

@@ -13,11 +13,15 @@ var lastPressed;
 
 function selectTabStyle(tablink) {
     if (lastPressed) {
-        lastPressed.style.backgroundColor = "#f1f1f1";
+        lastPressed.style.backgroundColor = "#ffffff";
         // lastPressed.className = "tablinks";
+        lastPressed.style.fontWeight = "normal";
+        lastPressed.style.color = "black";
     }
     lastPressed = tablink;
-    lastPressed.style.backgroundColor = "#cccccc";
+    lastPressed.style.backgroundColor = "#f1f1f1";
+    lastPressed.style.fontWeight = "bold";
+    // lastPressed.style.color = "blue";
 }
 
 function initializeTab(tabName, tablinkId) {

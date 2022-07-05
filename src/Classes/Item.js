@@ -30,6 +30,7 @@ import { configStyle } from "./Config.js";
 import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 import { deleteMultWithTrashBin } from "../Workspace/trashBin.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
+import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 
 class Item {
 
@@ -306,6 +307,7 @@ class Item {
                 }
             }
             // ()
+
     }
     deleteLink(deletedItemId) {
         var deletedLineId = this.links.get(deletedItemId);
