@@ -1,5 +1,6 @@
 import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
+import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 import { appearEditButtons } from "./tabAppearance/buttonsVisibility.js";
 
 function initialAppear() {
@@ -7,26 +8,52 @@ function initialAppear() {
     document.getElementById("redoButton").style.display = "block";
 }
 
-var gridState = "off"
+var gridState = "off",
+    panningState = "off"
 
 function gridTurnOn() {
     document.getElementById("body").className = "bodyDot";
     gridState = "on";
+    document.getElementById("gridButton").style.backgroundColor = "#ccc";
 }
 
 function gridTurnOff() {
     document.getElementById("body").className = "";
     gridState = "off";
+    document.getElementById("gridButton").style.backgroundColor = "";
+
 }
+
+function panningOn() {
+    panningState = "on";
+    enablePanning();
+    document.getElementById("panningButton").style.backgroundColor = "#ccc";
+}
+
+function panningOff() {
+    panningState = "off";
+    disablePanning();
+    document.getElementById("panningButton").style.backgroundColor = "";
+}
+
 
 function gridAction() {
     if (gridState === "off") {
         gridTurnOn();
-        actions.saveCommand(gridTurnOn, gridTurnOff, "", "");
-
+        // actions.saveCommand(gridTurnOn, gridTurnOff, "", "");
     } else {
         gridTurnOff();
-        actions.saveCommand(gridTurnOff, gridTurnOn, "", "");
+        // actions.saveCommand(gridTurnOff, gridTurnOn, "", "");
+    }
+}
+
+function panningAction() {
+    if (panningState === "off") {
+        panningOn();
+        // actions.saveCommand(panningOn, panningOff, "", "");
+    } else {
+        panningOff();
+        // actions.saveCommand(panningOff, panningOn, "", "");
     }
 }
 
@@ -34,6 +61,10 @@ function gridAction() {
 function addEditTabListeners() {
     document.getElementById("gridButton").addEventListener("click", function() {
         gridAction();
+        // actions.saveCommand()
+    });
+    document.getElementById("panningButton").addEventListener("click", function() {
+        panningAction();
         // actions.saveCommand()
     });
     document.getElementById("undoButton").addEventListener("click", function() {

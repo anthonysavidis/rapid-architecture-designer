@@ -25,7 +25,8 @@ const constantNames = {
         "Undo": "Undo",
         "Copy": "Copy",
         "Paste": "Paste",
-        "Redo": "Redo"
+        "Redo": "Redo",
+        "Panning": "Panning"
     },
     "componentsTab": {
         "tabName": "Components",
@@ -212,7 +213,8 @@ const buttonTooltips = {
     "Edit": {
         "Grid": "Toggle grid.",
         "Undo": "Undo the latest action.",
-        "Redo": "Redo the latest action."
+        "Redo": "Redo the latest action.",
+        "Panning": "Toggle panning in the workspace."
     },
     "Operations": {
         "New": "Create a new operation.",

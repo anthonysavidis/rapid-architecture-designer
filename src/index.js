@@ -11,6 +11,7 @@ import { createDraggableSpace, fixTrashBinPosition, initializeTheTrashBin } from
 import { produceLayerTabRod, produceRightTabRod } from "./HtmlElements/extendingSideTabs.js";
 import { createFullPath } from "./HtmlElements/pathAndLayerSpan.js";
 import { getAllCssVars } from "./Classes/ConfigActions.js";
+import { initZoom } from "./Workspace/zoom.js";
 
 
 
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     produceRightTabRod();
     initializeTab(constantNames["componentsTab"]["tabName"], "componentTab");
     createFullPath();
+    initZoom();
     // document.onpaste = function(params) {
     //     // console.log(params.clipboardData);
     // }

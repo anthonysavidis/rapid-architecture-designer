@@ -84,8 +84,8 @@ function cancelAll(e) {
 
 //The Observer
 
-function hasClickedOnWorkspace(id) {
-    if (id === "space")
+function hasClickedOnWorkspace(id, e) {
+    if (id === "space" || e.target.className === "workspace")
         return true;
     return false;
 }
@@ -115,7 +115,7 @@ function selectionHandler(e, targ) {
     const index = items.itemList.findIndex(el => el._id === suspectedId);
 
 
-    if (hasClickedOnWorkspace(targ.id)) {
+    if (hasClickedOnWorkspace(targ.id, e)) {
         document.getElementById("selectedComponentList").innerHTML = "";
         cancelAll(e);
     } else if (isInsideComponent && !e.ctrlKey) { //selected operations intacted
