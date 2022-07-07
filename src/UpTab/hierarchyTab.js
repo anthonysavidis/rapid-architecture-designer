@@ -56,11 +56,13 @@ function enableTreeFlag() {
     treeIsShown = true;
 }
 
+var moveToCntx = () => {};
+
 function addHierarchyTabListeners() {
     document.getElementById("toggleHierarchyTreeButton").style.display = "inline-block";
 
     document.getElementById("moveToLayerButton").style.display = "none";
-    document.getElementById("moveToLayerButton").addEventListener("click", function() {
+    document.getElementById("moveToLayerButton").addEventListener("click", moveToCntx = function() {
         const selectedItems = getSelectedItems();
         const disabled = getDisabledLayers(selectedItems).length;
         const l_no = layers.idList.length;
@@ -108,4 +110,4 @@ function addHierarchyTabListeners() {
     });
 }
 
-export { addHierarchyTabListeners };
+export { addHierarchyTabListeners, moveToCntx };

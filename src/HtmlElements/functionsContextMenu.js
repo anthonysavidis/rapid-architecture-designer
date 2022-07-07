@@ -3,13 +3,14 @@ import { addAllPossibleMovingComponents, splitCallBack, deleteCallBack, unparent
 
 function addToParentContext(funcId, parent, childName, callBack, componentId) {
     var child = document.createElement('div');
-    child.className = "item";
+    child.className = "item unselectableText";
+    child.style.cursor = "pointer";
     child.innerText = childName;
     child.onmousedown = function() {
         callBack(componentId);
     };
     parent.appendChild(child);
-    return;
+    return child;
 }
 
 function moveContextMenu(funcId, parent) {

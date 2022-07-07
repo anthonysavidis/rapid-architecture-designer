@@ -47,9 +47,11 @@ function deleteOperationWithTrashBin() {
     return;
 }
 
+var newFunctionCntx = () => {};
+
 function addFunctionTabListeners() {
     initialAppearance();
-    document.getElementById("newFunctionButton").addEventListener("click", function() {
+    document.getElementById("newFunctionButton").addEventListener("click", newFunctionCntx = function() {
         // var functionItem = newFunctionAction();
         askForDetails("Function", "");
 
@@ -86,4 +88,4 @@ function addFunctionTabListeners() {
     });
 }
 
-export { addFunctionTabListeners, newFunctionAction, deleteOperationWithTrashBin };
+export { addFunctionTabListeners, newFunctionAction, newFunctionCntx, deleteOperationWithTrashBin };

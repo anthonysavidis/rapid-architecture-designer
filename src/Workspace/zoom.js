@@ -73,7 +73,7 @@ function addPanning(elmnt) {
             } else {
                 var Dx = e.clientX - initX;
                 var Dy = e.clientY - initY;
-                moveAllItemsInCurrentLayer(-Dx / 100, -Dy / 100);
+                moveAllItemsInCurrentLayer(Dx / 100, Dy / 100);
                 console.log('dragging');
             }
         }

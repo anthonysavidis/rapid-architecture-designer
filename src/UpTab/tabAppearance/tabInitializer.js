@@ -8,6 +8,7 @@ import { takeScreenshot } from "../../Layers/preview.js";
 import { getSelectedLinkItems } from "../../Item/selectLink.js";
 import { constantNames } from "../../config/constantNames.js";
 import { produceLayerTabRod, removeLayerTabRod } from "../../HtmlElements/extendingSideTabs.js";
+import { produceWorkspaceContextMenu } from "../../Workspace/workspaceContextMenu.js";
 
 var lastPressed;
 
@@ -27,6 +28,11 @@ function selectTabStyle(tablink) {
 function initializeTab(tabName, tablinkId) {
     document.getElementById("main").style.display = "block";
     document.getElementById("main").style.height = window.screen.availHeight + "px";
+    document.getElementById("main").addEventListener("contextmenu", (e) => {
+        if (document.getElementById('workspaceContext'))
+            document.getElementById('workspaceContext').remove();
+        produceWorkspaceContextMenu("", "", e.clientX, e.clientY);
+    })
     document.getElementById("right_tab").style.display = "block";
     closeLayerTree();
     removeLayerTabRod();

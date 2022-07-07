@@ -88,6 +88,10 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         cancelButton.onclick = cancelAction;
         box.style.width = "380px";
         var params = extraInfo.split('@');
+        if (params[0].includes("subarchitecture")) {
+            title = document.createElement('h4');
+            title.style.paddingRight = title.style.paddingLeft = "20px";
+        }
         title.innerText = params[0];
 
         title.style.width = "100%";
@@ -212,8 +216,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         cancelButton.style.float = confirmationButton.style.float = "right";
         confirmationButton.innerHTML = constantNames["ok"];
         cancelButton.onclick = function() {
-            callBack("", constantNames["emptyNames"]["description"]);
-            // cancelCallBack();
+            // callBack("", constantNames["emptyNames"]["description"]);
+            cancelAction();
             closeBox();
         }
         confirmationButton.onclick = function() {

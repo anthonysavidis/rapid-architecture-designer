@@ -12,6 +12,17 @@ function hasListSubarchitecture(itemList) {
     return false;
 }
 
+function getActiveComponentButtonNames() {
+    const childrenButtons = document.getElementById("Components").children;
+    var activeButtons = [];
+    for (var x = 0; x < childrenButtons.length; x++) {
+        if (childrenButtons[x].style.display === "inline-block") {
+            activeButtons.push(childrenButtons[x].lastChild.innerHTML);
+        }
+    }
+    return activeButtons;
+}
+
 function appearComponentButtons() {
     const selectedItems = getSelectedItems();
     if (!selectedItems || !selectedItems[0]) {
@@ -71,7 +82,7 @@ function appearComponentButtons() {
     } else {
         document.getElementById("joinButton").style.display = "none";
     }
-
+    getActiveComponentButtonNames();
 }
 
 function appearFunctionButtons() {
@@ -140,4 +151,4 @@ function appearHierarchyButtons() {
     }
 }
 
-export { appearComponentButtons, appearFunctionButtons, appearEditButtons, appearHierarchyButtons };
+export { appearComponentButtons, appearFunctionButtons, getActiveComponentButtonNames, appearEditButtons, appearHierarchyButtons };

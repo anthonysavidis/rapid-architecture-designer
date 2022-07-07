@@ -16,6 +16,7 @@ import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 import { configStyle } from "../Classes/Config.js";
 import { enableLayerDescriptionExtension, refreshDescriptionExtension } from "../Layers/switchActions.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
+import { exitFullscreenCntx } from "./settingsTab.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
@@ -111,6 +112,7 @@ function saveAction() {
 function addFileTabListeners() {
     // loadSpecific("extendTest.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
+        exitFullscreenCntx();
         flushInputEvent();
         loadAction();
     });

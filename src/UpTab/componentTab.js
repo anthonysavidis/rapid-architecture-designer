@@ -149,13 +149,14 @@ function extendButton(extentableItems) {
     actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, JSON.stringify(extentableItems), oldBRecs);
     return;
 }
+var componentContextDispatch = {};
 
 function addComponentTabListeners() {
-    document.getElementById("newButton").addEventListener("click", function() {
+    document.getElementById("newButton").addEventListener("click", componentContextDispatch["New"] = function() {
 
         askForDetails("Component", ""); //fix
     });
-    document.getElementById("deleteButton").addEventListener("click", function() {
+    document.getElementById("deleteButton").addEventListener("click", componentContextDispatch["Delete"] = function() {
         // deletedItemsStack.push(getAllDeletedItemsStrs());
         var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + getSelectedIds().length + constantNames["confirmationBox"]["DeleteMsgEnd"];
         var originalItemsStrs = getAllDeletedItemsStrs();
@@ -175,13 +176,13 @@ function addComponentTabListeners() {
                 showAllRefresh();
         });
     });
-    document.getElementById("linkButton").addEventListener("click", function() {
+    document.getElementById("linkButton").addEventListener("click", componentContextDispatch["Link"] = function() {
         // var linkItem = linkComponentsAction();
         // var linkedItems = getSelectedItems();
         // var itemsStr = "{ \"0\":" + linkedItems[0].toString() + ", \"1\":" + linkedItems[1].toString() + ",\"2\":" + linkItem.toString() + "}"
         askForDetails("Link", ""); //fix
     });
-    document.getElementById("unlinkButton").addEventListener("click", function() {
+    document.getElementById("unlinkButton").addEventListener("click", componentContextDispatch["Unlink"] = function() {
         var unlinkedItems = getSelectedItems();
         var linkId = unlinkedItems[0].links.get(unlinkedItems[1]._id);
         const linkItemStr = items.itemList[items.itemList.findIndex((el) => el._id === linkId)].toString();
@@ -189,11 +190,11 @@ function addComponentTabListeners() {
         unlinkComponentsAction();
         actions.saveCommand(unlinkItems, linkItems, itemsStr, linkItemStr);
     });
-    document.getElementById("splitButton").addEventListener("click", function() {
+    document.getElementById("splitButton").addEventListener("click", componentContextDispatch["Split"] = function() {
         splitComponentAction();
         // actions.saveCommand(splitAction, joinAction, itemToBeSplited, itemParts);
     });
-    document.getElementById("joinButton").addEventListener("click", function() {
+    document.getElementById("joinButton").addEventListener("click", componentContextDispatch["Join"] = function() {
         const toBeJoined = getSelectedItems();
         const itemLinks = getLinkItems(toBeJoined);
         var itemToBeJoined;
@@ -208,13 +209,13 @@ function addComponentTabListeners() {
             showAllRefresh();
         actions.saveCommand(joinAction, splitAction, joinedItem, itemToBeJoined);
     });
-    document.getElementById("copyButton").addEventListener("click", function() {
+    document.getElementById("copyButton").addEventListener("click", componentContextDispatch["Copy"] = function() {
         copyComponentAction();
     });
-    document.getElementById("pasteButton").addEventListener("click", function() {
+    document.getElementById("pasteButton").addEventListener("click", componentContextDispatch["Paste"] = function() {
         pasteComponentAction();
     });
-    document.getElementById("subdivideButton").addEventListener("click", function() {
+    document.getElementById("subdivideButton").addEventListener("click", componentContextDispatch["Subdivide"] = function() {
         const sid = getSelectedIds()[0];
         const component = getSelectedItems()[0];
         var callBack = (name, cancelled) => {
@@ -228,7 +229,7 @@ function addComponentTabListeners() {
         appearComponentButtons();
 
     });
-    document.getElementById("unsubdivideButton").addEventListener("click", function() {
+    document.getElementById("unsubdivideButton").addEventListener("click", componentContextDispatch["Unsubdivide"] = function() {
         const unsubdivideCallBack = () => {
             var itemToBeUnsubdivided = getSelectedItems()[0];
             var layerBeingDeleted = layers.layerList[layers.layerList.findIndex((el) => itemToBeUnsubdivided.subLayers[0] === el._id)];
@@ -241,13 +242,13 @@ function addComponentTabListeners() {
         var msg = constantNames['messages']['unsubdivideMsg'];
         produceBox("confirmation", msg + "@1", unsubdivideCallBack);
     });
-    document.getElementById("extendButton").addEventListener("click", function() {
+    document.getElementById("extendButton").addEventListener("click", componentContextDispatch["Extend"] = function() {
         const extentableItems = getSelectedItems();
         extendButton(extentableItems);
         appearComponentButtons();
 
     });
-    document.getElementById("collapseButton").addEventListener("click", function() {
+    document.getElementById("collapseButton").addEventListener("click", componentContextDispatch["Collapse"] = function() {
         const extentableItems = getSelectedItems();
         collapseButton(extentableItems);
         appearComponentButtons();
@@ -272,4 +273,4 @@ function initialAppear() {
 
 }
 
-export { addComponentTabListeners, subdivideAction, askForDetails, produceNewLayer, pasteComponentAction };
+export { addComponentTabListeners, componentContextDispatch, subdivideAction, askForDetails, produceNewLayer, pasteComponentAction };

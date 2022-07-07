@@ -31,6 +31,7 @@ import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 import { deleteMultWithTrashBin } from "../Workspace/trashBin.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
+import { produceComponentContextMenu } from "../HtmlElements/componentContextMenu.js";
 
 class Item {
 
@@ -181,8 +182,10 @@ class Item {
         }
         document.getElementById(editId).addEventListener("contextmenu", (e) => {
             e.preventDefault();
-            produceTooltip(e.clientX - 10, e.clientY - 10, "", editId);
-        })
+            // produceTooltip(e.clientX - 10, e.clientY - 10, "", editId);
+            produceComponentContextMenu("", "", e.clientX, e.clientY);
+
+        });
         this.domElement.ondrop = (event) => {
                 event.preventDefault();
                 try {

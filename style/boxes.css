@@ -311,3 +311,19 @@ select {
     padding-left: 5px;
     padding-right: 5px;
 }
+
+.tick {
+    background-image: url('../images/small_tick.png');
+    width: 29px;
+    height: 20px;
+    float: right;
+    margin-right: -2.5px;
+    z-index: 30;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}

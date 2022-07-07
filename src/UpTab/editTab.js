@@ -56,23 +56,23 @@ function panningAction() {
         // actions.saveCommand(panningOff, panningOn, "", "");
     }
 }
-
+var gridCntx, panningCntx, undoCntx, redoCntx;
 
 function addEditTabListeners() {
-    document.getElementById("gridButton").addEventListener("click", function() {
+    document.getElementById("gridButton").addEventListener("click", gridCntx = function() {
         gridAction();
         // actions.saveCommand()
     });
-    document.getElementById("panningButton").addEventListener("click", function() {
+    document.getElementById("panningButton").addEventListener("click", panningCntx = function() {
         panningAction();
         // actions.saveCommand()
     });
-    document.getElementById("undoButton").addEventListener("click", function() {
+    document.getElementById("undoButton").addEventListener("click", undoCntx = function() {
         if (actions.undoStack.length !== 0)
             actions.undo();
         appearEditButtons();
     });
-    document.getElementById("redoButton").addEventListener("click", function() {
+    document.getElementById("redoButton").addEventListener("click", redoCntx = function() {
         if (actions.redoStack.length !== 0)
             actions.redo();
         appearEditButtons();
@@ -81,4 +81,4 @@ function addEditTabListeners() {
     initialAppear();
 }
 
-export { addEditTabListeners };
+export { addEditTabListeners, gridCntx, panningCntx, undoCntx, redoCntx, gridState, panningState };
