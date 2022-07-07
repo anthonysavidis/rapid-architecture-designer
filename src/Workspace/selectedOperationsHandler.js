@@ -41,7 +41,6 @@ function resetWidthToDefault() {
 
 function measureSelectedView(id, oneUpdated) {
     const fWidth = getSelectedFunctionWidth(id);
-    console.log(document.getElementById(id + 'name').innerHTML + " " + fWidth + " " + maxSelectedWidthMap[layers.selectedLayer._id]);
     if (!maxSelectedWidthMap[layers.selectedLayer._id] || fWidth > maxSelectedWidthMap[layers.selectedLayer._id]) {
         maxSelectedWidthMap[layers.selectedLayer._id] = fWidth;
         changeMaxWidth(maxSelectedWidthMap[layers.selectedLayer._id]);

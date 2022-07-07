@@ -116,15 +116,15 @@
 }
 
 .okButton {
-    width: 75px;
-    height: 35px;
+    width: 64.47px;
+    height: 28px;
     background-color: #1c5299;
     color: #FFFFFF;
     border: 0px;
-    padding-top: 7px;
+    padding-top: 6px;
     float: right;
     font-weight: bold;
-    font-size: large;
+    font-size: medium;
     border-radius: 10%;
     margin-right: 25px;
     -webkit-touch-callout: none;
@@ -171,7 +171,7 @@ select {
 
 .buttonTeam {
     margin-top: 8px;
-    height: 45px;
+    height: 30px;
 }
 
 .boxTitle {
@@ -297,17 +297,17 @@ select {
 
 .cancelConfigButton {
     width: auto;
-    height: 35px;
+    height: 28px;
     background-color: #FFFFFF;
     color: #1c5299;
     font-weight: bold;
-    font-size: large;
+    font-size: medium;
     border: #969696 solid 1px;
     float: left;
     border-radius: 10%;
     margin-left: 25px;
     /* box-shadow: 4px 6px 3px rgb(0 0 0 / 40%); */
-    padding-top: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }

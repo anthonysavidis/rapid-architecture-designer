@@ -50,7 +50,7 @@ function createFullPath() {
     path.innerHTML = currentText;
     document.getElementById('space').appendChild(path);
     var textDims = getPathTextDimensions(currentText);
-    path.style.top = spaceRec.top + "px";
+    // path.style.top = spaceRec.top + "px";
     path.style.left = spaceRec.width / 2 - textDims.width / 2 + "px";
     return;
 }

@@ -10,7 +10,7 @@ import { canResizeAutofit, passAutoFitRestrictions } from "./autoResize.js";
 
 function getTextDimensions(str) {
 
-    var text = document.createElement("span");
+    var text = document.createElement("div");
     document.body.appendChild(text);
 
     var r = document.querySelector(':root');

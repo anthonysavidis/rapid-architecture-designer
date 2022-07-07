@@ -26,6 +26,7 @@ function selectTabStyle(tablink) {
 
 function initializeTab(tabName, tablinkId) {
     document.getElementById("main").style.display = "block";
+    document.getElementById("main").style.height = window.screen.availHeight + "px";
     document.getElementById("right_tab").style.display = "block";
     closeLayerTree();
     removeLayerTabRod();

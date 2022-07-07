@@ -35,36 +35,38 @@
 </head>
 
 <body id="body" style="overflow: hidden;background-color: rgb(210, 212, 236);">
-    <div id="tabArea" class="tab not-target">
+    <div style="top:8px;left:8px;width:99%;height:104.8px;position:absolute;z-index: 29 ;">
+        <div id="tabArea" class="tab not-target">
 
+        </div>
+        <div id="tabButtons" style="background-color: #f1f1f1;" class="not-target">
+            <div id="Project" class="tabcontent">
+            </div>
+            <div id="Edit" class="tabcontent">
+            </div>
+            <div id="Components" class="tabcontent">
+            </div>
+            <div id="Operations" class="tabcontent">
+            </div>
+            <div id="Hierarchy" class="tabcontent">
+            </div>
+            <div id="Settings" class="tabcontent">
+            </div>
+        </div>
     </div>
-    <div id="tabButtons" style="background-color: #f1f1f1;" class="not-target">
-        <div id="Project" class="tabcontent">
-        </div>
-        <div id="Edit" class="tabcontent">
-        </div>
-        <div id="Components" class="tabcontent">
-        </div>
-        <div id="Operations" class="tabcontent">
-        </div>
-        <div id="Hierarchy" class="tabcontent">
-        </div>
-        <div id="Settings" class="tabcontent">
-        </div>
-    </div>
 
 
-    <div id="main" style="overflow: hidden; float:left;">
+    <div id="main" style="overflow: hidden;margin-top: 104.8px;width: 97%;height: 160%; float:left;">
         <!-- <div class="workspace" id="workspace">
 
       </div> -->
     </div>
-    <div id="right_tab" class="not-target">
+    <div id="right_tab" style="margin-top: 104.8px; z-index:29;" class="not-target">
         <!-- <h2 class="line" style="text-align: center; margin-top:1px;">Functions</h2>
         <div id="functionArea" class="functionRec">
         </div> -->
     </div>
-    <div id="fSidebar" class="rightSideBar">
+    <div id="fSidebar" style="margin-top: 104.8px;" class="rightSideBar">
         <div id="closeLayersButton" style="margin-right:5px;margin-top:5px;float: right;cursor: pointer;"><img src="./images/oldCloseInfo.png" /></div>
         <div style="width:150px; padding-top: 50px; display: none;" id="jstree">
         </div>

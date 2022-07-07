@@ -27,7 +27,11 @@ function produceConfirmationButtons(box, type, closeBox, saveCallBack, projectNa
     cancelButton.onclick = closeBox;
     confirmationButton.onclick = () => { modalCallbacksDispatch["save"](closeBox, saveCallBack, projectName); };
     var buttonsContainer = document.createElement('div');
-    buttonsContainer.style.marginTop = "28px";
+    buttonsContainer.style.marginTop = "8px";
+    buttonsContainer.style.marginRight = "2px";
+    buttonsContainer.style.display = "inline-block";
+    buttonsContainer.style.float = "right";
+    buttonsContainer.style.marginRight = "2px";
 
     confirmationButton.style.float = cancelButton.style.float = "right";
     confirmationButton.style.marginLeft = "25px";
@@ -44,6 +48,7 @@ function produceConfirmationButtons(box, type, closeBox, saveCallBack, projectNa
 function createDialog(type, callBack) {
     var box = document.createElement('div');
     box.className = "inputBox";
+    box.style.width = "450px";
     box.style.paddingLeft = box.style.paddingRight = "0px";
     var closeBox = function() {
         box.remove();
@@ -61,6 +66,7 @@ function createDialog(type, callBack) {
     // title.className = "boxTitle";
     title.style.marginTop = "-10px";
     title.style.marginLeft = "25px";
+    title.style.marginBottom = "12px";
     if (type === "newProj")
         title.innerText = 'Save current project before closing?';
     if (type === "Save")
@@ -76,11 +82,13 @@ function createDialog(type, callBack) {
     nameFormDiv.style.marginTop = 2.5 + "px";
     // nameFormDiv.style.marginLeft = -40 + "px";
     nameFormDiv.innerHTML = '<input type="text" style="width: 75%;" name="firstname">';
-    nameFormDiv.firstChild.style.width = "90%";
+    nameFormDiv.firstChild.style.width = "398px";
+    // nameFormDiv.firstChild.style.marginRight = "50px";
     nameFormExternal.appendChild(nameLabelDiv);
     nameFormExternal.appendChild(nameFormDiv);
-    nameFormExternal.style.marginBottom = "10px";
-
+    nameFormDiv.style.marginBottom = "10px";
+    nameFormDiv.style.display = "flex";
+    nameFormDiv.style.justifyContent = "center";
     // form.onmousedown = null;
 
 

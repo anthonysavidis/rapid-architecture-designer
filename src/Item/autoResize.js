@@ -31,6 +31,7 @@ function autoResizeAutoFit(component) {
     var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
     var dims = getTextDimensions(document.getElementById(component._id + 'name').innerText);
+    console.log(document.getElementById(component._id + 'name').innerText);
     var widthOfName = dims.width;
     var heightOfName = dims.height;
     document.getElementById(component._id).style.width = widthOfName + 2 * offsetX + "px";
@@ -121,7 +122,7 @@ function passAutoFitRestrictions(id) {
     var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
 
-    var dims = getTextDimensions(document.getElementById(id + 'name').innerText);
+    var dims = getTextDimensions(document.getElementById(id + 'name').innerHTML);
     var widthOfName = dims.width + 2 * offsetX;
     var heightOfName = dims.height + 2 * offsetY;
     var componentRect = document.getElementById(id).getBoundingClientRect();

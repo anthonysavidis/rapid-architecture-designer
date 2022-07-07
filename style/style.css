@@ -122,8 +122,8 @@
 }
 
 .workspace {
-    float: left;
-    height: 100%;
+    /* float: left; */
+    height: 140%;
     width: 1000px;
     /* background-color: rgb(210, 212, 236); */
     z-index: 2;
@@ -484,12 +484,6 @@ hr.solid {
     border: var(--componentTextBorderWidth) solid black;
     background-color: var(--componentTextBackgroundColor);
     white-space: nowrap;
-    -webkit-user-drag: none;
-    -moz-user-select: none;
-    user-drag: none;
-    user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
 }
 
 .focusName {
