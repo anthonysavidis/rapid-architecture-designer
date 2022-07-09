@@ -9,6 +9,7 @@ import { getSelectedLinkItems } from "../../Item/selectLink.js";
 import { constantNames } from "../../config/constantNames.js";
 import { produceLayerTabRod, removeLayerTabRod } from "../../HtmlElements/extendingSideTabs.js";
 import { produceWorkspaceContextMenu } from "../../Workspace/workspaceContextMenu.js";
+import { produceComponentContextMenu } from "../../HtmlElements/componentContextMenu.js";
 
 var lastPressed;
 
@@ -29,9 +30,12 @@ function initializeTab(tabName, tablinkId) {
     document.getElementById("main").style.display = "block";
     document.getElementById("main").style.height = window.screen.availHeight + "px";
     document.getElementById("main").addEventListener("contextmenu", (e) => {
-        if (document.getElementById('workspaceContext'))
-            document.getElementById('workspaceContext').remove();
-        produceWorkspaceContextMenu("", "", e.clientX, e.clientY);
+        // if (document.getElementById('workspaceContext'))
+        //     document.getElementById('workspaceContext').remove();
+        // if (!e.target.parentNode.className.includes("selected"))
+        //     produceWorkspaceContextMenu("", "", e.clientX, e.clientY);
+        // else
+        //     produceComponentContextMenu("", "", e.clientX, e.clientY);
     })
     document.getElementById("right_tab").style.display = "block";
     closeLayerTree();

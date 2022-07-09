@@ -244,8 +244,10 @@ function handleDescriptionExtension(component, lineNo) {
     var subComponent = document.createElement('div');
     subComponent.id = id + 'Description';
     subComponent.className = "subComponent";
+    subComponent.style += " -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;"
     subComponent.style.fontSize = "small";
     subComponent.style.color = "var(--descriptionColor)";
+
     const descriptionLines = handleSplitDescription(component._description, lineNo);
     var lineMaxWidth = 0,
         lineIndex = 0;
@@ -263,6 +265,18 @@ function handleDescriptionExtension(component, lineNo) {
     // subComponent.style.height = "fit-content";
 
     return descriptionLines;
+}
+
+
+function makeDescriptionUnselectable() {
+    // -webkit-touch-callout: none;
+    // -webkit-user-select: none;
+    // -khtml-user-select: none;
+    // -moz-user-select: none;
+    // -ms-user-select: none;
+    // user-select: none;
+
+
 }
 
 function turnOnDescription(component) {

@@ -173,6 +173,7 @@ function produceSubcomponentSettings(box, configGrid) {
 function descriptionHandler(noActionSave) {
     var oldBRecs = {};
     const currentLayerId = layers.selectedLayer._id;
+    configStyle.descriptionEnabled = document.getElementById("descriptionSwitch").checked;
     if (document.getElementById("descriptionSwitch").checked) {
         document.getElementById("descArea").style.display = "inline-block";
         configStyle.descriptionEnabled = true;

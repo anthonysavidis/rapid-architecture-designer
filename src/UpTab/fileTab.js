@@ -37,10 +37,10 @@ function readTextFile(file) {
     rawFile.send(null);
 }
 
-function download(filename, text) {
+function download(filename, text, suffix) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename + ".prj");
+    element.setAttribute('download', filename + suffix);
 
     element.style.display = 'none';
     document.body.appendChild(element);
@@ -104,7 +104,7 @@ function saveAction() {
         if (cancelled)
             return;
         // name = "myArchitecture.txt";
-        download(name, layers.toString());
+        download(name, layers.toString(), ".prj");
     }
     showInputDialog("Save", callBack);
 }
@@ -112,7 +112,10 @@ function saveAction() {
 function addFileTabListeners() {
     // loadSpecific("extendTest.txt");
     document.getElementById("loadButton").addEventListener("click", function() {
-        exitFullscreenCntx();
+        var isFullScreen = (window.fullScreen) ||
+            (window.innerWidth == screen.width && window.innerHeight == screen.height);
+        if (isFullScreen)
+            exitFullscreenCntx();
         flushInputEvent();
         loadAction();
     });
@@ -127,7 +130,7 @@ function addFileTabListeners() {
                 return;
             }
             // name = "myArchitecture.txt";
-            download(name, layers.toString());
+            download(name, layers.toString(), ".prj");
             setTimeout(
                 () => {
                     location.reload();
@@ -140,4 +143,4 @@ function addFileTabListeners() {
 }
 
 
-export { addFileTabListeners };
+export { addFileTabListeners, download };

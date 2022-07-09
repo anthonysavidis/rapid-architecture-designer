@@ -7,6 +7,8 @@ import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { configStyle } from "../Classes/Config.js";
 import { canResizeAutofit, passAutoFitRestrictions } from "./autoResize.js";
+import { panningState } from "../UpTab/editTab.js";
+import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 
 function getTextDimensions(str) {
 
@@ -36,7 +38,7 @@ function getTextDimensions(str) {
 }
 
 function getCustomTextDimensions(fontFamily, fontSize, str) {
-    var text = document.createElement("span");
+    var text = document.createElement("div");
     document.body.appendChild(text);
     text.style.fontFamily = fontFamily;
     text.style.fontSize = fontSize;
@@ -70,6 +72,7 @@ function canResize(id, pointerX, pointerY) { //NEEDS REDOING
     return true;
 }
 
+var panningEnabled = false;
 
 
 function addResize(id) {
@@ -98,7 +101,10 @@ function addResize(id) {
     }
 
     function doDrag(e) {
-
+        if (panningState === "on") {
+            panningEnabled = true;
+            disablePanning();
+        }
         document.onmouseup = null;
         document.onmousemove = null;
         const possibleWidth = startWidth + e.clientX - startX;
@@ -113,7 +119,10 @@ function addResize(id) {
 
     function stopDrag(e) {
         $('#' + id).draggable('enable');
-
+        if (panningEnabled) {
+            panningEnabled = false;
+            enablePanning();
+        }
         document.documentElement.removeEventListener("mousemove", doDrag, false);
         document.documentElement.removeEventListener("mouseup", stopDrag, false);
         var updatedBoundingRec = JSON.stringify(document.getElementById(id).getBoundingClientRect());

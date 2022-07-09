@@ -42,6 +42,7 @@ function produceTextArea(descriptionFormDiv) {
     descriptionTextArea.name = 'subject';
     descriptionTextArea.style.width = "375px";
     descriptionTextArea.style.height = "100px";
+    descriptionTextArea.style.fontFamily = "Arial, Helvetica, sans-serif";
     // descriptionTextArea.style.marginLeft = "-70px";
     descriptionTextArea.autocomplete = "off";
     descriptionTextArea.onkeydown = (e) => {
@@ -190,7 +191,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         nameLabelDiv.innerHTML = constantNames["inputBox"]["nameLabel"][extraInfo];
         var nameFormDiv = document.createElement('div');
         nameFormDiv.style.marginTop = 2.5 + "px";
-        nameFormDiv.innerHTML = '<input autocomplete="off" type="text" style="width: 375px;" name="firstname">';
+        nameFormDiv.innerHTML = '<input id="nameForm" autocomplete="off" type="text" style="width: 375px;" name="firstname">';
         // nameFormDiv.firstChild.style.marginLeft = "-70px";
         nameFormExternal.appendChild(nameLabelDiv);
         nameFormExternal.appendChild(nameFormDiv);
@@ -205,6 +206,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         descriptionFormDiv.style.marginTop = 2.5 + "px";
         nameLabelDiv.style.marginLeft = descriptionLabelDiv.style.marginLeft = "3px";
         produceTextArea(descriptionFormDiv);
+        // descriptionFormDiv.id = "descriptionForm";
         descriptionFormExternal.appendChild(descriptionLabelDiv);
         descriptionFormExternal.appendChild(descriptionFormDiv);
         form.appendChild(descriptionFormExternal);

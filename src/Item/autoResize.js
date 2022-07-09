@@ -31,7 +31,6 @@ function autoResizeAutoFit(component) {
     var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
     var dims = getTextDimensions(document.getElementById(component._id + 'name').innerText);
-    console.log(document.getElementById(component._id + 'name').innerText);
     var widthOfName = dims.width;
     var heightOfName = dims.height;
     document.getElementById(component._id).style.width = widthOfName + 2 * offsetX + "px";

@@ -10,7 +10,7 @@ import { actions } from "./Actions.js";
 import { setSpecificFunction, resetSpecificFunction } from "../Actions/inverseFunctionsActions.js";
 import { cancelSelectedLinks } from "../Item/selectLink.js";
 import { addInfoButton, renderInfoButton } from "../HtmlElements/componentInfo.js";
-import { cropName, produceDoubleClickEditingName } from "../HtmlElements/doubleClickEditing.js";
+import { cropName, preventDraggingOfCname, produceDoubleClickEditingName } from "../HtmlElements/doubleClickEditing.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { closeTooltip, produceTooltip } from "../HtmlElements/infoTooltip.js";
@@ -18,7 +18,7 @@ import { initializeTab } from "../UpTab/tabAppearance/tabInitializer.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { produceContextMenu } from "../HtmlElements/functionsContextMenu.js";
 import { showAll, showByComponent, showOwner } from "../Workspace/functionAppearance.js";
-import { moveCallBack } from "../Input/contextMenuCallbacks.js";
+import { moveCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { functionColors } from "../config/functionStyle.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { appearComponentButtons, appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
@@ -32,6 +32,8 @@ import { deleteMultWithTrashBin } from "../Workspace/trashBin.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 import { produceComponentContextMenu } from "../HtmlElements/componentContextMenu.js";
+import { panningState } from "../UpTab/editTab.js";
+import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 
 class Item {
 
@@ -100,7 +102,9 @@ class Item {
         // moveItem(this._id);
         var editId = this._id;
         var movingObject = {};
+        var panningEnabled = false;
         $('#' + this._id).on('dragstart', () => {
+
             closeTheTooltip();
             appearComponentButtons();
             const dragIds = getSelectedIds();
@@ -113,6 +117,10 @@ class Item {
         $('#' + this._id).draggable({
             containment: "#space",
             drag: (e) => { //prepei na ginei handle to containment, to trash bin kai ta links.
+                if (panningState === "on") {
+                    panningEnabled = true;
+                    disablePanning();
+                }
                 renderLine(editId);
                 const dragIds = getSelectedIds();
                 if (dragIds.length > 1) {
@@ -135,6 +143,10 @@ class Item {
                 }
             },
             stop: (e) => { //actionsSave item... apoi to move item
+                if (panningEnabled) {
+                    panningEnabled = false;
+                    enablePanning();
+                }
                 const dragIds = getSelectedIds();
                 const selectedIts = getSelectedItems();
                 const initialItem = movingObject;
@@ -173,6 +185,7 @@ class Item {
             produceDoubleClickEditingName(editId);
             closeTooltip(editId);
         });
+        preventDraggingOfCname(this._id);
         document.getElementById(this._id).addEventListener("mouseover", (e) => {
             div.title = this._description;
             // appearFunctionButtons();

@@ -10,6 +10,7 @@ import { cancelSelectedLinks } from "../Item/selectLink.js";
 import { resetButtons } from "../Layers/layerInfoFunctions.js";
 import { appearComponentButtons, appearFunctionButtons, appearEditButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { initializeTab, lastPressed } from "../UpTab/tabAppearance/tabInitializer.js";
+import { workspaceContextMenuObserver } from "../Workspace/contextMenuHandler.js";
 import { hideCurrentFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 import { bRecs } from "./boundingRectanglesObserver.js";
 import { closeTooltipIfClickedOutside } from "./tooltipObserver.js";
@@ -152,6 +153,7 @@ function whichElement(e) {
     appearFunctionButtons();
     appearEditButtons();
     appearHierarchyButtons();
+    workspaceContextMenuObserver(e);
     // console.log(e.clientX + " " + e.clientY + " " + tname);
     // console.log(targ.className)
     if (document.getElementsByClassName("helper")[0] && targ.className !== "focusName" && !isInsideRec(e.clientX, e.clientY, document.getElementsByClassName("helper")[0].getBoundingClientRect())) {
@@ -207,4 +209,4 @@ function checkToClose(cX, cY, e) {
 
 }
 
-export { whichElement, initializeObserver, closeTheTooltip };
+export { whichElement, initializeObserver, closeTheTooltip, hasClickedOnWorkspace };

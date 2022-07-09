@@ -86,7 +86,9 @@ function getAllCssVars() {
                                 if (prop.length == 2 && prop[0].indexOf('--') == 1) {
                                     // console.log('Property name: ', prop[0]);
                                     // console.log('Property value:', prop[1]);
-                                    cssVarNames.push(prop[0].replace(' --', '--'));
+                                    var varName = prop[0].replace(' --', '--')
+                                    if (!varName.includes("selectedOperationsWidth"))
+                                        cssVarNames.push(varName);
                                 }
                             }
                         }

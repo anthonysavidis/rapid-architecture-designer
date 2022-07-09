@@ -56,12 +56,13 @@ function addAllButtons() {
     addButton(constantNames['layersTab']["MoveTo"], "moveToLayerButton", constantNames['layersTab']['tabName']);
     addButton(constantNames['layersTab']["Info"], "infoLayerButton", constantNames['layersTab']['tabName']);
 
+    addButton("Export", "saveConfigButton", constantNames['settingsTab']['tabName']);
+    addButton("Import", "loadConfigButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Component"], "configureComponentButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Operation"], "configureOperationButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Link"], "configureLinkButton", constantNames['settingsTab']['tabName']);
-
     // addButton(constantNames['helpTab']["tabName"], "helpButton", constantNames['helpTab']['tabName']);
 }
 

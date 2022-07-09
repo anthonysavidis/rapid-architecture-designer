@@ -23,7 +23,6 @@ function moveAllItemsInCurrentLayer(X, Y) {
         document.getElementById(componentList[i]._id).style.left = componentRec.left + X + "px";
         document.getElementById(componentList[i]._id).style.top = componentRec.top + Y + "px";
         if (componentList[i].links) {
-            console.log('renderingg');
             renderLine(componentList[i]._id);
         }
     }
@@ -63,7 +62,6 @@ function addPanning(elmnt) {
         cancelFunctionSelection();
         initX = e.clientX;
         initY = e.clientY;
-        console.log('dragstart');
     }
     const mouseMoveFunction = (e) => {
             if (!detectLeftButton(e) || !dragEnabled)
@@ -73,8 +71,7 @@ function addPanning(elmnt) {
             } else {
                 var Dx = e.clientX - initX;
                 var Dy = e.clientY - initY;
-                moveAllItemsInCurrentLayer(Dx / 100, Dy / 100);
-                console.log('dragging');
+                moveAllItemsInCurrentLayer(Dx / 50, Dy / 50);
             }
         }
         // elmnt.onmousedown = (e) => {

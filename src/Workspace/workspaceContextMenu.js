@@ -36,7 +36,7 @@ function addShortcut(elemnt, text) {
     return;
 }
 
-function checkToDisable(elemnt, flag) {
+function checkToDisableOption(elemnt, flag) {
     if (!flag) {
         elemnt.style.color = "#ccc";
         elemnt.onmouseover = () => {
@@ -116,8 +116,8 @@ function produceWorkspaceContextMenu(clickedComponentId, componentIdList, x, y) 
             closeContext();
         }
     }, "");
-    checkToDisable(undoOption, canUndo);
-    checkToDisable(redoOption, canRedo);
+    checkToDisableOption(undoOption, canUndo);
+    checkToDisableOption(redoOption, canRedo);
     addShortcut(undoOption, "Ctrl + Z");
     addShortcut(redoOption, "Ctrl + Y");
     document.getElementById("body").appendChild(workspaceContext);
@@ -125,4 +125,4 @@ function produceWorkspaceContextMenu(clickedComponentId, componentIdList, x, y) 
     return;
 }
 
-export { produceWorkspaceContextMenu, closeContext };
+export { produceWorkspaceContextMenu, closeContext, checkToDisableOption };

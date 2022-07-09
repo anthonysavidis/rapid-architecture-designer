@@ -1,4 +1,5 @@
 import { createMultipleSpecificFunctions, deleteMultipleSpecificFunctions, inverseSplitAction, massiveSet, massiveMove, resetSpecificFunction, setSpecificFunction, standardSplitAction, massiveUnparent } from "../Actions/inverseFunctionsActions.js";
+import { detailChangeListener } from "../Actions/inversePropertiesTab.js";
 import { actions } from "../Classes/Actions.js";
 import { Item } from "../Classes/Item.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
@@ -7,10 +8,30 @@ import { addToParentContext, closeContext } from "../HtmlElements/functionsConte
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
-import { showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
+import { showAllRefresh, showByComponent, showOwner, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 
+var editFunctionCallBack = (funcId) => {
+        const editingFunction = items.itemList[items.itemList.findIndex(el => el._id === funcId)];
+        produceBox("input", "Component", (name, description) => {
+            const functionStr = items.itemList[items.itemList.findIndex(el => el._id === funcId)].toString();
+            const oldDomName = document.getElementById(funcId + "name").innerHTML;
+            if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"][type.toLowerCase()];
+            if (description === "" || !description.replace(/\s/g, '').length) description = constantNames["emptyNames"]["description"];
+            items.updateNameAndDescription(funcId, name, description);
+            const detailChanged = detailChangeListener(funcId, functionStr)
+            if (detailChanged && document.getElementById("all").checked && editingFunction.owners[0]) {
+                // document.getElementById(funcId + "name").innerHTML = 
+                // showOwner(items.itemList[items.itemList.findIndex(el => el._id === funcId)]);
+                showAllRefresh();
 
-//eee
+            } else if (!detailChanged) {
+                document.getElementById(funcId + "name").innerHTML = oldDomName;
+            }
+        });
+        document.getElementById("nameForm").value = editingFunction._name;
+        document.getElementById("itemDescription").value = editingFunction._description;
+    }
+    //eee
 const moveCallBack = (compId) => {
     const selectedFuncs = getSelectedFunctions();
     const initialFuncsStr = itemFromListToObject(selectedFuncs);
@@ -95,4 +116,4 @@ function addAllPossibleMovingComponents(funcId, parentDiv) {
     }
 }
 
-export { addAllPossibleMovingComponents, splitCallBack, unparentCallBack, deleteCallBack, moveCallBack };
+export { addAllPossibleMovingComponents, editFunctionCallBack, splitCallBack, unparentCallBack, deleteCallBack, moveCallBack };

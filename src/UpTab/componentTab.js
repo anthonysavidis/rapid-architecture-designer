@@ -16,7 +16,7 @@ import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { constantNames } from "../config/constantNames.js";
 import { createSpecificFunction, deleteSpecificFunction } from "../Actions/inverseFunctionsActions.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
-import { splitCallBack } from "../Input/contextMenuCallbacks.js";
+import { splitCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actions/inversePropertiesTab.js";
 import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";

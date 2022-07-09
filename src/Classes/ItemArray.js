@@ -9,7 +9,7 @@ import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
-import { autoResizeAutoFit } from "../Item/autoResize.js";
+import { autoResizeAutoFit, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 class ItemHolder {
 
@@ -80,8 +80,12 @@ class ItemHolder {
         if (document.getElementById("all").checked && this.itemList[oldIndex]._type === "Component") {
             showAllRefresh();
         }
-        if (this.itemList[oldIndex]._type === "Component" && !directlyFromLoad)
-            autoResizeAutoFit(this.itemList[oldIndex]);
+        if (!directlyFromLoad) {
+            if (this.itemList[oldIndex]._type === "Component" && !passAutoFitRestrictions(id)) {
+                autoResizeAutoFit(this.itemList[oldIndex]);
+                renderLine(id);
+            }
+        }
     }
     addLink(lineId, id1, id2) {
         const matchId1 = (element) => element._id == id1;
