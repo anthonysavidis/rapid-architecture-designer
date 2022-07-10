@@ -61,10 +61,10 @@ function produceComponentContextMenu(clickedComponentId, componentIdList, x, y) 
             closeContext();
         }, "");
     }
-    addToParentContext("", componentContext, "Copy", () => {
-        componentContextDispatch["Copy"]();
-        closeContext();
-    }, "");
+    // addToParentContext("", componentContext, "Copy", () => {
+    //     componentContextDispatch["Copy"]();
+    //     closeContext();
+    // }, "");
     addToParentContext("", componentContext, "Move To", () => {
         moveToCntx();
         closeContext();

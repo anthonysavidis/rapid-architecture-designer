@@ -25,7 +25,7 @@ function produceConfirmationButtons(box, type, closeBox, saveCallBack, projectNa
     cancelButton.innerHTML = constantNames["cancel"];
 
     cancelButton.onclick = closeBox;
-    confirmationButton.onclick = () => { modalCallbacksDispatch["save"](closeBox, saveCallBack, projectName); };
+    confirmationButton.onclick = () => { modalCallbacksDispatch["save"](closeBox, saveCallBack, document.getElementById("dialogInputField").value); };
     var buttonsContainer = document.createElement('div');
     buttonsContainer.style.marginTop = "8px";
     buttonsContainer.style.marginRight = "2px";
@@ -81,7 +81,7 @@ function createDialog(type, callBack) {
     var nameFormDiv = document.createElement('div');
     nameFormDiv.style.marginTop = 2.5 + "px";
     // nameFormDiv.style.marginLeft = -40 + "px";
-    nameFormDiv.innerHTML = '<input type="text" style="width: 75%;" name="firstname">';
+    nameFormDiv.innerHTML = '<input id="dialogInputField" type="text" style="width: 75%;" name="firstname">';
     nameFormDiv.firstChild.style.width = "398px";
     // nameFormDiv.firstChild.style.marginRight = "50px";
     nameFormExternal.appendChild(nameLabelDiv);
@@ -95,6 +95,7 @@ function createDialog(type, callBack) {
 
     produceGrayLayer(box, type);
     box.appendChild(nameFormExternal);
+
     produceConfirmationButtons(box, type, closeBox, callBack, nameFormDiv.firstChild.value);
     document.getElementById("body").appendChild(box);
     addMotion(box);

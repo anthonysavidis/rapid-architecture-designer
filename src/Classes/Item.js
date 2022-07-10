@@ -115,7 +115,7 @@ class Item {
             }
         });
         $('#' + this._id).draggable({
-            containment: "#space",
+            containment: "#" + layers.selectedLayer._id,
             drag: (e) => { //prepei na ginei handle to containment, to trash bin kai ta links.
                 if (panningState === "on") {
                     panningEnabled = true;

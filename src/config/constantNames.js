@@ -60,7 +60,7 @@ const constantNames = {
         "ToggleHierarchy": "Toggle Tree",
         "Delete": "Delete",
         "InitialLayerName": "Initial",
-        "moveBox": "Move item",
+        "moveBox": "Move item(s) to:",
         "Info": "Info"
     },
     "operationsArea": {
@@ -206,7 +206,7 @@ const buttonTooltips = {
         "Collapse": "Collapse the selected component(s)."
     },
     "Project": {
-        "New": "Creates a new architecture and optionally saves the last one.",
+        "New": "Create a new architecture and optionally save the last one.",
         "Save": "Save the current architecture.",
         "Load": "Load an architecture."
     },
@@ -214,7 +214,9 @@ const buttonTooltips = {
         "Grid": "Toggle grid.",
         "Undo": "Undo the latest action.",
         "Redo": "Redo the latest action.",
-        "Panning": "Toggle panning in the workspace."
+        "Panning": "Toggle panning in the workspace.",
+        "Fullscreen": "Enter fullscreen mode.",
+        "Exit Fullscreen": "Exit fullscreen mode."
     },
     "Operations": {
         "New": "Create a new operation.",
@@ -229,13 +231,14 @@ const buttonTooltips = {
         "Info": "Layer Info"
     },
     "Settings": {
+        "Import": "Import settings from a config file.",
+        "Export": "Export settings to a config file.",
         "Configure": "Configure text & font size.",
         "Component": "Configure component style.",
         "Operation": "Configure operation style.",
         "Link": "Configure link style.",
         "Configure Workspace": "Configure workspace style.",
-        "Fullscreen": "Emter fullscreen mode.",
-        "Exit Fullscreen": "Exit fullscreen mode."
+
     },
     "Help": {
         "Help": "Help"

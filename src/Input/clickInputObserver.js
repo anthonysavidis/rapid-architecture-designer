@@ -86,7 +86,8 @@ function cancelAll(e) {
 //The Observer
 
 function hasClickedOnWorkspace(id, e) {
-    if (id === "space" || e.target.className === "workspace")
+
+    if (id === "space" || e.target.className === "workspace" || e.target.tagName === "HTML")
         return true;
     return false;
 }
@@ -154,7 +155,7 @@ function whichElement(e) {
     appearEditButtons();
     appearHierarchyButtons();
     workspaceContextMenuObserver(e);
-    // console.log(e.clientX + " " + e.clientY + " " + tname);
+    // console.log("TARG:" + targ.className + " NAME:" + tname);
     // console.log(targ.className)
     if (document.getElementsByClassName("helper")[0] && targ.className !== "focusName" && !isInsideRec(e.clientX, e.clientY, document.getElementsByClassName("helper")[0].getBoundingClientRect())) {
         // alert('closingHelper');

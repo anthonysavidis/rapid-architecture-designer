@@ -113,8 +113,9 @@ function linedraw(lineId, linkState, name, rec1, rec2) {
     });
     var nameArea = document.createElement("div");
     nameArea.id = lineId + "name";
+    nameArea.style += " -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;"
     nameArea.className = "blurName";
-    nameArea.contentEditable = true;
+    // nameArea.contentEditable = true;
     nameArea.style.paddingLeft = nameArea.style.paddingRight = "5px";
     nameArea.innerText = name;
     nameArea.style.position = "relative";

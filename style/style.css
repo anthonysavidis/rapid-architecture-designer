@@ -53,14 +53,17 @@
 .tab {
     overflow: hidden;
     /* border: 1px solid #ccc; */
-    background-color: #ffffff;
+    background-color: #557da5;
 }
 
 
 /* Style the buttons inside the tab */
 
+
+/* 
 .tab button {
-    background-color: inherit;
+    background-color: #557da5;
+    color: #FFFFFF;
     float: left;
     border: none;
     outline: none;
@@ -68,10 +71,38 @@
     padding: 9px 11px;
     transition: 0.3s;
     font-size: 15px;
+} */
+
+.tabButtonPressed {
+    background-color: rgb(241, 241, 241);
+    color: rgb(85, 125, 165);
+    font-weight: normal;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 9px 11px;
+    transition: 0.3s;
+    font-size: 15px;
+    display: inline-block;
+    float: left;
 }
 
-.hoveredTab {
-    background: #f1f1f1 !important;
+.tabButton {
+    color: rgb(241, 241, 241);
+    background-color: rgb(85, 125, 165);
+    font-weight: normal;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 9px 11px;
+    transition: 0.3s;
+    font-size: 15px;
+    display: inline-block;
+    float: left;
+}
+
+.tabButton:hover {
+    background: #618fbd !important;
 }
 
 
@@ -92,7 +123,7 @@
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-top: none;
     border-left: none;
     border-right: none;
@@ -123,7 +154,8 @@
 .workspace {
     /* float: left; */
     height: 140%;
-    width: 1000px;
+    width: inherit;
+    margin-left: -10px;
     /* background-color: rgb(210, 212, 236); */
     z-index: 2;
 }

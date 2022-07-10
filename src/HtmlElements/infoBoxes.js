@@ -135,10 +135,12 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         return;
     } else if (type === "selecting") {
         closeButton.style.zIndex = 330;
+        buttons.style.display = "inline-block";
+        buttons.style.width = "100%";
+        buttons.style.marginTop = "-10px";
 
         box.style.width = "310px";
-        box.style.height = "200px";
-        box.style.paddingLeft = "10px";
+        box.style.paddingLeft = "5px";
         closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
         closeButton.style.top = 5 + "px";
         title.innerText = extraInfo[0];
@@ -169,13 +171,15 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         cancelButton.style.float = "right";
         confirmationButton.className = "okButton";
         confirmationButton.style.marginLeft = "25px";
-        confirmationButton.style.marginRight = "25px";
+        confirmationButton.style.marginRight = "30px";
         confirmationButton.innerHTML = constantNames["ok"];
         confirmationButton.onclick = function() {
             callBack(select.value);
             closeBox();
         }
         produceGrayLayer(box, extraInfo, "");
+        box.style.height = "153px";
+
     } else if (type === "input") {
         closeButton.remove();
         produceMovingBar(box);

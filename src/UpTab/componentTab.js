@@ -24,7 +24,7 @@ import { imageStorage } from "../Classes/ImageHolder.js";
 import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
 import { createSendingItem, createSendingLayer } from "../Layers/moveItem.js";
 import { newFunctionAction } from "./functionTab.js";
-import { appearComponentButtons } from "./tabAppearance/buttonsVisibility.js";
+import { appearComponentButtons, pasteAppearListener } from "./tabAppearance/buttonsVisibility.js";
 import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 
 function newComponentAction() {
@@ -270,6 +270,14 @@ function initialAppear() {
     document.getElementById("unsubdivideButton").style.display = "none";
     document.getElementById("collapseButton").style.display = "none";
     document.getElementById("extendButton").style.display = "none";
+    document.getElementById("pasteButton").style.display = "inline-block";
+    document.getElementById("copyButton").style.display = "none";
+    // navigator.clipboard.addEventListener("clipboardchange", (e) => {
+    //     pasteAppearListener() ?
+    //         document.getElementById("pasteButton").style.display = "inline-block" :
+    //         document.getElementById("pasteButton").style.display = "none";
+    //     console.log("Clipboard event fired!");
+    // })
 
 }
 

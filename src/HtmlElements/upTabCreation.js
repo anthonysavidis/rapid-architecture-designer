@@ -2,12 +2,12 @@ import { constantNames } from "../config/constantNames.js";
 
 function insertUpTabs() {
     insertSideTab();
-    var tabsStr = '<button id="fileTab" class="tablinks unselectableText">' + constantNames['fileTab']['tabName'] + '</button> \
-    <button id="editTab" class="tablinks unselectableText">' + constantNames['editTab']['tabName'] + '</button>\
-    <button id="componentTab" class="tablinks unselectableText">' + constantNames['componentsTab']['tabName'] + '</button>\
-    <button id="functionTab" class="tablinks unselectableText">' + constantNames['functionsTab']['tabName'] + '</button>\
-    <button id="layersTab" class="tablinks unselectableText">' + constantNames['layersTab']['tabName'] + '</button>\
-    <button id="settingsTab" class="tablinks unselectableText">' + constantNames['settingsTab']['tabName'] + '</button>';
+    var tabsStr = '<div id="fileTab" class="tabButton unselectableText">' + constantNames['fileTab']['tabName'] + '</div> \
+    <div id="editTab" class="tabButton unselectableText">' + constantNames['editTab']['tabName'] + '</div>\
+    <div id="componentTab" class="tabButton unselectableText">' + constantNames['componentsTab']['tabName'] + '</div>\
+    <div id="functionTab" class="tabButton unselectableText">' + constantNames['functionsTab']['tabName'] + '</div>\
+    <div id="layersTab" class="tabButton unselectableText">' + constantNames['layersTab']['tabName'] + '</div>\
+    <div id="settingsTab" class="tabButton unselectableText">' + constantNames['settingsTab']['tabName'] + '</div>';
     document.getElementById('tabArea').innerHTML = tabsStr;
     return;
 }
@@ -17,6 +17,7 @@ function produceOperationsTittle() {
     tittle.className = "unselectableText";
     tittle.innerText = constantNames['operationsArea']['title'];
     tittle.style.marginTop = 5 + "px";
+    tittle.style.color = "#557da5";
     tittle.style.marginBottom = 5 + "px";
     tittle.style.textAlign = "center";
     return tittle;

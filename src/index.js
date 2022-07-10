@@ -12,6 +12,7 @@ import { produceLayerTabRod, produceRightTabRod } from "./HtmlElements/extending
 import { createFullPath } from "./HtmlElements/pathAndLayerSpan.js";
 import { getAllCssVars } from "./Classes/ConfigActions.js";
 import { initZoom } from "./Workspace/zoom.js";
+import { windowChangeListeners } from "./Window/windowSizeHandler.js";
 
 
 
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeTab(constantNames["componentsTab"]["tabName"], "componentTab");
     createFullPath();
     initZoom();
+    windowChangeListeners();
     // document.onpaste = function(params) {
     //     // console.log(params.clipboardData);
     // }

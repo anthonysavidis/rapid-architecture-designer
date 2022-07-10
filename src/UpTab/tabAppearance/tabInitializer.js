@@ -13,17 +13,18 @@ import { produceComponentContextMenu } from "../../HtmlElements/componentContext
 
 var lastPressed;
 
-function selectTabStyle(tablink) {
-    if (lastPressed) {
-        lastPressed.style.backgroundColor = "#ffffff";
-        // lastPressed.className = "tablinks";
-        lastPressed.style.fontWeight = "normal";
-        lastPressed.style.color = "black";
-    }
-    lastPressed = tablink;
-    lastPressed.style.backgroundColor = "#f1f1f1";
-    lastPressed.style.fontWeight = "bold";
-    // lastPressed.style.color = "blue";
+function selectTabStyle(tablinkId) {
+    // if (lastPressed) {
+    //     // lastPressed.style.backgroundColor = "#557da5";
+    //     // lastPressed.style.fontWeight = "normal";
+    //     // lastPressed.style.color = "white";
+    //     lastPressed.className = "tabButton";
+    // }
+    // lastPressed = document.getElementById(tablinkId);
+    if (document.getElementsByClassName("tabButtonPressed unselectableText")[0])
+        document.getElementsByClassName("tabButtonPressed unselectableText")[0].className = "tabButton unselectableText";
+    document.getElementById(tablinkId).className = "tabButtonPressed unselectableText";
+
 }
 
 function initializeTab(tabName, tablinkId) {
@@ -42,8 +43,7 @@ function initializeTab(tabName, tablinkId) {
     removeLayerTabRod();
     spawnTab(tabName);
 
-    var tablink = document.getElementById(tablinkId);
-    selectTabStyle(tablink);
+    selectTabStyle(tablinkId);
 
 }
 
@@ -84,4 +84,4 @@ function initializeStyleAndOperations() {
     cancelSelection();
 }
 
-export { initializeStyleAndOperations, initializeTab, lastPressed };
+export { initializeStyleAndOperations, initializeTab, lastPressed, selectTabStyle };

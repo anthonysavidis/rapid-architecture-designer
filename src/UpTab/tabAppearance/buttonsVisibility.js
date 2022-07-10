@@ -23,6 +23,26 @@ function getActiveComponentButtonNames() {
     return activeButtons;
 }
 
+function pasteAppearListener() {
+    var appearPasteButton = true;
+    try {
+        var result = "";
+        const userAgent = navigator.userAgent;
+        if (userAgent.match(/firefox|fxios/i)) {
+            document.onpaste = (event) => {
+                result = (event.clipboardData || window.clipboardData).getData('text');
+            }
+        } else if (userAgent.match(/chrome|chromium|crios/i)) {
+            result = navigator.clipboard.readText();
+        }
+        JSON.parse(result);
+
+    } catch (error) {
+        appearPasteButton = false;
+    }
+    return;
+}
+
 function appearComponentButtons() {
     const selectedItems = getSelectedItems();
     if (!selectedItems || !selectedItems[0]) {
@@ -34,6 +54,7 @@ function appearComponentButtons() {
         document.getElementById("joinButton").style.display = "none";
         document.getElementById("unlinkButton").style.display = "none";
         document.getElementById("linkButton").style.display = "none";
+        document.getElementById("copyButton").style.display = "none";
         return;
     }
     if (selectedItems.length === 1) {
@@ -50,8 +71,9 @@ function appearComponentButtons() {
     }
     if (selectedItems.length >= 1) {
         document.getElementById("deleteButton").style.display = "inline-block";
+        document.getElementById("copyButton").style.display = "inline-block";
     } else {
-        document.getElementById("deleteButton").style.display = "none";
+        document.getElementById("copyButton").style.display = "none";
     }
     if (selectedItems.length >= 1 && areAllExtendable(selectedItems) && areAllCollapsed(selectedItems)) {
         document.getElementById("extendButton").style.display = "inline-block";
@@ -82,7 +104,8 @@ function appearComponentButtons() {
     } else {
         document.getElementById("joinButton").style.display = "none";
     }
-    getActiveComponentButtonNames();
+    // getActiveComponentButtonNames();
+    pasteAppearListener() ? document.getElementById("pasteButton").style.display = "inline-block" : document.getElementById("pasteButton").style.display = "none";
 }
 
 function appearFunctionButtons() {
@@ -151,4 +174,4 @@ function appearHierarchyButtons() {
     }
 }
 
-export { appearComponentButtons, appearFunctionButtons, getActiveComponentButtonNames, appearEditButtons, appearHierarchyButtons };
+export { appearComponentButtons, appearFunctionButtons, getActiveComponentButtonNames, pasteAppearListener, appearEditButtons, appearHierarchyButtons };
