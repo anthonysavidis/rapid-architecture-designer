@@ -33,9 +33,7 @@
     /* border-radius: 6px; */
     /* Position the tooltip text */
     position: absolute;
-    z-index: 30;
     bottom: 125%;
-    z-index: 9999999999999;
     /* Fade in tooltip */
     opacity: 0;
     transition: opacity 0.3s;

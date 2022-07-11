@@ -71,7 +71,8 @@ function createDialog(type, callBack) {
         title.innerText = 'Save current project before closing?';
     if (type === "Save")
         title.innerText = 'Save current project?';
-
+    if (type === "SettingsSave")
+        title.innerText = 'Save current settings?';
     box.appendChild(title);
     var nameFormExternal = document.createElement('div');
     var nameLabelDiv = document.createElement('div');

@@ -5,6 +5,7 @@ import { ConfigActions } from "./ConfigActions.js";
 import { download } from "../UpTab/fileTab.js";
 import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 import { applyToEachComponent } from "./LayerHolder.js";
+import { showInputDialog } from "../Input/inputDialog.js";
 
 class Config {
     produceActionDispatchMembers() {
@@ -89,7 +90,15 @@ class Config {
         exportedConfigJSON["descriptionEnabled"] = this.descriptionEnabled;
         exportedConfigJSON["configJSON"] = this.configJSON;
         var exportedConfigStr = JSON.stringify(exportedConfigJSON);
-        download("settings", exportedConfigStr, ".cfg");
+        var callBack = (name, cancelled) => {
+            if (cancelled)
+                return;
+            // name = "myArchitecture.txt";
+            if (name === undefined)
+                name = "settings";
+            download(name, exportedConfigStr, ".cfg");
+        }
+        showInputDialog("SettingsSave", callBack);
     }
 
     importConfig() {

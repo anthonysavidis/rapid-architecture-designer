@@ -97,6 +97,14 @@ function fixTrashBinPosition() {
     return;
 }
 
+function fixMainDiv() {
+    //ean einai mono to operations side i an einai kai ta 2.
+    var rightSmallVoid = window.innerWidth - document.getElementById("toolBar").getBoundingClientRect().right;
+    document.getElementById("main").style.width = window.innerWidth - document.getElementById("right_tab").getBoundingClientRect().width - rightSmallVoid - 11 + "px";
+    document.getElementById("main").style.height = document.getElementById("right_tab").getBoundingClientRect().height + "px";
+
+}
+
 function createDraggableSpace() {
     if (document.getElementById("space"))
         document.getElementById("space").remove();
@@ -112,6 +120,8 @@ function createDraggableSpace() {
     document.getElementById('body').appendChild(div);
     document.getElementById("right_tab").style.left = document.getElementById("tabButtons").getBoundingClientRect().width + 8 - document.getElementById("right_tab").getBoundingClientRect().width + "px";
     createFullPath();
+    fixMainDiv();
+
 }
 
-export { canBeDeleted, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, deleteMultWithTrashBin, fixTrashBinPosition };
+export { canBeDeleted, fixMainDiv, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, deleteMultWithTrashBin, fixTrashBinPosition };

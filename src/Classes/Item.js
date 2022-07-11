@@ -97,6 +97,7 @@ class Item {
 
         // div.style.transition = "width 1s, height 1s, transform 1s";
         document.getElementById(layers.selectedLayer._id).appendChild(div);
+        document.getElementById(this._id).style.top = document.getElementById("toolBar").getBoundingClientRect().height + 12 + "px";
         addResize(this._id);
         changeSelectState(this._id);
         // moveItem(this._id);

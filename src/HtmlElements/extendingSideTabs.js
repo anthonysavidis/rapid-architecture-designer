@@ -140,4 +140,4 @@ function addLayerRodListener() {
     });
 }
 
-export { produceRightTabRod, produceLayerTabRod, addRightTabRodListener, removeLayerTabRod, fixFunctionsWidth }
+export { produceRightTabRod, produceLayerTabRod, addRightTabRodListener, addLayerRodListener, removeLayerTabRod, fixFunctionsWidth }

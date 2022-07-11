@@ -7,7 +7,7 @@ import { insertUpTabs } from "./HtmlElements/upTabCreation.js";
 import { items } from "./Classes/ItemArray.js";
 import { renderInfoButton } from "./HtmlElements/componentInfo.js";
 import { constantNames } from "./config/constantNames.js";
-import { createDraggableSpace, fixTrashBinPosition, initializeTheTrashBin } from "./Workspace/trashBin.js";
+import { createDraggableSpace, fixMainDiv, fixTrashBinPosition, initializeTheTrashBin } from "./Workspace/trashBin.js";
 import { produceLayerTabRod, produceRightTabRod } from "./HtmlElements/extendingSideTabs.js";
 import { createFullPath } from "./HtmlElements/pathAndLayerSpan.js";
 import { getAllCssVars } from "./Classes/ConfigActions.js";
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
     createFullPath();
     initZoom();
     windowChangeListeners();
+    fixMainDiv();
     // document.onpaste = function(params) {
     //     // console.log(params.clipboardData);
     // }
