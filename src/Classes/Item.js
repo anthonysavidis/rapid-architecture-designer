@@ -276,7 +276,7 @@ class Item {
         document.getElementById(this._id + "ficon").addEventListener("click", function(ev) {
             ev.preventDefault();
             cancelFunctionSelection();
-            produceTooltip(ev.clientX, ev.clientY, "", editId);
+
             document.getElementById(editId).className = "selectedFunction";
         });
         document.getElementById(this._id + "name").addEventListener("dblclick", function() {

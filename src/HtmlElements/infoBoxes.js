@@ -32,7 +32,7 @@ function produceMovingBar(box, isMsgBox) {
         bar.style.backgroundColor = "#cedff7";
     bar.id = "movingBar";
     box.appendChild(bar);
-    return;
+    return bar;
 }
 
 function produceTextArea(descriptionFormDiv) {
@@ -182,13 +182,17 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
 
     } else if (type === "input") {
         closeButton.remove();
-        produceMovingBar(box);
+        var bar = produceMovingBar(box);
+        bar.style.position = "absolute";
+        bar.style.top = 0;
+        bar.style.left = 0;
         closeButton.style.marginRight = "-15px";
         box.style.width = "420px";
         // title.innerText = constantNames["inputBox"]["msg"] + extraInfo + constantNames["dot"];
         // box.appendChild(title);
         var form = document.createElement('form');
         form.id = "inputForm";
+        form.style.marginTop = "12px";
         var nameFormExternal = document.createElement('div');
         var nameLabelDiv = document.createElement('div');
         nameLabelDiv.className = "labelModalDiv";
