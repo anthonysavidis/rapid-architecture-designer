@@ -3,6 +3,7 @@
     width: 500px;
     height: auto;
     text-align: center;
+    border: 2px solid #768ca1;
     color: #525252;
     background-color: #e7e5e5;
     font-family: Arial, Helvetica, sans-serif;
@@ -27,10 +28,9 @@
 }
 
 .selectingBox {
-    padding: 1px;
-    padding-bottom: 1%;
     width: 250px;
     height: 165px;
+    border: 2px solid #768ca1;
     text-align: center;
     color: #525252;
     background-color: #e7e5e5;
@@ -50,7 +50,8 @@
     height: auto;
     text-align: center;
     color: #525252;
-    background-color: #e7e5e5;
+    background-color: #f1f1f1;
+    border: 2px solid #768ca1;
     font-family: Arial, Helvetica, sans-serif;
     left: 32.5%;
     top: 5%;
@@ -92,10 +93,9 @@
 .cancelButton {
     width: 75px;
     height: 35px;
-    background-color: #969696;
-    border: 0px;
+    border: 1px solid #969696;
+    background-color: #FFFFFF;
     float: left;
-    border-radius: 10%;
     margin-left: 25px;
 }
 
@@ -118,14 +118,11 @@
 .okButton {
     width: 64.47px;
     height: 28px;
-    background-color: #1c5299;
-    color: #FFFFFF;
-    border: 0px;
+    border: 1px solid #1c5299;
+    background-color: #FFFFFF;
     padding-top: 6px;
     float: right;
-    font-weight: bold;
-    font-size: medium;
-    border-radius: 10%;
+    font-size: small;
     margin-right: 25px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -203,13 +200,18 @@ select {
 }
 
 .movingBar {
-    background-color: #e7e5e5;
+    background-color: #557da5;
     /* background-color: #FF00FF; */
-    height: 15px;
+    height: 20px;
     width: 100%;
     position: relative;
     cursor: all-scroll;
     z-index: -20;
+    text-align: left;
+    padding-left: 5px;
+    padding-top: 2px;
+    font-size: small;
+    color: white;
 }
 
 .styleButton {
@@ -296,15 +298,12 @@ select {
 }
 
 .cancelConfigButton {
-    width: auto;
+    width: 64.47px;
     height: 28px;
     background-color: #FFFFFF;
-    color: #1c5299;
-    font-weight: bold;
-    font-size: medium;
+    font-size: small;
     border: #969696 solid 1px;
     float: left;
-    border-radius: 10%;
     margin-left: 25px;
     /* box-shadow: 4px 6px 3px rgb(0 0 0 / 40%); */
     padding-top: 5px;

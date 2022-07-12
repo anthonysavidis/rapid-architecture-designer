@@ -96,7 +96,7 @@ const deleteCallBack = () => {
     const toBeDeletedStr = itemFromListToObject(tobeDeleted);
     var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + tobeDeleted.length + constantNames["confirmationBox"]["DeleteMsgFunctionEnd"];
 
-    produceBox("confirmation", msg + "@1", () => {
+    produceBox("confirmation", msg + "@1@Operation(s) Deletion", () => {
         for (var x in tobeDeleted)
             items.delete(tobeDeleted[x]._id);
         actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedStr, "");

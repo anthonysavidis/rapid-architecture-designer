@@ -46,7 +46,9 @@ class Item {
         this._functions = [];
         var myId = this._id;
         $("#" + this._id).droppable({
+
             drop: function(event, ui) {
+                console.log("dropping...");
                 try {
                     if (event.target.className === "selected")
                         return;
@@ -201,6 +203,7 @@ class Item {
 
         });
         this.domElement.ondrop = (event) => {
+                console.log("dropping...");
                 event.preventDefault();
                 try {
                     if (event.target.className === "selected")

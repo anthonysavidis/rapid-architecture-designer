@@ -98,7 +98,7 @@
 
 .formButton {
     /* box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box; */
     width: 40%;
     padding: 2%;
@@ -124,7 +124,6 @@ textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 4px;
     resize: vertical;
 }
 
@@ -137,7 +136,7 @@ textarea:active,
 input[type=text]:hover,
 textarea:hover,
 .atomicFunctionRec:hover {
-    border: 2px solid blue;
+    border: 1px solid black;
 }
 
 label {
@@ -170,6 +169,10 @@ input[type=submit]:hover {
     margin-left: 35%;
     border: #899c98 1px solid;
     /* display:none; */
+}
+
+textarea:focus-visible {
+    border-radius: 0px;
 }
 
 .col-25 {
@@ -257,6 +260,7 @@ input[type=submit]:hover {
     margin-left: 28px;
     padding-bottom: 1px;
     text-align: left;
+    font-size: small;
 }
 
 .tittleDiv {
@@ -405,4 +409,17 @@ input[type=submit]:hover {
     padding: 20px;
     font-size: 30px;
     text-align: center;
+}
+
+.inputTextClass {
+    border-radius: 0px !important;
+    outline: 0;
+}
+
+.inputTextClass:focus-visible {
+    border-radius: 0px !important;
+}
+
+.inputTextClass:focus {
+    border-radius: 0px !important;
 }

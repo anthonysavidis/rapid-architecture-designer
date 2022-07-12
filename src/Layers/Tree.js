@@ -33,7 +33,7 @@ function refreshTree() {
     var jsTreeDiv = document.createElement('div');
     jsTreeDiv.id = "jstree";
     jsTreeDiv.style.width = 150 + "px";
-    jsTreeDiv.style.paddingTop = 50 + "px";
+    jsTreeDiv.style.paddingTop = 10 + "px";
     // var jsTreeStr = '<div style="width:150px; padding-top: 50px;" id="jstree"></div>'
     // jsTreeDiv.innerHTML = jsTreeStr;
     document.getElementById('fSidebar').appendChild(jsTreeDiv);

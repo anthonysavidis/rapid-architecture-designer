@@ -40,7 +40,7 @@ var chooseDirectionCallback = (id) => {
     selectStr += "<option value=\"bidirectionalChoice\" " + optionMap["bidirectional"] + ">" + constantNames["infoTooltip"]["<->"] + "</option>";
 
 
-    produceBox('selecting', ["Choose link direction", selectStr], function(selectedValue) {
+    produceBox('selecting', ["Choose link direction", selectStr, "Link Direction"], function(selectedValue) {
         chooseLineType(id, selectedValue);
     });
 };

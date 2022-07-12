@@ -39,6 +39,7 @@ class WindowChangeListener {
             document.getElementById('rightTabRod').style.height = document.getElementById("right_tab").getBoundingClientRect().height + "px";
             document.getElementById('rightTabRod').style.left = window.innerWidth * 0.82 - 10 + "px";
             addRightTabRodListener();
+            var rightSmallVoid = window.innerWidth - document.getElementById("toolBar").getBoundingClientRect().right;
 
             var layerTabRod = document.createElement('div');
             layerTabRod.id = "layerTabRod";
@@ -46,7 +47,7 @@ class WindowChangeListener {
             document.getElementById('body').appendChild(layerTabRod);
             document.getElementById('layerTabRod').style.top = document.getElementById("fSidebar").getBoundingClientRect().top / 2 + "px";
             document.getElementById('layerTabRod').style.height = document.getElementById("fSidebar").getBoundingClientRect().height + "px";
-            document.getElementById('layerTabRod').style.left = document.getElementById("fSidebar").getBoundingClientRect().right + "px";
+            document.getElementById('layerTabRod').style.left = document.getElementById("fSidebar").getBoundingClientRect().width + rightSmallVoid + "px";
             addLayerRodListener();
 
             // produceRightTabRod();

@@ -72,7 +72,7 @@ function addHierarchyTabListeners() {
             produceBox('updating', constantNames["messages"]["moveToMsg"], '');
             return;
         }
-        produceBox('selecting', [constantNames["layersTab"]["moveBox"], createSelectElementsFromLayers(selectedItems)], function(layerId) {
+        produceBox('selecting', [constantNames["layersTab"]["moveBox"], createSelectElementsFromLayers(selectedItems), "Move To"], function(layerId) {
             const itemLinks = getLinkItems(selectedItems);
             // console.log(itemLinks);
             // var itemToBeJoined = selectedItems;

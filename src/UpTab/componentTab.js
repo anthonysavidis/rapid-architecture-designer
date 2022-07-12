@@ -94,7 +94,7 @@ function subdivideAction() {
 // }
 
 function askForDetails(type, extraInfo) {
-    produceBox("input", type, (name, description) => {
+    produceBox("input", extraInfo, (name, description) => {
         var it;
 
         if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"][type.toLowerCase()];
@@ -154,14 +154,14 @@ var componentContextDispatch = {};
 function addComponentTabListeners() {
     document.getElementById("newButton").addEventListener("click", componentContextDispatch["New"] = function() {
 
-        askForDetails("Component", ""); //fix
+        askForDetails("Component", "New Component"); //fix
     });
     document.getElementById("deleteButton").addEventListener("click", componentContextDispatch["Delete"] = function() {
         // deletedItemsStack.push(getAllDeletedItemsStrs());
         var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + getSelectedIds().length + constantNames["confirmationBox"]["DeleteMsgEnd"];
         var originalItemsStrs = getAllDeletedItemsStrs();
         const selectedIds = getSelectedIds();
-        produceBox("confirmation", msg + "@1", () => {
+        produceBox("confirmation", msg + "@1@Component(s) Deletion", () => {
             const itemObjects = getSelectedItems();
             const links = getLinkItems(itemObjects);
             const str = createSendingItem(itemObjects);
@@ -180,7 +180,7 @@ function addComponentTabListeners() {
         // var linkItem = linkComponentsAction();
         // var linkedItems = getSelectedItems();
         // var itemsStr = "{ \"0\":" + linkedItems[0].toString() + ", \"1\":" + linkedItems[1].toString() + ",\"2\":" + linkItem.toString() + "}"
-        askForDetails("Link", ""); //fix
+        askForDetails("Link", "New Link"); //fix
     });
     document.getElementById("unlinkButton").addEventListener("click", componentContextDispatch["Unlink"] = function() {
         var unlinkedItems = getSelectedItems();
@@ -240,7 +240,7 @@ function addComponentTabListeners() {
             appearComponentButtons();
         }
         var msg = constantNames['messages']['unsubdivideMsg'];
-        produceBox("confirmation", msg + "@1", unsubdivideCallBack);
+        produceBox("confirmation", msg + "@1@Component Unsubdivision", unsubdivideCallBack);
     });
     document.getElementById("extendButton").addEventListener("click", componentContextDispatch["Extend"] = function() {
         const extentableItems = getSelectedItems();

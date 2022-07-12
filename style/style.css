@@ -332,10 +332,10 @@ body {
 }
 
 .functionRec {
-    width: 80%;
-    height: 80%;
+    width: 95%;
+    height: 83%;
     /* height: 57%; */
-    margin-left: 8.5%;
+    margin-left: 2.5%;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -344,6 +344,7 @@ body {
     user-select: none;
     overflow: scroll;
     padding-bottom: 12px;
+    background-color: white;
 }
 
 .function {
@@ -556,4 +557,16 @@ hr.solid {
     border: 1px solid blue;
     position: absolute;
     z-index: 1;
+}
+
+.sideTabTittle {
+    margin-top: -1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    color: black;
+    background-color: #e6e6e6;
+    margin-bottom: 5px;
+    width: 100%;
+    font-size: x-large;
 }

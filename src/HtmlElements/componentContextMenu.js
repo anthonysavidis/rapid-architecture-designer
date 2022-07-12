@@ -13,7 +13,7 @@ import { produceBox } from "./infoBoxes.js";
 var closeContext = () => {};
 var editComponentCallBack = (componentId) => {
     const editingComponent = items.itemList[items.itemList.findIndex(el => el._id === componentId)];
-    produceBox("input", "Component", (name, description) => {
+    produceBox("input", "Edit " + editingComponent._name, (name, description) => {
         const componentItemStr = items.itemList[items.itemList.findIndex(el => el._id === componentId)].toString();
 
         if (name === "" || !name.replace(/\s/g, '').length) name = constantNames["emptyNames"][type.toLowerCase()];

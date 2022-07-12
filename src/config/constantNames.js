@@ -85,7 +85,7 @@ const constantNames = {
     },
     "confirmationBox": {
         "DeleteMsgStart": "Do you want to delete ",
-        "DeleteMsgEnd": " components?",
+        "DeleteMsgEnd": " component(s)?",
         "DeleteMsgFunctionEnd": " operations?",
         "ResetStart": "Do you want reset this operation from ",
         "ResetMult": "Do you want reset the selected (",
@@ -135,18 +135,8 @@ const constantNames = {
     },
     "inputBox": {
         "msg": "Insert name and description of ",
-        "nameLabel": {
-            "Component": "Name:",
-            "Link": "Name:",
-            "Function": "Name:",
-            "Layer": "Name:",
-            "Save": "Name of the exported architecture:"
-        },
-        "descriptionLabel": {
-            "Component": "Description:",
-            "Link": "Description:",
-            "Function": "Description:"
-        }
+        "nameLabel": "Name:",
+        "descriptionLabel": "Description:"
     },
     "splittedBox": {
         "msg": "Parts split",

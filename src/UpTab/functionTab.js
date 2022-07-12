@@ -39,7 +39,7 @@ function deleteOperationWithTrashBin() {
     const toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());
     var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + getSelectedFunctionIds().length + constantNames["confirmationBox"]["DeleteMsgFunctionEnd"];
 
-    produceBox("confirmation", msg + "@1", () => {
+    produceBox("confirmation", msg + "@1@Operation Deletion", () => {
         deleteFunctionAction();
         actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedFunctions, "");
         cancelFunctionSelection();
@@ -53,14 +53,14 @@ function addFunctionTabListeners() {
     initialAppearance();
     document.getElementById("newFunctionButton").addEventListener("click", newFunctionCntx = function() {
         // var functionItem = newFunctionAction();
-        askForDetails("Function", "");
+        askForDetails("Function", "New Operation");
 
     });
     document.getElementById("deleteFunctionButton").addEventListener("click", function() {
         const toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());
         var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + getSelectedFunctionIds().length + constantNames["confirmationBox"]["DeleteMsgFunctionEnd"];
 
-        produceBox("confirmation", msg + "@1", () => {
+        produceBox("confirmation", msg + "@1@Operation(s) Deletion", () => {
             deleteFunctionAction();
             actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedFunctions, "");
             cancelFunctionSelection();
@@ -77,7 +77,7 @@ function addFunctionTabListeners() {
         var str = itemFromListToObject(itemList);
         // const fid = itemList[0]._id;
         // const cid = itemList[1]._id;
-        produceBox("confirmation", constantNames["confirmationBox"]["ResetMult"] + itemList.length + constantNames["confirmationBox"]["ResetEnd"] + "@1", () => {
+        produceBox("confirmation", constantNames["confirmationBox"]["ResetMult"] + itemList.length + constantNames["confirmationBox"]["ResetEnd"] + "@1@Operation(s) Reset", () => {
             for (var x in itemList) {
                 resetFunctionAction(itemList[x]._id, itemList[x].owners[0]);
             }
