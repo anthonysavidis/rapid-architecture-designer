@@ -11,6 +11,7 @@ function produceSizeForm(box, className, callBack) {
     var select = document.createElement('select');
     select.style.width = "150px";
     select.style.display = "inline-block";
+    select.className = "inputTextClass";
 
     select.style.marginLeft = "30px";
     select.style.float = "left";
@@ -34,6 +35,7 @@ function produceSizeForm(box, className, callBack) {
 
 function produceFontFamilyForms(box, className, callBack) {
     var select = document.createElement('select');
+    select.className = "inputTextClass";
     select.style.float = "right";
     select.style.width = "350px";
     select.style.display = "inline-block";
@@ -168,7 +170,6 @@ function produceTextColor(box, className, callBack) {
 function createRestoreButton(category, closeBoxCallBack, openBoxCallBack) {
     var restoreButton = document.createElement('div');
     restoreButton.className = "cancelConfigButton unselectableText";
-    restoreButton.style.borderRadius = "5px";
     restoreButton.innerHTML = constantNames["restore"];
     restoreButton.onclick = () => {
         if (category == "Component") {

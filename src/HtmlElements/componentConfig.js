@@ -16,14 +16,13 @@ import { detectBrowser } from "../Workspace/browserDetection.js";
 
 
 function produceComponentForm(box, configGrid) {
-    var labelDiv = document.createElement('div');
-    labelDiv.style.position = "";
-    labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.innerText = constantNames["configBox"]["component"];;
+    // var labelDiv = document.createElement('div');
+    // labelDiv.style.position = "";
+    // labelDiv.className = "tittleDiv unselectableText";
+    // labelDiv.innerText = constantNames["configBox"]["component"];;
 
     var div = document.createElement('div');
-    div.className = "formContainer";
-    div.appendChild(labelDiv);
+    // div.className = "formContainer";
     const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value); }
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
@@ -64,7 +63,7 @@ function produceComponentConfigBox(box, configGrid) {
     if (detectBrowser() === "Firefox")
         backgroundColorPicker.style.width = "195px";
     else
-        backgroundColorPicker.style.width = "205px";
+        backgroundColorPicker.style.width = "209px";
     backgroundColorPicker.lastChild.style.float = "right";
     backgroundColorPicker.lastChild.style.marginLeft = "0px";
     configGrid.appendChild(backgroundColorPicker);
@@ -142,7 +141,7 @@ function produceSwitches(box, configGrid) {
     if (detectBrowser() === "Firefox")
         switcher.lastChild.style.left = "140px";
     else
-        switcher.lastChild.style.left = "153px";
+        switcher.lastChild.style.left = "153.5px";
     switcher.lastChild.style.top = "-7px";
     configGrid.appendChild(switcher);
     return;
@@ -260,6 +259,7 @@ function addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConf
     cancelButton.innerHTML = constantNames["cancel"];
     cancelButton.onclick = cancelChanges;
     confirmationButton.className = "okButton unselectableText";
+    confirmationButton.style.marginRight = "61px";
     confirmationButton.innerHTML = constantNames["apply"];
     confirmationButton.onclick = function() {
         configStyle.actionDispatch["Component"].clearCurrentOldSettings();
@@ -296,6 +296,7 @@ function createComponentConfigBox(refresh) {
             document.getElementById('grayLayer').remove();
 
     };
+
     if (!refresh)
         storeInitialSettings();
     var cancelChanges = () => {
@@ -317,10 +318,13 @@ function createComponentConfigBox(refresh) {
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
     closeButton.onclick = cancelChanges;
-    closeButton.style.position = "absolute";
-    // closeButton.style.left = 680 + "px";
-    produceMovingBar(box, 0);
-    box.appendChild(closeButton);
+    closeButton.style.width = closeButton.style.height = "12px";
+    closeButton.style.float = "right";
+    closeButton.style.backgroundImage = 'url("../images/whiteCloseInfo.png")';
+
+    var bar = produceMovingBar(box, 0);
+    bar.innerText = constantNames["configBox"]["component"];
+    bar.appendChild(closeButton);
     var fields = document.createElement('div');
     configGrid.style.marginLeft = "61px";
     createComponentFields(fields, configGrid);

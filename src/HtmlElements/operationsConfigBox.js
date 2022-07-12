@@ -80,15 +80,8 @@ function createOperationColorPickers(box, configGrid) {
 var textContainer;
 
 function produceOperationForm(box, configGrid) {
-    var labelDiv = document.createElement('div');
-    labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.style.marginLeft = "0px";
-    labelDiv.style.textAlign = "center";
-    labelDiv.innerText = constantNames["configBox"]["operation"];
 
-    var div = document.createElement('div');
-    div.className = "formContainer";
-    div.appendChild(labelDiv);
+
     const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value) };
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
@@ -100,7 +93,6 @@ function produceOperationForm(box, configGrid) {
     produceTextColor(configGrid, "Operation", callBack);
 
     sizeStyleContainer.style.marginLeft = "39px";
-    box.appendChild(div);
     box.appendChild(sizeStyleContainer);
     return;
 }

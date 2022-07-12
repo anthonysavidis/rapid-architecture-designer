@@ -45,21 +45,22 @@ class Item {
         this.spawnComponent();
         this._functions = [];
         var myId = this._id;
-        $("#" + this._id).droppable({
+        // $("#" + myId).droppable({
 
-            drop: function(event, ui) {
-                console.log("dropping...");
-                try {
-                    if (event.target.className === "selected")
-                        return;
-                    var functionId = ui.draggable[0].id;
-                    items.setFunctionToItem(myId, functionId);
-                } catch (error) {
+        //     drop: function(event, ui) {
+        //         event.preventDefault();
+        //         console.log("dropping...");
+        //         try {
+        //             if (event.target.className === "selected")
+        //                 return;
+        //             var functionId = ui.draggable[0].id;
+        //             items.setFunctionToItem(myId, functionId);
+        //         } catch (error) {
 
-                }
+        //         }
 
-            }
-        });
+        //     }
+        // });
 
     }
     constructFunction() {
@@ -186,14 +187,13 @@ class Item {
         this.domElement = div;
         document.getElementById(this._id + "name").addEventListener("dblclick", function() {
             produceDoubleClickEditingName(editId);
-            closeTooltip(editId);
         });
         preventDraggingOfCname(this._id);
         document.getElementById(this._id).addEventListener("mouseover", (e) => {
             div.title = this._description;
             // appearFunctionButtons();
         });
-        this.domElement.ondragover = (event) => {
+        document.getElementById(this._id).ondragover = (event) => {
             event.preventDefault();
         }
         document.getElementById(editId).addEventListener("contextmenu", (e) => {
@@ -202,9 +202,9 @@ class Item {
             produceComponentContextMenu("", "", e.clientX, e.clientY);
 
         });
-        this.domElement.ondrop = (event) => {
-                console.log("dropping...");
+        document.getElementById(this._id).ondrop = (event) => {
                 event.preventDefault();
+                console.log("dropped function...");
                 try {
                     if (event.target.className === "selected")
                         return;
@@ -306,8 +306,8 @@ class Item {
         const curId = this._id;
         this.domElement.ondragstart = (ev) => {
             // cancelSelection();
-            closeTheTooltip();
-
+            // closeTheTooltip();
+            console.log("Dragging " + curId);
             keepOnlyLastSelectedFunction(curId);
             initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");
@@ -319,6 +319,7 @@ class Item {
                 document.getElementById(curId).style.backgroundColor = prevColor;
                 prevColor = "";
                 // alert('operation dropped');
+                console.log("Left " + curId);
 
                 const trashRec = document.getElementById('trashBin').getBoundingClientRect();
                 const funcRec = document.getElementById(editId).getBoundingClientRect();

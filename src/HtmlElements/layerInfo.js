@@ -12,9 +12,9 @@ function createLabels(box, infoGrid) {
     var componentMostOperationsLabel = document.createElement('div');
     var componentLeastOperationsLabel = document.createElement('div');
     orphanOperationLabel.className = componentLabel.className = componentMostOperationsLabel.className = componentLeastOperationsLabel.className = "labelDiv unselectableText";
-    orphanOperationLabel.style.marginTop = componentLabel.style.marginTop = componentMostOperationsLabel.style.marginTop = componentLeastOperationsLabel.style.marginTop = "12.5px";
+    // orphanOperationLabel.style.marginTop = componentLabel.style.marginTop = componentMostOperationsLabel.style.marginTop = componentLeastOperationsLabel.style.marginTop = "12.5px";
 
-    infoGrid.style.marginBottom = "15px";
+    infoGrid.style.marginBottom = "0";
     orphanOperationLabel.innerText = constantNames["layerInfo"]["orphanOperations"];
     componentLabel.innerText = constantNames["layerInfo"]["component"];
     componentMostOperationsLabel.innerText = constantNames["layerInfo"]["componentMostOperations"];
@@ -37,14 +37,14 @@ function createValues(box, infoGrid) {
     var componentMostOperationsValue = document.createElement('div');
     var componentLeastOperationsValue = document.createElement('div');
     orphanOperationValue.className = componentValue.className = componentMostOperationsValue.className = componentLeastOperationsValue.className = "labelDiv unselectableText";
-    orphanOperationValue.style.marginTop = componentValue.style.marginTop = componentMostOperationsValue.style.marginTop = componentLeastOperationsValue.style.marginTop = "12.5px";
+    // orphanOperationValue.style.marginTop = componentValue.style.marginTop = componentMostOperationsValue.style.marginTop = componentLeastOperationsValue.style.marginTop = "12.5px";
 
     orphanOperationValue.id = "orphanOperationValue";
     componentValue.id = "componentValue";
     componentMostOperationsValue.id = "componentMostOperationsValue";
     componentLeastOperationsValue.id = "componentLeastOperationsValue";
 
-    infoGrid.style.marginBottom = "15px";
+    infoGrid.style.marginBottom = infoGrid.style.marginTop = "5px";
     orphanOperationValue.className += " item2";
     componentValue.className += " item5";
     componentMostOperationsValue.className += " item8";
@@ -103,6 +103,8 @@ function produceLayerInfoContent(box) {
     infoGrid.className = "configGrid";
     infoGrid.style.marginLeft = "0px";
     infoGrid.style.paddingLeft = infoGrid.style.paddingRight = "28px";
+    infoGrid.style.fontSize = "small";
+    infoGrid.style.backgroundColor = "white";
     // infoGrid.style.fontSize = "small";
     createLabels(box, infoGrid);
     createValues(box, infoGrid);
@@ -116,14 +118,20 @@ function createLayerInfoModal() {
         document.getElementsByClassName("layerInfoBox")[0].remove();
         closeInfo = null;
     }
+
     var tittleDiv = document.createElement('div');
     tittleDiv.id = "layerInfoTittle";
-    tittleDiv.className = "tittleDiv unselectableText";
-    tittleDiv.style.marginLeft = "32px";
-    tittleDiv.style.textAlign = "center";
+    tittleDiv.style.paddingLeft = "25px";
+    tittleDiv.style.textAlign = "left";
+    tittleDiv.style.paddingTop = tittleDiv.style.paddingBottom = tittleDiv.style.paddingLeft = "5px";
+    tittleDiv.style.fontSize = "x-large";
+    tittleDiv.style.backgroundColor = "#e7e5e5";
+
+    tittleDiv.style.color = "black";
     tittleDiv.innerHTML = constantNames["layerInfo"]["tittle"];
     var box = document.createElement('div');
     box.className = "layerInfoBox";
+    box.style.paddingTop = 0;
     box.id = "layerInfo";
     closeInfo = function() {
         resetHighlightedHints();
@@ -132,7 +140,9 @@ function createLayerInfoModal() {
     }
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
-    closeButton.style.marginTop = "-10px";
+    closeButton.style.width = closeButton.style.height = "12px";
+    closeButton.style.marginTop = closeButton.style.marginRight = "5px";
+    // closeButton.style.marginTop = "-10px";
     closeButton.onclick = closeInfo;
     box.appendChild(closeButton);
     box.appendChild(tittleDiv);

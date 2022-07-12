@@ -10,17 +10,6 @@ import { refreshOperationList } from "../Workspace/functionAppearance.js";
 var textContainer;
 
 function produceLinkForm(box, configGrid) {
-    var labelDiv = document.createElement('div');
-    var div = document.createElement('div');
-    labelDiv.style.position = "";
-
-    labelDiv.className = "tittleDiv unselectableText";
-    labelDiv.style.marginLeft = "0px";
-    labelDiv.style.textAlign = "center";
-    labelDiv.innerText = constantNames["configBox"]["link"];
-    div.className = "formContainer";
-
-    div.appendChild(labelDiv);
     const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value); };
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
@@ -32,7 +21,6 @@ function produceLinkForm(box, configGrid) {
 
     produceTextColor(configGrid, "Link", callBack);
     sizeStyleContainer.style.marginLeft = "11px";
-    box.appendChild(div);
     box.appendChild(sizeStyleContainer);
     return;
 }
@@ -103,25 +91,28 @@ function produceAConfigBox(type, refresh) {
     var closeButton = document.createElement('div');
     closeButton.className = "closeBoxButton";
     closeButton.onclick = cancelChanges;
-    closeButton.style.position = "absolute";
-
-    produceMovingBar(box, 0);
+    closeButton.style.width = closeButton.style.height = "12px";
+    closeButton.style.float = "right";
+    closeButton.style.backgroundImage = 'url("../images/whiteCloseInfo.png")';
+    var bar = produceMovingBar(box, 0);
     var configGrid = document.createElement('div');
     configGrid.className = "configGrid";
     configGrid.style.gap = "25px";
-    box.appendChild(closeButton);
     if (type === "Operation") {
+        bar.innerText = constantNames["configBox"]["operation"];
         produceOperationForm(box, configGrid);
         createOperationColorPickers(box, configGrid);
         configStyle.actionDispatch["Operation"].currentOldSettings = configStyle.actionDispatch["Operation"].getCategoryInitialValue("Operation");
 
     } else {
+        bar.innerText = constantNames["configBox"]["link"];
         produceLinkForm(box, configGrid);
         createLinkConfigBox(box, configGrid);
         configStyle.actionDispatch["Link"].currentOldSettings = configStyle.actionDispatch["Link"].getCategoryInitialValue("Link");
         // closeButton.style.left = 685 + "px";
         // closeButton.style.top = 10 + "px";
     }
+    bar.appendChild(closeButton);
     box.appendChild(configGrid);
 
 
@@ -145,6 +136,7 @@ function produceAConfigBox(type, refresh) {
     buttonsContainer.style.width = "100%";
     buttonsContainer.style.height = 40 + "px";
     buttonsContainer.style.display = "inline-block";
+    buttonsContainer.style.marginTop = "20px";
     var restoreButton = createRestoreButton(type, closeBox, () => { produceAConfigBox(type, true); });
 
     buttonsContainer.style.marginTop = confirmationButton.style.marginLeft = 25 + "px";
@@ -158,12 +150,15 @@ function produceAConfigBox(type, refresh) {
     addMotion(box);
     if (type === "Operation") {
         configGrid.style.marginLeft = "64px";
+        confirmationButton.style.marginRight = "62px";
         document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "155px";
         document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "191px";
         // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
         document.getElementsByClassName("labelDiv unselectableText item3")[0].style.width = "228px";
     } else if (type === "Link") {
-        document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginRight = "31px";
+        confirmationButton.style.marginRight = "33px";
+
+        document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginRight = "28px";
         document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "90%";
         document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "90%";
         document.getElementsByClassName("labelDiv unselectableText item4")[0].style.width = "90%";
@@ -172,7 +167,6 @@ function produceAConfigBox(type, refresh) {
     for (var i = 1; i <= 8; i++) {
         if (document.getElementsByClassName("labelDiv unselectableText item" + i)[0]) {
             document.getElementsByClassName("labelDiv unselectableText item" + i)[0].style.fontSize = "small";
-            console.log(document.getElementsByClassName("labelDiv unselectableText item" + i)[0]);
         }
     }
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
