@@ -105,7 +105,7 @@ function appearComponentButtons() {
         document.getElementById("joinButton").style.display = "none";
     }
     // getActiveComponentButtonNames();
-    pasteAppearListener() ? document.getElementById("pasteButton").style.display = "inline-block" : document.getElementById("pasteButton").style.display = "none";
+    document.getElementById("pasteButton").style.display = "inline-block";
 }
 
 function appearFunctionButtons() {

@@ -27,7 +27,7 @@ function moveContextMenu(funcId, parent) {
 
     var moveContext = document.createElement('div');
     moveContext.style.top = moveContext.style.top + 0 + "px";
-    moveContext.style.left = moveContext.style.left + 150 + "px";
+    moveContext.style.left = moveContext.style.left + 145 + "px";
     moveContext.className = "context-menu";
     moveContext.style.display = "none";
     moveContext.style.height = 200 + "px";

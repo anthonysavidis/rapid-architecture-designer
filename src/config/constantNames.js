@@ -170,7 +170,7 @@ const constantNames = {
     "singleFormMessages": {
         "layer": "Sub layer name:",
         "Save": "Project's name:",
-        "newProj": "Project's name:",
+        "newProj": "Current project's name:",
         "SettingsSave": "Settings' name:"
     },
     "dot": ".",

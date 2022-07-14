@@ -418,7 +418,7 @@ body {
     padding-bottom: 4px;
     /* position: absolute; */
     line-height: 170%;
-    outline: var(--operationBorderWidth) solid blue;
+    border: var(--operationBorderWidth) solid blue;
     /* border: 2px  solid rgba(0,0,0,0.5);  */
     box-sizing: border-box;
     z-index: 11;

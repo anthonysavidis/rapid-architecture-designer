@@ -1,5 +1,5 @@
 import { addLayerRodListener, addRightTabRodListener, fixFunctionsWidth, produceRightTabRod, removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
-import { createDraggableSpace, fixTrashBinPosition } from "../Workspace/trashBin.js";
+import { createDraggableSpace, fixMainDiv, fixTrashBinPosition } from "../Workspace/trashBin.js";
 
 
 function fixSideBarsOnZoom() {
@@ -53,6 +53,7 @@ class WindowChangeListener {
             // produceRightTabRod();
             createDraggableSpace();
             fixTrashBinPosition();
+            fixMainDiv();
         });
 
     }

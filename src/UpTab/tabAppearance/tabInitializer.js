@@ -29,7 +29,7 @@ function selectTabStyle(tablinkId) {
 
 function initializeTab(tabName, tablinkId) {
     document.getElementById("main").style.display = "block";
-    document.getElementById("main").style.height = window.screen.availHeight + "px";
+    // document.getElementById("main").style.height = window.screen.availHeight + "px";
     document.getElementById("main").addEventListener("contextmenu", (e) => {
         // if (document.getElementById('workspaceContext'))
         //     document.getElementById('workspaceContext').remove();
