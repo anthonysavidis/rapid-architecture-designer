@@ -27,13 +27,13 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("fSidebar").style.height = window.screen.height * 0.7 + "px";
     document.getElementById("right_tab").style.height = window.screen.height * 0.7 + "px";
     createDraggableSpace();
-    fixTrashBinPosition();
     produceRightTabRod();
     initializeTab(constantNames["componentsTab"]["tabName"], "componentTab");
     createFullPath();
     initZoom();
     windowChangeListeners();
-    fixMainDiv();
+    fixMainDiv()
+    fixTrashBinPosition();
     // document.onpaste = function(params) {
     //     // console.log(params.clipboardData);
     // }
