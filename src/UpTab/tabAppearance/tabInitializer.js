@@ -1,6 +1,6 @@
 import { spawnTab } from "../tabSwitch.js";
 import { initButtons } from "./initializer.js";
-import { cancelSelection, getSelectedItems } from "../../Item/selectComponent.js";
+import { cancelSelection, getSelectedIds, getSelectedItems } from "../../Item/selectComponent.js";
 import { getSelectedFunctions } from "../../Item/selectFunction.js";
 import { clearTree, closeLayerTree, openLayerTree, updateTree } from "../../Layers/Tree.js";
 import { layers } from "../../Classes/LayerHolder.js";
@@ -62,26 +62,25 @@ function changeToLayerTab() {
 
 function initializeStyleAndOperations() {
     // localStorage.clear();
-    document.getElementById("componentTab").addEventListener("click", function() {
+    document.getElementById("componentTab").addEventListener("click", function () {
         initializeTab(constantNames["componentsTab"]["tabName"], "componentTab");
     });
-    document.getElementById("editTab").addEventListener("click", function() {
+    document.getElementById("editTab").addEventListener("click", function () {
         initializeTab(constantNames["editTab"]["tabName"], "editTab");
     });
-    document.getElementById("functionTab").addEventListener("click", function() {
+    document.getElementById("functionTab").addEventListener("click", function () {
         initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
     });
-    document.getElementById("fileTab").addEventListener("click", function() {
+    document.getElementById("fileTab").addEventListener("click", function () {
         initializeTab(constantNames["fileTab"]["tabName"], "fileTab");
     });
-    document.getElementById("settingsTab").addEventListener("click", function() {
+    document.getElementById("settingsTab").addEventListener("click", function () {
         initializeTab(constantNames["settingsTab"]["tabName"], "settingsTab");
     });
-    document.getElementById("layersTab").addEventListener("click", function() {
+    document.getElementById("layersTab").addEventListener("click", function () {
         changeToLayerTab();
     });
     initButtons();
-    cancelSelection();
 }
 
 export { initializeStyleAndOperations, initializeTab, lastPressed, selectTabStyle };

@@ -11,6 +11,7 @@ import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { autoResizeAutoFit, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
+import { InstanceGenerator } from "./InstanceCreator.js";
 class ItemHolder {
 
     constructor(str) {
@@ -31,6 +32,7 @@ class ItemHolder {
         // if (itemListIndex === -1)
         //     return; //already deleted? TODO: better check.. this happens only in paste situations undo?
         if (this.itemList[itemListIndex]._type === "Component") {
+            InstanceGenerator.deleteNode(this.itemList[itemListIndex].diagramNode);
             var toBeDeletedLinks = this.itemList[itemListIndex].linkedItems;
             var beingDeletedFromFunctions = this.itemList[itemListIndex]._functions;
             var toBeDeletedLayers = this.itemList[itemListIndex].subLayers;
@@ -53,7 +55,6 @@ class ItemHolder {
             closeTheTooltip();
             if (document.getElementById("byComponent").checked)
                 showByComponent();
-
         }
         if (this.itemList[itemListIndex]._type === "Function") {
             var ownersDelete = this.itemList[itemListIndex].owners;
@@ -66,9 +67,12 @@ class ItemHolder {
             this.unparentFunction(deletingItemId); //check again...
             this.itemList[itemListIndex].owners = [];
 
+            document.getElementById(deletingItemId + 'external').remove();
+        }
+        if (this.itemList[itemListIndex]._type === "Link") {
+            InstanceGenerator.deleteLink(this.itemList[itemListIndex]);
         }
         this.deleteFromLists(deletingItemId);
-        document.getElementById(deletingItemId + 'external').remove();
         updateLayerInfoBox();
     }
     updateNameAndDescription(id, newName, newDescription, directlyFromLoad) {
@@ -81,10 +85,10 @@ class ItemHolder {
             showAllRefresh();
         }
         if (!directlyFromLoad) {
-            if (this.itemList[oldIndex]._type === "Component" && !passAutoFitRestrictions(id)) {
-                autoResizeAutoFit(this.itemList[oldIndex]);
-                renderLine(id);
-            }
+            // if (this.itemList[oldIndex]._type === "Component" && !passAutoFitRestrictions(id)) {
+            //     autoResizeAutoFit(this.itemList[oldIndex]);
+            //     renderLine(id);
+            // }
         }
     }
     addLink(lineId, id1, id2) {
@@ -229,7 +233,7 @@ class ItemHolder {
         totalStr += '\"idList\":\" ' + this.idList + "\",";
         totalStr += '\"functionCounter\":\"' + this.functionCounter + "\",";
         var counter = 0;
-        this.itemList.forEach(function(item) {
+        this.itemList.forEach(function (item) {
             totalStr += '\"' + counter + '\":' + item.toString() + ",";
             counter++;
         });

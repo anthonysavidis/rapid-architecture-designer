@@ -34,6 +34,7 @@ import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 import { produceComponentContextMenu } from "../HtmlElements/componentContextMenu.js";
 import { panningState } from "../UpTab/editTab.js";
 import { disablePanning, enablePanning } from "../Workspace/zoom.js";
+import { InstanceGenerator } from "./InstanceCreator.js";
 
 class Item {
 
@@ -90,169 +91,21 @@ class Item {
         return id;
     }
     spawnComponent() {
-        var str = "<div droppable=\"true\" class=\"component\" id=\"" + this._id + "\">\
-        <div class=\"componentName unselectableText\" style=\"text-align:center;\" id=\"" + this._id + "name\">" + this._name + "</div> \
-        </div>";
-        var div = document.createElement("div");
-        div.innerHTML = str;
-        div.id = this._id + "external";
-        div.title = this._description;
-
-        // div.style.transition = "width 1s, height 1s, transform 1s";
-        document.getElementById(layers.selectedLayer._id).appendChild(div);
-        document.getElementById(this._id).style.top = document.getElementById("toolBar").getBoundingClientRect().height + 12 + "px";
-        addResize(this._id);
-        changeSelectState(this._id);
-        // moveItem(this._id);
-        var editId = this._id;
-        var movingObject = {};
-        var panningEnabled = false;
-        $('#' + this._id).on('dragstart', () => {
-
-            closeTheTooltip();
-            appearComponentButtons();
-            const dragIds = getSelectedIds();
-            const elmnt = document.getElementById(editId);
-            for (var x in dragIds) {
-                movingObject[dragIds[x]] = {};
-                movingObject[dragIds[x]]["initialRec"] = document.getElementById(dragIds[x]).getBoundingClientRect();
-            }
-        });
-        $('#' + this._id).draggable({
-            containment: "#" + layers.selectedLayer._id,
-            drag: (e) => { //prepei na ginei handle to containment, to trash bin kai ta links.
-                if (panningState === "on") {
-                    panningEnabled = true;
-                    disablePanning();
-                }
-                renderLine(editId);
-                const dragIds = getSelectedIds();
-                if (dragIds.length > 1) {
-                    const elmnt = document.getElementById(editId);
-                    const elmntRec = document.getElementById(editId).getBoundingClientRect();
-                    var distanceLeft = elmntRec.left - movingObject[editId]["initialRec"].left;
-                    var distanceTop = elmntRec.top - movingObject[editId]["initialRec"].top;
-                    for (var x in dragIds) {
-                        const curRec = document.getElementById(dragIds[x]).getBoundingClientRect();
-                        const DLeft = movingObject[dragIds[x]]["initialRec"].left + distanceLeft;
-                        const DTop = movingObject[dragIds[x]]["initialRec"].top + distanceTop;
-                        if (editId === dragIds[x])
-                            continue;
-                        if (canMove(DTop, DLeft, curRec.height, curRec.width)) {
-                            document.getElementById(dragIds[x]).style.left = DLeft + "px";
-                            document.getElementById(dragIds[x]).style.top = DTop + "px";
-                            renderLine(dragIds[x]);
-                        }
-                    }
-                }
-            },
-            stop: (e) => { //actionsSave item... apoi to move item
-                if (panningEnabled) {
-                    panningEnabled = false;
-                    enablePanning();
-                }
-                const dragIds = getSelectedIds();
-                const selectedIts = getSelectedItems();
-                const initialItem = movingObject;
-                if (dragIds.length > 1) {
-                    var updatedItem = {};
-                    for (var x in dragIds) {
-                        updatedItem[dragIds[x]] = {};
-                        updatedItem[dragIds[x]]["newRec"] = document.getElementById(dragIds[x]).getBoundingClientRect();
-                    }
-                    const itemIndex = items.itemList.findIndex((el) => el._id === editId);
-                    items.itemList[itemIndex].updateBoundingRec();
-                    actions.saveCommand(moveAllNext, moveAllPrev, initialItem, updatedItem);
-                } else {
-                    var updatedItem = document.getElementById(dragIds[0]).getBoundingClientRect();
-                    actions.saveCommand(moveNext, movePrev,
-                        JSON.stringify(initialItem[dragIds[0]]["initialRec"]) + '@' + dragIds[0], JSON.stringify(updatedItem));
-                }
-                var trashBinRec = document.getElementById("trashBin").getBoundingClientRect();
-
-                if (e.clientX >= trashBinRec.x && e.clientY >= trashBinRec.y && e.clientX <= (trashBinRec.x + trashBinRec.width) && e.clientY <= (trashBinRec.y + trashBinRec.height)) {
-                    const msg = constantNames["confirmationBox"]["DeleteMsgStart"] + selectedIts.length + constantNames["confirmationBox"]["DeleteMsgEnd"];
-                    produceBox("confirmation", msg + "@1", () => {
-                        deleteMultWithTrashBin(selectedIts);
-                    });
-                }
-                this.updateBoundingRec();
-                if (this.links)
-                    renderLine(this._id);
-            },
-            click: (e) => {
-                appearComponentButtons();
-            }
-        });
-        this.domElement = div;
-        document.getElementById(this._id + "name").addEventListener("dblclick", function() {
-            produceDoubleClickEditingName(editId);
-        });
-        preventDraggingOfCname(this._id);
-        document.getElementById(this._id).addEventListener("mouseover", (e) => {
-            div.title = this._description;
-            // appearFunctionButtons();
-        });
-        document.getElementById(this._id).ondragover = (event) => {
-            event.preventDefault();
-        }
-        document.getElementById(editId).addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            // produceTooltip(e.clientX - 10, e.clientY - 10, "", editId);
-            produceComponentContextMenu("", "", e.clientX, e.clientY);
-
-        });
-        document.getElementById(this._id).ondrop = (event) => {
-                event.preventDefault();
-                console.log("dropped function...");
-                try {
-                    if (event.target.className === "selected")
-                        return;
-                    console.log(event.target.id);
-                    var functionId = event.dataTransfer.getData("text");
-                    if (!this._functions.includes(functionId)) {
-                        var hasError = items.setFunctionToItem(this._id, functionId);
-                        if (hasError === -1)
-                            return;
-                        if (hasError === 2) {
-                            moveCallBack(editId);
-                            return;
-                        }
-                        var settingFunction = items.itemList[items.itemList.findIndex((e) => e._id === functionId)];
-                        var funcComp = [settingFunction, this];
-                        var str = itemFromListToObject(funcComp);
-                        actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
-                    } else {
-                        produceBox("updating", constantNames["messages"]["functionExists"]);
-                    }
-                } catch {
-
-                }
-
-            }
-            // this.domElement.ondragstart = (ev) => {
-            //     console.log("dragStart");
-            //     ev.dataTransfer.setData("text/plain", ev.target.id);
-            // }
-            // document.getElementById(this._id).style.width="100px";
-            // document.getElementById(this._id).style.height="50px";
-        setInitialSize(this._id, this._name);
-        setTimeout(() => {
-            if (configStyle.descriptionEnabled) {
-                turnOnDescription(this, 1);
-            }
-        }, 50);
+        this.diagramNode = InstanceGenerator.createComponent(this);
     }
     spawnLink() {
-        var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
-        var rec2 = document.getElementById(this.idComponent2).getBoundingClientRect(); //--
-        this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
+        // var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
+        // var rec2 = document.getElementById(this.idComponent2).getBoundingClientRect(); //--
+        // this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
+        this.diagramLink = InstanceGenerator.createLink(this._id, this.idComponent1, this.idComponent2, this._name);
         items.addLink(this._id, this.idComponent1, this.idComponent2);
     }
     spawnLoadedLink() {
-        var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
-        var rec2 = document.getElementById(this.idComponent2).getBoundingClientRect(); //--
-        this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
+        // var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
+        // var rec2 = document.getElementById(this.idComponent2).getBoundingClientRect(); //--
+        // this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
+        this.diagramLink = InstanceGenerator.createLink(this._id, this.idComponent1, this.idComponent2, this._name);
+
     }
     spawnFunction() {
         var str = "<div draggable=\"true\"  class=\"function\" id=\"" + this._id + "\"><div id=\"" + this._id + "ficon\" class=\"ficon\"></div><div class=\"fName\" id=\"" + this._id + "name\">" + this._name + "</div></div>";
@@ -268,7 +121,7 @@ class Item {
         this.domElement = div;
         const editId = this._id;
         document.getElementById(this._id + "name").style.outline = 0 + "px";
-        document.getElementById(this._id + "name").onblur = (function() {
+        document.getElementById(this._id + "name").onblur = (function () {
             items.itemList[items.itemList.findIndex(el => el._id === editId)]._name = this.innerText;
         });
         changeFunctionSelectState(this._id);
@@ -277,17 +130,17 @@ class Item {
         // });
         const fid = this._id;
 
-        document.getElementById(this._id + "ficon").addEventListener("click", function(ev) {
+        document.getElementById(this._id + "ficon").addEventListener("click", function (ev) {
             ev.preventDefault();
             cancelFunctionSelection();
 
             document.getElementById(editId).className = "selectedFunction";
         });
-        document.getElementById(this._id + "name").addEventListener("dblclick", function() {
+        document.getElementById(this._id + "name").addEventListener("dblclick", function () {
             produceDoubleClickEditingName(editId);
             closeTooltip(editId);
         });
-        document.getElementById(this._id).addEventListener("contextmenu", function(ev) {
+        document.getElementById(this._id).addEventListener("contextmenu", function (ev) {
             ev.preventDefault();
             if (document.getElementsByClassName("context-menu")[0])
                 document.getElementsByClassName("context-menu")[0].remove();
@@ -316,18 +169,18 @@ class Item {
             ev.dataTransfer.setData("text/plain", ev.target.id);
         }
         this.domElement.ondragend = (ev) => {
-                document.getElementById(curId).style.backgroundColor = prevColor;
-                prevColor = "";
-                // alert('operation dropped');
-                console.log("Left " + curId);
+            document.getElementById(curId).style.backgroundColor = prevColor;
+            prevColor = "";
+            // alert('operation dropped');
+            console.log("Left " + curId);
 
-                const trashRec = document.getElementById('trashBin').getBoundingClientRect();
-                const funcRec = document.getElementById(editId).getBoundingClientRect();
-                if (ev.clientX >= trashRec.x && ev.clientY >= (trashRec.y) && ev.clientX <= (trashRec.x + trashRec.width) && ev.clientY <= (trashRec.y + trashRec.height)) {
-                    deleteOperationWithTrashBin();
-                }
+            const trashRec = document.getElementById('trashBin').getBoundingClientRect();
+            const funcRec = document.getElementById(editId).getBoundingClientRect();
+            if (ev.clientX >= trashRec.x && ev.clientY >= (trashRec.y) && ev.clientX <= (trashRec.x + trashRec.width) && ev.clientY <= (trashRec.y + trashRec.height)) {
+                deleteOperationWithTrashBin();
             }
-            // ()
+        }
+        // ()
 
     }
     deleteLink(deletedItemId) {
@@ -336,24 +189,42 @@ class Item {
         var deleteLinkIndex = this.linkedItems.findIndex(deleteFun);
         this.linkedItems.splice(deleteLinkIndex, 1);
         this.links.delete(deletedItemId);
-        if (document.getElementById(deletedLineId)) {
-            document.getElementById(deletedLineId).remove();
-            // document.getElementById(deletedLineId + 'point1').remove();
-            // document.getElementById(deletedLineId + 'point2').remove();
-            items.deleteFromLists(deletedLineId);
-        }
+        // if (document.getElementById(deletedLineId)) {
+        //     document.getElementById(deletedLineId).remove();
+        //     // document.getElementById(deletedLineId + 'point1').remove();
+        //     // document.getElementById(deletedLineId + 'point2').remove();
+        //     items.deleteFromLists(deletedLineId);
+        // }
     }
 
     isLinked(itemId) {
-            var getItemFun = (element) => element === itemId;
-            var res = this.linkedItems.findIndex(getItemFun);
-            if (res != -1)
-                return true;
-            return false;
-        }
-        // domElement;
+        var getItemFun = (element) => element === itemId;
+        var res = this.linkedItems.findIndex(getItemFun);
+        if (res != -1)
+            return true;
+        return false;
+    }
+    // domElement;
     updateDomName(newName) {
-        document.getElementById(this._id + "name").innerText = (this._type === "Function") ? this._name : newName;
+        if (this._type === "Function") {
+            document.getElementById(this._id + "name").innerText = this._name;
+        }
+        else if (this._type === "Component") {
+            const node = this.diagramNode;
+            var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(node.key);
+            InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
+            this.diagramNode.text = newName;
+            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
+            items.itemList[items.itemList.findIndex((el) => el._id === this._id)].diagramNode = this.diagramNode;
+        }
+        else {
+            const link = this.diagramLink;
+            // var delLink = InstanceGenerator.diagramMap[layers.selectedLayer._id].findLinkForKey(link.key);
+            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(this.diagramLink);
+            this.diagramLink.text = newName;
+            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addLinkData(this.diagramLink);
+            items.itemList[items.itemList.findIndex((el) => el._id === this._id)].diagramLink = this.diagramLink;
+        }
     }
     loadSizeWithBoundingRec(bRec) {
         console.log(bRec);
@@ -368,7 +239,7 @@ class Item {
             this._id = this.generateItemId().toString();
             this._name = constantNames["emptyNames"]["component"];
             this.constructComponent();
-            this.updateBoundingRec();
+            // this.updateBoundingRec();
         } else if (type === "Link") {
             this._id = this.generateItemId().toString();
             this._name = constantNames["emptyNames"]["line"];

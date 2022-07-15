@@ -131,7 +131,7 @@ function appearFunctionButtons() {
         var functionList = getSelectedFunctions();
         var canReset = true;
         functionList.forEach((el, index, arr) => {
-            (!el.owners[0]) ? canReset = false: 1;
+            (!el.owners[0]) ? canReset = false : 1;
         });
         if (canReset) {
             document.getElementById("splitButton").style.display = "inline-block";

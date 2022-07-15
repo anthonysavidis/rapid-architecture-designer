@@ -150,6 +150,7 @@
 
 .workspace {
     /* float: left; */
+    left: -250px;
     height: inherit;
     width: inherit;
     /* background-color: rgb(210, 212, 236); */

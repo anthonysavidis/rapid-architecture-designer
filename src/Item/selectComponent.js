@@ -1,4 +1,6 @@
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
+import { layers } from "../Classes/LayerHolder.js";
 import { appearComponentButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { hideCurrentFunctions, showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 
@@ -11,8 +13,10 @@ function handleByComponent() {
     return;
 }
 
-const selectAction = function(compId) {
-    document.getElementById(compId).className = "selected";
+const selectAction = function (compId) {
+    // document.getElementById(compId).className = "selected";
+    var selNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(compId);
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].select(selNode);
     appearComponentButtons();
     appearHierarchyButtons();
     if (document.getElementById("byComponent").checked) {
@@ -22,7 +26,7 @@ const selectAction = function(compId) {
 }
 
 function changeSelectState(id) {
-    document.getElementById(id).addEventListener("mousedown", function(e) {
+    document.getElementById(id).addEventListener("mousedown", function (e) {
         if (!e.ctrlKey)
             cancelSelection();
         selectAction(id);
@@ -31,12 +35,12 @@ function changeSelectState(id) {
 }
 
 function getSelectedIds() {
-    var selected = document.getElementsByClassName("selected");
-    var selectedIds = [];
-    for (var i = 0; i < selected.length; i++) {
-        selectedIds[i] = selected[i].id;
-    }
-    return selectedIds;
+    var keys = [];
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].selection.each(function (n) {
+        if (!(n instanceof go.Node)) return;
+        keys.push(n.data.key);
+    });
+    return keys;
 }
 
 function getSelectedItems() {
@@ -63,12 +67,8 @@ function unlinkSelectedItems() {
 }
 
 function cancelSelection() {
-    // document.getElementById("linkButton").style.display="none";
-    document.getElementById("selectedComponentList") ? document.getElementById("selectedComponentList").innerHTML = "" : 1;
-    var y = document.getElementsByClassName("selected");
-    while (y.length !== 0) {
-        y[0].className = "component";
-    }
+    if (layers.selectedLayer && InstanceGenerator.diagramMap[layers.selectedLayer._id])
+        InstanceGenerator.diagramMap[layers.selectedLayer._id].clearSelection();
 }
 
 function keepOnlyLastSelectedItem(id) {
