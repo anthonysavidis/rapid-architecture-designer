@@ -27,6 +27,7 @@ function showByComponent() {
     hideCurrentFunctions();
     configAppearance("none");
     const selectedIds = getSelectedIds();
+    console.log(selectedIds);
     if (!selectedIds || !selectedIds[0])
         return;
     for (var x in selectedIds) {
@@ -67,7 +68,7 @@ function showAll() {
         if (allItemList[i]._type === "Function") {
             showOwner(allItemList[i]);
             const fWidth = getSelectedFunctionWidth(allItemList[i]._id);
-            (maxWidth < fWidth) ? maxWidth = fWidth: 1;
+            (maxWidth < fWidth) ? maxWidth = fWidth : 1;
         }
     }
     changeMaxWidth(maxWidth);
@@ -125,7 +126,7 @@ function showAllRefresh() {
 }
 
 function setUpFunctionDisplayListeners() {
-    document.getElementById("all").addEventListener("change", function() {
+    document.getElementById("all").addEventListener("change", function () {
         if (document.getElementById("all").checked) {
             cancelFunctionSelection();
             document.getElementById("byComponent").checked = false;
@@ -135,7 +136,7 @@ function setUpFunctionDisplayListeners() {
         }
     });
 
-    document.getElementById("byComponent").addEventListener("change", function() {
+    document.getElementById("byComponent").addEventListener("change", function () {
         if (document.getElementById("byComponent").checked) {
             cancelFunctionSelection();
             document.getElementById("all").checked = false;

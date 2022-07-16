@@ -1,5 +1,9 @@
-const functionOnDropOnComponent = (event, obj) => {
+import { items } from "../Classes/ItemArray.js";
+import { forceActivateAll } from "../Workspace/functionAppearance.js";
+
+const functionOnDropOnComponent = (event, componentID) => {
   event.preventDefault();
+  const obj = items.itemList[items.itemList.findIndex(el => el._id === componentID)];
   console.log("dropped function...");
   try {
     if (event.target.className === "selected") return;
@@ -17,10 +21,11 @@ const functionOnDropOnComponent = (event, obj) => {
       var funcComp = [settingFunction, obj];
       var str = itemFromListToObject(funcComp);
       actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
+
     } else {
       produceBox("updating", constantNames["messages"]["functionExists"]);
     }
-  } catch {}
+  } catch { }
 };
 
 export { functionOnDropOnComponent };

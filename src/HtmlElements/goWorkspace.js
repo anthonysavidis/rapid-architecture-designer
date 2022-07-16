@@ -1,27 +1,32 @@
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
+import { items } from "../Classes/ItemArray.js";
+import { layers } from "../Classes/LayerHolder.js";
+import { functionOnDropOnComponent } from "../Item/componentEventCallbacks.js";
+import { cancelSelection, handleByComponent } from "../Item/selectComponent.js";
+import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 const $ = go.GraphObject.make;
 
 function getNewWorkspace(lid) {
     return $(go.Diagram, lid, {
         padding: 20, // extra space when scrolled all the way
-        grid: $(
-            go.Panel,
-            "Grid", // a simple 10x10 grid
-            $(go.Shape, "LineH", {
-                stroke: "lightgray",
-                strokeWidth: 0.5,
-            }),
-            $(go.Shape, "LineV", {
-                stroke: "lightgray",
-                strokeWidth: 0.5,
-            })
-        ),
+        grid:
+            $(go.Panel, "Grid",
+                { gridCellSize: new go.Size(10, 10) },
+                $(go.Shape, "LineH", { strokeDashArray: [1, 9] })
+            ),
+        "BackgroundSingleClicked": (e) => {
+            cancelFunctionSelection();
+            cancelSelection();
+        },
+        "ExternalObjectsDropped": (e) => {
+        },
         "draggingTool.isGridSnapEnabled": true,
         handlesDragDropForTopLevelParts: true,
         mouseDrop: (e) => {
             // when the selection is dropped in the diagram's background,
             // make sure the selected Parts no longer belong to any Group
-            console.log(e);
             var ok = e.diagram.commandHandler.addTopLevelParts(
                 e.diagram.selection,
                 true
@@ -84,8 +89,24 @@ function initializeNodeTemplate() {
             resizeCellSize: new go.Size(20, 20),
             // click: function (e, obj) { appearComponentButtons(); },
             selectionChanged: function (node) {
-
                 appearComponentButtons();
+                (document.getElementById("byComponent").checked) ? handleByComponent() : 1;
+
+            },
+            mouseDragEnter: (e, nodeKey) => {
+                // const node = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(nodeKey);
+                // node.fill = "#cce6ff";
+            },
+            mouseDragLeave: (e, node) => node.isHighlighted = false,
+            // on a mouse-drop add a link from the dropped-upon node to the new node
+            mouseDrop: (e, nodeKey) => {
+                functionOnDropOnComponent(e, nodeKey);
+                // const newnode = e.diagram.selection.first();
+                // const incoming = newnode.findLinksInto().first();
+                // if (incoming) e.diagram.remove(incoming);
+                // e.diagram.model.addLinkData({ from: node.key, to: newnode.key });
+                measureAllLayersOperations();
+                (document.getElementById("byComponent").checked) ? handleByComponent() : 1;
             }
         },
         // these Bindings are TwoWay because the DraggingTool and ResizingTool modify the target properties
@@ -96,19 +117,25 @@ function initializeNodeTemplate() {
             go.Size.stringify
         ),
         $(
-            go.Shape,
+            go.Shape, "RoundedRectangle",
             {
                 // the border
                 name: "SHAPE",
                 fill: "white",
                 portId: "",
                 cursor: "pointer",
-                fromLinkable: true,
-                toLinkable: true,
+                // fromLinkable: true,
+                // toLinkable: true,
                 fromLinkableDuplicates: true,
                 toLinkableDuplicates: true,
                 fromSpot: go.Spot.AllSides,
                 toSpot: go.Spot.AllSides,
+                // mouseEnter: function (e, obj) {
+                //     obj.part.findObject("SHAPE").fill = "red";
+                // },
+                // mouseLeave: function (e, obj) {
+                //     obj.part.findObject("SHAPE").fill = "white";
+                // }
             },
             new go.Binding("figure"),
             new go.Binding("fill"),
@@ -136,7 +163,13 @@ function initializeNodeTemplate() {
             new go.Binding("text").makeTwoWay(),
             new go.Binding("stroke", "color")
         ),
-
+        {
+            toolTip:  // define a tooltip for each node that displays the color as text
+                $("ToolTip",
+                    $(go.TextBlock, { margin: 4 },
+                        new go.Binding("text", "key", function (s) { return items.itemList[items.itemList.findIndex(el => el._id === s)]._description; }))
+                )  // end of Adornment
+        }
     );
 }
 
@@ -294,4 +327,133 @@ function getLinkContext() {
     );
 }
 
-export { initializeNodeTemplate, getNewWorkspace, initializeLinkTemplate, getLinkContext }; 
+
+function setWorkspaceDropListeners(workspaceID) {
+    const div = document.getElementById(workspaceID);
+    const myDiagram = InstanceGenerator.diagramMap[workspaceID];
+    function onHighlight(part) {  // may be null
+        const oldskips = myDiagram.skipsUndoManager;
+        myDiagram.skipsUndoManager = true;
+        myDiagram.startTransaction("highlight");
+        if (part !== null) {
+            myDiagram.highlight(part);
+        } else {
+            myDiagram.clearHighlighteds();
+        }
+        myDiagram.commitTransaction("highlight");
+        myDiagram.skipsUndoManager = oldskips;
+    }
+
+    // this is called upon an external drop in this diagram
+    function onDrop(event, point) {
+        const it = myDiagram.findPartsAt(point).iterator;
+        while (it.next()) {
+            const part = it.value;
+            // the drop happened on some Part -- call its mouseDrop handler
+            if (part && part.mouseDrop) {
+                // should be running in a transaction already
+                part.mouseDrop(event, part.key);
+                break;
+            }
+        }
+    }
+    div.addEventListener("dragenter", event => {
+        // Here you could also set effects on the Diagram,
+        // such as changing the background color to indicate an acceptable drop zone
+
+        // Requirement in some browsers, such as Internet Explorer
+        event.preventDefault();
+    }, false);
+
+    div.addEventListener("dragover", event => {
+        // We call preventDefault to allow a drop
+        // But on divs that already contain an element,
+        // we want to disallow dropping
+
+        if (div === myDiagram.div) {
+            const can = event.target;
+            const pixelratio = myDiagram.computePixelRatio();
+
+            // if the target is not the canvas, we may have trouble, so just quit:
+            if (!(can instanceof HTMLCanvasElement)) return;
+
+            const bbox = can.getBoundingClientRect();
+            let bbw = bbox.width;
+            if (bbw === 0) bbw = 0.001;
+            let bbh = bbox.height;
+            if (bbh === 0) bbh = 0.001;
+            const mx = event.clientX - bbox.left * ((can.width / pixelratio) / bbw);
+            const my = event.clientY - bbox.top * ((can.height / pixelratio) / bbh);
+            const point = myDiagram.transformViewToDoc(new go.Point(mx, my));
+            const part = myDiagram.findPartAt(point, true);
+            if (part) {
+                part.mouseDragEnter(event, part.node);
+            }
+        }
+
+        if (event.target.className === "dropzone") {
+            // Disallow a drop by returning before a call to preventDefault:
+            return;
+        }
+
+        // Allow a drop on everything else
+        event.preventDefault();
+    }, false);
+
+    div.addEventListener("dragleave", event => {
+        // reset background of potential drop target
+        if (event.target.className == "dropzone") {
+            event.target.style.background = "";
+        }
+        onHighlight(null);
+    }, false);
+    div.addEventListener("drop", event => {
+        // prevent default action
+        // (open as link for some elements in some browsers)
+        event.preventDefault();
+
+        // Dragging onto a Diagram
+        if (div === myDiagram.div) {
+            const can = event.target;
+            const pixelratio = myDiagram.computePixelRatio();
+
+            // if the target is not the canvas, we may have trouble, so just quit:
+            if (!(can instanceof HTMLCanvasElement)) return;
+
+            const bbox = can.getBoundingClientRect();
+            let bbw = bbox.width;
+            if (bbw === 0) bbw = 0.001;
+            let bbh = bbox.height;
+            if (bbh === 0) bbh = 0.001;
+            const mx = event.clientX - bbox.left * ((can.width / pixelratio) / bbw);
+            const my = event.clientY - bbox.top * ((can.height / pixelratio) / bbh);
+            const point = myDiagram.transformViewToDoc(new go.Point(mx, my));
+            onDrop(event, point);
+
+            // remove dragged element from its old location, if checkbox is checked
+            // if (document.getElementById('removeCheckBox').checked) dragged.parentNode.removeChild(dragged);
+
+        }
+
+        // If we were using drag data, we could get it here, ie:
+        // const data = event.dataTransfer.getData('text');
+    }, false);
+}
+
+
+function addDiagramListener(diagram) {
+    diagram.addDiagramListener("ViewportBoundsChanged", function (e) {
+        e.diagram.commit(function (dia) {
+            // only iterates through simple Parts in the diagram, not Nodes or Links
+            dia.nodes.each(function (part) {
+                // and only on those that have the "_viewPosition" property set to a Point
+                if (part._viewPosition) {
+                    part.position = dia.transformViewToDoc(part._viewPosition);
+                    part.scale = 1 / dia.scale;  // counteract any zooming
+                }
+            })
+        }, null);  // set skipsUndoManager to true, to avoid recording these changes
+    });
+}
+
+export { initializeNodeTemplate, setWorkspaceDropListeners, addDiagramListener, getNewWorkspace, initializeLinkTemplate, getLinkContext }; 

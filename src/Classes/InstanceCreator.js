@@ -65,14 +65,15 @@ import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 import { produceComponentContextMenu } from "../HtmlElements/componentContextMenu.js";
 import { panningState } from "../UpTab/editTab.js";
 import { disablePanning, enablePanning } from "../Workspace/zoom.js";
-import { getLinkContext, getNewWorkspace, initializeLinkTemplate, initializeNodeTemplate } from "../HtmlElements/goWorkspace.js";
+import { addDiagramListener, getLinkContext, getNewWorkspace, initializeLinkTemplate, initializeNodeTemplate, setWorkspaceDropListeners } from "../HtmlElements/goWorkspace.js";
 
 class InstanceCreator {
   constructor() {
     this.diagramMap = {};
   }
   createComponent(obj) {
-    var objJSON = { "text": obj._name, "key": obj._id, "loc": "300 50" };
+    const spawiningPoint = this.diagramMap[layers.selectedLayer._id].transformDocToView(new go.Point(400, 100));
+    var objJSON = { "text": obj._name, "key": obj._id, "loc": 300 + " " + 50 };
     this.diagramMap[layers.selectedLayer._id].model.addNodeData(objJSON);
     return objJSON;
   }
@@ -90,6 +91,8 @@ class InstanceCreator {
     this.diagramMap[lid].nodeTemplate = initializeNodeTemplate();
     this.diagramMap[lid].linkTemplate = initializeLinkTemplate();
     this.diagramMap[lid].linkTemplate.contextMenu = getLinkContext();
+    setWorkspaceDropListeners(lid);
+    addDiagramListener(this.diagramMap[lid]);
   }
   deleteNode(obj) {
     const node = obj;

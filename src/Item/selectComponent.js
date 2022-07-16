@@ -69,6 +69,9 @@ function unlinkSelectedItems() {
 function cancelSelection() {
     if (layers.selectedLayer && InstanceGenerator.diagramMap[layers.selectedLayer._id])
         InstanceGenerator.diagramMap[layers.selectedLayer._id].clearSelection();
+    if (document.getElementById("byComponent").checked) {
+        handleByComponent();
+    }
 }
 
 function keepOnlyLastSelectedItem(id) {
@@ -83,4 +86,4 @@ function keepOnlyLastSelectedItem(id) {
     }
 }
 
-export { changeSelectState, cancelSelection, getSelectedIds, getSelectedItems, selectAction, keepOnlyLastSelectedItem };
+export { changeSelectState, cancelSelection, handleByComponent, getSelectedIds, getSelectedItems, selectAction, keepOnlyLastSelectedItem };
