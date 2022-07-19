@@ -4,7 +4,7 @@ import { layers } from "../Classes/LayerHolder.js";
 import { functionOnDropOnComponent } from "../Item/componentEventCallbacks.js";
 import { cancelSelection, handleByComponent } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
-import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 const $ = go.GraphObject.make;
 
@@ -19,6 +19,8 @@ function getNewWorkspace(lid) {
         "BackgroundSingleClicked": (e) => {
             cancelFunctionSelection();
             cancelSelection();
+            appearFunctionButtons();
+
         },
         "ExternalObjectsDropped": (e) => {
         },
@@ -86,10 +88,12 @@ function initializeNodeTemplate() {
             desiredSize: new go.Size(120, 60),
             minSize: new go.Size(40, 40),
             resizable: true,
-            resizeCellSize: new go.Size(20, 20),
+            resizeCellSize: new go.Size(10, 10),
             // click: function (e, obj) { appearComponentButtons(); },
             selectionChanged: function (node) {
                 appearComponentButtons();
+                appearFunctionButtons();
+                appearHierarchyButtons();
                 (document.getElementById("byComponent").checked) ? handleByComponent() : 1;
 
             },
@@ -138,8 +142,8 @@ function initializeNodeTemplate() {
                 // }
             },
             new go.Binding("figure"),
-            new go.Binding("fill"),
-            new go.Binding("stroke", "color"),
+            new go.Binding("fill", "color"),
+            new go.Binding("stroke", "borderColor"),
             new go.Binding("strokeWidth", "thickness"),
             new go.Binding("strokeDashArray", "dash")
         ),
@@ -161,7 +165,7 @@ function initializeNodeTemplate() {
 
             // this Binding is TwoWay due to the user editing the text with the TextEditingTool
             new go.Binding("text").makeTwoWay(),
-            new go.Binding("stroke", "color")
+            new go.Binding("stroke", "letterColor")
         ),
         {
             toolTip:  // define a tooltip for each node that displays the color as text
@@ -212,13 +216,18 @@ function initializeLinkTemplate() {
             new go.Binding("visible", "dir", dir => dir >= 1),
             new go.Binding("fill", "color"),
             new go.Binding("scale", "thickness", t => (2 + t) / 3)),
-        $(go.TextBlock,
-            { alignmentFocus: new go.Spot(0, 1, -4, 0), editable: true },
+        $(go.TextBlock, "right",
+            {
+                segmentOffset: new go.Point(0, 10),
+                segmentOrientation: go.Link.OrientUpright
+            },
             new go.Binding("text").makeTwoWay(),  // TwoWay due to user editing with TextEditingTool
             new go.Binding("stroke", "color"))// { segmentOffset: new go.Point(0, 10) })
     );
 }
 function ClickFunction(propname, value) {
+    if (propname === "dir") {
+    }
     return (e, obj) => {
         e.handled = true; // don't let the click bubble up
         e.diagram.model.commit(m => {
@@ -232,8 +241,10 @@ function ArrowButton(num) {
         geo = "M0 0 M16 16 M0 8 L16 8";
     } else if (num === 2) {
         geo = "M0 0 M16 16 M0 8 L16 8  M12 11 L16 8 L12 5  M4 11 L0 8 L4 5";
+        console.log(2);
     } else if (num === 3) {
         geo = "M0 0 M16 16 M0 8 L16 8   M4 11 L0 8 L4 5";
+
     }
     return $(go.Shape, {
         geometryString: geo,

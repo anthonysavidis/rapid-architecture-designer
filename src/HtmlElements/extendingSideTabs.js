@@ -9,9 +9,9 @@ function produceRightTabRod() {
     rightTabRod.id = "rightTabRod";
     rightTabRod.className = 'rod';
     document.getElementById('body').appendChild(rightTabRod);
-    document.getElementById('rightTabRod').style.top = document.getElementById("right_tab").getBoundingClientRect().top - 10 + "px";
+    document.getElementById('rightTabRod').style.top = document.getElementById("right_tab").getBoundingClientRect().top + "px";
     document.getElementById('rightTabRod').style.height = document.getElementById("right_tab").getBoundingClientRect().height + "px";
-    document.getElementById('rightTabRod').style.left = document.getElementById("right_tab").getBoundingClientRect().left + "px";
+    document.getElementById('rightTabRod').style.left = document.getElementById("right_tab").getBoundingClientRect().left - 10 + "px";
     addRightTabRodListener();
 }
 
@@ -22,7 +22,7 @@ function produceLayerTabRod() {
     document.getElementById('body').appendChild(layerTabRod);
     document.getElementById('layerTabRod').style.top = 125 + "px";
     document.getElementById('layerTabRod').style.height = document.getElementById("fSidebar").getBoundingClientRect().height + "px";
-    document.getElementById('layerTabRod').style.left = document.getElementById("fSidebar").getBoundingClientRect().right - 10 + "px";
+    document.getElementById('layerTabRod').style.left = document.getElementById("fSidebar").getBoundingClientRect().right + "px";
     addLayerRodListener();
 }
 
@@ -71,7 +71,7 @@ function addRightTabRodListener() {
                 return;
             var dP = tP - initialPosition.left;
             if (rodRec.x > 0.7 * buttonsRec.width && rodRec.x < 0.85 * buttonsRec.width) {
-                (dP > 0) ? dP += 15: dP -= 10;
+                (dP > 0) ? dP += 15 : dP -= 10;
 
                 document.getElementById('right_tab').style.left = document.getElementById('rightTabRod').getBoundingClientRect().left + "px";
                 fixFunctionsWidth();
@@ -88,7 +88,7 @@ function addRightTabRodListener() {
 
         },
         stop: (e) => { //actionsSave item... apoi to move item
-            document.getElementById('rightTabRod').style.left = document.getElementById('right_tab').getBoundingClientRect().left + "px";
+            document.getElementById('rightTabRod').style.left = document.getElementById('right_tab').getBoundingClientRect().left - 10 + "px";
             fixFunctionsWidth();
             createDraggableSpace();
             fixTrashBinPosition();
@@ -99,7 +99,7 @@ function addRightTabRodListener() {
         mouseup: (e) => {
             console.log('mouseUp');
         },
-        click: (e) => {}
+        click: (e) => { }
     });
 }
 

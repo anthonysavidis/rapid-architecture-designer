@@ -13,7 +13,7 @@ import { renderLine } from "../Item/createLine.js";
 import { configStyle } from "../Classes/Config.js";
 import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "./extendingComponent.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
-import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
+import { measureAllLayersOperations, measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 
 function cropName(value, limit) {
     if (value.length <= limit)
@@ -53,14 +53,12 @@ function produceDoubleClickEditingName(editId) {
         input.style.left = inputLeft + "px";
 
     input.value = val;
-    input.onblur = (function() {
+    input.onblur = (function () {
         console.log('item db edit');
         var val = (this.value == "" || !this.value.replace(/\s/g, '').length) ? constantNames["emptyNames"][items.itemList[index]._type.toLowerCase()] : this.value;
         const originalItemStr = items.itemList[index].toString();
         items.itemList[index]._name = val;
         //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
-        // if (itemType === "Function")
-        //     measureSelectedView(editId);
         if (itemType === "Function" && items.itemList[index].owners[0] && document.getElementById("all").checked) {
             showAllRefresh();
             // showOwner(items.itemList[index]);
@@ -95,6 +93,8 @@ function produceDoubleClickEditingName(editId) {
             turnOffDescription(items.itemList[index]);
             turnOnDescription(items.itemList[index]);
         }
+        if (itemType === "Function")
+            measureSelectedView(editId);
     });
     document.getElementById(editId + "name").innerText = "";
     if (itemType === "Function") {
@@ -114,7 +114,7 @@ function produceDoubleClickEditingLayerName(domId, oldName, layerObject, branchR
     input.style.width = branchRect.width + "px";
     input.value = layerObject._name;
     input.style.zIndex = 90;
-    input.onblur = (function() {
+    input.onblur = (function () {
         var val = (this.value == "" || !this.value.replace(/\s/g, '').length) ? constantNames["emptyNames"]["layer"] : this.value;
         const oldObject = layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].treeObj;
         layers.layerList[layers.layerList.findIndex(e => e._id === layerObject._id)].updateLayerName(val);

@@ -39,7 +39,9 @@ function produceTextArea(descriptionFormDiv) {
     descriptionTextArea.id = "itemDescription";
     descriptionTextArea.className = "inputTextClass";
     descriptionTextArea.name = 'subject';
-    descriptionTextArea.style.width = "375px";
+    descriptionTextArea.style.width = "290px";
+    descriptionTextArea.style.padding = "5px";
+    descriptionTextArea.style.float = "right";
     descriptionTextArea.style.height = "100px";
     descriptionTextArea.style.resize = "none";
     descriptionTextArea.style.fontFamily = "Arial, Helvetica, sans-serif";
@@ -58,7 +60,7 @@ function produceTextArea(descriptionFormDiv) {
 function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
     var box = document.createElement('div');
     box.className = type + "Box";
-    var closeBox = function() {
+    var closeBox = function () {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
@@ -118,8 +120,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         confirmationButton.style.backgroundColor = "#ff6464";
         confirmationButton.style.borderColor = "#969696";
 
-        (params[1] === '1') ? confirmationButton.innerHTML = "OK": confirmationButton.innerHTML = "Delete";
-        confirmationButton.onclick = function() {
+        (params[1] === '1') ? confirmationButton.innerHTML = "OK" : confirmationButton.innerHTML = "Delete";
+        confirmationButton.onclick = function () {
             callBack();
             closeBox();
         }
@@ -151,22 +153,12 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         buttons.style.marginTop = "-10px";
 
         box.style.width = "310px";
-        title.innerText = extraInfo[0];
-        title.style.marginTop = "32px";
-        title.style.marginLeft = "25px";
-        title.style.left = "0px";
-        // title.style.marginLeft = "27px";
-        title.style.textAlign = "left";
-        title.style.marginBottom = "6px";
-        box.style.height = "172px";
         closeButton.remove();
         closeButton.style.width = closeButton.style.height = "12px";
         closeButton.style.float = "right";
         var bar = produceMovingBar(box);
-        bar.style.position = "absolute";
         bar.innerText = extraInfo[2];
         bar.appendChild(closeButton);
-        box.appendChild(title);
         var selectExternal = document.createElement('div');
         selectExternal.style.alignContent = "center";
         selectExternal.style.margin = 0;
@@ -175,24 +167,28 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         select.innerHTML = extraInfo[1];
         select.style.width = "250px";
         selectExternal.appendChild(select);
-        select.style.marginLeft = 25 + "px";
-        select.style.marginTop = 0 + "px";
-        select.style.marginBottom = 24 + "px";
+        select.style.marginLeft = 27 + "px";
+        select.style.marginTop = 17 + "px";
+        select.style.marginBottom = 22 + "px";
+        select.style.padding = 2 + "px";
+        select.style.paddingLeft = 5 + "px";
+        select.style.fontSize = "small";
+        select.style.height = "30px";
+
         select.style.outline = 0;
         box.appendChild(selectExternal);
         cancelButton.onclick = cancelAction;
         cancelButton.style.float = "right";
         confirmationButton.className = "okButton";
-        confirmationButton.style.marginLeft = "25px";
-        confirmationButton.style.marginRight = "30px";
+        confirmationButton.style.marginLeft = "13px";
+        confirmationButton.style.marginRight = "29px";
         confirmationButton.innerHTML = constantNames["ok"];
-        confirmationButton.onclick = function() {
+        confirmationButton.onclick = function () {
             callBack(select.value);
             closeBox();
         }
         produceGrayLayer(box, extraInfo, "");
-        box.style.height = "153px";
-
+        box.style.height = "129px";
     } else if (type === "input") {
         closeButton.remove();
         closeButton.style.width = closeButton.style.height = "12px";
@@ -202,7 +198,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         bar.style.top = 0;
         bar.style.left = 0;
         bar.innerText = extraInfo
-            // closeButton.style.marginRight = "-15px";
+        // closeButton.style.marginRight = "-15px";
         bar.appendChild(closeButton);
 
         box.style.width = "420px";
@@ -215,12 +211,15 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         var nameFormExternal = document.createElement('div');
         var nameLabelDiv = document.createElement('div');
         nameLabelDiv.className = "labelModalDiv";
+        nameLabelDiv.style.float = "left";
+        nameLabelDiv.style.width = "fit-content";
+        nameLabelDiv.style.marginRight = nameLabelDiv.style.marginTop = "0px";
         nameLabelDiv.innerHTML = constantNames["inputBox"]["nameLabel"];
         var nameFormDiv = document.createElement('div');
-        nameFormDiv.style.marginTop = 2.5 + "px";
-        nameFormDiv.innerHTML = '<input id="nameForm" class="inputTextClass" autocomplete="off" type="text" style="width: 375px;" name="firstname">';
+        nameFormDiv.innerHTML = '<input id="nameForm" class="inputTextClass" autocomplete="off" type="text" style="width: 290px;padding:5px; float:right;" name="firstname">';
         // nameFormDiv.firstChild.style.marginLeft = "-70px";
-        nameFormExternal.appendChild(nameLabelDiv);
+        nameFormDiv.className = "formExternalClass";
+        nameFormDiv.appendChild(nameLabelDiv);
         nameFormExternal.appendChild(nameFormDiv);
 
         form.appendChild(nameFormExternal);
@@ -228,35 +227,38 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         var descriptionFormExternal = document.createElement('div');
         var descriptionLabelDiv = document.createElement('div');
         descriptionLabelDiv.className = "labelModalDiv";
+        descriptionLabelDiv.style.width = "fit-content";
+        descriptionLabelDiv.style.marginRight = descriptionLabelDiv.style.marginTop = "0px";
+        descriptionLabelDiv.style.float = "left";
         descriptionLabelDiv.innerHTML = constantNames["inputBox"]["descriptionLabel"];
         var descriptionFormDiv = document.createElement('div');
-        descriptionFormDiv.style.marginTop = 2.5 + "px";
+        descriptionFormDiv.className = "formExternalClass";
         nameLabelDiv.style.marginLeft = descriptionLabelDiv.style.marginLeft = "0";
+        descriptionFormDiv.appendChild(descriptionLabelDiv);
         produceTextArea(descriptionFormDiv);
         // descriptionFormDiv.id = "descriptionForm";
-        descriptionFormExternal.appendChild(descriptionLabelDiv);
         descriptionFormExternal.appendChild(descriptionFormDiv);
         form.appendChild(descriptionFormExternal);
 
         box.appendChild(form);
         confirmationButton.className = "okButton unselectableText";
-        confirmationButton.style.marginRight = "0.5px";
-        confirmationButton.style.marginLeft = "20px";
+        confirmationButton.style.marginRight = "0px";
+        confirmationButton.style.marginLeft = "13px";
         cancelButton.style.float = confirmationButton.style.float = "right";
         confirmationButton.innerHTML = constantNames["ok"];
-        cancelButton.onclick = function() {
+        cancelButton.onclick = function () {
             // callBack("", constantNames["emptyNames"]["description"]);
             cancelAction();
             closeBox();
         }
-        confirmationButton.onclick = function() {
-                // if (!nameFormDiv.firstChild.value) {
-                //     callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
-                // } else
-                callBack(nameFormDiv.firstChild.value, descriptionFormDiv.firstChild.value);
-                closeBox();
-            }
-            // form.onmousedown = null;
+        confirmationButton.onclick = function () {
+            // if (!nameFormDiv.firstChild.value) {
+            //     callBack(constantNames["emptyNames"][extraInfo.toLowerCase()], constantNames["emptyNames"]["description"]);
+            // } else
+            callBack(nameFormDiv.firstChild.value, descriptionFormDiv.children[1].value);
+            closeBox();
+        }
+        // form.onmousedown = null;
         produceGrayLayer(box, extraInfo, callBack, cancelCallBack);
     }
 

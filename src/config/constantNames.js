@@ -169,9 +169,14 @@ const constantNames = {
     },
     "singleFormMessages": {
         "layer": "Sub layer name:",
-        "Save": "Project's name:",
-        "newProj": "Current project's name:",
-        "SettingsSave": "Settings' name:"
+        "Save": "Name:",
+        "newProj": "Name:",
+        "SettingsSave": "Name:"
+    },
+    "inputDialogTitles": {
+        "Save": "Save Project",
+        "New": "New Project",
+        "SettingsSave": 'Save current settings'
     },
     "dot": ".",
     "ok": "OK",

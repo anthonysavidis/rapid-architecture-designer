@@ -16,7 +16,8 @@ function getSelectedFunctionWidth(id) {
     // document.getElementById(id).className = "function";
     // document.getElementById(id).style.display = displayOld;
     // // document.getElementById(id).style.width = "var(--selectedOperationsWidth)";
-
+    console.log(document.getElementById(id + 'name').innerHTML);
+    console.log((id + 'name'));
     const textDims = getCustomTextDimensions("var(--operationTextFamily)", "var(--operationTextSize)", document.getElementById(id + 'name').innerHTML);
     const opWidth = textDims.width + 43 + 14 + 4;
     return opWidth;
@@ -41,6 +42,8 @@ function resetWidthToDefault() {
 
 function measureSelectedView(id, oneUpdated) {
     const fWidth = getSelectedFunctionWidth(id);
+    console.log('current: ' + (fWidth - 61) + " maximum: " + maxSelectedWidthMap[layers.selectedLayer._id])
+
     if (!maxSelectedWidthMap[layers.selectedLayer._id] || fWidth > maxSelectedWidthMap[layers.selectedLayer._id]) {
         maxSelectedWidthMap[layers.selectedLayer._id] = fWidth;
         changeMaxWidth(maxSelectedWidthMap[layers.selectedLayer._id]);
@@ -50,7 +53,7 @@ function measureSelectedView(id, oneUpdated) {
 
 function selectLayersMaxOperationWidth(lid) {
     var r = document.querySelector(':root');
-    (maxSelectedWidthMap[lid]) ? r.style.setProperty("--selectedOperationsWidth", maxSelectedWidthMap[lid] + "px"): r.style.setProperty("--selectedOperationsWidth", "fit-content");
+    (maxSelectedWidthMap[lid]) ? r.style.setProperty("--selectedOperationsWidth", maxSelectedWidthMap[lid] + "px") : r.style.setProperty("--selectedOperationsWidth", "fit-content");
     return;
 }
 

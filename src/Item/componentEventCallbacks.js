@@ -2,6 +2,8 @@ import { items } from "../Classes/ItemArray.js";
 import { forceActivateAll } from "../Workspace/functionAppearance.js";
 
 const functionOnDropOnComponent = (event, componentID) => {
+  if (!event || !event.preventDefault)
+    return;
   event.preventDefault();
   const obj = items.itemList[items.itemList.findIndex(el => el._id === componentID)];
   console.log("dropped function...");

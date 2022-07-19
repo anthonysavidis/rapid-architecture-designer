@@ -326,3 +326,10 @@ select {
     user-select: none;
     cursor: pointer;
 }
+
+
+.formExternalClass {
+    width: 100%;
+    display: inline-block;
+    margin-top: 2.5px;
+}

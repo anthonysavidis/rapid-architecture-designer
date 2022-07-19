@@ -354,7 +354,7 @@ body {
     cursor: grab;
     text-align: right;
     line-height: 170%;
-    padding-right: 14px;
+    padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
     box-sizing: border-box;
@@ -412,7 +412,7 @@ body {
     height: fit-content;
     width: var(--selectedOperationsWidth);
     /*29px to height*/
-    padding-right: 14px;
+    padding-right: 10px;
     text-align: center;
     cursor: grab;
     padding-top: 4px;

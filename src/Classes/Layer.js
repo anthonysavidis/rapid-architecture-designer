@@ -14,6 +14,7 @@ class Layer {
       this._name = name;
       this.setOfItems = new ItemHolder(); //1 layer has 1 setOfItems.
       this.domElement = this.spawnLayer();
+      // this.domElement.style.backgroundImage = "linear-gradient(to bottom,#ffffff, rgb(210, 212, 236),40%)";
       this.domFunctions = this.spawnFunctionContainer();
       this.treeObj = addToArchitectureList(
         this._id,

@@ -48,7 +48,7 @@ function checkToSwitchTabs(e) {
     if (isInsideRec(clickedX, clickedY, functionsRec)) {
         initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
     } else if (isInsideRec(clickedX, clickedY, componentsRec)) {
-        (lastPressed && lastPressed.id !== "layersTab") ? initializeTab(constantNames["componentsTab"]["tabName"], "componentTab"): 1;
+        (lastPressed && lastPressed.id !== "layersTab") ? initializeTab(constantNames["componentsTab"]["tabName"], "componentTab") : 1;
     }
     return;
 }
