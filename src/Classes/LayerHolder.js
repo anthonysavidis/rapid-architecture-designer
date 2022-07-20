@@ -18,7 +18,7 @@ import {
 import { imageStorage } from "./ImageHolder.js";
 import { InstanceGenerator } from "./InstanceCreator.js";
 import { Item } from "./Item.js";
-import { ItemHolder } from "./ItemArray.js";
+import { itemFromListToObject, ItemHolder } from "./ItemArray.js";
 import { items, setItems } from "./ItemArray.js";
 import { Layer } from "./Layer.js";
 
@@ -63,15 +63,9 @@ class LayerHolder {
   deleteLayer(id) {
     var index = this.layerList.findIndex((el) => el._id === id);
     var itemId = this.layerList[index].componentId;
-    var itemIndex = this.itemMap
-      .get(this.layerList[index].parentId)
-      .itemList.findIndex((el) => el._id === itemId);
+    var itemIndex = this.itemMap.get(this.layerList[index].parentId).itemList.findIndex((el) => el._id === itemId);
     var layerItems = this.itemMap.get(this.layerList[index].parentId);
-    layerItems.itemList[itemIndex].subLayers.splice(
-      layerItems.itemList[itemIndex].subLayers.indexOf(id),
-      1
-    );
-
+    layerItems.itemList[itemIndex].subLayers.splice(layerItems.itemList[itemIndex].subLayers.indexOf(id), 1);
     if (this.selectedLayer._id === id) {
       this.changeLayer(this.layerList[0]._id);
     }
@@ -129,7 +123,12 @@ class LayerHolder {
       if (x === "itemMap") {
         // var mapStr = JSON.stringify(Array.from(this.itemMap.entries()));
         totalStr += '"' + x.toString() + '":' + this.getItemMapString() + " ,";
+      } else if (x === "selectedLayer") {
+        totalStr += '"' + x + '":' + this[x].toString() + " ,";
+      } else if (x === "layerList") {
+        totalStr += '"' + x + '":' + itemFromListToObject(this[x]) + " ,";
       } else {
+        console.log(x);
         totalStr += '"' + x + '":' + JSON.stringify(this[x]) + " ,";
       }
     }
@@ -153,35 +152,33 @@ class LayerHolder {
   toObject(str) {
     clearTree();
     var layerObject = JSON.parse(str);
+    console.log(layerObject);
     setLayers(this);
-    for (var i = 0; i < layerObject.layerList.length; i++) {
-      layerObject.layerList[i].setOfItems =
-        layerObject.itemMap[layerObject.layerList[i]._id];
+    for (var i in layerObject["layerList"]) {
+      layerObject.layerList[i].setOfItems = layerObject.itemMap[layerObject.layerList[i]._id];
       var l = new Layer("", -1, -1, layerObject.layerList[i]);
+      InstanceGenerator.turnOffGrid(l._id);
+
+      // console.log('loop1');
     }
 
     var arr = layers.idList.filter((c, index) => {
       return layers.idList.indexOf(c) === index;
     });
     layers.idList = arr;
-    var layersArr = [];
-    layers.layerList.forEach((c) => {
-      if (layersArr.findIndex((el) => el._id === c._id) === -1) {
-        layersArr.push(c);
-      }
-    });
-    layers.layerList = layersArr;
+    // var layersArr = [];
+    // layers.layerList.forEach((c) => {
+    //   if (layersArr.findIndex((el) => el._id === c._id) === -1) {
+    //     layersArr.push(c);
+    //   }
+    // });
+    // layers.layerList = layersArr;
 
     document.getElementById("main").innerHTML = "";
     for (var i = 0; i < layers.layerList.length; i++) {
-      document
-        .getElementById("main")
-        .appendChild(layers.layerList[i].domElement);
+      document.getElementById("main").appendChild(layers.layerList[i].domElement);
       var layerId = layers.layerList[i]._id;
-      var children = [].slice.call(
-        document.getElementById(layerId).getElementsByTagName("*"),
-        0
-      );
+      var children = [].slice.call(document.getElementById(layerId).getElementsByTagName("*"), 0);
       const seenIDs = {};
       for (var x in children) {
         var childsId = children[x].getAttribute("id");
@@ -193,6 +190,7 @@ class LayerHolder {
       }
     }
     layers.produceTree();
+    console.log(layers);
     layers.changeLayer(layers.layerList[0]._id);
     setItems(layers.itemMap.get(layers.layerList[0]._id));
     restorePreviewImages(layerObject["localStorageInstance"]);

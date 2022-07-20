@@ -9,7 +9,7 @@ import { moveToCntx } from "../UpTab/hierarchyTab.js";
 import { exitFullscreenCntx, fullscreenCntx } from "../UpTab/settingsTab.js";
 import { getActiveComponentButtonNames } from "../UpTab/tabAppearance/buttonsVisibility.js";
 
-var closeContext = () => {};
+var closeContext = () => { };
 
 function seperativeContextLine(context) {
     var l = document.createElement('div');
@@ -75,11 +75,7 @@ function produceWorkspaceContextMenu(clickedComponentId, componentIdList, x, y) 
         gridCntx();
         closeContext();
     }, "");
-    addTick
-    var panningOption = addToParentContext("", workspaceContext, "Panning", () => {
-        panningCntx();
-        closeContext();
-    }, "");
+
     var fullscreenOption = addToParentContext("", workspaceContext, "Fullscreen", () => {
         if (!isFullScreen)
             fullscreenCntx();
@@ -89,8 +85,6 @@ function produceWorkspaceContextMenu(clickedComponentId, componentIdList, x, y) 
     }, "");
     // addShortcut(fullscreenOption, "F11");
 
-    if (panningState === "on")
-        addTick(panningOption);
     if (gridState === "on")
         addTick(gridOption);
     if (isFullScreen) {

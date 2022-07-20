@@ -33,6 +33,37 @@ function getTextWidth(inputText, font) {
 }
 
 
+const itemNameChangedHandler = (editId, newName) => {
+    const index = items.itemList.findIndex((el) => el._id === editId);
+    var val = (newName == "" || !newName.replace(/\s/g, '').length) ? constantNames["emptyNames"][items.itemList[index]._type.toLowerCase()] : newName;
+    const originalItemStr = items.itemList[index].toString();
+    items.itemList[index]._name = val;
+    //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
+    if (items.itemList[index]._type === "Component" && document.getElementById("all").checked) {
+        if (document.getElementById('Hierarchy').style.display === "block") {
+            closeLayerTree();
+            removeLayerTabRod();
+        }
+        showAllRefresh();
+        if (document.getElementById("jstree").style.display === "block")
+            updateTree();
+    }
+    console.log(originalItemStr);
+    console.log(items.itemList[index].toString());
+
+
+    var nameChanged = detailChangeListener(editId, originalItemStr);
+    // if (nameChanged && document.getElementById(items.itemList[index]._id + "subComponent0")) {
+    //     turnOffExtension(items.itemList[index]._id);
+    //     turnOnExtension(items.itemList[index]._id);
+    //     return;
+    // }
+    // if (nameChanged && configStyle.descriptionEnabled) {
+    //     turnOffDescription(items.itemList[index]);
+    //     turnOnDescription(items.itemList[index]);
+    // }
+}
+
 function produceDoubleClickEditingName(editId) {
     var index = items.itemList.findIndex(((element) => element._id === editId));
     var inputWidth = document.getElementById(editId).getBoundingClientRect().width - 25;
@@ -61,11 +92,8 @@ function produceDoubleClickEditingName(editId) {
         //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
         if (itemType === "Function" && items.itemList[index].owners[0] && document.getElementById("all").checked) {
             showAllRefresh();
-            // showOwner(items.itemList[index]);
 
-        } else
-            document.getElementById(items.itemList[index]._id + "name").innerHTML = val;
-
+        }
         if (items.itemList[index]._type === "Component" && document.getElementById("all").checked) {
             if (document.getElementById('Hierarchy').style.display === "block") {
                 closeLayerTree();
@@ -76,12 +104,7 @@ function produceDoubleClickEditingName(editId) {
                 updateTree();
         }
         input.remove();
-        if (items.itemList[index]._type === "Component" && !passAutoFitRestrictions(items.itemList[index]._id)) {
-            autoResizeDispatch["autoFit"](items.itemList[index]);
-        }
-        if (items.itemList[index].links) {
-            renderLine(items.itemList[index]._id);
-        }
+
         var nameChanged = detailChangeListener(editId, originalItemStr);
         console.log(nameChanged);
         if (nameChanged && document.getElementById(items.itemList[index]._id + "subComponent0")) {
@@ -182,4 +205,4 @@ function preventDraggingOfCname(id) {
 }
 
 
-export { produceDoubleClickEditingName, produceDoubleClickEditingLayerName, preventDraggingOfCname, cropName, getTextWidth };
+export { produceDoubleClickEditingName, produceDoubleClickEditingLayerName, preventDraggingOfCname, cropName, getTextWidth, itemNameChangedHandler };

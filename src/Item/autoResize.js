@@ -79,6 +79,7 @@ function setInitialSize(id, text) {
 }
 
 function checkAndResize() {
+    return;
     for (var x in layers.layerList) {
         layers.changeLayer(layers.layerList[x]._id);
         const layerItems = layers.itemMap.get(layers.layerList[x]._id);

@@ -2,11 +2,17 @@ import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { functionOnDropOnComponent } from "../Item/componentEventCallbacks.js";
-import { cancelSelection, handleByComponent } from "../Item/selectComponent.js";
+import { cancelSelection, getSelectedItems, handleByComponent } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
+import { produceWorkspaceContextMenu } from "../Workspace/workspaceContextMenu.js";
+import { produceComponentContextMenu } from "./componentContextMenu.js";
+import { itemNameChangedHandler } from "./doubleClickEditing.js";
+import { produceLinkContextMenu } from "./linkContextMenu.js";
 const $ = go.GraphObject.make;
+
+var lastSelectedNodeKey = null;
 
 function getNewWorkspace(lid) {
     return $(go.Diagram, lid, {
@@ -15,7 +21,7 @@ function getNewWorkspace(lid) {
             $(go.Panel, "Grid",
                 { gridCellSize: new go.Size(10, 10) },
                 $(go.Shape, "LineH", { strokeDashArray: [1, 9] })
-            ),
+            ), "draggingTool.isCopyEnabled": false,
         "BackgroundSingleClicked": (e) => {
             cancelFunctionSelection();
             cancelSelection();
@@ -24,6 +30,13 @@ function getNewWorkspace(lid) {
         },
         "ExternalObjectsDropped": (e) => {
         },
+        // "TextEdited": (textBlock, previousText, currentText) => {
+        //     console.log(textBlock.text);
+        //     // setTimeout(() => {
+        //     //     var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(lastSelectedNodeKey);
+        //     //     itemNameChangedHandler(lastSelectedNodeKey, delNode.text);
+        //     // }, 1200);
+        // },
         "draggingTool.isGridSnapEnabled": true,
         handlesDragDropForTopLevelParts: true,
         mouseDrop: (e) => {
@@ -34,7 +47,7 @@ function getNewWorkspace(lid) {
                 true
             );
             if (!ok) e.diagram.currentTool.doCancel();
-        },
+        }, contextMenu: $("ContextMenu"),
         commandHandler: $(DrawCommandHandler), // support offset copy-and-paste
         // "clickCreatingTool.archetypeNodeData": {
         //     text: "Component (New)",
@@ -63,6 +76,34 @@ function getNewWorkspace(lid) {
                 e.diagram.commandHandler.editTextBlock();
             });
         },
+        "contextMenuTool.showContextMenu": function (cm, obj) {
+            go.ContextMenuTool.prototype.showContextMenu.call(this, cm, obj);
+            // var data = obj.part.data; InstanceGenerator.diagramMap[layers.selectedLayer._id].lastInput.viewPoint
+            var mousePt = InstanceGenerator.diagramMap[layers.selectedLayer._id].toolManager.contextMenuTool.mouseDownPoint;
+            // const contextX = mousePt.x - 200;
+            // const contextY = mousePt.y + 150;
+            const finalPoint = InstanceGenerator.diagramMap[layers.selectedLayer._id].transformDocToView(new go.Point(mousePt.x, mousePt.y));
+            if (!obj) {
+                produceWorkspaceContextMenu("", "", finalPoint.x - 235, finalPoint.y + 120);
+                return;
+            }
+            if (obj.part.data["from"]) {
+                produceLinkContextMenu(obj.part.data.key, finalPoint.x - 235, finalPoint.y + 120);
+            } else if (obj.part.data["key"]) {
+                InstanceGenerator.clickLambda(obj.part.data.key);
+                produceComponentContextMenu("", "", finalPoint.x - 235, finalPoint.y + 120);
+            }
+            // first clear out any existing ContextMenuButtons
+            // while (cm.elements.count > 0) cm.removeAt(0);
+
+            // // then add those menu items that you want
+            // cm.add($("ContextMenuButton",
+            //     $(go.TextBlock, "Do Something"),
+            //     { click: function (e, but) { console.log("doSomething()"); } }));
+            // cm.add($("ContextMenuButton",
+            //     $(go.TextBlock, "Do Something Else"),
+            //     { click: function (e, but) { console.log("doSomethingElse()"); } }));
+        },
         LinkRelinked: (e) => {
             // re-spread the connections of other links connected with both old and new nodes
             var oldnode = e.parameter.part;
@@ -77,9 +118,18 @@ function getNewWorkspace(lid) {
         "undoManager.isEnabled": true,
     });
 }
-
 function initializeNodeTemplate() {
-    return $(
+    // function MaybeCopyableNode() {
+    //     go.Node.call(this);
+    // }
+    // go.Diagram.inherit(MaybeCopyableNode, go.Node);
+
+    // MaybeCopyableNode.prototype.canCopy = function () {
+    //     var diagram = this.diagram;
+    //     if (diagram !== null && diagram.currentTool instanceof go.DraggingTool && this.data.text === "Beta") return false;
+    //     return go.Node.prototype.canCopy.call(this);
+    // }
+    var nodeTemplate = $(
         go.Node,
         "Auto",
         {
@@ -90,18 +140,24 @@ function initializeNodeTemplate() {
             resizable: true,
             resizeCellSize: new go.Size(10, 10),
             // click: function (e, obj) { appearComponentButtons(); },
+
             selectionChanged: function (node) {
+                console.log(getSelectedItems());
                 appearComponentButtons();
                 appearFunctionButtons();
                 appearHierarchyButtons();
                 (document.getElementById("byComponent").checked) ? handleByComponent() : 1;
+                lastSelectedNodeKey = node.key;
+
 
             },
+            contextMenu: $("ContextMenu"),
             mouseDragEnter: (e, nodeKey) => {
                 // const node = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(nodeKey);
                 // node.fill = "#cce6ff";
             },
             mouseDragLeave: (e, node) => node.isHighlighted = false,
+
             // on a mouse-drop add a link from the dropped-upon node to the new node
             mouseDrop: (e, nodeKey) => {
                 functionOnDropOnComponent(e, nodeKey);
@@ -160,9 +216,10 @@ function initializeNodeTemplate() {
                 margin: 1,
                 textAlign: "center",
                 overflow: go.TextBlock.OverflowEllipsis,
-                editable: true,
-            },
+                // editable: true,
+                contextMenu: $("ContextMenu")
 
+            },
             // this Binding is TwoWay due to the user editing the text with the TextEditingTool
             new go.Binding("text").makeTwoWay(),
             new go.Binding("stroke", "letterColor")
@@ -175,6 +232,7 @@ function initializeNodeTemplate() {
                 )  // end of Adornment
         }
     );
+    return nodeTemplate;
 }
 
 function initializeLinkTemplate() {
@@ -186,7 +244,8 @@ function initializeLinkTemplate() {
         relinkableFrom: true,
         relinkableTo: true,
         reshapable: true,
-        resegmentable: true
+        resegmentable: true,
+        contextMenu: $("ContextMenu"),
     },
         new go.Binding("fromSpot", "fromSpot", go.Spot.parse),
         new go.Binding("toSpot", "toSpot", go.Spot.parse),
@@ -222,7 +281,14 @@ function initializeLinkTemplate() {
                 segmentOrientation: go.Link.OrientUpright
             },
             new go.Binding("text").makeTwoWay(),  // TwoWay due to user editing with TextEditingTool
-            new go.Binding("stroke", "color"))// { segmentOffset: new go.Point(0, 10) })
+            new go.Binding("stroke", "color")),// { segmentOffset: new go.Point(0, 10) })
+        {
+            toolTip:  // define a tooltip for each node that displays the color as text
+                $("ToolTip",
+                    $(go.TextBlock, { margin: 4 },
+                        new go.Binding("text", "key", function (s) { return items.itemList[items.itemList.findIndex(el => el._id === s)]._description; }))
+                )  // end of Adornment
+        }
     );
 }
 function ClickFunction(propname, value) {
@@ -235,107 +301,31 @@ function ClickFunction(propname, value) {
         });
     };
 }
-function ArrowButton(num) {
-    var geo = "M0 0 M16 16 M0 8 L16 8  M12 11 L16 8 L12 5";
-    if (num === 0) {
-        geo = "M0 0 M16 16 M0 8 L16 8";
-    } else if (num === 2) {
-        geo = "M0 0 M16 16 M0 8 L16 8  M12 11 L16 8 L12 5  M4 11 L0 8 L4 5";
-        console.log(2);
-    } else if (num === 3) {
-        geo = "M0 0 M16 16 M0 8 L16 8   M4 11 L0 8 L4 5";
 
-    }
-    return $(go.Shape, {
-        geometryString: geo,
-        margin: 2,
-        background: "transparent",
-        mouseEnter: (e, shape) => shape.background = "dodgerblue",
-        mouseLeave: (e, shape) => shape.background = "transparent",
-        click: ClickFunction("dir", num),
-        contextClick: ClickFunction("dir", num)
-    });
-}
 
-function AllSidesButton(to) {
-    var setter = (e, shape) => {
-        e.handled = true;
-        e.diagram.model.commit(m => {
-            var link = shape.part.adornedPart;
-            m.set(link.data, (to ? "toSpot" : "fromSpot"), go.Spot.stringify(go.Spot.AllSides));
-            // re-spread the connections of other links connected with the node
-            (to ? link.toNode : link.fromNode).invalidateConnectedLinks();
-        });
-    };
-    return $(go.Shape, {
-        width: 12,
-        height: 12,
-        fill: "transparent",
-        mouseEnter: (e, shape) => shape.background = "dodgerblue",
-        mouseLeave: (e, shape) => shape.background = "transparent",
-        click: setter,
-        contextClick: setter
-    });
-}
-
-function SpotButton(spot, to) {
-    var ang = 0;
-    var side = go.Spot.RightSide;
-    if (spot.equals(go.Spot.Top)) {
-        ang = 270;
-        side = go.Spot.TopSide;
-    } else if (spot.equals(go.Spot.Left)) {
-        ang = 180;
-        side = go.Spot.LeftSide;
-    } else if (spot.equals(go.Spot.Bottom)) {
-        ang = 90;
-        side = go.Spot.BottomSide;
-    }
-    if (!to) ang -= 180;
-    var setter = (e, shape) => {
-        e.handled = true;
-        e.diagram.model.commit(m => {
-            var link = shape.part.adornedPart;
-            m.set(link.data, (to ? "toSpot" : "fromSpot"), go.Spot.stringify(side));
-            // re-spread the connections of other links connected with the node
-            (to ? link.toNode : link.fromNode).invalidateConnectedLinks();
-        });
-    };
-    return $(go.Shape, {
-        alignment: spot,
-        alignmentFocus: spot.opposite(),
-        geometryString: "M0 0 M12 12 M12 6 L1 6 L4 4 M1 6 L4 8",
-        angle: ang,
-        background: "transparent",
-        mouseEnter: (e, shape) => shape.background = "dodgerblue",
-        mouseLeave: (e, shape) => shape.background = "transparent",
-        click: setter,
-        contextClick: setter
-    });
-}
 function getLinkContext() {
-    return $("ContextMenu",
+    // return $("ContextMenu",
 
-        $("ContextMenuButton",
-            $(go.Panel, "Horizontal",
-                ArrowButton(0), ArrowButton(1), ArrowButton(2), ArrowButton(3)
-            )
-        ),
-        $("ContextMenuButton",
-            $(go.Panel, "Horizontal",
-                $(go.Panel, "Spot",
-                    AllSidesButton(false),
-                    SpotButton(go.Spot.Top, false), SpotButton(go.Spot.Left, false), SpotButton(go.Spot.Right, false), SpotButton(go.Spot.Bottom, false)
-                ),
-                $(go.Panel, "Spot", {
-                    margin: new go.Margin(0, 0, 0, 2)
-                },
-                    AllSidesButton(true),
-                    SpotButton(go.Spot.Top, true), SpotButton(go.Spot.Left, true), SpotButton(go.Spot.Right, true), SpotButton(go.Spot.Bottom, true)
-                )
-            )
-        )
-    );
+    //     $("ContextMenuButton",
+    //         $(go.Panel, "Horizontal",
+    //             ArrowButton(0), ArrowButton(1), ArrowButton(2), ArrowButton(3)
+    //         )
+    //     ),
+    //     $("ContextMenuButton",
+    //         $(go.Panel, "Horizontal",
+    //             $(go.Panel, "Spot",
+    //                 AllSidesButton(false),
+    //                 SpotButton(go.Spot.Top, false), SpotButton(go.Spot.Left, false), SpotButton(go.Spot.Right, false), SpotButton(go.Spot.Bottom, false)
+    //             ),
+    //             $(go.Panel, "Spot", {
+    //                 margin: new go.Margin(0, 0, 0, 2)
+    //             },
+    //                 AllSidesButton(true),
+    //                 SpotButton(go.Spot.Top, true), SpotButton(go.Spot.Left, true), SpotButton(go.Spot.Right, true), SpotButton(go.Spot.Bottom, true)
+    //             )
+    //         )
+    //     )
+    // );
 }
 
 
@@ -397,7 +387,7 @@ function setWorkspaceDropListeners(workspaceID) {
             const my = event.clientY - bbox.top * ((can.height / pixelratio) / bbh);
             const point = myDiagram.transformViewToDoc(new go.Point(mx, my));
             const part = myDiagram.findPartAt(point, true);
-            if (part) {
+            if (part && part.node) {
                 part.mouseDragEnter(event, part.node);
             }
         }

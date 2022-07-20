@@ -33,15 +33,9 @@ class Layer {
       this.domElement = this.spawnLayer();
       this.domElement.innerHTML = "";
       this.domFunctions = this.spawnFunctionContainer();
-      this.treeObj = addToArchitectureList(
-        this._id,
-        this._name,
-        this.parentId,
-        this.componentId
-      );
+      this.treeObj = addToArchitectureList(this._id, this._name, this.parentId, this.componentId);
       if (!savedFlag) {
         layers.add(this);
-
         layers.changeLayer(this._id);
         var savedItems = new ItemHolder(JSON.stringify(obj.setOfItems));
         layers.itemMap.delete(this._id);
@@ -88,12 +82,7 @@ class Layer {
         continue;
       } else if (x === "setOfItems") {
         // var mapStr = JSON.stringify(Array.from(this.links.entries()));
-        str +=
-          '"' +
-          x.toString() +
-          '":' +
-          layers.getItems(this._id).toString() +
-          " ,";
+        str += '"' + x.toString() + '":' + layers.getItems(this._id).toString() + " ,";
       } else if (x === "treeObj") {
         str += '"' + x.toString() + '":' + this.treeObj + " ,";
       } else {

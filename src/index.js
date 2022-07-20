@@ -16,7 +16,7 @@ import { windowChangeListeners } from "./Window/windowSizeHandler.js";
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     insertUpTabs();
     initializeStyleAndOperations();
     initializeObserver();
@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", function() {
     windowChangeListeners();
     fixMainDiv()
     fixTrashBinPosition();
+    document.getElementById("html1").scrollTop = 0; //always scroll on top especially in zoom in/out.
+
     // document.onpaste = function(params) {
     //     // console.log(params.clipboardData);
     // }

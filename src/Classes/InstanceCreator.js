@@ -67,6 +67,7 @@ import { panningState } from "../UpTab/editTab.js";
 import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 import { addDiagramListener, getLinkContext, getNewWorkspace, initializeLinkTemplate, initializeNodeTemplate, setWorkspaceDropListeners } from "../HtmlElements/goWorkspace.js";
 
+
 class InstanceCreator {
   constructor() {
     this.diagramMap = {};
@@ -75,7 +76,7 @@ class InstanceCreator {
     const spawiningPoint = this.diagramMap[layers.selectedLayer._id].transformDocToView(new go.Point(400, 100));
     var objJSON = { "text": obj._name, "key": obj._id, "loc": 300 + " " + 50 };
     this.diagramMap[layers.selectedLayer._id].model.addNodeData(objJSON);
-    this.diagramMap[layers.selectedLayer._id].model.setDataProperty(this.diagramMap[layers.selectedLayer._id].model.nodeDataArray[0], "color", "red");
+    // this.diagramMap[layers.selectedLayer._id].model.setDataProperty(this.diagramMap[layers.selectedLayer._id].model.nodeDataArray[0], "color", "red"); //FOR CONFIG PART
     return objJSON;
   }
   createLink(linkId, fromId, toId, name) {
@@ -86,7 +87,7 @@ class InstanceCreator {
   createLinkLabels() { }
 
   createWorkspace(lid) {
-
+    console.log('created Workspace')
     this.diagramMap[lid] = getNewWorkspace(lid);
 
     this.diagramMap[lid].nodeTemplate = initializeNodeTemplate();
@@ -109,6 +110,24 @@ class InstanceCreator {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].startTransaction();
     InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(obj);
     InstanceGenerator.diagramMap[layers.selectedLayer._id].commitTransaction("deleted link");
+  }
+
+  turnOffGrid(lid) {
+    InstanceGenerator.diagramMap[lid].grid.visible = false;
+
+  }
+  clickLambda(key) {
+    var robot = new Robot(InstanceGenerator.diagramMap[layers.selectedLayer._id]);
+    var lambda = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(key);
+    if (lambda === null) return;
+    var loc = lambda.location;
+
+    // click on Lambda
+    robot.mouseDown(loc.x + 10, loc.y + 10, 0, {});
+    robot.mouseUp(loc.x + 10, loc.y + 10, 100, {});
+
+    // Clicking is just a sequence of input events.
+    // There is no command in CommandHandler for such a basic gesture.
   }
 }
 const InstanceGenerator = new InstanceCreator();

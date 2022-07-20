@@ -340,6 +340,8 @@ class Item {
                 }
             } else if (x === "linkedItems") {
                 itemJSON["linkedItems"] = JSON.stringify(this.linkedItems);
+            } else if (x === "diagramNode" || x === "diagramLink") {
+                itemJSON[x] = JSON.stringify(this[x]);
             } else {
                 itemJSON[x.toString()] = this[x].toString();
             }
@@ -373,10 +375,15 @@ class Item {
         this._description = itemObject._description;
 
         if (type === "component" || itemObject._type === "Component") {
-            this.constructComponent();
+            // this.constructComponent();
             this._type = "Component";
-            this.linkedItems = JSON.parse(itemObject.linkedItems);
-            this.fixPositionAndDetails(itemObject, 0);
+            this.subLayers = [];
+            this._functions = [];
+            this.diagramNode = JSON.parse(itemObject.diagramNode);
+            console.log(itemObject);
+            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
+            // this.linkedItems = JSON.parse(itemObject.linkedItems);
+            // this.fixPositionAndDetails(itemObject, 0);
             // for(var i=0;i<itemObject._functions.length)
             if (itemObject._functions) {
                 var functionList = [];
@@ -407,7 +414,9 @@ class Item {
             this.linkState = !(itemObject.linkState) ? "" : itemObject.linkState; //compatible with older versions..
             // items.addLink(this._id,this.idComponent1,this.idComponent2);
             // this.spawnLoadedLink();
-            this.spawnLink();
+            this.diagramLink = JSON.parse(itemObject.diagramLink);
+            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addLinkData(this.diagramLink);
+            // this.spawnLink();
         } else if (type === "function" || itemObject._type === "Function") {
             this.constructFunction();
             this._type = "Function";
