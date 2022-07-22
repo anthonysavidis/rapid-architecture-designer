@@ -3,6 +3,7 @@ import { items } from "../../Classes/ItemArray.js";
 import { getSelectedFunctions, getSelectedFunctionIds } from "../../Item/selectFunction.js";
 import { actions } from "../../Classes/Actions.js";
 import { areAllCollapsed, areAllExtendable, areAllExtended } from "../../HtmlElements/extendingComponent.js";
+import { checkIfCollapsed, checkIfExtended } from "../../HtmlElements/goExtendedComponents.js";
 
 function hasListSubarchitecture(itemList) {
     for (var i in itemList) {
@@ -75,13 +76,13 @@ function appearComponentButtons() {
     } else {
         document.getElementById("copyButton").style.display = "none";
     }
-    if (selectedItems.length >= 1 && areAllExtendable(selectedItems) && areAllCollapsed(selectedItems)) {
+    if (selectedItems.length >= 1 && areAllExtendable(selectedItems) && checkIfCollapsed(selectedItems)) {
         document.getElementById("extendButton").style.display = "inline-block";
     } else {
         document.getElementById("extendButton").style.display = "none";
     }
 
-    if (selectedItems.length >= 1 && areAllExtendable(selectedItems) && areAllExtended(selectedItems)) {
+    if (selectedItems.length >= 1 && areAllExtendable(selectedItems) && checkIfExtended(selectedItems)) {
         document.getElementById("collapseButton").style.display = "inline-block";
     } else {
         document.getElementById("collapseButton").style.display = "none";

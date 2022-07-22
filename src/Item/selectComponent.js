@@ -38,6 +38,7 @@ function getSelectedIds() {
     var keys = [];
     InstanceGenerator.diagramMap[layers.selectedLayer._id].selection.each(function (n) {
         if (!(n instanceof go.Node)) return;
+
         keys.push(n.data.key);
     });
     return keys;

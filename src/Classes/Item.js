@@ -239,6 +239,7 @@ class Item {
             this._id = this.generateItemId().toString();
             this._name = constantNames["emptyNames"]["component"];
             this.constructComponent();
+            this.isSubarchExtended = false;
             // this.updateBoundingRec();
         } else if (type === "Link") {
             this._id = this.generateItemId().toString();
@@ -382,6 +383,8 @@ class Item {
             this.diagramNode = JSON.parse(itemObject.diagramNode);
             console.log(itemObject);
             InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
+            const nodeData = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).data;
+            InstanceGenerator.applyCurrentComponentSettings(layers.selectedLayer._id, nodeData);
             // this.linkedItems = JSON.parse(itemObject.linkedItems);
             // this.fixPositionAndDetails(itemObject, 0);
             // for(var i=0;i<itemObject._functions.length)

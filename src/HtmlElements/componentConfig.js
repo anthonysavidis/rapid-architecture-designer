@@ -82,12 +82,12 @@ function produceSliders(box, configGrid) {
     const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
     const innerMarginXCallBack = (value) => {
         configStyle.handleChange('Component', "innerMarginX", value + "px");
-        refreshAllLinks();
+        // refreshAllLinks();
 
     };
     const innerMarginYCallBack = (value) => {
         configStyle.handleChange('Component', "innerMarginY", value + "px");
-        refreshAllLinks();
+        // refreshAllLinks();
     };
 
     const defaultBorderSliderValue = (parseInt(configStyle.getJSONValue("componentBorderWidth"))) ? parseInt(configStyle.getJSONValue("componentBorderWidth"), 10) : 2;
@@ -193,12 +193,13 @@ function descriptionHandler(noActionSave) {
         });
         if (!noActionSave)
             actions.saveCommand(disableDescriptionInAllComponents, enableDescriptionInAllComponents, "", "");
-        autoResizeAllComponents();
+        // autoResizeAllComponents();
     }
     layers.changeLayer(currentLayerId);
 }
 
 function autoFitHandler() {
+    return;///TODO FIX AUTOFIT
     configStyle.autoFit = document.getElementById("autofitSwitch").checked;
     if (document.getElementById("autofitSwitch").checked) {
         document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
@@ -232,8 +233,8 @@ function loadInitialSettings() {
     configStyle.descriptionEnabled = configStyle.actionDispatch["Component"].currentOldSettings["_descOn"];
     configStyle.autoFit = configStyle.actionDispatch["Component"].currentOldSettings["_autoFit"];
     descriptionHandler(true); //call me flag i opoia simainei oti den tha ginei save sto action stack.
-    autoFitHandler();
-    setBoundingRectMap(oldBRecs);
+    // autoFitHandler(); //TODO AUTOFIT
+    // setBoundingRectMap(oldBRecs);
     return;
 }
 
@@ -261,7 +262,7 @@ function addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConf
     confirmationButton.className = "okButton unselectableText";
     confirmationButton.style.marginRight = "61px";
     confirmationButton.innerHTML = constantNames["apply"];
-    confirmationButton.onclick = function() {
+    confirmationButton.onclick = function () {
         configStyle.actionDispatch["Component"].clearCurrentOldSettings();
         configStyle.actionDispatch["Description"].clearCurrentOldSettings();
         configStyle.actionDispatch["Subcomponent"].clearCurrentOldSettings();
@@ -290,15 +291,15 @@ function createComponentConfigBox(refresh) {
     box.className = 'configurationBox';
     var configGrid = document.createElement('div');
     configGrid.className = "configGrid";
-    var closeBox = function() {
+    var closeBox = function () {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
 
     };
 
-    if (!refresh)
-        storeInitialSettings();
+    // if (!refresh)
+    //     storeInitialSettings();
     var cancelChanges = () => {
         console.log(configStyle.actionDispatch["Component"].currentOldSettings);
         loadInitialSettings();
@@ -310,7 +311,7 @@ function createComponentConfigBox(refresh) {
         configStyle.actionDispatch["Component"].clearCurrentOldSettings();
         configStyle.actionDispatch["Description"].clearCurrentOldSettings();
         configStyle.actionDispatch["Subcomponent"].clearCurrentOldSettings();
-        refreshAllLinks();
+        // refreshAllLinks();
     }
     produceGrayLayer(box, "", "", cancelChanges);
 

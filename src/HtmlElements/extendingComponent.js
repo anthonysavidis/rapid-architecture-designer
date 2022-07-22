@@ -88,7 +88,7 @@ function calculateSubcomponents(id) {
     const subLayerItems = layers.itemMap.get(component.subLayers[0]);
     var componentNames = [];
     for (var x in subLayerItems.itemList) {
-        (subLayerItems.itemList[x]._type === "Component") ? componentNames.push(subLayerItems.itemList[x]._name): 1;
+        (subLayerItems.itemList[x]._type === "Component") ? componentNames.push(subLayerItems.itemList[x]._name) : 1;
     }
     return componentNames;
 }
@@ -104,7 +104,7 @@ function resizeExtended(id, nameList) {
         var heightAcc = 0;
         for (var i = 0; i < nameList.length; i++) {
             var textDims = getCustomTextDimensions("Arial, Helvetica, sans-serif", "small", nameList[i]);
-            (textDims.width > maxWidth) ? maxWidth = textDims.width: 1;
+            (textDims.width > maxWidth) ? maxWidth = textDims.width : 1;
             heightAcc += textDims.height;
         }
         document.getElementById(id + "Description").style.height = heightAcc + 2 * offsetY + "px";
@@ -113,7 +113,7 @@ function resizeExtended(id, nameList) {
         maxWidth = getTextDimensions(document.getElementById(id + 'name').innerText).width;
         nameList.forEach((el) => {
             var width = getTextDimensions(el).width;
-            (width > maxWidth) ? maxWidth = width: 1;
+            (width > maxWidth) ? maxWidth = width : 1;
         });
         document.getElementById(id).style.width = maxWidth + 2 * offsetX + "px";
         for (var i = 0; i < nameList.length; i++) {
@@ -183,7 +183,7 @@ function areAllExtendable(itemsList) {
     var extentable = true;
     for (var x in itemsList) {
         if (!itemsList[x].subLayers[0] || (itemsList[x].subLayers[0] && layers.getItems(itemsList[x].subLayers[0]).itemList.length === 0)) {
-            var extentable = false;
+            extentable = false;
         }
     }
     return extentable;
@@ -193,7 +193,7 @@ function areAllCollapsed(itemsList) {
     var collapsed = true;
     for (var x in itemsList) {
         if (!document.getElementById(itemsList[x]._id + "resizer") && !document.getElementById(itemsList[x]._id + "Description")) {
-            var collapsed = false;
+            collapsed = false;
         }
     }
     return collapsed;

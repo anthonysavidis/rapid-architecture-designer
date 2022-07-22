@@ -118,6 +118,10 @@ function getNewWorkspace(lid) {
         "undoManager.isEnabled": true,
     });
 }
+
+var r = document.querySelector(':root');
+var rs = getComputedStyle(r);
+var nodeTemplate;
 function initializeNodeTemplate() {
     // function MaybeCopyableNode() {
     //     go.Node.call(this);
@@ -129,10 +133,11 @@ function initializeNodeTemplate() {
     //     if (diagram !== null && diagram.currentTool instanceof go.DraggingTool && this.data.text === "Beta") return false;
     //     return go.Node.prototype.canCopy.call(this);
     // }
-    var nodeTemplate = $(
+    nodeTemplate = $(
         go.Node,
         "Auto",
         {
+            name: "COMPONENT",
             locationSpot: go.Spot.Center,
             locationObjectName: "SHAPE",
             desiredSize: new go.Size(120, 60),
@@ -176,6 +181,7 @@ function initializeNodeTemplate() {
         new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
             go.Size.stringify
         ),
+        new go.Binding("resizable", "resizable"),
         $(
             go.Shape, "RoundedRectangle",
             {
@@ -198,10 +204,10 @@ function initializeNodeTemplate() {
                 // }
             },
             new go.Binding("figure"),
-            new go.Binding("fill", "color"),
-            new go.Binding("stroke", "borderColor"),
-            new go.Binding("strokeWidth", "thickness"),
-            new go.Binding("strokeDashArray", "dash")
+            new go.Binding("fill", "componentBackgroundColor"),
+            new go.Binding("stroke", "componentBorderColor"),
+            new go.Binding("strokeWidth", "componentBorderWidth"),
+            new go.Binding("strokeDashArray", "dash"),
         ),
         // this Shape prevents mouse events from reaching the middle of the port
         $(go.Shape, {
@@ -209,7 +215,11 @@ function initializeNodeTemplate() {
             height: 40,
             strokeWidth: 0,
             fill: "transparent",
-        }),
+        },
+            new go.Binding("strokeDashArray", "dash"),
+            new go.Binding("height", "componentHeight"),
+            new go.Binding("width", "componentWidth"),
+        ),
         $(
             go.TextBlock,
             {
@@ -217,14 +227,30 @@ function initializeNodeTemplate() {
                 textAlign: "center",
                 overflow: go.TextBlock.OverflowEllipsis,
                 // editable: true,
-                contextMenu: $("ContextMenu")
+                contextMenu: $("ContextMenu"),
+                isUnderline: false
 
             },
             // this Binding is TwoWay due to the user editing the text with the TextEditingTool
             new go.Binding("text").makeTwoWay(),
-            new go.Binding("stroke", "letterColor")
+            new go.Binding("stroke", "componentTextColor"),
+            new go.Binding("font", "font"),
+            new go.Binding("background", "componentTextBackgroundColor"),
+            new go.Binding("isUnderline", "componentTextUnderlined"),
+            new go.Binding("alignment", "textblockPosition"),
+            new go.Binding("margin", "textblockMargin"),
+
         ),
         {
+            selectionAdornmentTemplate:
+                $(go.Adornment, "Auto",
+                    $(go.Shape, "Rectangle",
+                        { fill: null, stroke: "blue", strokeWidth: 4 },
+                        new go.Binding("stroke", "componentSelectedBorderColor")
+                    ),
+                    $(go.Placeholder),
+                ),  // end Adornment
+
             toolTip:  // define a tooltip for each node that displays the color as text
                 $("ToolTip",
                     $(go.TextBlock, { margin: 4 },
@@ -234,6 +260,21 @@ function initializeNodeTemplate() {
     );
     return nodeTemplate;
 }
+
+function alterFocusedColor(color) {
+    return;
+    const changedSelectionAdornmentTemplate = $(go.Adornment, "Auto",
+        $(go.Shape, "Rectangle",
+            { fill: null, stroke: color, strokeWidth: 4 }),
+        $(go.Placeholder),
+    );  // e
+    for (var l in layers.layerList) {
+        console.log('the:' + color)
+        InstanceGenerator.diagramMap[layers.layerList[l]._id].nodeTemplate.selectionAdornmentTemplate = changedSelectionAdornmentTemplate;
+    }
+    return;
+}
+
 
 function initializeLinkTemplate() {
     return $(go.Link, {
@@ -457,4 +498,18 @@ function addDiagramListener(diagram) {
     });
 }
 
-export { initializeNodeTemplate, setWorkspaceDropListeners, addDiagramListener, getNewWorkspace, initializeLinkTemplate, getLinkContext }; 
+function keyDownWorkpaceHandler(myDiagram) {
+    var e = myDiagram.lastInput;
+    // The meta (Command) key substitutes for "control" for Mac commands
+    var control = e.control || e.meta;
+    var deleteKey = e.delete;
+    var key = e.key;
+    // Quit on any undo/redo key combination:
+    if ((control && (key === 'Z' || key === 'Y')) || deleteKey)
+        return;
+
+    // call base method with no arguments (default functionality)
+    // go.CommandHandler.prototype.doKeyDown.call(this);
+};
+
+export { initializeNodeTemplate, setWorkspaceDropListeners, addDiagramListener, getNewWorkspace, initializeLinkTemplate, getLinkContext, keyDownWorkpaceHandler, alterFocusedColor }; 

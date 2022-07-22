@@ -6,6 +6,8 @@ import { download } from "../UpTab/fileTab.js";
 import { turnOnDescription } from "../HtmlElements/extendingComponent.js";
 import { applyToEachComponent } from "./LayerHolder.js";
 import { showInputDialog } from "../Input/inputDialog.js";
+import { InstanceGenerator } from "./InstanceCreator.js";
+import { alterFocusedColor } from "../HtmlElements/goWorkspace.js";
 
 class Config {
     produceActionDispatchMembers() {
@@ -26,6 +28,11 @@ class Config {
         this.configJSON["componentInnerMarginY"] = constantValues["initialOffsetHeight"] + "px";
         this.configJSON["descriptionColor"] = "#545454";
         this.configJSON["descriptionLines"] = "3";
+        this.configJSON["componentFontStyle"] = "normal";
+        this.configJSON["componentTextDecoration"] = "none";
+        this.configJSON["componentFontWeight"] = "normal";
+        this.configJSON["componentTextFamily"] = "Arial, Helvetica, sans-serif";
+        this.configJSON["componentTextSize"] = "10pt";
     }
 
     setJSONValue(key, value) {
@@ -45,7 +52,29 @@ class Config {
         r.style.setProperty(varName, value);
         return;
     }
-
+    handleComponentChange(varName, type, textType, attributeChanged, value) {
+        if (type === "Component") {
+            if (varName === "--componentTextSize" || varName === "--componentFontStyle" || varName === "--componentTextFamily" || varName === "--componentFontWeight") {
+                const font = this.configJSON["componentFontStyle"] + " normal " + this.configJSON["componentFontWeight"] + " " + this.configJSON["componentTextSize"] + " " + this.configJSON["componentTextFamily"];
+                console.log(font);
+                InstanceGenerator.modifyNodeProperty("font", font);
+            } else {
+                if (varName.includes("componentBorderWidth")) {
+                    InstanceGenerator.modifyNodeProperty(textType + capitalizeFirstLetter(attributeChanged), parseInt(value.slice(0, -2), 10)); //<-string
+                }
+                else if (varName.includes("componentTextDecoration")) {
+                    const finalValue = !(value.includes("none"));
+                    InstanceGenerator.modifyNodeProperty("componentTextUnderlined", finalValue);
+                }
+                else if (varName.includes("SelectedBorderColor")) {
+                    InstanceGenerator.modifyNodeProperty("componentSelectedBorderColor", value);
+                }
+                else {
+                    InstanceGenerator.modifyNodeProperty(textType + capitalizeFirstLetter(attributeChanged), value);
+                }
+            }
+        }
+    }
     handleChange(type, attributeChanged, value, ignoreCurrent) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
@@ -54,9 +83,14 @@ class Config {
         var rs = getComputedStyle(r);
         const oldValue = rs.getPropertyValue(varName);
         r.style.setProperty(varName, value);
-        if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color")) && !ignoreCurrent) {
-            // autoResizeAllComponents();
-            checkAndResize(); //?????????????????????????
+        // if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color")) && !ignoreCurrent) {
+        //     // autoResizeAllComponents();
+        //     checkAndResize(); //?????????????????????????
+        // }
+        this.handleComponentChange(varName, type, textType, attributeChanged, value);
+        if (varName.includes("subcomponent")) {
+            InstanceGenerator.modifyExtensionProperty("subcomponent" + capitalizeFirstLetter(attributeChanged), value);
+
         }
         // if (!ignoreCurrent)
         //     this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
@@ -102,7 +136,7 @@ class Config {
     }
 
     importConfig() {
-        $("#config-file-input").click(function(e) {
+        $("#config-file-input").click(function (e) {
             $('#config-file-input').val('');
         });
         $('#config-file-input').trigger('click');
@@ -116,7 +150,7 @@ class Config {
 
             var reader = new FileReader();
 
-            reader.onload = function(evt) {
+            reader.onload = function (evt) {
                 if (evt.target.readyState != 2) return;
                 if (evt.target.error) {
                     alert('Error while reading file');

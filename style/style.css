@@ -1,15 +1,15 @@
 :root {
     /*------------------Components------------------*/
-    --componentTextSize: 12pt;
+    --componentTextSize: 10pt;
     --componentTextFamily: Arial, Helvetica, sans-serif;
-    --componentFontWeight: "normal";
-    --componentFontStyle: "normal";
-    --componentTextDecoration: "none";
+    --componentFontWeight: normal;
+    --componentFontStyle: normal;
+    --componentTextDecoration: none;
     --componentTextBackgroundColor: transparent;
     --componentTextColor: #000000;
     --componentBackgroundColor: #FFFFFF;
     --componentBorderColor: #000000;
-    --componentBorderWidth: 2px;
+    --componentBorderWidth: 1px;
     --componentSelectedBorderColor: #0000ff;
     --componentTextBorderWidth: 0px;
     --componentInnerMarginX: 19px;

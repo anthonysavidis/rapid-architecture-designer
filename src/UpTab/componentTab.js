@@ -26,6 +26,7 @@ import { createSendingItem, createSendingLayer } from "../Layers/moveItem.js";
 import { newFunctionAction } from "./functionTab.js";
 import { appearComponentButtons, pasteAppearListener } from "./tabAppearance/buttonsVisibility.js";
 import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
+import { hideSubarchitectureExpansion, showSubarchitectureExpansion } from "../HtmlElements/goExtendedComponents.js";
 
 function newComponentAction() {
     var newItem = new Item("Component");
@@ -134,20 +135,22 @@ function askForDetails(type, extraInfo) {
 }
 
 function collapseButton(extentableItems) {
-    for (var x in extentableItems) {
-        turnOffExtension(extentableItems[x]._id);
-    }
-    actions.saveCommand(collapseSubcomponentsAction, extendSubcomponentsAction, JSON.stringify(extentableItems), "");
+    // for (var x in extentableItems) {
+    //     turnOffExtension(extentableItems[x]._id);
+    // }
+    // actions.saveCommand(collapseSubcomponentsAction, extendSubcomponentsAction, JSON.stringify(extentableItems), "");
+    hideSubarchitectureExpansion(extentableItems);
     return;
 }
 
 function extendButton(extentableItems) {
-    var oldBRecs = {};
-    for (var x in extentableItems) {
-        oldBRecs[extentableItems[x]._id] = JSON.stringify(extentableItems[x].boundingRec);
-        turnOnExtension(extentableItems[x]._id);
-    }
-    actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, JSON.stringify(extentableItems), oldBRecs);
+    // var oldBRecs = {};
+    showSubarchitectureExpansion(extentableItems)
+    // for (var x in extentableItems) {
+    //     oldBRecs[extentableItems[x]._id] = JSON.stringify(extentableItems[x].boundingRec);
+    //     turnOnExtension(extentableItems[x]._id);
+    // }
+    // actions.saveCommand(extendSubcomponentsAction, collapseSubcomponentsAction, JSON.stringify(extentableItems), oldBRecs);
     return;
 }
 var componentContextDispatch = {};
