@@ -7,6 +7,7 @@ import { constantValues } from "../config/constantValues.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { getNameListArgument, resizeExtended } from "../HtmlElements/extendingComponent.js";
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 
 
 function autoGrow(component) {
@@ -30,12 +31,13 @@ function autoGrow(component) {
 function autoResizeAutoFit(component) {
     var offsetX = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
     var offsetY = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
-    var dims = getTextDimensions(document.getElementById(component._id + 'name').innerText);
-    var widthOfName = dims.width;
-    var heightOfName = dims.height;
-    document.getElementById(component._id).style.width = widthOfName + 2 * offsetX + "px";
-    document.getElementById(component._id).style.height = heightOfName + 2 * offsetY + "px";
-    component.updateBoundingRec();
+    const textDims = InstanceGenerator.getComponentsTextBlockDims(component._id);
+    var widthOfName = textDims[0];
+    var heightOfName = textDims[1];
+    const finalWidth = widthOfName + 2 * offsetX;
+    const finalHeight = heightOfName + 2 * offsetY;
+    InstanceGenerator.alterNodeDims(component._id, finalWidth, finalHeight);
+    // component.updateBoundingRec();
     return;
 }
 
@@ -59,8 +61,6 @@ function autoResizeAllComponents() {
                     resizeExtended(layerItems.itemList[y]._id, getNameListArgument(layerItems.itemList[y]));
                 } else {
                     autoResizeAutoFit(layerItems.itemList[y]);
-                    if (layerItems.itemList[y].links)
-                        renderLine(layerItems.itemList[y]._id);
                 }
             }
         }

@@ -21,7 +21,7 @@ import { exitFullscreenCntx } from "./settingsTab.js";
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function() {
+    rawFile.onreadystatechange = function () {
         if (rawFile.readyState === 4) {
             if (rawFile.status === 200 || rawFile.status == 0) {
                 var allText = rawFile.responseText;
@@ -61,7 +61,7 @@ function loadAction() {
 
         var reader = new FileReader();
 
-        reader.onload = function(evt) {
+        reader.onload = function (evt) {
             if (evt.target.readyState != 2) return;
             if (evt.target.error) {
                 alert('Error while reading file');
@@ -81,7 +81,7 @@ function loadAction() {
             else
                 checkAndResize();
             updateFullPath(layers.layerList[0]._name);
-            (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+            (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
             measureAllLayersOperations();
         };
         reader.readAsText(e.target.files[0]);
@@ -94,7 +94,7 @@ function loadSpecific(name) {
 }
 
 function flushInputEvent() {
-    $("#file-input").click(function(e) {
+    $("#file-input").click(function (e) {
         $('#file-input').val('');
     });
 }
@@ -111,7 +111,7 @@ function saveAction() {
 
 function addFileTabListeners() {
     // loadSpecific("extendTest.txt");
-    document.getElementById("loadButton").addEventListener("click", function() {
+    document.getElementById("loadButton").addEventListener("click", function () {
         var isFullScreen = (window.fullScreen) ||
             (window.innerWidth == screen.width && window.innerHeight == screen.height);
         if (isFullScreen)
@@ -119,10 +119,10 @@ function addFileTabListeners() {
         flushInputEvent();
         loadAction();
     });
-    document.getElementById("saveButton").addEventListener("click", function() {
+    document.getElementById("saveButton").addEventListener("click", function () {
         saveAction();
     });
-    document.getElementById("newProjectButton").addEventListener("click", function() {
+    document.getElementById("newProjectButton").addEventListener("click", function () {
         console.log('clicked');
         var callBack = (name, cancelled) => {
             if (cancelled) {

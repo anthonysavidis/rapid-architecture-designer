@@ -39,11 +39,29 @@ class InstanceCreator {
   deleteNode(obj) {
     const node = obj;
     var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(node.key);
+    console.log(InstanceGenerator.diagramMap[layers.selectedLayer._id].model.nodeDataArray);
     InstanceGenerator.diagramMap[layers.selectedLayer._id].startTransaction();
     InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
     InstanceGenerator.diagramMap[layers.selectedLayer._id].commitTransaction("deleted node");
   }
+  alterNodeDims(key, width, height) {
+    this.diagramMap[layers.selectedLayer._id].findNodeForKey(key).width = width;
+    this.diagramMap[layers.selectedLayer._id].findNodeForKey(key).height = height;
+    return;
+  }
+  getNodeBoundingRect(key) {
+    const node = this.diagramMap[layers.selectedLayer._id].findNodeForKey(key);
+    const realLoc = this.diagramMap[layers.selectedLayer._id].transformDocToView(node.location);
+    return { width: node.width, height: node.height, top: Number(realLoc.y.toFixed(2)), left: Number(realLoc.x.toFixed(2)) };
+  }
+  getComponentsTextBlockDims(key) {
 
+    var n = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(key);
+    console.log(n.findObject("COMPONENT_TEXT_BLOCK").naturalBounds);
+    const textWidth = n.findObject("COMPONENT_TEXT_BLOCK").naturalBounds.width;
+    const textHeight = n.findObject("COMPONENT_TEXT_BLOCK").naturalBounds.height;
+    return [textWidth, textHeight];
+  }
   deleteLink(linkItem) {
     // InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(this.diagramLink);
     const obj = linkItem.diagramLink;

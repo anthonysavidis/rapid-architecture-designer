@@ -28,6 +28,10 @@ function getNewWorkspace(lid) {
             appearFunctionButtons();
 
         },
+        "SelectionMoved": function (e) {
+            console.log("selectionMovedByHand");
+            items.updateSelectedBoundings();
+        },
         "ExternalObjectsDropped": (e) => {
         },
         // "TextEdited": (textBlock, previousText, currentText) => {
@@ -116,6 +120,9 @@ function getNewWorkspace(lid) {
             }
         },
         "undoManager.isEnabled": true,
+        "ViewportBoundsChanged": (e) => {
+            items.updateAllWorkspaceBoundings();
+        }
     });
 }
 
@@ -156,6 +163,7 @@ function initializeNodeTemplate() {
 
 
             },
+
             contextMenu: $("ContextMenu"),
             mouseDragEnter: (e, nodeKey) => {
                 // const node = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(nodeKey);
@@ -223,13 +231,13 @@ function initializeNodeTemplate() {
         $(
             go.TextBlock,
             {
+                name: "COMPONENT_TEXT_BLOCK",
                 margin: 1,
                 textAlign: "center",
                 overflow: go.TextBlock.OverflowEllipsis,
                 // editable: true,
                 contextMenu: $("ContextMenu"),
                 isUnderline: false
-
             },
             // this Binding is TwoWay due to the user editing the text with the TextEditingTool
             new go.Binding("text").makeTwoWay(),
@@ -239,13 +247,15 @@ function initializeNodeTemplate() {
             new go.Binding("isUnderline", "componentTextUnderlined"),
             new go.Binding("alignment", "textblockPosition"),
             new go.Binding("margin", "textblockMargin"),
+            new go.Binding("width", "width"),
+            new go.Binding("height", "height"),
 
         ),
         {
             selectionAdornmentTemplate:
                 $(go.Adornment, "Auto",
                     $(go.Shape, "Rectangle",
-                        { fill: null, stroke: "blue", strokeWidth: 4 },
+                        { fill: null, stroke: "blue", strokeWidth: 2 },
                         new go.Binding("stroke", "componentSelectedBorderColor")
                     ),
                     $(go.Placeholder),

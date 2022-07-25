@@ -6,7 +6,7 @@ import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
 import { configAppearance, resetOwner, showAll, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
-import { cancelSelection } from "../Item/selectComponent.js";
+import { cancelSelection, getSelectedIds } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { autoResizeAutoFit, passAutoFitRestrictions } from "../Item/autoResize.js";
@@ -49,7 +49,7 @@ class ItemHolder {
                 console.log('deleted ' + toBeDeletedLayers[i]);
                 layers.deleteLayer(toBeDeletedLayers[i]);
             }
-            bRecs.deleteBoundingRec(layers.selectedLayer._id, deletingItemId);
+            // bRecs.deleteBoundingRec(layers.selectedLayer._id, deletingItemId);
             //delete sublayers...
             cancelSelection();
             closeTheTooltip();
@@ -214,6 +214,20 @@ class ItemHolder {
             }
         }
         return index;
+    }
+    updateAllWorkspaceBoundings() {
+        // const components = items.itemList.filter(el => el._type === "Component");
+
+        for (var x in items.itemList) {
+            if (items.itemList[x]._type === "Component")
+                items.itemList[x].updateBoundingRec();
+        }
+    }
+    updateSelectedBoundings() {
+        const selectedIds = getSelectedIds();
+        for (var x in selectedIds) {
+            items.itemList[items.itemList.findIndex(el => el._id === selectedIds[x])].updateBoundingRec();
+        }
     }
 
     clear() {

@@ -9,6 +9,8 @@ import { closeTooltip } from "./infoTooltip.js";
 import { autoResizeDispatch } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { produceExpandedNode } from "./goExtendedComponents.js";
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 
 function getSubComponentWidth(text) {
     const textDims = getTextDimensions(text);
@@ -216,24 +218,31 @@ function handleSplitDescription(description, lineNo) {
     // description = "Lorem ipsum dol ori ahora que si.ahora que si.ahora que si.ahora que si.";
     // var descDims = getCustomTextDimensions("Arial, Helvetica, sans-serif","small",description);
     var words = description.split(" ");
-    var lines = [];
+    // const CHARS_LIMIT = 35;
+    var lines = description.match(/.{1,20}/g) || [];;
     var word_counter = 0;
-    const PIXELS_LIMIT = 150;
-    for (var i = 0; i < lineNo; i++) {
-        var line = "";
-        var totalPixels = 0;
-        while (words[word_counter] && (totalPixels + getWidth(words[word_counter])) < PIXELS_LIMIT) {
-            line += words[word_counter] + " ";
-            word_counter++;
-            totalPixels += getWidth(words[word_counter] + " ");
-        }
-        line.slice(0, -1);
-        if (line === "" || !line.replace(/\s/g, '').length)
-            continue;
-        lines.push(line);
-    }
+    // for (var i = 0; i < lineNo; i++) {
+    //     var line = "";
+    //     var totalPixels = 0;
+    //     while (words[word_counter] && (totalPixels + getWidth(words[word_counter])) < PIXELS_LIMIT) {
+    //         line += words[word_counter] + " ";
+    //         word_counter++;
+    //         totalPixels += getWidth(words[word_counter] + " ");
+    //     }
+    //     line.slice(0, -1);
+    //     if (line === "" || !line.replace(/\s/g, '').length)
+    //         continue;
+    //     lines.push(line);
+    // }
 
     return lines;
+}
+
+function findMaxChars(descLines) {
+    var max = -1;
+    for (var x in descLines)
+        max = (max < descLines[x].length) ? descLines[x].length : max;
+    return max;
 }
 
 function handleDescriptionExtension(component, lineNo) {
@@ -281,29 +290,66 @@ function makeDescriptionUnselectable() {
 
 function turnOnDescription(component) {
     const id = component._id;
-    if (document.getElementById(id + "subComponent0") || document.getElementById(id + "Description")) {
+    if (component.isDescExtended) {
         return;
     }
+    items.itemList[items.itemList.findIndex(el => el._id === component._id)].isDescExtended = true;
 
-    document.getElementById(id).style.display = "block";
-    closeTooltip(id);
-    document.getElementById(id + "resizer").remove();
-    // autoResizeDispatch["autoFit"](component);
+    const initialNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id);
+    produceExpandedNode(id, [component._description], initialNode);
+
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
     const lineNo = rs.getPropertyValue("--descriptionLines");
-    resizeExtended(id, handleDescriptionExtension(component, lineNo));
+    const descLines = handleSplitDescription(component._description, lineNo);
+    const descMAxChars = findMaxChars(descLines);
+    const maxChars = descMAxChars > component._name.length ? descMAxChars : component._name.length;
+
+    // initialNode.findObject("SUB_COMPONENT_TEXT0").lineCount = lineNo;
+    initialNode.findObject("SUB_COMPONENT0").strokeWidth = 0;
+
+    const textWidth = initialNode.findObject("SUB_COMPONENT_TEXT0").naturalBounds.width + 20;
+    var componentFinalWidth = textWidth > 240 ? 240 : textWidth;
+    initialNode.width = componentFinalWidth > initialNode.width ? componentFinalWidth : initialNode.width;
+    componentFinalWidth = initialNode.width;
+
+    initialNode.findObject("SUB_COMPONENT_TEXT0").left = 0;
+    initialNode.findObject("SUB_COMPONENT0").width = initialNode.findObject("DB_LINE").width = componentFinalWidth;
+    initialNode.height = 87;
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("COMPONENT").resizable = false;
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("SUB_COMPONENT_TEXT0").maxLines = lineNo;
+    if (descLines.length > 2 && lineNo > 2) {
+        initialNode.findObject("SUB_COMPONENT0").height += (descLines.length - 2) * 18;
+    }
+
+    var finalStr = "";
+    for (var x in descLines)
+        finalStr += descLines[x] + '\n';
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("SUB_COMPONENT_TEXT0").text = finalStr;
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("SUB_COMPONENT_TEXT0").margin = new go.Margin(5, 0, 0, 0);
+    // resizeExtended(id, handleDescriptionExtension(component, lineNo));
     // if (component.links)
     // renderLine(id);
-    document.getElementById(id).style.height = "fit-content";
-    component.updateBoundingRec();
+    // document.getElementById(id).style.height = "fit-content";
+    // component.updateBoundingRec();
     return;
 }
 
 function turnOffDescription(component) {
+    items.itemList[items.itemList.findIndex(el => el._id === component._id)].isDescExtended = false;
+
+    // const prevLocation = delNode.location;
+    var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id)
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
+    items.itemList[items.itemList.findIndex(el => el._id === component._id)].spawnComponent();
+    console.log(InstanceGenerator.getNodeBoundingRect(component._id));
+
+    return;
     const id = component._id;
-    if (!document.getElementById(id + 'Description'))
+    if (!component.isDescExtended)
         return;
+    items.itemList[items.itemList.findIndex(el => el._id === component._id)].isDescExtended = false;
+
     document.getElementById(id).style.display = "flex";
     document.getElementById(id + 'name').style.marginTop = "0";
     document.getElementById(id + 'Description').remove();
@@ -313,6 +359,7 @@ function turnOffDescription(component) {
     // const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
     autoResizeDispatch["autoFit"](component);
     component.updateBoundingRec();
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("COMPONENT").resizable = true;
 
     // if (component.links)
     // renderLine(id);

@@ -13,6 +13,7 @@ import { disableDescriptionInAllComponents, enableDescriptionInAllComponents } f
 import { canBeDeleted } from "../Workspace/trashBin.js";
 import { renderLine } from "../Item/createLine.js";
 import { detectBrowser } from "../Workspace/browserDetection.js";
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 
 
 function produceComponentForm(box, configGrid) {
@@ -114,7 +115,7 @@ function produceSliders(box, configGrid) {
     innerMarginX.style.marginLeft = innerMarginY.style.marginLeft = "20px";
     innerMarginY.style.marginLeft = "19.2px";
     innerMarginX.children[2].style.position = innerMarginY.children[2].style.position = "absolute";
-    innerMarginY.style.top = 345 + "px";
+    innerMarginY.style.top = 305 + "px";
     innerMarginDiv.id = "innerMarginSlider";
     innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
     innerMarginDiv.style.marginTop = "17px";
@@ -177,10 +178,9 @@ function descriptionHandler(noActionSave) {
         document.getElementById("descArea").style.display = "inline-block";
         configStyle.descriptionEnabled = true;
         applyToEachComponent((component) => {
-            oldBRecs[component._id] = (JSON.stringify(component.boundingRec));
+            oldBRecs[component._id] = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id).naturalBounds.actualBounds;
+            console.log(oldBRecs[component._id]);
             turnOnDescription(component);
-            if (component.links)
-                renderLine(component._id);
         });
         // refreshAllLinks();
         if (!noActionSave)
@@ -199,7 +199,6 @@ function descriptionHandler(noActionSave) {
 }
 
 function autoFitHandler() {
-    return;///TODO FIX AUTOFIT
     configStyle.autoFit = document.getElementById("autofitSwitch").checked;
     if (document.getElementById("autofitSwitch").checked) {
         document.getElementById('innerMarginSlider').firstChild.children[1].value = configStyle.getJSONValue("componentInnerMarginX").split("px")[0];
@@ -214,6 +213,7 @@ function autoFitHandler() {
         autoResizeAllComponents();
         document.getElementById('innerMarginSlider').style.display = "none";
     }
+    return;
 }
 
 function storeInitialSettings() {

@@ -69,10 +69,14 @@ class Config {
                 else if (varName.includes("SelectedBorderColor")) {
                     InstanceGenerator.modifyNodeProperty("componentSelectedBorderColor", value);
                 }
+                else if (varName.includes("InnerMargin")) {
+                    autoResizeAllComponents();
+                }
                 else {
                     InstanceGenerator.modifyNodeProperty(textType + capitalizeFirstLetter(attributeChanged), value);
                 }
             }
+
         }
     }
     handleChange(type, attributeChanged, value, ignoreCurrent) {

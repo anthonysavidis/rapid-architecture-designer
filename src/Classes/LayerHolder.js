@@ -66,11 +66,15 @@ class LayerHolder {
     var itemIndex = this.itemMap.get(this.layerList[index].parentId).itemList.findIndex((el) => el._id === itemId);
     var layerItems = this.itemMap.get(this.layerList[index].parentId);
     layerItems.itemList[itemIndex].subLayers.splice(layerItems.itemList[itemIndex].subLayers.indexOf(id), 1);
+    const currentlySelectedId = this.selectedLayer._id;
+    this.changeLayer(id);
+    this.itemMap.get(id).clear();
+    this.itemMap.delete(id);
+
+    this.changeLayer(currentlySelectedId);
     if (this.selectedLayer._id === id) {
       this.changeLayer(this.layerList[0]._id);
     }
-    this.itemMap.get(id).clear();
-    this.itemMap.delete(id);
 
     this.layerList.splice(index, 1);
     this.idList.splice(index, 1); //will be the same index here

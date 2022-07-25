@@ -240,6 +240,7 @@ class Item {
             this._name = constantNames["emptyNames"]["component"];
             this.constructComponent();
             this.isSubarchExtended = false;
+            this.isDescExtended = false;
             // this.updateBoundingRec();
         } else if (type === "Link") {
             this._id = this.generateItemId().toString();
@@ -301,8 +302,9 @@ class Item {
     }
 
     updateBoundingRec() {
-        this.boundingRec = document.getElementById(this._id).getBoundingClientRect();
-        bRecs.updateBoundingRec(layers.selectedLayer._id, this._id, this.boundingRec);
+        // this.boundingRec = document.getElementById(this._id).getBoundingClientRect();
+        // bRecs.updateBoundingRec(layers.selectedLayer._id, this._id, this.boundingRec);
+        this.boundingRec = InstanceGenerator.getNodeBoundingRect(this._id);
         return;
     }
 

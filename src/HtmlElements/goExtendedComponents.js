@@ -22,6 +22,14 @@ function checkIfExtended(itemlist) {
 }
 const $ = go.GraphObject.make;
 
+function getMaxNoChars(nameList) {
+    var max = -1;
+    for (var x in nameList) {
+        (nameList[x].length > max) ? (max = nameList[x].length) : 1;
+    }
+    return max;
+}
+
 
 function produceExpandedNode(id, nameList, initialNode) {
     var component = items.itemList[items.itemList.findIndex(el => el._id === id)];
@@ -32,15 +40,18 @@ function produceExpandedNode(id, nameList, initialNode) {
     // expandedNode.add($(go.Panel, "Auto", $(go.Shape, "RoundedRectangle", { height: 30, strokeWidth: 0, width: MaxWidth, margin: new go.Margin(0, 0, 0, 0), fill: "transparent" }), $(go.TextBlock, { text: component._name, background: "transparent" })));
     expandedNode.add(
 
-        $(go.Panel, "Auto", $(go.Shape, "Rectangle", { height: 2, strokeWidth: 0.5, width: MaxWidth, margin: new go.Margin(30, 0, 0, 0), fill: "white" }), $(go.TextBlock, "", { background: "transparent" }))
+        $(go.Panel, "Auto", $(go.Shape, "Rectangle", { name: "DB_LINE", height: 4, strokeWidth: 0.5, width: 165, margin: new go.Margin(30, 0, 0, 0), fill: "white" }), $(go.TextBlock, "", { background: "transparent" }))
     );
     for (let index = 0; index < nameList.length; index++) {
         // if (index !== (nameList.length - 1))
         expandedNode.add($(go.Panel, "Auto",
             $(go.Shape, "Rectangle",
-                { name: "SUB_COMPONENT" + index, height: 30, strokeWidth: 0.5, width: MaxWidth, margin: new go.Margin(-0.5, 0, 0, 0), fill: "white" },
+                { name: "SUB_COMPONENT" + index, height: 30, strokeWidth: 0.5, width: MaxWidth, margin: new go.Margin(-0.5, -2, 0, 0), fill: "white" },
                 new go.Binding("fill", "subcomponentBackgroundColor")),
-            $(go.TextBlock, { name: "SUB_COMPONENT_TEXT" + index, text: nameList[index], background: "transparent", stroke: "black" },
+            $(go.TextBlock, {
+                name: "SUB_COMPONENT_TEXT" + index, text: nameList[index], overflow: go.TextBlock.OverflowClip /* the default value */,
+                background: "transparent", stroke: "black"
+            },
                 new go.Binding("stroke", "subcomponentTextColor")
             )
         )
@@ -49,15 +60,14 @@ function produceExpandedNode(id, nameList, initialNode) {
         // expandedNode.add($(go.Panel, "Auto", $(go.Shape, "Rectangle", { height: 30, name: "SUB_COMPONENT" + index, strokeWidth: 0, width: MaxWidth, margin: new go.Margin(-0.5, 0, 0, 1), fill: "white" }, new go.Binding("fill", "subcomponentBackgroundColor")), $(go.TextBlock, { name: "SUB_COMPONENT_TEXT" + index, text: nameList[index], background: "transparent" }, new go.Binding("stroke", "subcomponentTextColor"))))
     }
 
-    console.log(expandedNode.data);
-    // InstanceGenerator.diagramMap[layers.selectedLayer._id].add(expandedNode);
-    console.log(initialNode.data)
+    // console.log(expandedNode.data);
+    // // InstanceGenerator.diagramMap[layers.selectedLayer._id].add(expandedNode);
+    // console.log(initialNode.data)
     InstanceGenerator.diagramMap[layers.selectedLayer._id].model.setDataProperty(initialNode.data, "textblockPosition", go.Spot.Top);
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].model.setDataProperty(initialNode.data, "textblockMargin", new go.Margin(8, 0, 0, 0));
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].model.setDataProperty(initialNode.data, "textblockMargin", new go.Margin(6, 0, 0, 0));
     // initialNode.
     initialNode.add(expandedNode);
     initialNode.height = offset;
-
     return initialNode;
 }
 
@@ -72,7 +82,7 @@ function showSubarchitectureExpansion(selectedItems) {
         // InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
         InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(selectedItems[x]._id).findObject("COMPONENT").resizable = false;
         const subComponentsName = calculateSubcomponents(selectedItems[x]._id);
-        items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].diagramNode = produceExpandedNode(selectedItems[x]._id, subComponentsName, delNode);
+        produceExpandedNode(selectedItems[x]._id, subComponentsName, delNode);
     }
 
 }
@@ -82,9 +92,8 @@ function hideSubarchitectureExpansion(selectedItems) {
         items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].isSubarchExtended = false;
 
         // const prevLocation = delNode.location;
-        console.log(items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].diagramNode);
-
-        InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].diagramNode);
+        var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(selectedItems[x]._id)
+        InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
         items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].spawnComponent();
         // const subComponentsName = calculateSubcomponents(selectedItems[x]._id);
         // produceExpandedNode(selectedItems[x]._id, subComponentsName, location);
@@ -92,4 +101,4 @@ function hideSubarchitectureExpansion(selectedItems) {
     return;
 }
 
-export { showSubarchitectureExpansion, hideSubarchitectureExpansion, checkIfCollapsed, checkIfExtended };
+export { showSubarchitectureExpansion, hideSubarchitectureExpansion, checkIfCollapsed, checkIfExtended, produceExpandedNode };
