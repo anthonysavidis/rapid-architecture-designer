@@ -132,6 +132,7 @@ function createLayerInfoModal() {
     var box = document.createElement('div');
     box.className = "layerInfoBox";
     box.style.paddingTop = 0;
+    box.style.left = 0;
     box.id = "layerInfo";
     closeInfo = function() {
         resetHighlightedHints();

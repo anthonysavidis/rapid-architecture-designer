@@ -209,7 +209,7 @@ const buttonTooltips = {
         "Collapse": "Collapse the selected component(s)."
     },
     "Project": {
-        "New": "Create a new architecture and optionally save the last one.",
+        "New": "Create a new architecture.",
         "Save": "Save the current architecture.",
         "Load": "Load an architecture."
     },

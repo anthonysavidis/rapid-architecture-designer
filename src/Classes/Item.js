@@ -157,10 +157,11 @@ class Item {
         });
         var prevColor = "";
         const curId = this._id;
+        const rec = document.getElementById(curId).getBoundingClientRect();
         this.domElement.ondragstart = (ev) => {
             // cancelSelection();
             // closeTheTooltip();
-            console.log("Dragging " + curId);
+            // document.getElementById(curId).style.width="100%";
             keepOnlyLastSelectedFunction(curId);
             initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");
@@ -173,6 +174,7 @@ class Item {
             prevColor = "";
             // alert('operation dropped');
             console.log("Left " + curId);
+            // document.getElementById(curId).style.width=rec.width+"px";
 
             const trashRec = document.getElementById('trashBin').getBoundingClientRect();
             const funcRec = document.getElementById(editId).getBoundingClientRect();

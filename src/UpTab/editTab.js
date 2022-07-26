@@ -17,13 +17,13 @@ function gridTurnOn() {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].grid.visible = true;
     gridState = "on";
 
-    document.getElementById("gridButton").style.backgroundColor = "#ccc";
+    // document.getElementById("gridButton").style.backgroundColor = "#ccc";
 }
 
 function gridTurnOff() {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].grid.visible = false;
     gridState = "off";
-    document.getElementById("gridButton").style.backgroundColor = "";
+    // document.getElementById("gridButton").style.backgroundColor = "";
 
 }
 

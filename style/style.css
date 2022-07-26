@@ -363,7 +363,8 @@ body {
     z-index: 11;
     display: inline-block;
     background-color: var(--operationColor);
-    outline: var(--operationBorderWidth) solid var(--operationBorderColor);
+    border: 2px solid var(--operationBorderColor);
+    /* outline: var(--operationBorderWidth) solid var(--operationBorderColor); */
 }
 
 .fName {
@@ -419,7 +420,7 @@ body {
     padding-bottom: 4px;
     /* position: absolute; */
     line-height: 170%;
-    border: var(--operationBorderWidth) solid blue;
+    border: 2px solid blue;
     /* border: 2px  solid rgba(0,0,0,0.5);  */
     box-sizing: border-box;
     z-index: 11;

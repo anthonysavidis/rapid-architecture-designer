@@ -1,3 +1,4 @@
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
@@ -110,11 +111,18 @@ function highlightEmptyComponents(elmnt) {
     if (document.getElementById("maxHint").className.includes("Pressed") || document.getElementById("minHint").className.includes("Pressed")) {
         resetComponentHints();
     }
-    const emptyComponents = items.itemList.filter((el) => el._type === "Component" && !el._functions.length);
+    const emptyComponents = items.itemList.filter((el) => el._type === "Component");
     const active = alterHintState(elmnt);
     if (active) {
         cancelSelection();
-        emptyComponents.forEach(el => { selectAction(el._id); });
+        var collectionList = [];
+        for(var x in items.itemList){
+            if(items.itemList[x]._type==="Component" && items.itemList[x]._functions.length===0){
+                var selNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(items.itemList[x]._id);
+                collectionList.push(selNode);
+            }
+        }
+        InstanceGenerator.diagramMap[layers.selectedLayer._id].selectCollection(collectionList);
     } else
         cancelSelection();
     return;

@@ -49,6 +49,7 @@ function createDialog(type, callBack) {
     box.className = "inputBox";
     box.style.width = "392px";
     box.style.paddingTop = "0px";
+    box.style.paddingBottom = "15px";
     box.style.paddingLeft = box.style.paddingRight = "0px";
     var closeBox = function () {
         box.remove();

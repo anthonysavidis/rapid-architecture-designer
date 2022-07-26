@@ -113,7 +113,8 @@ const deleteCallBack = () => {
 function addAllPossibleMovingComponents(funcId, parentDiv) {
     for (var x in items.itemList) {
         if (items.itemList[x]._type === "Component") {
-            addToParentContext(funcId, parentDiv, items.itemList[x]._name, moveCallBack, items.itemList[x]._id);
+            var child = addToParentContext(funcId, parentDiv, items.itemList[x]._name, moveCallBack, items.itemList[x]._id);
+            // child.style.width=;
         }
     }
 }

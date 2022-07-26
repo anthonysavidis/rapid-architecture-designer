@@ -118,7 +118,7 @@ function createDraggableSpace() {
     div.style.zIndex = -1;
     div.style.width = document.getElementById('tabButtons').getBoundingClientRect().width - document.getElementById('right_tab').getBoundingClientRect().width - 4 + "px";
     document.getElementById('body').appendChild(div);
-    document.getElementById("right_tab").style.left = document.getElementById("tabButtons").getBoundingClientRect().width + 8 - document.getElementById("right_tab").getBoundingClientRect().width + "px";
+    document.getElementById("right_tab").style.left = document.getElementById("toolBar").getBoundingClientRect().width-document.getElementById("right_tab").getBoundingClientRect().width+ "px";
     createFullPath();
     fixMainDiv();
 

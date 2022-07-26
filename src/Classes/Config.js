@@ -1,5 +1,5 @@
 import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
-import { capitalizeFirstLetter, TextConfig } from "./TextConfig.js";
+import { capitalizeFirstLetter, makeSmallFirstLetter, TextConfig } from "./TextConfig.js";
 import { constantValues } from "../config/constantValues.js";
 import { ConfigActions } from "./ConfigActions.js";
 import { download } from "../UpTab/fileTab.js";
@@ -8,6 +8,7 @@ import { applyToEachComponent } from "./LayerHolder.js";
 import { showInputDialog } from "../Input/inputDialog.js";
 import { InstanceGenerator } from "./InstanceCreator.js";
 import { alterFocusedColor } from "../HtmlElements/goWorkspace.js";
+import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 
 class Config {
     produceActionDispatchMembers() {
@@ -47,9 +48,8 @@ class Config {
         return this.configJSON[key];
     }
     handleChangeVar(varName, value) {
-        this.setJSONValue(varName.slice(2), value);
-        var r = document.querySelector(':root');
-        r.style.setProperty(varName, value);
+        const type = varName.split(/(?=[A-Z])/);
+        configStyle.handleChange(capitalizeFirstLetter(type[0].slice(2)), makeSmallFirstLetter(type[1])+type[2], value);
         return;
     }
     handleComponentChange(varName, type, textType, attributeChanged, value) {
@@ -69,7 +69,7 @@ class Config {
                 else if (varName.includes("SelectedBorderColor")) {
                     InstanceGenerator.modifyNodeProperty("componentSelectedBorderColor", value);
                 }
-                else if (varName.includes("InnerMargin")) {
+                else if (varName.includes("InnerMargin") && this.autoFit) {
                     autoResizeAllComponents();
                 }
                 else {
@@ -87,6 +87,8 @@ class Config {
         var rs = getComputedStyle(r);
         const oldValue = rs.getPropertyValue(varName);
         r.style.setProperty(varName, value);
+        if(varName==="--operationTextSize")
+            measureAllLayersOperations();
         // if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color")) && !ignoreCurrent) {
         //     // autoResizeAllComponents();
         //     checkAndResize(); //?????????????????????????
@@ -96,7 +98,7 @@ class Config {
             InstanceGenerator.modifyExtensionProperty("subcomponent" + capitalizeFirstLetter(attributeChanged), value);
         }
         console.log(varName);
-        if (type.includes("desc")) {
+        if (type.includes("desc") && this.descriptionEnabled) {
             console.log(value);
             InstanceGenerator.modifyDescriptionProperty("", value);
         }

@@ -44,7 +44,8 @@ function createFullPath() {
         document.getElementById('layerPath').remove();
     path.id = 'layerPath';
     path.className = 'layerPath';
-    path.style.top = '3px';
+    path.style.top = '-5px';
+    path.style.fontSize = 'large';
     path.style.color = '#557da5';
     var tabRec = document.getElementById('tabButtons').getBoundingClientRect();
     var spaceRec = document.getElementById('space').getBoundingClientRect();

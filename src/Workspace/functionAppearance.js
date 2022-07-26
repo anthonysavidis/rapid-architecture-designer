@@ -182,4 +182,4 @@ function refreshOperationList() {
     return;
 }
 
-export { setUpFunctionDisplayListeners, refreshOperationList, forceActivateAll, forceActivateByComponent, configAppearance, showAllRefresh, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
+export { setUpFunctionDisplayListeners, refreshOperationList,maxCurrentOperationsWidth, forceActivateAll, forceActivateByComponent, configAppearance, showAllRefresh, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };

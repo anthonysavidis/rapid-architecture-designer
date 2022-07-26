@@ -108,6 +108,11 @@ function handleLayerInfoAppearance(x, y) {
     if (isInsideRec(x, y, document.getElementById('right_tab').getBoundingClientRect())) {
         document.getElementById("functionHint").className = (document.getElementById("functionHint").className.includes("disabled")) ? document.getElementById("functionHint").className : "layerInfoHint item3";
     }
+    if(document.getElementById('layerInfo') && isInsideRec(x, y, document.getElementById('layerInfo').getBoundingClientRect())){
+        document.getElementById('layerInfo').style.outlineColor="#768ca1";
+    }else{
+            document.getElementById('layerInfo').style.outlineColor="#cccccc";
+    }
 }
 
 function selectionHandler(e, targ) {

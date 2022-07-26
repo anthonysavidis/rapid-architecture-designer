@@ -84,10 +84,10 @@ function insertSideTab() {
 function toggleSelectedComponents() {
     if (document.getElementById("currentSelectedArea").style.display === "none") {
         document.getElementById("currentSelectedArea").style.display = "block";
-        document.getElementById("functionArea").style.height = "64.5%";
+        document.getElementById("functionArea").style.height = "77.5%";
     } else {
         document.getElementById("currentSelectedArea").style.display = "none";
-        document.getElementById("functionArea").style.height = "83%";
+        document.getElementById("functionArea").style.height = "89%";
 
     }
     return;
