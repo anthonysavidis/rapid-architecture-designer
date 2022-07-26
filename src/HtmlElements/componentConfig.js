@@ -178,8 +178,8 @@ function descriptionHandler(noActionSave) {
         document.getElementById("descArea").style.display = "inline-block";
         configStyle.descriptionEnabled = true;
         applyToEachComponent((component) => {
-            oldBRecs[component._id] = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id).naturalBounds.actualBounds;
-            console.log(oldBRecs[component._id]);
+            // oldBRecs[component._id] = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id).naturalBounds.actualBounds;
+            // console.log(oldBRecs[component._id]);
             turnOnDescription(component);
         });
         // refreshAllLinks();

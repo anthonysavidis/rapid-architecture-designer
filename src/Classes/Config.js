@@ -79,7 +79,7 @@ class Config {
 
         }
     }
-    handleChange(type, attributeChanged, value, ignoreCurrent) {
+    handleChange(type, attributeChanged, value, completeVarName) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
         this.setJSONValue(textType + capitalizeFirstLetter(attributeChanged), value);
@@ -94,10 +94,14 @@ class Config {
         this.handleComponentChange(varName, type, textType, attributeChanged, value);
         if (varName.includes("subcomponent")) {
             InstanceGenerator.modifyExtensionProperty("subcomponent" + capitalizeFirstLetter(attributeChanged), value);
-
+        }
+        console.log(varName);
+        if (type.includes("desc")) {
+            console.log(value);
+            InstanceGenerator.modifyDescriptionProperty("", value);
         }
         // if (!ignoreCurrent)
-        //     this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
+        this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
         return;
     }
     getStyleButtonStates(className) {

@@ -136,8 +136,19 @@ class InstanceCreator {
     } //FOR CONFIG PART}
 
   }
+  modifyDescriptionProperty(modifiedProperty, value) {
+    for (var l in layers.layerList) {
+      const lid = layers.layerList[l]._id;
+      this.diagramMap[lid].nodes.each((n) => {
+        if (n.findObject("DESCRIPTION_TEXT0")) {
+          n.findObject("DESCRIPTION_TEXT0").stroke = value;
+        }
+      });
+    }
+  }
 
   modifyExtensionProperty(modifiedProperty, value) {
+
     if (modifiedProperty.includes("subcomponentBackground"))
       for (var l in layers.layerList) {
         const lid = layers.layerList[l]._id;

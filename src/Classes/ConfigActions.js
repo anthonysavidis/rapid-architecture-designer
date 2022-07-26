@@ -3,7 +3,7 @@ import { autoResizeAllComponents } from "../Item/autoResize.js";
 import { renderLine } from "../Item/createLine.js";
 import { configStyle } from "./Config.js";
 import { applyToEachComponent, refreshAllLinks } from "./LayerHolder.js";
-import { capitalizeFirstLetter } from "./TextConfig.js";
+import { capitalizeFirstLetter, makeSmallFirstLetter } from "./TextConfig.js";
 
 class ConfigActions {
     constructor(category) {
@@ -23,8 +23,13 @@ class ConfigActions {
         return initialJSON;
     }
     applyToConfig(changesJSON) {
+
         for (var x in changesJSON) {
-            configStyle.handleChangeVar(x, changesJSON[x]);
+            const atributeChanged = x.split(this.category.toLowerCase())[1];
+            const value = changesJSON[x].charAt(0) === " " ? changesJSON[x].slice(1) : changesJSON[x];
+            console.log(this.category + " " + makeSmallFirstLetter(atributeChanged) + " " + value);
+            configStyle.handleChange(this.category, makeSmallFirstLetter(atributeChanged), value);
+            // configStyle.handleChangeVar(x, changesJSON[x]);
         }
         // this.clearCurrentOldSettings();
         // refreshAllLinks();
@@ -32,6 +37,7 @@ class ConfigActions {
     }
 
     resetCurrentChanges() {
+
         this.applyToConfig(this.currentOldSettings);
         return;
     }
@@ -47,8 +53,7 @@ class ConfigActions {
             document.getElementById("descriptionSwitch").checked = configStyle.descriptionEnabled = false;
             applyToEachComponent((component) => {
                 turnOffDescription(component);
-                if (component.links)
-                    renderLine(component._id);
+
             });
             autoResizeAllComponents();
         }
@@ -74,10 +79,10 @@ class ConfigActions {
 function getAllCssVars() {
     var cssVarNames = [];
     var allCSS = [].slice.call(document.styleSheets)
-        .reduce(function(prev, styleSheet) {
+        .reduce(function (prev, styleSheet) {
             if (styleSheet.cssRules) {
                 return prev + [].slice.call(styleSheet.cssRules)
-                    .reduce(function(prev, cssRule) {
+                    .reduce(function (prev, cssRule) {
                         if (cssRule.selectorText == ':root') {
                             var css = cssRule.cssText.split('{');
                             css = css[1].replace('}', '').split(';');

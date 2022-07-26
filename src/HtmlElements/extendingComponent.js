@@ -219,7 +219,7 @@ function handleSplitDescription(description, lineNo) {
     // var descDims = getCustomTextDimensions("Arial, Helvetica, sans-serif","small",description);
     var words = description.split(" ");
     // const CHARS_LIMIT = 35;
-    var lines = description.match(/.{1,20}/g) || [];;
+    var lines = description.match(/.{1,22}/g) || [];;
     var word_counter = 0;
     // for (var i = 0; i < lineNo; i++) {
     //     var line = "";
@@ -296,7 +296,7 @@ function turnOnDescription(component) {
     items.itemList[items.itemList.findIndex(el => el._id === component._id)].isDescExtended = true;
 
     const initialNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id);
-    produceExpandedNode(id, [component._description], initialNode);
+    produceExpandedNode(id, [component._description], initialNode, true);
 
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
@@ -308,16 +308,16 @@ function turnOnDescription(component) {
     // initialNode.findObject("SUB_COMPONENT_TEXT0").lineCount = lineNo;
     initialNode.findObject("SUB_COMPONENT0").strokeWidth = 0;
 
-    const textWidth = initialNode.findObject("SUB_COMPONENT_TEXT0").naturalBounds.width + 20;
+    const textWidth = initialNode.findObject("DESCRIPTION_TEXT0").naturalBounds.width + 20;
     var componentFinalWidth = textWidth > 240 ? 240 : textWidth;
     initialNode.width = componentFinalWidth > initialNode.width ? componentFinalWidth : initialNode.width;
     componentFinalWidth = initialNode.width;
 
-    initialNode.findObject("SUB_COMPONENT_TEXT0").left = 0;
+    initialNode.findObject("DESCRIPTION_TEXT0").left = 0;
     initialNode.findObject("SUB_COMPONENT0").width = initialNode.findObject("DB_LINE").width = componentFinalWidth;
     initialNode.height = 87;
     InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("COMPONENT").resizable = false;
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("SUB_COMPONENT_TEXT0").maxLines = lineNo;
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("DESCRIPTION_TEXT0").maxLines = lineNo;
     if (descLines.length > 2 && lineNo > 2) {
         initialNode.findObject("SUB_COMPONENT0").height += (descLines.length - 2) * 18;
     }
@@ -325,8 +325,8 @@ function turnOnDescription(component) {
     var finalStr = "";
     for (var x in descLines)
         finalStr += descLines[x] + '\n';
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("SUB_COMPONENT_TEXT0").text = finalStr;
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("SUB_COMPONENT_TEXT0").margin = new go.Margin(5, 0, 0, 0);
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("DESCRIPTION_TEXT0").text = finalStr;
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("DESCRIPTION_TEXT0").margin = new go.Margin(10, 0, 0, 0);
     // resizeExtended(id, handleDescriptionExtension(component, lineNo));
     // if (component.links)
     // renderLine(id);
@@ -336,33 +336,23 @@ function turnOnDescription(component) {
 }
 
 function turnOffDescription(component) {
-    items.itemList[items.itemList.findIndex(el => el._id === component._id)].isDescExtended = false;
-
-    // const prevLocation = delNode.location;
-    var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id)
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
-    items.itemList[items.itemList.findIndex(el => el._id === component._id)].spawnComponent();
-    console.log(InstanceGenerator.getNodeBoundingRect(component._id));
-
-    return;
-    const id = component._id;
     if (!component.isDescExtended)
         return;
     items.itemList[items.itemList.findIndex(el => el._id === component._id)].isDescExtended = false;
 
-    document.getElementById(id).style.display = "flex";
-    document.getElementById(id + 'name').style.marginTop = "0";
-    document.getElementById(id + 'Description').remove();
-    document.getElementById(id + 'l1').remove();
-    document.getElementById(id + 'l2').remove();
-    addResize(id);
-    // const component = items.itemList[items.itemList.findIndex(el => el._id === id)];
-    autoResizeDispatch["autoFit"](component);
-    component.updateBoundingRec();
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("COMPONENT").resizable = true;
+    // const prevLocation = delNode.location;
+    var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id)
+    delNode.height -= delNode.findObject("SUB_COMPONENT0").height;
+    delNode.remove(component.expandedNode);
+    // delNode.findObject("COMPONENT_TEXT_BLOCK").textAlign = "center";
+    // delNode.findObject("COMPONENT_TEXT_BLOCK").position = "center";
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].model.setDataProperty(delNode.data, "textblockPosition", go.Spot.Center);
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id).findObject("COMPONENT_TEXT_BLOCK").margin = new go.Margin(0, 0, 0, 0);
 
-    // if (component.links)
-    // renderLine(id);
+    // InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
+    // items.itemList[items.itemList.findIndex(el => el._id === component._id)].spawnComponent();
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id).findObject("COMPONENT").resizable = true;
+
     return;
 }
 

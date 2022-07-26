@@ -26,9 +26,13 @@ function produceSizeForm(box, className, callBack) {
     const rsValue = rs.getPropertyValue('--' + className.toLowerCase() + 'TextSize');
     select.value = rsValue.charAt(0) === " " ? rsValue.slice(1) : rsValue;
     // (!select.value) ? select.value = "medium" : 1;
-    select.addEventListener("change", function() {
+    select.addEventListener("change", function () {
         callBack(className, 'textSize', select.value);
     })
+    select.style.padding = 0;
+    select.style.paddingLeft = "8px";
+    select.style.height = "30px";
+    select.style.marginTop = "20px";
     box.appendChild(select);
 }
 
@@ -56,15 +60,19 @@ function produceFontFamilyForms(box, className, callBack) {
   <option value=\"Verdana\">Verdana</option>\
   <option value=\"Courier New\">Courier New</option>\
   <option value=\"Lucida Console\">Lucida Console</option>';
-    select.addEventListener("change", function() {
+    select.addEventListener("change", function () {
         callBack(className, 'textFamily', select.value);
     });
     var r = document.querySelector(':root');
     var rs = getComputedStyle(r);
     select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextFamily');
-    (!select.value) ? select.value = "Arial, Helvetica, sans-serif": 1;
+    (!select.value) ? select.value = "Arial, Helvetica, sans-serif" : 1;
     select.style.float = "left";
     select.style.width = 315 + "px";
+    select.style.padding = 0;
+    select.style.paddingLeft = "8px";
+    select.style.height = "30px";
+    select.style.marginTop = "20px";
     box.appendChild(select);
 }
 
@@ -75,7 +83,7 @@ function produceStyleButtons(box, className, callBack) {
     [boldButton.className, italicButton.className, underlinedButton.className] = configStyle.getStyleButtonStates(className);
     boldButton.innerText = "B";
     boldButton.style.fontWeight = "bold";
-    boldButton.addEventListener("click", function() {
+    boldButton.addEventListener("click", function () {
         if (boldButton.className === "styleButton") {
             callBack(className, 'fontWeight', "bold");
             boldButton.className = "styleButtonPressed";
@@ -86,7 +94,7 @@ function produceStyleButtons(box, className, callBack) {
     })
     italicButton.innerText = "I";
     italicButton.style.fontStyle = "italic";
-    italicButton.addEventListener("click", function() {
+    italicButton.addEventListener("click", function () {
         if (italicButton.className === "styleButton") {
             callBack(className, 'fontStyle', "italic");
             italicButton.className = "styleButtonPressed";
@@ -97,7 +105,7 @@ function produceStyleButtons(box, className, callBack) {
     })
     underlinedButton.innerText = "U";
     underlinedButton.style.textDecoration = "underline";
-    underlinedButton.addEventListener("click", function() {
+    underlinedButton.addEventListener("click", function () {
         if (underlinedButton.className === "styleButton") {
             callBack(className, 'textDecoration', "underline");
             underlinedButton.className = "styleButtonPressed";
@@ -124,7 +132,7 @@ function createPicker(txt, selected, callBack) {
     labelDiv.innerHTML = '<div style="float:left;">' + txt + '</div>';
     var picker = document.createElement('input');
     picker.type = "color";
-    picker.addEventListener("change", function() {
+    picker.addEventListener("change", function () {
         callBack(picker.value);
     })
     picker.style.display = "inline-block";

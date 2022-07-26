@@ -52,8 +52,9 @@ function descriptionArea(box) {
         refreshDescriptionLines();
     };
     const descriptionColorCallBack = (value) => {
-        configStyle.setJSONValue('descriptionColor', value);
-        r.style.setProperty('--descriptionColor', value);
+        // configStyle.setJSONValue('descriptionColor', value);
+        configStyle.handleChange('description', 'color', value);
+        // r.style.setProperty('--descriptionColor', value);
     };
     var lineNoSlider = getSliderGroup(constantNames["configBox"]["lineNo"], 1, 5, parseInt(rs.getPropertyValue('--descriptionLines'), 10), lineNoCallBack, 1);
     var descriptionColor = configStyle.getJSONValue("descriptionColor");

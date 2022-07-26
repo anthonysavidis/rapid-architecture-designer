@@ -39,4 +39,9 @@ function capitalizeFirstLetter(str) {
     return str2;
 }
 
-export { TextConfig, capitalizeFirstLetter };
+function makeSmallFirstLetter(str) {
+    const str2 = str.charAt(0).toLowerCase() + str.slice(1);
+    return str2;
+}
+
+export { TextConfig, capitalizeFirstLetter, makeSmallFirstLetter };

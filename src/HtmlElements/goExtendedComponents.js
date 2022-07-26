@@ -31,28 +31,33 @@ function getMaxNoChars(nameList) {
 }
 
 
-function produceExpandedNode(id, nameList, initialNode) {
+function produceExpandedNode(id, nameList, initialNode, isDesc) {
     var component = items.itemList[items.itemList.findIndex(el => el._id === id)];
     const offset = nameList.length * 30 + 30;
     console.log(component)
     const MaxWidth = 165;
     var expandedNode = $(go.Panel, "Vertical");
+    const textColorBinding =
+        (isDesc) ? new go.Binding("stroke", "descriptionColor") : new go.Binding("stroke", "subcomponentTextColor")
+    const textBlockPrefix = (isDesc) ? "DESCRIPTION_TEXT" : "SUB_COMPONENT_TEXT";
+    console.log(textBlockPrefix)
     // expandedNode.add($(go.Panel, "Auto", $(go.Shape, "RoundedRectangle", { height: 30, strokeWidth: 0, width: MaxWidth, margin: new go.Margin(0, 0, 0, 0), fill: "transparent" }), $(go.TextBlock, { text: component._name, background: "transparent" })));
     expandedNode.add(
 
-        $(go.Panel, "Auto", $(go.Shape, "Rectangle", { name: "DB_LINE", height: 4, strokeWidth: 0.5, width: 165, margin: new go.Margin(30, 0, 0, 0), fill: "white" }), $(go.TextBlock, "", { background: "transparent" }))
+        $(go.Panel, { name: "DB_LINE_PANEL" }, "Auto", $(go.Shape, "Rectangle", { name: "DB_LINE", height: 4, strokeWidth: 0.5, width: 165, margin: new go.Margin(30, 0, 0, 0), fill: "white" }), $(go.TextBlock, "", { background: "transparent" }))
     );
     for (let index = 0; index < nameList.length; index++) {
         // if (index !== (nameList.length - 1))
-        expandedNode.add($(go.Panel, "Auto",
+        expandedNode.add($(go.Panel, "Auto", {
+            name: "PANEL" + index
+        },
             $(go.Shape, "Rectangle",
                 { name: "SUB_COMPONENT" + index, height: 30, strokeWidth: 0.5, width: MaxWidth, margin: new go.Margin(-0.5, -2, 0, 0), fill: "white" },
                 new go.Binding("fill", "subcomponentBackgroundColor")),
             $(go.TextBlock, {
-                name: "SUB_COMPONENT_TEXT" + index, text: nameList[index], overflow: go.TextBlock.OverflowClip /* the default value */,
+                name: textBlockPrefix + index, text: nameList[index], overflow: go.TextBlock.OverflowClip /* the default value */,
                 background: "transparent", stroke: "black"
-            },
-                new go.Binding("stroke", "subcomponentTextColor")
+            }, textColorBinding
             )
         )
         );
@@ -67,6 +72,7 @@ function produceExpandedNode(id, nameList, initialNode) {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].model.setDataProperty(initialNode.data, "textblockMargin", new go.Margin(6, 0, 0, 0));
     // initialNode.
     initialNode.add(expandedNode);
+    items.itemList[items.itemList.findIndex(el => el._id === id)].expandedNode = expandedNode;
     initialNode.height = offset;
     return initialNode;
 }
