@@ -91,6 +91,13 @@ const constantNames = {
         "ResetMult": "Do you want reset the selected (",
         "ResetEnd": ") operation(s)?"
     },
+    "linkDirectionBox": {
+        "title": "Link Direction",
+        "directed": "Directed",
+        "bidirected": "Bidirectional",
+        "undirected": "Undirected"
+    }
+    ,
     "configBox": {
         "xSmall": "x-Small",
         "Small": "Small",
