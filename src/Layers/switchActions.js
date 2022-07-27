@@ -5,7 +5,7 @@ import { getCurrentFullPath, updateFullPath } from "../HtmlElements/pathAndLayer
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { cancelSelection } from "../Item/selectComponent.js";
 import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
-import { hideCurrentFunctions, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
+import { hideCurrentFunctions, isAllChecked, resetOwner, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 import { updateLayerInfoBox } from "./layerInfoFunctions.js";
 
 function refreshExtendedComponents(layersItems) {
@@ -50,7 +50,7 @@ function actionsOfNextLayer(layerId) {
     appearComponentButtons();
     appearFunctionButtons();
     appearHierarchyButtons();
-    if (document.getElementById('all').checked)
+    if (isAllChecked())
         showAll();
     else
         showByComponent();

@@ -17,7 +17,7 @@ import { closeTooltip, produceTooltip } from "../HtmlElements/infoTooltip.js";
 import { initializeTab } from "../UpTab/tabAppearance/tabInitializer.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { produceContextMenu } from "../HtmlElements/functionsContextMenu.js";
-import { showAll, showByComponent, showOwner } from "../Workspace/functionAppearance.js";
+import { isByComponentChecked, showAll, showByComponent, showOwner } from "../Workspace/functionAppearance.js";
 import { moveCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { functionColors } from "../config/functionStyle.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
@@ -277,7 +277,7 @@ class Item {
         var updatingMessage = items.itemList[fIndex]._name + " attached to " + this._name + ".";
         produceBox("updating", updatingMessage, null);
         showOwner(items.itemList[fIndex]);
-        if (document.getElementById("byComponent").checked)
+        if (isByComponentChecked())
             showByComponent();
         updateLayerInfoBox();
         return;
@@ -288,7 +288,7 @@ class Item {
         if (itemListIndex > -1) {
             this._functions.splice(itemListIndex, 1);
         }
-        if (document.getElementById("byComponent").checked)
+        if (isByComponentChecked())
             showByComponent();
         updateLayerInfoBox();
 

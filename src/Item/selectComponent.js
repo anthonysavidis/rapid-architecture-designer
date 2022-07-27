@@ -2,14 +2,12 @@ import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { appearComponentButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
-import { hideCurrentFunctions, showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
+import { hideCurrentFunctions, isByComponentChecked, showByComponent, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 
 function handleByComponent() {
     hideCurrentFunctions();
-    // if (document.getElementById("byComponent").checked) {
     updateSelectedList();
     showByComponent();
-    // }
     return;
 }
 
@@ -19,7 +17,7 @@ const selectAction = function (compId) {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].select(selNode);
     appearComponentButtons();
     appearHierarchyButtons();
-    if (document.getElementById("byComponent").checked) {
+    if (isByComponentChecked()) {
         handleByComponent();
     }
     return;
@@ -70,7 +68,7 @@ function unlinkSelectedItems() {
 function cancelSelection() {
     if (layers.selectedLayer && InstanceGenerator.diagramMap[layers.selectedLayer._id])
         InstanceGenerator.diagramMap[layers.selectedLayer._id].clearSelection();
-    if (document.getElementById("byComponent").checked) {
+    if (isByComponentChecked()) {
         handleByComponent();
     }
 }

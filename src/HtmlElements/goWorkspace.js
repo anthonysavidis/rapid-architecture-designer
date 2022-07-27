@@ -5,6 +5,7 @@ import { functionOnDropOnComponent } from "../Item/componentEventCallbacks.js";
 import { cancelSelection, getSelectedItems, handleByComponent } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { isByComponentChecked } from "../Workspace/functionAppearance.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 import { produceWorkspaceContextMenu } from "../Workspace/workspaceContextMenu.js";
 import { produceComponentContextMenu } from "./componentContextMenu.js";
@@ -158,7 +159,7 @@ function initializeNodeTemplate() {
                 appearComponentButtons();
                 appearFunctionButtons();
                 appearHierarchyButtons();
-                (document.getElementById("byComponent").checked) ? handleByComponent() : 1;
+                (isByComponentChecked()) ? handleByComponent() : 1;
                 lastSelectedNodeKey = node.key;
 
 
@@ -179,7 +180,7 @@ function initializeNodeTemplate() {
                 // if (incoming) e.diagram.remove(incoming);
                 // e.diagram.model.addLinkData({ from: node.key, to: newnode.key });
                 measureAllLayersOperations();
-                (document.getElementById("byComponent").checked) ? handleByComponent() : 1;
+                (isByComponentChecked()) ? handleByComponent() : 1;
             }
         },
         // these Bindings are TwoWay because the DraggingTool and ResizingTool modify the target properties

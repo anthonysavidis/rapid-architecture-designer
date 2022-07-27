@@ -4,7 +4,7 @@ import { renderLine } from "../Item/createLine.js";
 import { layers } from "./LayerHolder.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { actions } from "./Actions.js";
-import { configAppearance, resetOwner, showAll, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
+import { configAppearance, isAllChecked, isByComponentChecked, resetOwner, showAll, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { massiveMove, massiveSet } from "../Actions/inverseFunctionsActions.js";
 import { cancelSelection, getSelectedIds } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
@@ -53,7 +53,7 @@ class ItemHolder {
             //delete sublayers...
             cancelSelection();
             closeTheTooltip();
-            if (document.getElementById("byComponent").checked)
+            if (isByComponentChecked())
                 showByComponent();
         }
         if (this.itemList[itemListIndex]._type === "Function") {
@@ -81,7 +81,7 @@ class ItemHolder {
         this.itemList[oldIndex]._name = newName;
         this.itemList[oldIndex]._description = newDescription;
         this.itemList[oldIndex].updateDomName(newName);
-        if (document.getElementById("all").checked && this.itemList[oldIndex]._type === "Component") {
+        if (isAllChecked() && this.itemList[oldIndex]._type === "Component") {
             showAllRefresh();
         }
         if (!directlyFromLoad) {
@@ -168,7 +168,7 @@ class ItemHolder {
         resetOwner(items.itemList[items.itemList.findIndex((el) => el._id === fid)]);
         this.deleteFunctionFromOwner(id, fid);
         this.deleteOwnerFromFunction(id, fid);
-        if (document.getElementById("byComponent").checked)
+        if (isByComponentChecked())
             showByComponent();
         document.getElementById(fid).firstChild.className = "ficon";
 

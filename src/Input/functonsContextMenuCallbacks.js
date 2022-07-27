@@ -8,7 +8,7 @@ import { addToParentContext, closeContext } from "../HtmlElements/functionsConte
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
-import { showAllRefresh, showByComponent, showOwner, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
+import { isAllChecked, isByComponentChecked, showAllRefresh, showByComponent, showOwner, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 
 var editFunctionCallBack = (funcId) => {
@@ -20,7 +20,7 @@ var editFunctionCallBack = (funcId) => {
         if (description === "" || !description.replace(/\s/g, '').length) description = constantNames["emptyNames"]["description"];
         items.updateNameAndDescription(funcId, name, description);
         const detailChanged = detailChangeListener(funcId, functionStr)
-        if (detailChanged && document.getElementById("all").checked && editingFunction.owners[0]) {
+        if (detailChanged && isAllChecked() && editingFunction.owners[0]) {
             // document.getElementById(funcId + "name").innerHTML = 
             // showOwner(items.itemList[items.itemList.findIndex(el => el._id === funcId)]);
             showAllRefresh();
@@ -43,7 +43,7 @@ const moveCallBack = (compId) => {
         items.setFunctionToItem(compId, funcId);
     }
     actions.saveCommand(massiveSet, massiveMove, initialFuncsStr, JSON.stringify(compId));
-    if (document.getElementById("byComponent").checked) {
+    if (isByComponentChecked()) {
         showByComponent();
     }
     // closeContext();
@@ -103,7 +103,7 @@ const deleteCallBack = () => {
             items.delete(tobeDeleted[x]._id);
         actions.saveCommand(deleteMultipleSpecificFunctions, createMultipleSpecificFunctions, toBeDeletedStr, "");
         closeContext();
-        if (document.getElementById("byComponent").checked) {
+        if (isByComponentChecked()) {
             showByComponent();
         }
     });

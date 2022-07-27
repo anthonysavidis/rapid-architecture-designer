@@ -5,7 +5,7 @@ import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { changeTreeName, closeLayerTree, createNodeFullPath, treeData, updateTree } from "../Layers/Tree.js";
-import { showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
+import { isAllChecked, showAllRefresh, showOwner } from "../Workspace/functionAppearance.js";
 import { removeLayerTabRod } from "./extendingSideTabs.js";
 import { replaceOnFullPath, updateFullPath } from "./pathAndLayerSpan.js";
 import { autoResizeDispatch, passAutoFitRestrictions } from "../Item/autoResize.js";
@@ -39,7 +39,7 @@ const itemNameChangedHandler = (editId, newName) => {
     const originalItemStr = items.itemList[index].toString();
     items.itemList[index]._name = val;
     //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
-    if (items.itemList[index]._type === "Component" && document.getElementById("all").checked) {
+    if (items.itemList[index]._type === "Component" && isAllChecked()) {
         if (document.getElementById('Hierarchy').style.display === "block") {
             closeLayerTree();
             removeLayerTabRod();
@@ -90,11 +90,11 @@ function produceDoubleClickEditingName(editId) {
         const originalItemStr = items.itemList[index].toString();
         items.itemList[index]._name = val;
         //getTextWidth(val, document.getElementById(editId).style.font) > document.getElementById(editId).getBoundingClientRect().width comparison
-        if (itemType === "Function" && items.itemList[index].owners[0] && document.getElementById("all").checked) {
+        if (itemType === "Function" && items.itemList[index].owners[0] && isAllChecked()) {
             showAllRefresh();
 
         }
-        if (items.itemList[index]._type === "Component" && document.getElementById("all").checked) {
+        if (items.itemList[index]._type === "Component" && isAllChecked()) {
             if (document.getElementById('Hierarchy').style.display === "block") {
                 closeLayerTree();
                 removeLayerTabRod();

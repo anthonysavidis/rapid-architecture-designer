@@ -9,7 +9,7 @@ import { createFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { createSendingItem } from "../Layers/moveItem.js";
-import { showAllRefresh } from "./functionAppearance.js";
+import { isAllChecked, showAllRefresh } from "./functionAppearance.js";
 
 function canBeDeleted(elementRect) {
     var trashRect = document.getElementById('trashBin').getBoundingClientRect();
@@ -43,7 +43,7 @@ function deleteWithTrashBin(elmnt) {
         linkArg = itemFromListToObject(links);
     actions.saveCommand(deleteTrashBinItem, restoreFromTrashBin, [str, linkArg], "");
     items.delete(elmnt.id);
-    if (document.getElementById('all').checked) {
+    if (isAllChecked()) {
         showAllRefresh();
     }
 }
@@ -59,7 +59,7 @@ function deleteMultWithTrashBin(itemElmnts) {
     actions.saveCommand(deleteTrashBinItem, restoreFromTrashBin, [str, linkArg], "");
     for (var x in itemElmnts)
         items.delete(itemElmnts[x]._id);
-    if (document.getElementById('all').checked) {
+    if (isAllChecked()) {
         showAllRefresh();
     }
 }
@@ -118,7 +118,7 @@ function createDraggableSpace() {
     div.style.zIndex = -1;
     div.style.width = document.getElementById('tabButtons').getBoundingClientRect().width - document.getElementById('right_tab').getBoundingClientRect().width - 4 + "px";
     document.getElementById('body').appendChild(div);
-    document.getElementById("right_tab").style.left = document.getElementById("toolBar").getBoundingClientRect().width-document.getElementById("right_tab").getBoundingClientRect().width+ "px";
+    document.getElementById("right_tab").style.left = document.getElementById("toolBar").getBoundingClientRect().width - document.getElementById("right_tab").getBoundingClientRect().width + "px";
     createFullPath();
     fixMainDiv();
 

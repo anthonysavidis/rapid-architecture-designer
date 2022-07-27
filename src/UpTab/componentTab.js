@@ -19,7 +19,7 @@ import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { splitCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { turnOffExtension, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { collapseSubcomponentsAction, extendSubcomponentsAction } from "../Actions/inversePropertiesTab.js";
-import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
+import { isAllChecked, isByComponentChecked, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
 import { deleteTrashBinItem, restoreFromTrashBin } from "../Actions/inverseMovement.js";
 import { createSendingItem, createSendingLayer } from "../Layers/moveItem.js";
@@ -123,7 +123,7 @@ function askForDetails(type, extraInfo) {
 
             actions.saveCommand(createSpecificFunction, deleteSpecificFunction, "", it.toString());
         }
-        if (it._type === "Function" && document.getElementById('byComponent').checked)
+        if (it._type === "Function" && isByComponentChecked())
             showByComponent();
     }, () => {
         // if (it._type === "Component" || it._type === "Function") {
@@ -177,7 +177,7 @@ function addComponentTabListeners() {
                 linkArg = itemFromListToObject(links);
             actions.saveCommand(deleteSpecificItems, restoreFromTrashBin, [str, linkArg], "");
             cancelSelection();
-            if (document.getElementById('all').checked)
+            if (isAllChecked())
                 showAllRefresh();
 
         });
@@ -214,7 +214,7 @@ function addComponentTabListeners() {
         } else
             itemToBeJoined = JSON.parse(itemFromListToObject(toBeJoined));
         var joinedItem = joinComponentAction();
-        if (document.getElementById('all').checked)
+        if (isAllChecked())
             showAllRefresh();
         actions.saveCommand(joinAction, splitAction, joinedItem, itemToBeJoined);
     });

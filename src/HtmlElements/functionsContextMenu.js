@@ -2,7 +2,7 @@ import { constantNames } from "../config/constantNames.js";
 import { addAllPossibleMovingComponents, splitCallBack, deleteCallBack, unparentCallBack, editFunctionCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { newFunctionCntx } from "../UpTab/functionTab.js";
-import { showOwner } from "../Workspace/functionAppearance.js";
+import { isByComponentChecked, showOwner } from "../Workspace/functionAppearance.js";
 import { checkToDisableOption } from "../Workspace/workspaceContextMenu.js";
 import { editComponentCallBack } from "./componentContextMenu.js";
 
@@ -13,7 +13,7 @@ function addToParentContext(funcId, parent, childName, callBack, componentId) {
     child.className = "item unselectableText";
     child.style.cursor = "pointer";
     child.innerText = childName;
-    child.onmousedown = function() {
+    child.onmousedown = function () {
         callBack(componentId);
     };
     parent.appendChild(child);
@@ -35,23 +35,23 @@ function moveContextMenu(funcId, parent) {
     //add the components...
     addAllPossibleMovingComponents(funcId, moveContext);
 
-    parent.onmouseover = function() {
+    parent.onmouseover = function () {
         moveContext.style.display = "block";
     }
-    parent.onmouseleave = function() {
+    parent.onmouseleave = function () {
         moveContext.style.display = "none";
     }
-    moveContext.onmouseover = function() {
+    moveContext.onmouseover = function () {
         moveContext.style.display = "block";
     }
-    moveContext.onmouseleave = function() {
+    moveContext.onmouseleave = function () {
         moveContext.style.display = "none";
     }
     parent.appendChild(moveContext);
     return;
 }
 
-var closeContext = () => {};
+var closeContext = () => { };
 
 function produceContextMenu(funcId, x, y) {
     var funcContext = document.createElement('div');
@@ -68,7 +68,7 @@ function produceContextMenu(funcId, x, y) {
     moveOption.className = "item";
     moveContextMenu(funcId, moveOption);
     funcContext.appendChild(moveOption);
-    if (document.getElementById("byComponent").checked) {
+    if (isByComponentChecked()) {
         addToParentContext(funcId, funcContext, constantNames["functionsContext"]["split"], splitCallBack, "");
         addToParentContext(funcId, funcContext, constantNames["functionsContext"]["unparent"], unparentCallBack, "");
     }

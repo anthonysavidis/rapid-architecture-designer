@@ -2,7 +2,7 @@ import { items } from "../Classes/ItemArray.js";
 import { actions } from "../Classes/Actions.js";
 import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
-import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
+import { isAllChecked, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { autoResizeDispatch, checkAndResize, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
 import { renderLine } from "../Item/createLine.js";
@@ -42,7 +42,7 @@ function changeDetails(actionItem) {
             renderLine(component._id);
         }
     } else if (alteredItemObject._type === "Function") {
-        if (document.getElementById('all').checked) {
+        if (isAllChecked()) {
             showAllRefresh();
         } else {
             showByComponent();

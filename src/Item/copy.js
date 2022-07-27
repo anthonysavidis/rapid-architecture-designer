@@ -6,7 +6,7 @@ import { Layer } from "../Classes/Layer.js";
 import { actions } from "../Classes/Actions.js";
 import { deletePastedItems, pasteAction } from "../Actions/inverseActions.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
-import { showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
+import { isAllChecked, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { getTreeData } from "../Layers/Tree.js";
 import { checkAndResize } from "./autoResize.js";
 import { configStyle } from "../Classes/Config.js";
@@ -37,7 +37,7 @@ function removeLinksFromJSON(itemsToBeCopiedJSON, deleteLinkIds) {
                 var linkIndex = itemLinks.findIndex(el => el[0] === deleteLinkIds[x] || el[1] === deleteLinkIds[x]);
                 if (linkIndex !== -1) {
                     console.log(itemLinks[linkIndex][0]);
-                    linkedItems = linkedItems.filter(function(e) {
+                    linkedItems = linkedItems.filter(function (e) {
                         return e !== itemLinks[linkIndex][0];
                     })
                     itemLinks.splice(linkIndex, 1);
@@ -74,14 +74,14 @@ function copyClickedItems(itemsSelected, itemsToBeCopiedJSON, idsToBeCopied) {
             }
         }
         if (currentItem.links) {
-            Array.from(currentItem.links.entries()).forEach(function(e) {
+            Array.from(currentItem.links.entries()).forEach(function (e) {
                 currentLinkIds.push(e[1]); // get the value
             });
         }
         currentItemCounter++;
     }
     var filteredLinkIds = currentLinkIds.filter((a, i, aa) => aa.indexOf(a) === i && aa.lastIndexOf(a) !== i);
-    var deleteLinkIds = currentLinkIds.filter(function(e) {
+    var deleteLinkIds = currentLinkIds.filter(function (e) {
         return !filteredLinkIds.includes(e);
     });
     removeLinksFromJSON(itemsToBeCopiedJSON, deleteLinkIds);
@@ -217,7 +217,7 @@ function pasteFromStr(result) {
         console.log("x" + ' ' + x);
         imageStorage.save(x + "_LAYER_PREVIEW", pastingItemsJSON['localStorage'][x]);
     }
-    if (document.getElementById('all').checked) {
+    if (isAllChecked()) {
         showAllRefresh();
     } else {
         showByComponent();
@@ -243,7 +243,7 @@ async function pasteComponent() {
             var pastingItemsJSON = JSON.parse(result);
             actions.saveCommand(pasteAction, deletePastedItems, result, "");
             pasteFromStr(result);
-            (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+            (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
             layers.changeLayer(currentLayerId);
 
         } catch (error) {

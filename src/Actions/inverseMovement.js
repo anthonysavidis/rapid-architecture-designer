@@ -3,7 +3,7 @@ import { Item } from "../Classes/Item.js";
 import { items } from "../Classes/ItemArray.js";
 import { pasteFromStr } from "../Item/copy.js";
 import { renderLine } from "../Item/createLine.js";
-import { showAllRefresh } from "../Workspace/functionAppearance.js";
+import { isAllChecked, showAllRefresh } from "../Workspace/functionAppearance.js";
 
 function moveSpecificDirection(index, componentId, boundingStr) {
     var currentBoundingRec = JSON.parse(boundingStr);
@@ -92,7 +92,7 @@ function deleteTrashBinItem(actionItems) {
             items.delete(it._id);
         }
     }
-    if (document.getElementById('all').checked) {
+    if (isAllChecked()) {
         showAllRefresh();
     }
 }

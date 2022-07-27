@@ -41,15 +41,22 @@ function produceHR() {
 }
 
 function produceOperationRadioButtons() {
-    var innerStr = '<div class="unselectableText" style="float:left;margin-left:2.5px;"><input type="radio" id="byComponent" value="HTML">\
-    <label for="html" class="unselectableText">' + constantNames["operationsArea"]["byComponent"] + '</label></div> \
-    <div class="unselectableText" style="float:left;"><input type="radio" id="all" value="CSS" checked> \
-    <label for="css" class="unselectableText">' + constantNames["operationsArea"]["all"] + '</label></div>';
+    // var innerStr = '<div class="unselectableText" style="float:left;margin-left:2.5px;"><input type="radio" id="byComponent" value="HTML">\
+    // <label for="html" class="unselectableText">' + constantNames["operationsArea"]["byComponent"] + '</label></div> \
+    // <div class="unselectableText" style="float:left;"><input type="radio" id="all" value="CSS" checked> \
+    // <label for="css" class="unselectableText">' + constantNames["operationsArea"]["all"] + '</label></div>';
+    var innerStr = '<select class="inputTextClass" id="functionAppearance"><option value="byComponent">By Component</option><option value="all" selected>All</option></select>'
+
     var radioButtons = document.createElement('div');
     radioButtons.style.height = '24.33px';
+    radioButtons.style.width = '175px';
     radioButtons.style.marginBottom = '15px';
-    radioButtons.style.marginTop = '10px';
+    radioButtons.style.marginTop = '0px';
+
     radioButtons.innerHTML = innerStr;
+    radioButtons.firstChild.style.padding = 0;
+    radioButtons.firstChild.style.paddingLeft = "8px";
+    radioButtons.firstChild.style.height = "30px";
     return radioButtons;
 }
 

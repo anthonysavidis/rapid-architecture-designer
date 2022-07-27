@@ -7,7 +7,7 @@ import { Layer } from "../Classes/Layer.js";
 import { updateTree } from "../Layers/Tree.js";
 import { pasteComponentAction } from "../UpTab/componentTab.js";
 import { pasteFromStr } from "../Item/copy.js";
-import { showAllRefresh } from "../Workspace/functionAppearance.js";
+import { isAllChecked, showAllRefresh } from "../Workspace/functionAppearance.js";
 import { selectAction } from "../Item/selectComponent.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { imageStorage } from "../Classes/ImageHolder.js";
@@ -47,7 +47,7 @@ function deleteSpecificItems(actionItems) {
             items.delete(it._id);
         }
     }
-    if (document.getElementById('all').checked) {
+    if (isAllChecked()) {
         showAllRefresh();
     }
     return;
@@ -106,9 +106,9 @@ function splitAction(actionItems) {
             }
         }
         //select all forcely
-        (it._type === "Component") ? selectAction(it._id): 1;
+        (it._type === "Component") ? selectAction(it._id) : 1;
     }
-    if (document.getElementById('all').checked)
+    if (isAllChecked())
         showAllRefresh();
     return;
 }
@@ -154,7 +154,7 @@ function deleteSpecificLayer(actionItems) {
 function pasteAction(actionItems) {
     const pastingStr = actionItems.initialItem;
     pasteFromStr(pastingStr);
-    (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+    (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
 
     return;
 }

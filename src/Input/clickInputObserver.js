@@ -11,7 +11,7 @@ import { resetButtons } from "../Layers/layerInfoFunctions.js";
 import { appearComponentButtons, appearFunctionButtons, appearEditButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { initializeTab, lastPressed } from "../UpTab/tabAppearance/tabInitializer.js";
 import { workspaceContextMenuObserver } from "../Workspace/contextMenuHandler.js";
-import { hideCurrentFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
+import { hideCurrentFunctions, isByComponentChecked, updateSelectedList } from "../Workspace/functionAppearance.js";
 import { bRecs } from "./boundingRectanglesObserver.js";
 import { closeTooltipIfClickedOutside } from "./tooltipObserver.js";
 
@@ -77,7 +77,7 @@ function cancelAll(e) {
     var outsideOfLink = cancelSelectedLinks(e);
     if (outsideOfLink) {
         cancelFunctionSelection();
-        if (document.getElementById("byComponent").checked)
+        if (isByComponentChecked())
             hideCurrentFunctions();
     }
     return;
@@ -108,10 +108,10 @@ function handleLayerInfoAppearance(x, y) {
     if (isInsideRec(x, y, document.getElementById('right_tab').getBoundingClientRect())) {
         document.getElementById("functionHint").className = (document.getElementById("functionHint").className.includes("disabled")) ? document.getElementById("functionHint").className : "layerInfoHint item3";
     }
-    if(document.getElementById('layerInfo') && isInsideRec(x, y, document.getElementById('layerInfo').getBoundingClientRect())){
-        document.getElementById('layerInfo').style.outlineColor="#768ca1";
-    }else{
-            document.getElementById('layerInfo').style.outlineColor="#cccccc";
+    if (document.getElementById('layerInfo') && isInsideRec(x, y, document.getElementById('layerInfo').getBoundingClientRect())) {
+        document.getElementById('layerInfo').style.outlineColor = "#768ca1";
+    } else {
+        document.getElementById('layerInfo').style.outlineColor = "#cccccc";
     }
 }
 

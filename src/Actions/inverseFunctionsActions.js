@@ -1,13 +1,13 @@
 import { items } from "../Classes/ItemArray.js";
 import { Item } from "../Classes/Item.js";
-import { showAll, showByComponent } from "../Workspace/functionAppearance.js";
+import { isByComponentChecked, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 
 function createSpecificFunction(actionItems) {
 
     var it = new Item(actionItems.updatedItem);
     it.owners[0] ? items.setFunctionToItem(itemsObject[1]._id, itemsObject[0]._id) : 1;
-    if (document.getElementById('byComponent').checked)
+    if (isByComponentChecked())
         showByComponent();
     return;
 }
@@ -30,7 +30,7 @@ function createMultipleSpecificFunctions(actionItems) {
             items.itemList[items.itemList.findIndex(el => el._id === it._id)].owners = [];
             items.setFunctionToItem(ownerID, it._id);
         }
-        if (document.getElementById('byComponent').checked)
+        if (isByComponentChecked())
             showByComponent();
     }
 
@@ -118,7 +118,7 @@ function massiveSet(actionItems) {
         items.unparentFunction(initialFunctionList[x]._id);
         items.setFunctionToItem(componentId, initialFunctionList[x]._id);
     }
-    if (document.getElementById("byComponent").checked) {
+    if (isByComponentChecked()) {
         showByComponent();
         console.log('set');
 
@@ -132,7 +132,7 @@ function massiveMove(actionItems) {
         if (initialFunctionList[x].owners)
             items.setFunctionToItem(initialFunctionList[x].owners, initialFunctionList[x]._id);
     }
-    if (document.getElementById("byComponent").checked) {
+    if (isByComponentChecked()) {
         showByComponent();
         console.log('move');
     }

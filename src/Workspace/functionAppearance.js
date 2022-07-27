@@ -23,6 +23,16 @@ function configAppearance(display) {
     return;
 }
 
+
+function isByComponentChecked() {
+    return document.getElementById("functionAppearance").value === "byComponent";
+}
+
+function isAllChecked() {
+    return document.getElementById("functionAppearance").value === "all";
+}
+
+
 function showByComponent() {
     hideCurrentFunctions();
     configAppearance("none");
@@ -44,7 +54,7 @@ function showOwner(functionItem) {
     var newName = functionItem._name + '  <' + ownerName + '>';
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name + '  <' + ownerName + '>';
     setTimeout(() => { //due to listeners...
-        if (!document.getElementById("byComponent").checked && document.getElementById(functionItem._id))
+        if (!isByComponentChecked() && document.getElementById(functionItem._id))
             document.getElementById(functionItem._id).firstChild.className = "fIconSetted";
 
     }, 50)
@@ -77,7 +87,7 @@ function showAll() {
 var maxCurrentOperationsWidth = 0;
 
 function updateSelectedList() {
-    if (document.getElementById('all').checked)
+    if (isAllChecked())
         return;
     const componentsIdList = getSelectedIds();
     const componentItems = getSelectedItems()
@@ -126,20 +136,17 @@ function showAllRefresh() {
 }
 
 function setUpFunctionDisplayListeners() {
-    document.getElementById("all").addEventListener("change", function () {
-        if (document.getElementById("all").checked) {
+    document.getElementById("functionAppearance").addEventListener("change", function () {
+        if (isAllChecked()) {
             cancelFunctionSelection();
-            document.getElementById("byComponent").checked = false;
+            // document.getElementById("byComponent").checked = false;
             showAll();
             toggleSelectedComponents();
             closeTheTooltip();
         }
-    });
-
-    document.getElementById("byComponent").addEventListener("change", function () {
-        if (document.getElementById("byComponent").checked) {
+        if (isByComponentChecked()) {
             cancelFunctionSelection();
-            document.getElementById("all").checked = false;
+            // document.getElementById("all").checked = false;
             showByComponent();
             toggleSelectedComponents();
             updateSelectedList();
@@ -152,8 +159,7 @@ function setUpFunctionDisplayListeners() {
 
 function forceActivateAll() {
     cancelFunctionSelection();
-    document.getElementById("all").checked = true;
-    document.getElementById("byComponent").checked = false;
+    document.getElementById("functionAppearance").value = "all";
     showAll();
     if (document.getElementById("currentSelectedArea").style.display !== "none")
         toggleSelectedComponents();
@@ -162,9 +168,9 @@ function forceActivateAll() {
 }
 
 function forceActivateByComponent() {
-    document.getElementById("byComponent").checked = true;
     cancelFunctionSelection();
-    document.getElementById("all").checked = false;
+    document.getElementById("functionAppearance").value = "byComponent";
+
     showByComponent();
     if (document.getElementById("currentSelectedArea").style.display === "none")
         toggleSelectedComponents();
@@ -174,12 +180,12 @@ function forceActivateByComponent() {
 }
 
 function refreshOperationList() {
-    if (document.getElementById("all").checked) {
+    if (isAllChecked()) {
         forceActivateAll();
-    } else if (document.getElementById("byComponent").checked) {
+    } else if (isByComponentChecked()) {
         forceActivateByComponent();
     }
     return;
 }
 
-export { setUpFunctionDisplayListeners, refreshOperationList,maxCurrentOperationsWidth, forceActivateAll, forceActivateByComponent, configAppearance, showAllRefresh, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
+export { setUpFunctionDisplayListeners, refreshOperationList, isByComponentChecked, isAllChecked, maxCurrentOperationsWidth, forceActivateAll, forceActivateByComponent, configAppearance, showAllRefresh, updateSelectedList, setLastSelected, showByComponent, hideCurrentFunctions, showAll, showSpecificFunctions, resetOwner, showOwner };
