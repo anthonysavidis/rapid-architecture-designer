@@ -26,6 +26,9 @@ class ConfigActions {
 
         for (var x in changesJSON) {
             const atributeChanged = x.split(this.category.toLowerCase())[1];
+            console.log(x);
+            if (x.includes("_"))
+                continue;
             const value = changesJSON[x].charAt(0) === " " ? changesJSON[x].slice(1) : changesJSON[x];
             console.log(this.category + " " + makeSmallFirstLetter(atributeChanged) + " " + value);
             configStyle.handleChange(this.category, makeSmallFirstLetter(atributeChanged), value);

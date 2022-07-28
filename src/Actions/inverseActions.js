@@ -56,7 +56,7 @@ function deleteSpecificItems(actionItems) {
 function respawnDeletedItems(actionItems) {
     var respawningItems = JSON.parse(actionItems.initialItem);
     for (var x in respawningItems) {
-        var it = new Item(JSON.stringify(respawningItems[x]), 0);
+        var it = new Item(JSON.stringify(respawningItems[x]));
         if (it._functions) {
             const functionIds = it._functions;
             it._functions = [];
@@ -96,7 +96,7 @@ function splitAction(actionItems) {
     console.log(splitedParts);
     for (var x in splitedParts) {
         var itStr = JSON.stringify(splitedParts[x]);
-        var it = new Item(itStr, 0);
+        var it = new Item(itStr);
         if (it._functions) {
             const functionIds = it._functions;
             it._functions = [];
@@ -116,7 +116,7 @@ function splitAction(actionItems) {
 
 function joinAction(actionItems) {
     var joinedItemObj = JSON.parse(actionItems.initialItem);
-    var joinedItem = new Item(JSON.stringify(joinedItemObj), 0);
+    var joinedItem = new Item(JSON.stringify(joinedItemObj));
     var splitedParts = actionItems.updatedItem //ta parts.
     for (var x in splitedParts) {
         if (splitedParts[x]._type === "Link")

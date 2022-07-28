@@ -98,11 +98,16 @@ function hideSubarchitectureExpansion(selectedItems) {
         items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].isSubarchExtended = false;
 
         // const prevLocation = delNode.location;
-        var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(selectedItems[x]._id)
-        InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
-        items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].spawnComponent();
+        var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(selectedItems[x]._id);
+        delNode.remove(items.itemList[items.itemList.findIndex(el => el._id === selectedItems[x]._id)].expandedNode);
         // const subComponentsName = calculateSubcomponents(selectedItems[x]._id);
         // produceExpandedNode(selectedItems[x]._id, subComponentsName, location);
+        InstanceGenerator.diagramMap[layers.selectedLayer._id].model.setDataProperty(delNode.data, "textblockPosition", go.Spot.Center);
+        InstanceGenerator.diagramMap[layers.selectedLayer._id].model.setDataProperty(delNode.data, "textblockMargin", new go.Margin(0, 0, 0, 0));
+        InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(selectedItems[x]._id).findObject("COMPONENT").resizable = true;
+
+
+
     }
     return;
 }

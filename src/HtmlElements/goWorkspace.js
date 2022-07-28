@@ -224,6 +224,7 @@ function initializeNodeTemplate() {
             height: 40,
             strokeWidth: 0,
             fill: "transparent",
+
         },
             new go.Binding("strokeDashArray", "dash"),
             new go.Binding("height", "componentHeight"),
@@ -243,7 +244,7 @@ function initializeNodeTemplate() {
             // this Binding is TwoWay due to the user editing the text with the TextEditingTool
             new go.Binding("text").makeTwoWay(),
             new go.Binding("stroke", "componentTextColor"),
-            new go.Binding("font", "font"),
+            new go.Binding("font", "componentFont"),
             new go.Binding("background", "componentTextBackgroundColor"),
             new go.Binding("isUnderline", "componentTextUnderlined"),
             new go.Binding("alignment", "textblockPosition"),
@@ -288,52 +289,41 @@ function alterFocusedColor(color) {
 
 
 function initializeLinkTemplate() {
-    return $(go.Link, {
-        layerName: "Foreground",
-        // routing: go.Link.AvoidsNodes,
-        corner: 10,
-        toShortLength: 4, // assume arrowhead at "to" end, need to avoid bad appearance when path is thick
-        relinkableFrom: true,
-        relinkableTo: true,
-        reshapable: true,
-        resegmentable: true,
-        contextMenu: $("ContextMenu"),
-    },
-        new go.Binding("fromSpot", "fromSpot", go.Spot.parse),
-        new go.Binding("toSpot", "toSpot", go.Spot.parse),
-        new go.Binding("fromShortLength", "dir", dir => dir === 2 ? 4 : 0),
-        new go.Binding("toShortLength", "dir", dir => dir >= 1 ? 4 : 0),
-        new go.Binding("points").makeTwoWay(), // TwoWay due to user reshaping with LinkReshapingTool
+    return $(go.Link,
         $(go.Shape, {
-            strokeWidth: 1
+            name: "LINK_LINE",
+            contextMenu: $("ContextMenu"),
         },
-            new go.Binding("stroke", "color"),
-            new go.Binding("strokeWidth", "thickness"),
-            new go.Binding("strokeDashArray", "dash")),
-        $(go.Shape, {
-            fromArrow: "Backward",
-            strokeWidth: 0,
-            scale: 4 / 3,
-            visible: false
-        },
-            new go.Binding("visible", "dir", dir => dir === 2),
-            new go.Binding("fill", "color"),
-            new go.Binding("scale", "thickness", t => (2 + t) / 3)),
-        $(go.Shape, {
-            toArrow: "Standard",
-            strokeWidth: 0,
-            scale: 4 / 3
-        },
-            new go.Binding("visible", "dir", dir => dir >= 1),
-            new go.Binding("fill", "color"),
-            new go.Binding("scale", "thickness", t => (2 + t) / 3)),
+            new go.Binding("stroke", "linkColor")),  // the link shape
+        $(go.Shape,   // the arrowhead
+            {
+                name: "TO_ARROW",
+                toArrow: "Standard", strokeWidth: 0,
+                contextMenu: $("ContextMenu"),
+                scale: 4 / 3,
+            }, new go.Binding("fill", "toColor")),
+        $(go.Shape,   // the arrowhead
+            {
+                contextMenu: $("ContextMenu"),
+                name: "BACKWARD_ARROW",
+                fromArrow: "Backward", strokeWidth: 0, visible: false,
+                scale: 4 / 3,
+
+            }, new go.Binding("fill", "fromColor")),
         $(go.TextBlock, "right",
             {
+                name: "LINK_TEXTBLOCK",
+                stroke: "black",
                 segmentOffset: new go.Point(0, 10),
-                segmentOrientation: go.Link.OrientUpright
+                contextMenu: $("ContextMenu"),
+                segmentOrientation: go.Link.OrientUpright,
+                textAlign: "center",
             },
             new go.Binding("text").makeTwoWay(),  // TwoWay due to user editing with TextEditingTool
-            new go.Binding("stroke", "color")),// { segmentOffset: new go.Point(0, 10) })
+            new go.Binding("stroke", "linkTextColor"),
+            new go.Binding("font", "linkFont"),
+            new go.Binding("background", "linkTextBackgroundColor"),
+            new go.Binding("isUnderline", "linkTextUnderlined")),
         {
             toolTip:  // define a tooltip for each node that displays the color as text
                 $("ToolTip",

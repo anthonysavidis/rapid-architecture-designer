@@ -34,6 +34,11 @@ class Config {
         this.configJSON["componentFontWeight"] = "normal";
         this.configJSON["componentTextFamily"] = "Arial, Helvetica, sans-serif";
         this.configJSON["componentTextSize"] = "10pt";
+        this.configJSON["linkFontStyle"] = "normal";
+        this.configJSON["linkTextDecoration"] = "none";
+        this.configJSON["linkFontWeight"] = "normal";
+        this.configJSON["linkTextFamily"] = "Arial, Helvetica, sans-serif";
+        this.configJSON["linkTextSize"] = "10pt";
     }
 
     setJSONValue(key, value) {
@@ -49,15 +54,19 @@ class Config {
     }
     handleChangeVar(varName, value) {
         const type = varName.split(/(?=[A-Z])/);
-        configStyle.handleChange(capitalizeFirstLetter(type[0].slice(2)), makeSmallFirstLetter(type[1])+type[2], value);
+        console.log(type[0].slice(2) + " " + makeSmallFirstLetter(type[1]) + type[2] + " " + value);
+        const atributeChanged = type[0].slice(2) + makeSmallFirstLetter(type[1]);
+        if (atributeChanged === "linkcolor")
+            configStyle.handleChange(capitalizeFirstLetter(type[0].slice(2)), "color", value);
+        else
+            configStyle.handleChange(capitalizeFirstLetter(type[0].slice(2)), makeSmallFirstLetter(type[1]) + type[2], value);
         return;
     }
     handleComponentChange(varName, type, textType, attributeChanged, value) {
         if (type === "Component") {
             if (varName === "--componentTextSize" || varName === "--componentFontStyle" || varName === "--componentTextFamily" || varName === "--componentFontWeight") {
                 const font = this.configJSON["componentFontStyle"] + " normal " + this.configJSON["componentFontWeight"] + " " + this.configJSON["componentTextSize"] + " " + this.configJSON["componentTextFamily"];
-                console.log(font);
-                InstanceGenerator.modifyNodeProperty("font", font);
+                InstanceGenerator.modifyNodeProperty("componentFont", font);
             } else {
                 if (varName.includes("componentBorderWidth")) {
                     InstanceGenerator.modifyNodeProperty(textType + capitalizeFirstLetter(attributeChanged), parseInt(value.slice(0, -2), 10)); //<-string
@@ -79,6 +88,30 @@ class Config {
 
         }
     }
+    handleLinkChange(type, attributeChanged, value, completeVarName) {
+        if (type === "Link") {
+            if (attributeChanged === "textSize" || attributeChanged === "textFamily" || attributeChanged === "fontWeight" || attributeChanged === "fontStyle") {
+                const font = this.configJSON["linkFontStyle"] + " normal " + this.configJSON["linkFontWeight"] + " " + this.configJSON["linkTextSize"] + " " + this.configJSON["linkTextFamily"];
+                InstanceGenerator.modifyLinkProperty("linkFont", font);
+            }
+            else if (attributeChanged === "textDecoration") {
+                const finalValue = !(value.includes("none"));
+                console.log(finalValue)
+                InstanceGenerator.modifyLinkProperty("linkTextUnderlined", finalValue);
+            } else if (attributeChanged === "arrowColor") {
+
+                console.log('arowwww');
+                InstanceGenerator.modifyLinkProperty("fromColor", value);
+                InstanceGenerator.modifyLinkProperty("toColor", value);
+            }
+            else {
+                console.log(type.toLowerCase() + capitalizeFirstLetter(attributeChanged));
+                InstanceGenerator.modifyLinkProperty(type.toLowerCase() + capitalizeFirstLetter(attributeChanged), value);
+            }
+
+        }
+    }
+
     handleChange(type, attributeChanged, value, completeVarName) {
         var textType = type.toLowerCase();
         var varName = "--" + textType + capitalizeFirstLetter(attributeChanged);
@@ -87,7 +120,7 @@ class Config {
         var rs = getComputedStyle(r);
         const oldValue = rs.getPropertyValue(varName);
         r.style.setProperty(varName, value);
-        if(varName==="--operationTextSize")
+        if (varName === "--operationTextSize")
             measureAllLayersOperations();
         // if (type === "Component" && !attributeChanged.includes("border") && (!attributeChanged.includes("color") && !attributeChanged.includes("Color")) && !ignoreCurrent) {
         //     // autoResizeAllComponents();
@@ -102,6 +135,7 @@ class Config {
             console.log(value);
             InstanceGenerator.modifyDescriptionProperty("", value);
         }
+        this.handleLinkChange(type, attributeChanged, value, "");
         // if (!ignoreCurrent)
         this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
         return;

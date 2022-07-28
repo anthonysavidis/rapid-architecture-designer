@@ -276,9 +276,7 @@ function refreshAllLinks() {
 function getAllBoundingRectMap() {
   var brectsJSON = {};
   const callBack = (component) => {
-    brectsJSON[component._id] = document
-      .getElementById(component._id)
-      .getBoundingClientRect();
+    brectsJSON[component._id] = InstanceGenerator.getNodeBoundingRect(component._id); //document.getElementById(component._id).getBoundingClientRect();
   };
   applyToEachComponent(callBack);
   return brectsJSON;
@@ -286,14 +284,15 @@ function getAllBoundingRectMap() {
 
 function setBoundingRectMap(brectsJSON) {
   const callBack = (component) => {
-    document.getElementById(component._id).style.width =
-      brectsJSON[component._id].width + "px";
-    document.getElementById(component._id).style.height =
-      brectsJSON[component._id].height + "px";
-    document.getElementById(component._id).style.top =
-      brectsJSON[component._id].top + "px";
-    document.getElementById(component._id).style.left =
-      brectsJSON[component._id].left + "px";
+    InstanceGenerator.alterNodeDims(component._id, brectsJSON[component._id].width, brectsJSON[component._id].height);
+    // document.getElementById(component._id).style.width =
+    //   brectsJSON[component._id].width + "px";
+    // document.getElementById(component._id).style.height =
+    //   brectsJSON[component._id].height + "px";
+    // document.getElementById(component._id).style.top =
+    //   brectsJSON[component._id].top + "px";
+    // document.getElementById(component._id).style.left =
+    //   brectsJSON[component._id].left + "px";
   };
   applyToEachComponent(callBack);
 }

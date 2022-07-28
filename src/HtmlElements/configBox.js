@@ -139,6 +139,7 @@ function createPicker(txt, selected, callBack) {
     picker.style.marginLeft = "10px";
     picker.style.marginTop = "-6px";
     picker.style.float = "right";
+    picker.style.border = picker.style.padding = 0;
     labelDiv.style.width = "100%";
     picker.value = selected.charAt(0) === " " ? selected.slice(1) : selected;
     // picker.value= rs.getPropertyValue('--' + className.toLowerCase() + capitalizeFirstLetter(selected));

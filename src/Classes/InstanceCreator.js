@@ -5,6 +5,7 @@ import { configStyle } from "./Config.js";
 
 import { addDiagramListener, getLinkContext, getNewWorkspace, initializeLinkTemplate, initializeNodeTemplate, keyDownWorkpaceHandler, setWorkspaceDropListeners } from "../HtmlElements/goWorkspace.js";
 import { getAllCssVars } from "./ConfigActions.js";
+import { items } from "./ItemArray.js";
 
 
 
@@ -68,6 +69,33 @@ class InstanceCreator {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].startTransaction();
     InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(obj);
     InstanceGenerator.diagramMap[layers.selectedLayer._id].commitTransaction("deleted link");
+  }
+  alterLinkDirection(linkItem, linkState, toId) {
+
+    const link = InstanceGenerator.diagramMap[layers.selectedLayer._id].findLinkForData(linkItem.diagramLink);
+    if (linkState === "bidirectional") {
+      link.findObject("BACKWARD_ARROW").visible = true;
+      link.findObject("TO_ARROW").visible = true;
+    }
+    else if (linkState === "") {
+      link.findObject("BACKWARD_ARROW").visible = false;
+      link.findObject("TO_ARROW").visible = false;
+    }
+    else {
+      if (toId === linkItem.idComponent1) {
+        items.itemList[items.itemList.findIndex(el => el._id === linkItem._id)].linkState = "point1";
+
+        link.findObject("BACKWARD_ARROW").visible = true;
+        link.findObject("TO_ARROW").visible = false;
+      } else {
+        items.itemList[items.itemList.findIndex(el => el._id === linkItem._id)].linkState = "point2";
+
+        link.findObject("BACKWARD_ARROW").visible = false;
+        link.findObject("TO_ARROW").visible = true;
+
+      }
+    }
+
   }
 
   turnOffGrid(lid) {
@@ -136,6 +164,16 @@ class InstanceCreator {
     } //FOR CONFIG PART}
 
   }
+  modifyLinkProperty(modifiedProperty, value) {
+    for (var l in layers.layerList) {
+      const lid = layers.layerList[l]._id;
+      const linkArray = this.diagramMap[lid].model.linkDataArray;
+      for (var linkIndex in linkArray)
+        this.diagramMap[lid].model.setDataProperty(linkArray[linkIndex], modifiedProperty, value);
+    } //FOR CONFIG PART}
+
+  }
+
   modifyDescriptionProperty(modifiedProperty, value) {
     for (var l in layers.layerList) {
       const lid = layers.layerList[l]._id;

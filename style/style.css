@@ -14,7 +14,7 @@
     --componentTextBorderWidth: 0px;
     --componentInnerMarginX: 19px;
     --componentInnerMarginY: 19px;
-    --subcomponentTextSize: 12pt;
+    --subcomponentTextSize: 10pt;
     --subcomponentTextColor: #000000;
     --subcomponentBackgroundColor: #FFFFFF;
     --descriptionColor: #545454;
@@ -36,7 +36,7 @@
     --operationBorderWidth: 3px;
     --selectedOperationsWidth: fit-content;
     /*------------------Links------------------*/
-    --linkTextSize: 12pt;
+    --linkTextSize: 10pt;
     --linkTextFamily: Arial, Helvetica, sans-serif;
     --linkFontWeight: "normal";
     --linkFontStyle: "normal";

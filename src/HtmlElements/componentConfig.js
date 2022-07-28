@@ -64,7 +64,7 @@ function produceComponentConfigBox(box, configGrid) {
     if (detectBrowser() === "Firefox")
         backgroundColorPicker.style.width = "195px";
     else
-        backgroundColorPicker.style.width = "209px";
+        backgroundColorPicker.style.width = "211px";
     backgroundColorPicker.lastChild.style.float = "right";
     backgroundColorPicker.lastChild.style.marginLeft = "0px";
     configGrid.appendChild(backgroundColorPicker);
@@ -115,7 +115,7 @@ function produceSliders(box, configGrid) {
     innerMarginX.style.marginLeft = innerMarginY.style.marginLeft = "20px";
     innerMarginY.style.marginLeft = "19.2px";
     innerMarginX.children[2].style.position = innerMarginY.children[2].style.position = "absolute";
-    innerMarginY.style.top = 305 + "px";
+    innerMarginY.style.top = 297 + "px";
     innerMarginDiv.id = "innerMarginSlider";
     innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
     innerMarginDiv.style.marginTop = "17px";
@@ -178,7 +178,7 @@ function descriptionHandler(noActionSave) {
         document.getElementById("descArea").style.display = "inline-block";
         configStyle.descriptionEnabled = true;
         applyToEachComponent((component) => {
-            // oldBRecs[component._id] = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(component._id).naturalBounds.actualBounds;
+            oldBRecs[component._id] = InstanceGenerator.getNodeBoundingRect(component._id);
             // console.log(oldBRecs[component._id]);
             turnOnDescription(component);
         });
@@ -233,8 +233,8 @@ function loadInitialSettings() {
     configStyle.descriptionEnabled = configStyle.actionDispatch["Component"].currentOldSettings["_descOn"];
     configStyle.autoFit = configStyle.actionDispatch["Component"].currentOldSettings["_autoFit"];
     descriptionHandler(true); //call me flag i opoia simainei oti den tha ginei save sto action stack.
-    // autoFitHandler(); //TODO AUTOFIT
-    // setBoundingRectMap(oldBRecs);
+    //autoFitHandler(); //TODO AUTOFIT
+    setBoundingRectMap(oldBRecs);
     return;
 }
 
@@ -298,8 +298,8 @@ function createComponentConfigBox(refresh) {
 
     };
 
-    // if (!refresh)
-    //     storeInitialSettings();
+    if (!refresh)
+        storeInitialSettings();
     var cancelChanges = () => {
         console.log(configStyle.actionDispatch["Component"].currentOldSettings);
         loadInitialSettings();

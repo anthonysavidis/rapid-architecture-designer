@@ -4,7 +4,7 @@ class TextConfig {
 
     constructor() {
         this.textConfigJSON = {};
-        this.textConfigJSON["textSize"] = "12pt";
+        this.textConfigJSON["textSize"] = "10pt";
         this.textConfigJSON["textFamily"] = "Arial, Helvetica, sans-serif";
         this.textConfigJSON["fontWeight"] = "normal";
         this.textConfigJSON["fontStyle"] = "normal";

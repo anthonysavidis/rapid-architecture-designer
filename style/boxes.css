@@ -163,7 +163,7 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: url('../images/arrowDown.png') 96% / 8% no-repeat #eee;
+    background: url('../images/arrowDown.png') right no-repeat #fff;
 }
 
 .buttonTeam {

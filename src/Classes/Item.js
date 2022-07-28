@@ -99,6 +99,27 @@ class Item {
         // this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
         this.diagramLink = InstanceGenerator.createLink(this._id, this.idComponent1, this.idComponent2, this._name);
         items.addLink(this._id, this.idComponent1, this.idComponent2);
+
+        switch (this.linkState) {
+            case "": {
+                InstanceGenerator.alterLinkDirection(this, "");
+                break;
+            }
+            case "bidirectional": {
+                InstanceGenerator.alterLinkDirection(this, "");
+                break;
+            }
+            case "point1": {
+                InstanceGenerator.alterLinkDirection(this, "point1", this.idComponent1);
+                break;
+            }
+            case "point2": {
+                InstanceGenerator.alterLinkDirection(this, "point2", this.idComponent2);
+                break;
+            }
+            default:
+                console.error("bad linkState value");
+        }
     }
     spawnLoadedLink() {
         // var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
@@ -173,7 +194,6 @@ class Item {
             document.getElementById(curId).style.backgroundColor = prevColor;
             prevColor = "";
             // alert('operation dropped');
-            console.log("Left " + curId);
             // document.getElementById(curId).style.width=rec.width+"px";
 
             const trashRec = document.getElementById('trashBin').getBoundingClientRect();
@@ -212,27 +232,27 @@ class Item {
             document.getElementById(this._id + "name").innerText = this._name;
         }
         else if (this._type === "Component") {
-            const node = this.diagramNode;
-            var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(node.key);
-            InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
-            this.diagramNode.text = newName;
-            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
-            items.itemList[items.itemList.findIndex((el) => el._id === this._id)].diagramNode = this.diagramNode;
+            const nodeData = this.diagramNode;
+            var modifiedNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(nodeData.key);
+            // InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
+            modifiedNode.findObject("COMPONENT_TEXT_BLOCK").text = newName;
+            // InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
+            items.itemList[items.itemList.findIndex((el) => el._id === this._id)].diagramNode = modifiedNode.data;
         }
         else {
             const link = this.diagramLink;
-            // var delLink = InstanceGenerator.diagramMap[layers.selectedLayer._id].findLinkForKey(link.key);
-            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(this.diagramLink);
-            this.diagramLink.text = newName;
-            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addLinkData(this.diagramLink);
-            items.itemList[items.itemList.findIndex((el) => el._id === this._id)].diagramLink = this.diagramLink;
+            var modifiedLink = InstanceGenerator.diagramMap[layers.selectedLayer._id].findLinkForData(link);
+            // InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(this.diagramLink);
+            modifiedLink.findObject("LINK_TEXTBLOCK").text = newName;
+            // InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addLinkData(this.diagramLink);
+            items.itemList[items.itemList.findIndex((el) => el._id === this._id)].diagramLink = modifiedLink.data;
         }
     }
     loadSizeWithBoundingRec(bRec) {
         console.log(bRec);
     }
 
-    constructor(type, flag) {
+    constructor(type) {
         this._type = type;
         this.domElement = null;
         this._description = constantNames["emptyNames"]["description"];
@@ -255,10 +275,8 @@ class Item {
             this.constructFunction();
         } else {
             this._toObject(type); //type is the object in string form
-            if (!flag) {
-                items.add(this);
-                items.updateNameAndDescription(this._id, this._name, this._description, 1);
-            }
+
+            items.updateNameAndDescription(this._id, this._name, this._description, 1);
             // this._type === "Component" ? renderInfoButton(this._id) : 1;
             updateLayerInfoBox();
 
@@ -389,6 +407,7 @@ class Item {
             InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
             const nodeData = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).data;
             InstanceGenerator.applyCurrentComponentSettings(layers.selectedLayer._id, nodeData);
+            // nodeData.left 
             // this.linkedItems = JSON.parse(itemObject.linkedItems);
             // this.fixPositionAndDetails(itemObject, 0);
             // for(var i=0;i<itemObject._functions.length)
@@ -414,22 +433,27 @@ class Item {
                 this.subLayers.push(itemObject.subLayers[0]);
             }
             this.linkedItems = [...new Set(linkIds)];
+            items.add(this);
+
         } else if (type === "link" || itemObject._type === "Link") {
             this._type = "Link";
             this.idComponent1 = itemObject.idComponent1;
             this.idComponent2 = itemObject.idComponent2;
-            this.linkState = !(itemObject.linkState) ? "" : itemObject.linkState; //compatible with older versions..
+            this.linkState = itemObject.linkState; //compatible with older versions..
             // items.addLink(this._id,this.idComponent1,this.idComponent2);
             // this.spawnLoadedLink();
-            this.diagramLink = JSON.parse(itemObject.diagramLink);
-            InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addLinkData(this.diagramLink);
-            // this.spawnLink();
+            // this.diagramLink = JSON.parse(itemObject.diagramLink);
+            // InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addLinkData(this.diagramLink);
+            items.add(this);
+
+            this.spawnLink();
         } else if (type === "function" || itemObject._type === "Function") {
             this.constructFunction();
             this._type = "Function";
             this.owners = itemObject.owners.split(",");
             if (this.owners[0] === "")
                 this.owners = [];
+            items.add(this);
         }
     }
 
