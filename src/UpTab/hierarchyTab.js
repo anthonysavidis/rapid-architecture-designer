@@ -56,23 +56,23 @@ function enableTreeFlag() {
     treeIsShown = true;
 }
 
-var moveToCntx = () => {};
+var moveToCntx = () => { };
 
 function addHierarchyTabListeners() {
     document.getElementById("toggleHierarchyTreeButton").style.display = "inline-block";
 
     document.getElementById("moveToLayerButton").style.display = "none";
-    document.getElementById("moveToLayerButton").addEventListener("click", moveToCntx = function() {
+    document.getElementById("moveToLayerButton").addEventListener("click", moveToCntx = function () {
         const selectedItems = getSelectedItems();
         const disabled = getDisabledLayers(selectedItems).length;
         const l_no = layers.idList.length;
         console.log(disabled + " " + l_no);
 
         if (disabled === l_no) {
-            produceBox('updating', constantNames["messages"]["moveToMsg"], '');
+            produceBox('updating', constantNames["messages"]["moveToMsg"], true);
             return;
         }
-        produceBox('selecting', [constantNames["layersTab"]["moveBox"], createSelectElementsFromLayers(selectedItems), "Move To"], function(layerId) {
+        produceBox('selecting', [constantNames["layersTab"]["moveBox"], createSelectElementsFromLayers(selectedItems), "Move To"], function (layerId) {
             const itemLinks = getLinkItems(selectedItems);
             // console.log(itemLinks);
             // var itemToBeJoined = selectedItems;
@@ -93,7 +93,7 @@ function addHierarchyTabListeners() {
         });
         return;
     });
-    document.getElementById("toggleHierarchyTreeButton").addEventListener("click", function() {
+    document.getElementById("toggleHierarchyTreeButton").addEventListener("click", function () {
         if (!treeIsShown) {
             openLayerTree();
             produceLayerTabRod();

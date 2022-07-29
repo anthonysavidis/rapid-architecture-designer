@@ -47,16 +47,16 @@ function deleteOperationWithTrashBin() {
     return;
 }
 
-var newFunctionCntx = () => {};
+var newFunctionCntx = () => { };
 
 function addFunctionTabListeners() {
     initialAppearance();
-    document.getElementById("newFunctionButton").addEventListener("click", newFunctionCntx = function() {
+    document.getElementById("newFunctionButton").addEventListener("click", newFunctionCntx = function () {
         // var functionItem = newFunctionAction();
         askForDetails("Function", "New Operation");
 
     });
-    document.getElementById("deleteFunctionButton").addEventListener("click", function() {
+    document.getElementById("deleteFunctionButton").addEventListener("click", function () {
         const toBeDeletedFunctions = itemFromListToObject(getSelectedFunctions());
         var msg = constantNames["confirmationBox"]["DeleteMsgStart"] + getSelectedFunctionIds().length + constantNames["confirmationBox"]["DeleteMsgFunctionEnd"];
 
@@ -66,13 +66,13 @@ function addFunctionTabListeners() {
             cancelFunctionSelection();
         });
     });
-    document.getElementById("setFunctionButton").addEventListener("click", function() {
+    document.getElementById("setFunctionButton").addEventListener("click", function () {
         var itemList = [getSelectedFunctions()[0], getSelectedItems()[0]];
         var str = itemFromListToObject(itemList);
         setFunctionAction();
         actions.saveCommand(setSpecificFunction, resetSpecificFunction, str, "");
     });
-    document.getElementById("resetFunctionButton").addEventListener("click", function() {
+    document.getElementById("resetFunctionButton").addEventListener("click", function () {
         var itemList = getSelectedFunctions();
         var str = itemFromListToObject(itemList);
         // const fid = itemList[0]._id;
@@ -82,7 +82,7 @@ function addFunctionTabListeners() {
                 resetFunctionAction(itemList[x]._id, itemList[x].owners[0]);
             }
             var updatingMessage = "Operation(s) detached successfully.";
-            produceBox("updating", updatingMessage, null);
+            produceBox("updating", updatingMessage, true);
             actions.saveCommand(resetMultipleFunctions, setMultipleFunctions, str, "");
         });
     });

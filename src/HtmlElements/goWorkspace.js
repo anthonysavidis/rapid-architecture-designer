@@ -1,9 +1,11 @@
+import { actions, redoAction, undoAction } from "../Classes/Actions.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { functionOnDropOnComponent } from "../Item/componentEventCallbacks.js";
 import { cancelSelection, getSelectedItems, handleByComponent } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
+import { componentContextDispatch } from "../UpTab/componentTab.js";
 import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { isByComponentChecked } from "../Workspace/functionAppearance.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
@@ -20,7 +22,7 @@ function getNewWorkspace(lid) {
         padding: 20, // extra space when scrolled all the way
         grid:
             $(go.Panel, "Grid",
-                { gridCellSize: new go.Size(10, 10) },
+                { gridCellSize: new go.Size(10, 10), visible: false },
                 $(go.Shape, "LineH", { strokeDashArray: [1, 9] })
             ), "draggingTool.isCopyEnabled": false,
         "BackgroundSingleClicked": (e) => {
@@ -155,7 +157,6 @@ function initializeNodeTemplate() {
             // click: function (e, obj) { appearComponentButtons(); },
 
             selectionChanged: function (node) {
-                console.log(getSelectedItems());
                 appearComponentButtons();
                 appearFunctionButtons();
                 appearHierarchyButtons();
@@ -506,9 +507,23 @@ function keyDownWorkpaceHandler(myDiagram) {
     var deleteKey = e.delete;
     var key = e.key;
     // Quit on any undo/redo key combination:
-    if ((control && (key === 'Z' || key === 'Y')) || deleteKey)
-        return;
+    // if ((control && (key === 'Z' || key === 'Y')) || deleteKey)
+    //     return;
+    if ((control) && (key === 'Z')) {
+        undoAction();
+    }
+    if ((control) && (key === 'Y')) {
+        redoAction();
+    }
 
+    if ((control) && (key === 'C')) {
+        componentContextDispatch["Copy"]();
+    }
+    if ((control) && (key === 'V')) {
+        componentContextDispatch["Paste"]();
+    }
+
+    // e.control = false;
     // call base method with no arguments (default functionality)
     // go.CommandHandler.prototype.doKeyDown.call(this);
 };

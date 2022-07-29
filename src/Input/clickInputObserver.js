@@ -139,6 +139,12 @@ function selectionHandler(e, targ) {
         updateSelectedList();
 }
 
+var lastClickedClassName = "";
+
+function getLastClickedClassName() {
+    return lastClickedClassName;
+}
+
 function whichElement(e) {
     var targ;
     if (!e) {
@@ -151,6 +157,7 @@ function whichElement(e) {
     }
     var tname;
     tname = targ.tagName;
+    lastClickedClassName = targ.className;
     checkToClose(e.clientX, e.clientY, e);
     // if(targ)
     selectionHandler(e, targ);
@@ -167,6 +174,7 @@ function whichElement(e) {
         document.getElementsByClassName("helper")[0].remove();
     }
 }
+
 
 function initializeObserver() {
     document.getElementById("html1").addEventListener("mousedown", whichElement);
@@ -215,4 +223,4 @@ function checkToClose(cX, cY, e) {
 
 }
 
-export { whichElement, initializeObserver, closeTheTooltip, hasClickedOnWorkspace };
+export { whichElement, initializeObserver, getLastClickedClassName, closeTheTooltip, hasClickedOnWorkspace };

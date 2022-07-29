@@ -130,13 +130,34 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         confirmationButton.style.marginRight = "20px";
         produceGrayLayer(box, "", "", cancelCallBack);
     } else if (type === "updating") {
+        const isInfo = callBack;
+        var imageTick = document.createElement('div');
+        imageTick.style.width = imageTick.style.height = "30px";
+        imageTick.style.backgroundImage = "url(../images/successTick.png)";
+        imageTick.style.backgroundSize = "contain";
+
+        if (isInfo) {
+            box.style.backgroundColor = "#cde6f6";
+            box.style.color = "#5c90ab";
+            box.style.fontWeight = "bold";
+            box.style.borderColor = "#b4d9f2";
+            imageTick.style.backgroundImage = "url(../images/infoUpdate.png)";
+
+        }
+
+
+        imageTick.style.float = "left";
+        imageTick.style.marginLeft = "5px";
+        box.appendChild(imageTick);
         title.style.textAlign = "center";
         title.style.marginRight = "0px";
+        title.style.float = "right";
         title.style.paddingRight = title.style.paddingLeft = "10px";
         // title.style.paddingRight=title.style.paddingLeft="15px";
-        title.innerText = extraInfo;
+        title.innerHTML = extraInfo;
         // produceMovingBar(box, 1);
-        title.style.marginTop = -5 + "px";
+        title.style.marginTop = 7 + "px";
+        title.style.whiteSpace = "nowrap";
         box.appendChild(title);
 
         document.getElementById("body").appendChild(box);

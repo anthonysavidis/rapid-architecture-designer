@@ -55,6 +55,7 @@ function produceOperationRadioButtons() {
 
     radioButtons.innerHTML = innerStr;
     radioButtons.style.marginLeft = "2.5%";
+    radioButtons.style.marginTop = radioButtons.style.marginBottom = "10px";
 
     radioButtons.firstChild.style.margin = 0 + "px";
     radioButtons.firstChild.style.padding = 0;

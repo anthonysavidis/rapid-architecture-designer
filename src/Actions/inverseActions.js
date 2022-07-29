@@ -74,17 +74,18 @@ function respawnDeletedItems(actionItems) {
 function linkItems(actionItems) {
     var toBeLinkedItems = JSON.parse(actionItems.initialItem);
     var link = new Item(JSON.stringify(toBeLinkedItems[2]));
-    items.addLink(link._id, toBeLinkedItems[0]._id, toBeLinkedItems[1]._id);
+    // items.addLink(link._id, toBeLinkedItems[0]._id, toBeLinkedItems[1]._id);
     return;
 }
 
 function unlinkItems(actionItems) {
-    closeTheTooltip();
     var toBeUnlinkedItems = JSON.parse(actionItems.initialItem);
     var index0 = items.itemList.findIndex((el) => el._id === toBeUnlinkedItems[0]._id);
     var index1 = items.itemList.findIndex((el) => el._id === toBeUnlinkedItems[1]._id);
     items.itemList[index0].deleteLink(toBeUnlinkedItems[1]._id);
     items.itemList[index1].deleteLink(toBeUnlinkedItems[0]._id);
+    console.log(toBeUnlinkedItems[2]);
+    items.delete(toBeUnlinkedItems[2]._id);
     return;
 }
 
@@ -108,6 +109,7 @@ function splitAction(actionItems) {
         //select all forcely
         (it._type === "Component") ? selectAction(it._id) : 1;
     }
+
     if (isAllChecked())
         showAllRefresh();
     return;

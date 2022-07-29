@@ -17,6 +17,7 @@ import { configStyle } from "../Classes/Config.js";
 import { enableLayerDescriptionExtension, refreshDescriptionExtension } from "../Layers/switchActions.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 import { exitFullscreenCntx } from "./settingsTab.js";
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
@@ -83,6 +84,7 @@ function loadAction() {
             updateFullPath(layers.layerList[0]._name);
             (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
             measureAllLayersOperations();
+            InstanceGenerator.clickWorkspace();
         };
         reader.readAsText(e.target.files[0]);
     }

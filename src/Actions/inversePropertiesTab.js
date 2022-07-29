@@ -1,13 +1,13 @@
 import { items } from "../Classes/ItemArray.js";
 import { actions } from "../Classes/Actions.js";
-import { turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "../HtmlElements/extendingComponent.js";
+import { areAllExtendable, areAllExtended, turnOffDescription, turnOffExtension, turnOnDescription, turnOnExtension } from "../HtmlElements/extendingComponent.js";
 import { appearComponentButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { isAllChecked, showAllRefresh, showByComponent } from "../Workspace/functionAppearance.js";
 import { autoResizeDispatch, checkAndResize, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { configStyle } from "../Classes/Config.js";
 import { renderLine } from "../Item/createLine.js";
 import { setComponentsRec } from "../Classes/Item.js";
-
+import { showSubarchitectureExpansion, hideSubarchitectureExpansion } from "../HtmlElements/goExtendedComponents.js"
 
 var lastOriginalItem = null;
 
@@ -29,17 +29,16 @@ function changeDetails(actionItem) {
         var component = items.itemList[items.itemList.findIndex((el) => el._id === alteredItemObject._id)];
         // if (!passAutoFitRestrictions(component._id))
         //     autoResizeDispatch["autoFit"](component);
-        setComponentsRec(component, alteredItemObject.boundingRec);
+        // setComponentsRec(component, alteredItemObject.boundingRec);
         if (component._type === "Component" && configStyle.descriptionEnabled) {
             turnOffDescription(component);
             turnOnDescription(component);
         }
-        if (component._type === "Component" && document.getElementById(component._id + "subComponent0")) {
-            turnOffExtension(component._id);
-            turnOnExtension(component._id);
-        }
-        if (component.links) {
-            renderLine(component._id);
+        if (component._type === "Component" && areAllExtendable([component])) {
+            // turnOffExtension(component._id);
+            // turnOnExtension(component._id);
+            hideSubarchitectureExpansion([component]);
+            showSubarchitectureExpansion([component]);
         }
     } else if (alteredItemObject._type === "Function") {
         if (isAllChecked()) {

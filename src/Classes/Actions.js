@@ -1,3 +1,5 @@
+import { appearComponentButtons, appearEditButtons, appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+
 class ActionHolder {
     constructor() {
         this.commands = [];
@@ -39,7 +41,26 @@ class ActionHolder {
 }
 var actions = new ActionHolder();
 
+function undoAction() {
+    if (actions.undoStack.length >= 1) {
+        actions.undo();
+        // if (document.getElementById("Edit").style.display === "block")
+        appearEditButtons();
+        appearComponentButtons();
+        appearFunctionButtons();
+    }
+}
+
+function redoAction() {
+    if (actions.redoStack.length >= 1) {
+        actions.redo();
+        // if (document.getElementById("Edit").style.display === "block")
+        appearEditButtons();
+        appearComponentButtons();
+        appearFunctionButtons();
+    }
+}
 
 
 
-export { actions };
+export { actions, undoAction, redoAction };

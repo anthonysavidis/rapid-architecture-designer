@@ -78,8 +78,8 @@ class Item {
     }
     constructLink() {
         var linkedIds = getSelectedIds();
-        this.idComponent1 = linkedIds[0];
-        this.idComponent2 = linkedIds[1];
+        items.itemList[items.itemList.findIndex(el => el._id === this._id)].idComponent1 = linkedIds[0];
+        items.itemList[items.itemList.findIndex(el => el._id === this._id)].idComponent2 = linkedIds[1];
         this.spawnLink();
     }
 
@@ -93,20 +93,14 @@ class Item {
     spawnComponent() {
         this.diagramNode = InstanceGenerator.createComponent(this);
     }
-    spawnLink() {
-        // var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
-        // var rec2 = document.getElementById(this.idComponent2).getBoundingClientRect(); //--
-        // this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
-        this.diagramLink = InstanceGenerator.createLink(this._id, this.idComponent1, this.idComponent2, this._name);
-        items.addLink(this._id, this.idComponent1, this.idComponent2);
-
+    configureDirection() {
         switch (this.linkState) {
             case "": {
                 InstanceGenerator.alterLinkDirection(this, "");
                 break;
             }
             case "bidirectional": {
-                InstanceGenerator.alterLinkDirection(this, "");
+                InstanceGenerator.alterLinkDirection(this, "bidirectional");
                 break;
             }
             case "point1": {
@@ -120,6 +114,15 @@ class Item {
             default:
                 console.error("bad linkState value");
         }
+    }
+    spawnLink() {
+        // var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
+        // var rec2 = document.getElementById(this.idComponent2).getBoundingClientRect(); //--
+        // this.domElement = linedraw(this._id, this.linkState, this._name, rec1, rec2);
+        items.addLink(this._id, this.idComponent1, this.idComponent2);
+        this.diagramLink = items.itemList[items.itemList.findIndex(el => el._id === this._id)].diagramLink = InstanceGenerator.createLink(this._id, this.idComponent1, this.idComponent2, this._name);
+
+        this.configureDirection();
     }
     spawnLoadedLink() {
         // var rec1 = document.getElementById(this.idComponent1).getBoundingClientRect(); //--
@@ -268,7 +271,9 @@ class Item {
             this._id = this.generateItemId().toString();
             this._name = constantNames["emptyNames"]["line"];
             this.linkState = "";
+            items.add(this);
             this.constructLink();
+            return;
         } else if (type === "Function") {
             this._id = this.generateItemId().toString();
             this._name = constantNames["emptyNames"]["function"];
@@ -292,7 +297,7 @@ class Item {
         this._functions.push(fid);
         var fIndex = items.itemList.findIndex(((element) => element._id === fid));
         items.itemList[fIndex].owners.push(this._id);
-        var updatingMessage = items.itemList[fIndex]._name + " attached to " + this._name + ".";
+        var updatingMessage = "<b>" + items.itemList[fIndex]._name + "</b> attached to <b>" + this._name + "</b>.";
         produceBox("updating", updatingMessage, null);
         showOwner(items.itemList[fIndex]);
         if (isByComponentChecked())
@@ -324,7 +329,12 @@ class Item {
     updateBoundingRec() {
         // this.boundingRec = document.getElementById(this._id).getBoundingClientRect();
         // bRecs.updateBoundingRec(layers.selectedLayer._id, this._id, this.boundingRec);
-        this.boundingRec = InstanceGenerator.getNodeBoundingRect(this._id);
+        try {
+            this.boundingRec = InstanceGenerator.getNodeBoundingRect(this._id);
+        }
+        catch (e) {
+            this.boundingRec = {};
+        }
         return;
     }
 
@@ -403,7 +413,6 @@ class Item {
             this.subLayers = [];
             this._functions = [];
             this.diagramNode = JSON.parse(itemObject.diagramNode);
-            console.log(itemObject);
             InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
             const nodeData = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).data;
             InstanceGenerator.applyCurrentComponentSettings(layers.selectedLayer._id, nodeData);
@@ -496,11 +505,13 @@ function getAllLayersString(counter, objectList) {
 }
 
 function setComponentsRec(component, brec) {
-    document.getElementById(component._id).style.width = brec.width + "px";
-    document.getElementById(component._id).style.height = brec.height + "px";
-    document.getElementById(component._id).style.left = brec.left + "px";
-    document.getElementById(component._id).style.top = brec.top + "px";
+    // document.getElementById(component._id).style.width = brec.width + "px";
+    // document.getElementById(component._id).style.height = brec.height + "px";
+    // document.getElementById(component._id).style.left = brec.left + "px";
+    // document.getElementById(component._id).style.top = brec.top + "px";
+    InstanceGenerator.alterNodeDims(component._id, brec.width, brec.height);
     component.updateBoundingRec();
+    return;
 }
 
 export { Item, setComponentsRec };

@@ -37,7 +37,6 @@ function showByComponent() {
     hideCurrentFunctions();
     configAppearance("none");
     const selectedIds = getSelectedIds();
-    console.log(selectedIds);
     if (!selectedIds || !selectedIds[0])
         return;
     for (var x in selectedIds) {
@@ -82,6 +81,7 @@ function showAll() {
         }
     }
     changeMaxWidth(maxWidth);
+
     return;
 }
 var maxCurrentOperationsWidth = 0;

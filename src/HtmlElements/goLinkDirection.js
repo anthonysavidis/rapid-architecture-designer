@@ -1,3 +1,4 @@
+import { actions } from "../Classes/Actions.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
@@ -134,8 +135,21 @@ function produceLinkDirectionBox(linkId) {
     confirmationButton.style.marginLeft = "13px";
     confirmationButton.style.marginRight = "18px";
     confirmationButton.innerHTML = constantNames["ok"];
+    const oldLinkState = linkItem.linkState;
     confirmationButton.onclick = function () {
         alterChoiceCallBack(linkItem);
+        const newLinkState = items.itemList[items.itemList.findIndex(el => el._id === linkId)].linkState;
+        if (newLinkState !== oldLinkState) {
+            actions.saveCommand((actionItems) => {
+                items.itemList[items.itemList.findIndex(el => el._id === linkId)].linkState = actionItems.updatedItem;
+                console.log("LINK STATE:" + items.itemList[items.itemList.findIndex(el => el._id === linkId)].linkState)
+                items.itemList[items.itemList.findIndex(el => el._id === linkId)].configureDirection();
+            }, (actionItems) => {
+                items.itemList[items.itemList.findIndex(el => el._id === linkId)].linkState = actionItems.initialItem;
+                console.log("LINK STATE:" + items.itemList[items.itemList.findIndex(el => el._id === linkId)].linkState)
+                items.itemList[items.itemList.findIndex(el => el._id === linkId)].configureDirection();
+            }, oldLinkState, newLinkState);
+        }
         closeBox();
     }
     var buttons = document.createElement('div');

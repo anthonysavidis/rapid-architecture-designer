@@ -15,6 +15,7 @@ import {
   setUpFunctionDisplayListeners,
   showAll,
 } from "../Workspace/functionAppearance.js";
+import { macroURCallBack } from "../Workspace/macroDetection.js";
 import { imageStorage } from "./ImageHolder.js";
 import { InstanceGenerator } from "./InstanceCreator.js";
 import { Item } from "./Item.js";
@@ -132,7 +133,6 @@ class LayerHolder {
       } else if (x === "layerList") {
         totalStr += '"' + x + '":' + itemFromListToObject(this[x]) + " ,";
       } else {
-        console.log(x);
         totalStr += '"' + x + '":' + JSON.stringify(this[x]) + " ,";
       }
     }
@@ -156,7 +156,6 @@ class LayerHolder {
   toObject(str) {
     clearTree();
     var layerObject = JSON.parse(str);
-    console.log(layerObject);
     setLayers(this);
     for (var i in layerObject["layerList"]) {
       layerObject.layerList[i].setOfItems = layerObject.itemMap[layerObject.layerList[i]._id];
@@ -194,7 +193,6 @@ class LayerHolder {
       }
     }
     layers.produceTree();
-    console.log(layers);
     layers.changeLayer(layers.layerList[0]._id);
     setItems(layers.itemMap.get(layers.layerList[0]._id));
     restorePreviewImages(layerObject["localStorageInstance"]);

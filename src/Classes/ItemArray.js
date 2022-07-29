@@ -39,6 +39,7 @@ class ItemHolder {
             for (var i = 0; i < toBeDeletedLinks.length; i++) {
                 var deleteLinkFun = (element) => element._id == toBeDeletedLinks[i];
                 var deleteLinkIndex = this.itemList.findIndex(deleteLinkFun);
+                InstanceGenerator.deleteLink(this.itemList[deleteLinkIndex]);
                 this.itemList[deleteLinkIndex].deleteLink(deletingItemId);
             }
             for (var i = 0; i < beingDeletedFromFunctions.length; i++) {
@@ -46,7 +47,6 @@ class ItemHolder {
                 this.itemList[deleteOwnerIndex].deleteOwner(deletingItemId);
             }
             for (var i = 0; i < toBeDeletedLayers.length; i++) {
-                console.log('deleted ' + toBeDeletedLayers[i]);
                 layers.deleteLayer(toBeDeletedLayers[i]);
             }
             // bRecs.deleteBoundingRec(layers.selectedLayer._id, deletingItemId);
@@ -219,8 +219,9 @@ class ItemHolder {
         // const components = items.itemList.filter(el => el._type === "Component");
 
         for (var x in items.itemList) {
-            if (items.itemList[x]._type === "Component")
+            if (items.itemList[x]._type === "Component") {
                 items.itemList[x].updateBoundingRec();
+            }
         }
     }
     updateSelectedBoundings() {

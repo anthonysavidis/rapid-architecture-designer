@@ -45,6 +45,8 @@ const moveCallBack = (compId) => {
     actions.saveCommand(massiveSet, massiveMove, initialFuncsStr, JSON.stringify(compId));
     if (isByComponentChecked()) {
         showByComponent();
+    } else {
+        showAllRefresh();
     }
     // closeContext();
 

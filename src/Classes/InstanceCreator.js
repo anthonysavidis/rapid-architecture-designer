@@ -40,7 +40,6 @@ class InstanceCreator {
   deleteNode(obj) {
     const node = obj;
     var delNode = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(node.key);
-    console.log(InstanceGenerator.diagramMap[layers.selectedLayer._id].model.nodeDataArray);
     InstanceGenerator.diagramMap[layers.selectedLayer._id].startTransaction();
     InstanceGenerator.diagramMap[layers.selectedLayer._id].remove(delNode);
     InstanceGenerator.diagramMap[layers.selectedLayer._id].commitTransaction("deleted node");
@@ -115,7 +114,18 @@ class InstanceCreator {
     // Clicking is just a sequence of input events.
     // There is no command in CommandHandler for such a basic gesture.
   }
+  clickWorkspace() {
+    var robot = new Robot(InstanceGenerator.diagramMap[layers.selectedLayer._id]);
 
+    var loc = { x: 0, y: 0 };
+
+    // click on Lambda
+    robot.mouseDown(loc.x + 10, loc.y + 10, 0, {});
+    robot.mouseUp(loc.x + 10, loc.y + 10, 100, {});
+
+    // Clicking is just a sequence of input events.
+    // There is no command in CommandHandler for such a basic gesture.
+  }
   applyCurrentComponentSettings(lid, nodeData) {
     const css = getAllCssVars();
     for (var i in css) {
