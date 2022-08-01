@@ -8,7 +8,7 @@ import { produceLayerTabRod, removeLayerTabRod } from "../HtmlElements/extending
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { closeInfo, createLayerInfoModal } from "../HtmlElements/layerInfo.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
-import { moveItemsTo, setUpMoveAction } from "../Layers/moveItem.js";
+import { createSendingItem, moveItemsTo, setUpMoveAction } from "../Layers/moveItem.js";
 import { closeLayerTree, openLayerTree } from "../Layers/Tree.js";
 
 
@@ -86,8 +86,8 @@ function addHierarchyTabListeners() {
             // actions.saveCommand(moveToNext, moveToPrev, initialItem, updatedItem);
             if (!itemLinks)
                 itemLinks = "";
-            const nextSendingItem = moveItemsTo(layerId, selectedItems);
-            setUpMoveAction(layerId, selectedItems, itemLinks, nextSendingItem);
+            setUpMoveAction(layerId, selectedItems, itemLinks, createSendingItem(selectedItems));
+            moveItemsTo(layerId, selectedItems);
             layers.changeLayer(layerId);
 
         });

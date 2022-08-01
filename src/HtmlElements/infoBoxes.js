@@ -98,27 +98,22 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         bar.appendChild(closeButton);
         bar.style.position = "relative";
         cancelButton.onclick = cancelAction;
-        box.style.width = "318px";
-        buttons.style.marginTop = "45px";
-
-        if (params[0].includes("subarchitecture")) {
-            // title = document.createElement('h4');
-            title.style.paddingRight = title.style.paddingLeft = "10px";
-            buttons.style.marginTop = "65px";
-
-        }
+        box.style.width = "fit-content";
+        buttons.style.marginTop = "10px";
+        buttons.style.marginBottom = "3px";
         title.innerText = params[0];
 
         title.style.width = "100%";
-        title.style.display = "flex";
+        title.style.display = "inline-block";
         title.style.justifyContent = "center";
-        title.style.position = "absolute";
         title.style.top = "-10px";
-        title.style.marginTop = "38px";
+        title.style.marginTop = "10px";
+        title.style.whiteSpace = "nowrap";
         box.appendChild(title);
         confirmationButton.className = "okButton";
         confirmationButton.style.backgroundColor = "#ff6464";
         confirmationButton.style.borderColor = "#969696";
+
 
         (params[1] === '1') ? confirmationButton.innerHTML = "OK" : confirmationButton.innerHTML = "Delete";
         confirmationButton.onclick = function () {
@@ -126,9 +121,15 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
             closeBox();
         }
         cancelButton.style.float = "right";
-        confirmationButton.style.marginLeft = "20px";
-        confirmationButton.style.marginRight = "20px";
+        confirmationButton.style.marginLeft = "13px";
+        confirmationButton.style.marginRight = "11px";
         produceGrayLayer(box, "", "", cancelCallBack);
+        if (params[0].includes("subarchitecture")) {
+            // title = document.createElement('h4');
+            title.style.paddingRight = title.style.paddingLeft = "10px";
+            buttons.style.marginTop = "10px";
+            confirmationButton.style.marginRight = "20px";
+        }
     } else if (type === "updating") {
         const isInfo = callBack;
         var imageTick = document.createElement('div');
@@ -203,6 +204,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         confirmationButton.className = "okButton";
         confirmationButton.style.marginLeft = "13px";
         confirmationButton.style.marginRight = "29px";
+
         confirmationButton.innerHTML = constantNames["ok"];
         confirmationButton.onclick = function () {
             callBack(select.value);

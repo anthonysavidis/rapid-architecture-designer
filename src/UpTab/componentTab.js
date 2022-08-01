@@ -255,13 +255,25 @@ function addComponentTabListeners() {
         const extentableItems = getSelectedItems();
         extendButton(extentableItems);
         appearComponentButtons();
-
+        actions.saveCommand((actionItems) => {
+            extendButton(actionItems.initialItem);
+            appearComponentButtons();
+        }, (actionItems) => {
+            collapseButton(actionItems.initialItem);
+            appearComponentButtons();
+        }, extentableItems, "");
     });
     document.getElementById("collapseButton").addEventListener("click", componentContextDispatch["Collapse"] = function () {
         const extentableItems = getSelectedItems();
         collapseButton(extentableItems);
         appearComponentButtons();
-
+        actions.saveCommand((actionItems) => {
+            collapseButton(actionItems.initialItem);
+            appearComponentButtons();
+        }, (actionItems) => {
+            extendButton(actionItems.initialItem);
+            appearComponentButtons();
+        }, extentableItems, "");
     });
     initialAppear();
     return;

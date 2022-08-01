@@ -63,7 +63,7 @@ function showOwner(functionItem) {
 
 function resetOwner(functionItem) {
     document.getElementById(functionItem._id + 'name').innerText = functionItem._name;
-    // document.getElementById(functionItem._id).firstChild.className = "ficon";
+    document.getElementById(functionItem._id).firstChild.className = "ficon";
     return;
 }
 

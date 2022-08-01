@@ -52,7 +52,8 @@ class InstanceCreator {
   getNodeBoundingRect(key) {
     const node = this.diagramMap[layers.selectedLayer._id].findNodeForKey(key);
     const realLoc = this.diagramMap[layers.selectedLayer._id].transformDocToView(node.location);
-    return { width: node.width, height: node.height, top: Number(realLoc.y.toFixed(2)), left: Number(realLoc.x.toFixed(2)) };
+    // console.log({ width: node.width, height: node.height, top: node.location.y, left: node.location.x });
+    return { width: node.width, height: node.height, top: node.location.y, left: node.location.x };
   }
   getComponentsTextBlockDims(key) {
 

@@ -85,4 +85,19 @@ function keepOnlyLastSelectedItem(id) {
     }
 }
 
-export { changeSelectState, cancelSelection, handleByComponent, getSelectedIds, getSelectedItems, selectAction, keepOnlyLastSelectedItem };
+function updateSelectedComponentBoundingRec() {
+    const selected = getSelectedItems();
+    for (var x in selected)
+        items.itemList[items.itemList.findIndex(el => el._id === selected[x]._id)].updateBoundingRec();
+}
+
+function getSelectedComponentBoundingRec() {
+    const selected = getSelectedItems();
+    const boundingRecMap = {}
+    for (var x in selected)
+        boundingRecMap[selected[x]._id] = items.itemList[items.itemList.findIndex(el => el._id === selected[x]._id)].boundingRec;
+    return boundingRecMap;
+}
+
+
+export { changeSelectState, cancelSelection, handleByComponent, updateSelectedComponentBoundingRec, getSelectedComponentBoundingRec, getSelectedIds, getSelectedItems, selectAction, keepOnlyLastSelectedItem };

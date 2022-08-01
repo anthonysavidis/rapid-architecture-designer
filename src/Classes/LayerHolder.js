@@ -102,6 +102,7 @@ class LayerHolder {
     this.selectLayer(id);
     this.bindItemsToLayer(id);
     actionsOfNextLayer(id);
+    InstanceGenerator.clickWorkspace();
   }
   bindItemsToLayer(id) {
     setItems(this.itemMap.get(id));

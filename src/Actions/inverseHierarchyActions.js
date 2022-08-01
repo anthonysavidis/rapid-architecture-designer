@@ -10,7 +10,7 @@ function moveToNext(actionItems) {
     const itemList = actionItems.updatedItem[1];
     const sendingItem = JSON.parse(actionItems.updatedItem[2]);
     // moveItemsTo(nextLayerId, itemList);
-    closeTheTooltip();
+
     removeFromCurrentLayer(itemList);
     layers.changeLayer(nextLayerId);
     pasteFromStr(sendingItem);
@@ -28,8 +28,11 @@ function moveToPrev(actionItems) {
     } catch {
         allLinks = "";
     }
+    console.log("move to prev");
+    console.log(prevLayerId);
+    console.log(itemList);
     moveItemsTo(prevLayerId, itemList);
-    closeTheTooltip();
+
     if (allLinks) {
         for (var x in allLinks) {
             if (items.itemList.findIndex((el) => el._id === allLinks[x]._id) === -1)

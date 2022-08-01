@@ -3,7 +3,7 @@ import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { functionOnDropOnComponent } from "../Item/componentEventCallbacks.js";
-import { cancelSelection, getSelectedItems, handleByComponent } from "../Item/selectComponent.js";
+import { cancelSelection, getSelectedComponentBoundingRec, getSelectedItems, handleByComponent, selectAction, updateSelectedComponentBoundingRec } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { componentContextDispatch } from "../UpTab/componentTab.js";
 import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
@@ -19,7 +19,7 @@ var lastSelectedNodeKey = null;
 
 function getNewWorkspace(lid) {
     return $(go.Diagram, lid, {
-        padding: 20, // extra space when scrolled all the way
+        padding: new go.Margin(20, -150, -150, 250), //20 extra space when scrolled all the way
         grid:
             $(go.Panel, "Grid",
                 { gridCellSize: new go.Size(10, 10), visible: false },
@@ -32,8 +32,30 @@ function getNewWorkspace(lid) {
 
         },
         "SelectionMoved": function (e) {
-            console.log("selectionMovedByHand");
-            items.updateSelectedBoundings();
+            const transaction = InstanceGenerator.diagramMap[layers.selectedLayer._id].model.undoManager.currentTransaction;
+            const oldRecMap = JSON.stringify(getSelectedComponentBoundingRec());
+            updateSelectedComponentBoundingRec();
+            // items.updateSelectedBoundings();
+            const newRecMap = JSON.stringify(getSelectedComponentBoundingRec());
+
+            actions.saveCommand((actionItems) => {
+                const newRecMap = JSON.parse(actionItems.updatedItem);
+                for (var x in newRecMap) {
+
+                    items.itemList[items.itemList.findIndex(el => el._id === x)].boundingRec = newRecMap[x];
+                    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(x).move(new go.Point(newRecMap[x].left, newRecMap[x].top));
+                    // InstanceGenerator.alterNodeDims(x, newRecMap[x].width, newRecMap[x].height);
+                }
+            }, (actionItems) => {
+                const oldRecMap = JSON.parse(actionItems.initialItem);
+
+                for (var x in oldRecMap) {
+                    items.itemList[items.itemList.findIndex(el => el._id === x)].boundingRec = oldRecMap[x];
+                    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(x).move(new go.Point(oldRecMap[x].left, oldRecMap[x].top));
+                    // InstanceGenerator.alterNodeDims(x, oldRecMap[x].width, oldRecMap[x].height);
+                }
+
+            }, oldRecMap, newRecMap);
         },
         "ExternalObjectsDropped": (e) => {
         },
@@ -71,6 +93,26 @@ function getNewWorkspace(lid) {
                 // and have the user start editing its text
                 e.diagram.commandHandler.editTextBlock();
             }, 20);
+        },
+        PartResized: (e) => {
+            cancelSelection();
+            var node = e.subject;
+            const initialBounding = JSON.stringify(items.itemList[items.itemList.findIndex(el => el._id === node.key)].boundingRec) + '@' + node.key;
+            selectAction(node.key);
+            updateSelectedComponentBoundingRec();
+            const updatedBounding = JSON.stringify(items.itemList[items.itemList.findIndex(el => el._id === node.key)].boundingRec);
+            actions.saveCommand((actionItems) => {
+                var nodeKey = actionItems.initialItem.split('@')[1];
+                const newRec = JSON.parse(actionItems.updatedItem);
+                items.itemList[items.itemList.findIndex(el => el._id === nodeKey)].boundingRec = newRec;
+                InstanceGenerator.alterNodeDims(nodeKey, newRec.width, newRec.height);
+            }, (actionItems) => {
+                var objstr = actionItems.initialItem.split('@')[0];
+                var nodeKey = actionItems.initialItem.split('@')[1];
+                const oldRec = JSON.parse(objstr);
+                items.itemList[items.itemList.findIndex(el => el._id === nodeKey)].boundingRec = oldRec;
+                InstanceGenerator.alterNodeDims(nodeKey, oldRec.width, oldRec.height);
+            }, initialBounding, updatedBounding);
         },
         "commandHandler.archetypeGroupData": {
             isGroup: true,
@@ -162,7 +204,7 @@ function initializeNodeTemplate() {
                 appearHierarchyButtons();
                 (isByComponentChecked()) ? handleByComponent() : 1;
                 lastSelectedNodeKey = node.key;
-
+                updateSelectedComponentBoundingRec();
 
             },
 

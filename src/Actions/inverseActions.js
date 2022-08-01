@@ -84,7 +84,6 @@ function unlinkItems(actionItems) {
     var index1 = items.itemList.findIndex((el) => el._id === toBeUnlinkedItems[1]._id);
     items.itemList[index0].deleteLink(toBeUnlinkedItems[1]._id);
     items.itemList[index1].deleteLink(toBeUnlinkedItems[0]._id);
-    console.log(toBeUnlinkedItems[2]);
     items.delete(toBeUnlinkedItems[2]._id);
     return;
 }

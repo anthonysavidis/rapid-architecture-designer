@@ -572,3 +572,7 @@ hr.solid {
     width: 100%;
     font-size: x-large;
 }
+
+canvas {
+    outline: none;
+}

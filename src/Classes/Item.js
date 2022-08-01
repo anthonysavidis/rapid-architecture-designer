@@ -413,9 +413,12 @@ class Item {
             this.subLayers = [];
             this._functions = [];
             this.diagramNode = JSON.parse(itemObject.diagramNode);
+            this.boundingRec = itemObject.boundingRec;
             InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
             const nodeData = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).data;
             InstanceGenerator.applyCurrentComponentSettings(layers.selectedLayer._id, nodeData);
+            InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).move(new go.Point(this.boundingRec.left, this.boundingRec.top));
+
             // nodeData.left 
             // this.linkedItems = JSON.parse(itemObject.linkedItems);
             // this.fixPositionAndDetails(itemObject, 0);
