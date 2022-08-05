@@ -346,6 +346,7 @@ body {
     overflow: scroll;
     padding-bottom: 12px;
     background-color: white;
+    border: 1px solid #ccc;
 }
 
 .function {

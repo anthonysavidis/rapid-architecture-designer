@@ -36,6 +36,8 @@ class InstanceCreator {
     this.diagramMap[lid].linkTemplate.contextMenu = getLinkContext();
     setWorkspaceDropListeners(lid);
     addDiagramListener(this.diagramMap[lid]);
+
+
   }
   deleteNode(obj) {
     const node = obj;

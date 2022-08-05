@@ -1,6 +1,8 @@
 import { resetSpecificFunction, setSpecificFunction } from "../Actions/inverseFunctionsActions.js";
 import { actions } from "../Classes/Actions.js";
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
+import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { moveCallBack } from "../Input/functonsContextMenuCallbacks.js";
@@ -36,4 +38,27 @@ const functionOnDropOnComponent = (event, componentID) => {
   }
 };
 
-export { functionOnDropOnComponent };
+const moveActionHandler = (oldRecMap, newRecMap) => {
+  actions.saveCommand((actionItems) => {
+    const newRecMap = JSON.parse(actionItems.updatedItem);
+    for (var x in newRecMap) {
+
+      items.itemList[items.itemList.findIndex(el => el._id === x)].boundingRec = newRecMap[x];
+      InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(x).move(new go.Point(newRecMap[x].left, newRecMap[x].top));
+      // InstanceGenerator.alterNodeDims(x, newRecMap[x].width, newRecMap[x].height);
+    }
+  }, (actionItems) => {
+    const oldRecMap = JSON.parse(actionItems.initialItem);
+
+    for (var x in oldRecMap) {
+      items.itemList[items.itemList.findIndex(el => el._id === x)].boundingRec = oldRecMap[x];
+      InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(x).move(new go.Point(oldRecMap[x].left, oldRecMap[x].top));
+      // InstanceGenerator.alterNodeDims(x, oldRecMap[x].width, oldRecMap[x].height);
+    }
+
+  }, oldRecMap, newRecMap);
+}
+
+
+
+export { functionOnDropOnComponent, moveActionHandler };

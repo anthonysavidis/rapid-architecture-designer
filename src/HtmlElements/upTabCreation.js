@@ -91,14 +91,14 @@ function insertSideTab() {
     document.getElementById('right_tab').appendChild(functionsRec);
     return;
 }
-
+//12.5
 function toggleSelectedComponents() {
     if (document.getElementById("currentSelectedArea").style.display === "none") {
         document.getElementById("currentSelectedArea").style.display = "block";
-        document.getElementById("functionArea").style.height = "77.5%";
+        document.getElementById("functionArea").style.height = "66.2%";
     } else {
         document.getElementById("currentSelectedArea").style.display = "none";
-        document.getElementById("functionArea").style.height = "89%";
+        document.getElementById("functionArea").style.height = "84.5%";
 
     }
     return;

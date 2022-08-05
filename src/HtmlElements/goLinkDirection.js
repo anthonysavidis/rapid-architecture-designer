@@ -59,8 +59,6 @@ function produceRadioButton(id, labelstr) {
 
 function produceLinkDirectionBox(linkId) {
     const linkItem = items.itemList[items.itemList.findIndex(el => el._id === linkId)];
-    const toValues = [linkItem.idComponent1, linkItem.idComponent2];
-    const toNames = [items.itemList[items.itemList.findIndex(el => el._id === toValues[0])]._name, items.itemList[items.itemList.findIndex(el => el._id === toValues[1])]._name];
 
     var box = document.createElement('div');
     var closeBox = () => {
@@ -88,6 +86,13 @@ function produceLinkDirectionBox(linkId) {
     var undirectedRadio = produceRadioButton("undirected", constantNames["linkDirectionBox"]["undirected"]); undirectedRadio.className += "item1";
     var bidirectedRadio = produceRadioButton("bidirected", constantNames["linkDirectionBox"]["bidirected"]); bidirectedRadio.className += "item4";
     var directedRadio = produceRadioButton("directed", constantNames["linkDirectionBox"]["directed"]); directedRadio.className += "item7";
+    if (linkItem.linkState === "")
+        undirectedRadio.firstChild.checked = true;
+    else if (linkItem.linkState === "bidirectional")
+        bidirectedRadio.firstChild.checked = true;
+    else {
+        directedRadio.firstChild.checked = true;
+    }
     grid.appendChild(undirectedRadio);
     grid.appendChild(bidirectedRadio);
     grid.appendChild(directedRadio);
@@ -110,6 +115,8 @@ function produceLinkDirectionBox(linkId) {
     selectDiv.className = "item10";
     selectDiv.style.display = "none";
     selectDiv.style.marginLeft = "10px";
+    const toValues = [linkItem.idComponent1, linkItem.idComponent2];
+    const toNames = [items.itemList[items.itemList.findIndex(el => el._id === toValues[0])]._name, items.itemList[items.itemList.findIndex(el => el._id === toValues[1])]._name];
     select.innerHTML = '<option value="' + toValues[0] + '">' + toNames[0] + '</option>  \
     <option value="'+ toValues[1] + '">' + toNames[1] + '</option>';
     select.style.margin = 0 + "px";
@@ -123,7 +130,14 @@ function produceLinkDirectionBox(linkId) {
     grid.appendChild(selectDiv);
     box.appendChild(grid)
 
-
+    if (directedRadio.firstChild.checked) {
+        selectDiv.style.display = "block";
+        if (linkItem.linkState === "point1") {
+            select.value = toValues[0];
+        } else {
+            select.value = toValues[1];
+        }
+    }
 
     var cancelButton = document.createElement('div'),
         confirmationButton = document.createElement('div');

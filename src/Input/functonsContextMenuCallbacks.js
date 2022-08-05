@@ -42,6 +42,7 @@ const moveCallBack = (compId) => {
         items.unparentFunction(funcId);
         items.setFunctionToItem(compId, funcId);
     }
+
     actions.saveCommand(massiveSet, massiveMove, initialFuncsStr, JSON.stringify(compId));
     if (isByComponentChecked()) {
         showByComponent();

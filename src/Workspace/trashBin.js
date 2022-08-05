@@ -63,9 +63,22 @@ function deleteMultWithTrashBin(itemElmnts) {
         showAllRefresh();
     }
 }
-
+var hoverBin = false;
 
 function initializeTheTrashBin() {
+
+    document.getElementById('trashBin').addEventListener("mouseenter", (e) => {
+        // console.log('enter');
+        document.getElementById('trashBin').style.zIndex = 1;
+        hoverBin = true;
+    });
+    document.getElementById('trashBin').addEventListener("mouseleave", (e) => {
+        // console.log('leave');
+        hoverBin = false;
+        document.getElementById('trashBin').style.zIndex = 29;
+
+    });
+
     // document.getElementById('helpButton').addEventListener("click", (e) => {
     //     createLayerInfoModal();
     // });
@@ -124,4 +137,4 @@ function createDraggableSpace() {
 
 }
 
-export { canBeDeleted, fixMainDiv, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, deleteMultWithTrashBin, fixTrashBinPosition };
+export { canBeDeleted, fixMainDiv, hoverBin, deleteWithTrashBin, initializeTheTrashBin, createDraggableSpace, deleteMultWithTrashBin, fixTrashBinPosition };

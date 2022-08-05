@@ -74,14 +74,14 @@ function loadInitialSettings(type) {
 function produceAConfigBox(type, refresh) {
     var box = document.createElement('div');
     box.className = 'configurationBox';
-    var closeBox = function() {
+    var closeBox = function () {
         box.remove();
         if (document.getElementById('grayLayer'))
             document.getElementById('grayLayer').remove();
     };
     if (!refresh)
         storeInitialSettings(type);
-    var cancelChanges = function() {
+    var cancelChanges = function () {
         loadInitialSettings(type);
         closeBox();
     };
@@ -123,7 +123,7 @@ function produceAConfigBox(type, refresh) {
     cancelButton.onclick = cancelChanges;
     confirmationButton.className = "okButton";
     confirmationButton.innerHTML = constantNames["apply"];
-    confirmationButton.onclick = function() {
+    confirmationButton.onclick = function () {
         if (type === "Operation") {
             configStyle.actionDispatch["Operation"].clearCurrentOldSettings();
         } else if (type === "Link") {
@@ -151,7 +151,7 @@ function produceAConfigBox(type, refresh) {
     if (type === "Operation") {
         configGrid.style.marginLeft = "64px";
         confirmationButton.style.marginRight = "62px";
-        document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "155px";
+        document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "152px";
         document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "191px";
         // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
         document.getElementsByClassName("labelDiv unselectableText item3")[0].style.width = "228px";

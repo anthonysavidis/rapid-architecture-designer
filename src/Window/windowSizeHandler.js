@@ -23,7 +23,7 @@ class WindowChangeListener {
 
 
     windowSizeListener() {
-        $(window).resize(function() {
+        $(window).resize(function () {
             document.getElementById("html1").scrollTop = 0; //always scroll on top especially in zoom in/out.
             fixSideBarsOnZoom();
 

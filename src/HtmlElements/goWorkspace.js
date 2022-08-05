@@ -2,16 +2,20 @@ import { actions, redoAction, undoAction } from "../Classes/Actions.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
-import { functionOnDropOnComponent } from "../Item/componentEventCallbacks.js";
+import { constantNames } from "../config/constantNames.js";
+import { isInsideRec } from "../Input/clickInputObserver.js";
+import { functionOnDropOnComponent, moveActionHandler } from "../Item/componentEventCallbacks.js";
 import { cancelSelection, getSelectedComponentBoundingRec, getSelectedItems, handleByComponent, selectAction, updateSelectedComponentBoundingRec } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { componentContextDispatch } from "../UpTab/componentTab.js";
 import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { isByComponentChecked } from "../Workspace/functionAppearance.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
+import { deleteMultWithTrashBin, deleteWithTrashBin, hoverBin } from "../Workspace/trashBin.js";
 import { produceWorkspaceContextMenu } from "../Workspace/workspaceContextMenu.js";
 import { produceComponentContextMenu } from "./componentContextMenu.js";
 import { itemNameChangedHandler } from "./doubleClickEditing.js";
+import { produceBox } from "./infoBoxes.js";
 import { produceLinkContextMenu } from "./linkContextMenu.js";
 const $ = go.GraphObject.make;
 
@@ -19,7 +23,7 @@ var lastSelectedNodeKey = null;
 
 function getNewWorkspace(lid) {
     return $(go.Diagram, lid, {
-        padding: new go.Margin(20, -150, -150, 250), //20 extra space when scrolled all the way
+        padding: new go.Margin(20, -150, -100, 250), //20 extra space when scrolled all the way
         grid:
             $(go.Panel, "Grid",
                 { gridCellSize: new go.Size(10, 10), visible: false },
@@ -31,31 +35,23 @@ function getNewWorkspace(lid) {
             appearFunctionButtons();
 
         },
+        mouseOver: function (e) {
+            // console.log(InstanceGenerator.diagramMap[layers.selectedLayer._id].transformDocToView(new go.Point(e.viewPoint.x, e.viewPoint.y)))
+
+        },
         "SelectionMoved": function (e) {
             const transaction = InstanceGenerator.diagramMap[layers.selectedLayer._id].model.undoManager.currentTransaction;
             const oldRecMap = JSON.stringify(getSelectedComponentBoundingRec());
             updateSelectedComponentBoundingRec();
             // items.updateSelectedBoundings();
             const newRecMap = JSON.stringify(getSelectedComponentBoundingRec());
+            console.log(e.diagram.viewportBounds);
+            if (hoverBin) {
 
-            actions.saveCommand((actionItems) => {
-                const newRecMap = JSON.parse(actionItems.updatedItem);
-                for (var x in newRecMap) {
+            } else {
+                moveActionHandler(oldRecMap, newRecMap);
 
-                    items.itemList[items.itemList.findIndex(el => el._id === x)].boundingRec = newRecMap[x];
-                    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(x).move(new go.Point(newRecMap[x].left, newRecMap[x].top));
-                    // InstanceGenerator.alterNodeDims(x, newRecMap[x].width, newRecMap[x].height);
-                }
-            }, (actionItems) => {
-                const oldRecMap = JSON.parse(actionItems.initialItem);
-
-                for (var x in oldRecMap) {
-                    items.itemList[items.itemList.findIndex(el => el._id === x)].boundingRec = oldRecMap[x];
-                    InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(x).move(new go.Point(oldRecMap[x].left, oldRecMap[x].top));
-                    // InstanceGenerator.alterNodeDims(x, oldRecMap[x].width, oldRecMap[x].height);
-                }
-
-            }, oldRecMap, newRecMap);
+            }
         },
         "ExternalObjectsDropped": (e) => {
         },
@@ -71,6 +67,11 @@ function getNewWorkspace(lid) {
         mouseDrop: (e) => {
             // when the selection is dropped in the diagram's background,
             // make sure the selected Parts no longer belong to any Group
+            const pointX = e.viewPoint.x - 250;
+            const pointY = e.viewPoint.y + 100;
+            if (isInsideRec(pointX, pointY, document.getElementById('trashBin').getBoundingClientRect())) {
+                componentContextDispatch["Delete"]();
+            }
             var ok = e.diagram.commandHandler.addTopLevelParts(
                 e.diagram.selection,
                 true

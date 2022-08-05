@@ -266,7 +266,7 @@ class Item {
             this.constructComponent();
             this.isSubarchExtended = false;
             this.isDescExtended = false;
-            // this.updateBoundingRec();
+            this.updateBoundingRec();
         } else if (type === "Link") {
             this._id = this.generateItemId().toString();
             this._name = constantNames["emptyNames"]["line"];

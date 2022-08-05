@@ -223,4 +223,4 @@ function checkToClose(cX, cY, e) {
 
 }
 
-export { whichElement, initializeObserver, getLastClickedClassName, closeTheTooltip, hasClickedOnWorkspace };
+export { whichElement, initializeObserver, getLastClickedClassName, closeTheTooltip, isInsideRec, hasClickedOnWorkspace };
