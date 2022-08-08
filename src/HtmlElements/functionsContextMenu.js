@@ -1,3 +1,4 @@
+import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { addAllPossibleMovingComponents, splitCallBack, deleteCallBack, unparentCallBack, editFunctionCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
@@ -30,11 +31,11 @@ function moveContextMenu(funcId, parent) {
     moveContext.style.left = moveContext.style.left + 145 + "px";
     moveContext.className = "context-menu";
     moveContext.style.display = "none";
-    moveContext.style.height = 200 + "px";
-    moveContext.style.overflow = "scroll";
+    moveContext.style.maxHeight = 200 + "px";
+    if (items.itemList.filter(el => el._type === "Component").length >= 6)
+        moveContext.style.overflowY = "scroll";
     //add the components...
-    addAllPossibleMovingComponents(funcId, moveContext);
-
+    var movCompCount = addAllPossibleMovingComponents(funcId, moveContext);
     parent.onmouseover = function () {
         moveContext.style.display = "block";
     }

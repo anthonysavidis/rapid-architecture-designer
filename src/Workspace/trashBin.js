@@ -105,8 +105,8 @@ function initializeTheTrashBin() {
 function fixTrashBinPosition() {
     // document.getElementById("helpButton").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";
     // document.getElementById("helpButton").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 145 + "px";
-    document.getElementById("trashBin").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 110 + "px";
-    document.getElementById("trashBin").style.top = document.getElementById("right_tab").getBoundingClientRect().height - 15 + "px";
+    document.getElementById("trashBin").style.left = document.getElementById("right_tab").getBoundingClientRect().left - 74 + "px";
+    document.getElementById("trashBin").style.top = document.getElementById("right_tab").getBoundingClientRect().height + 26 + "px";
     return;
 }
 

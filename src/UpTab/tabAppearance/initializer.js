@@ -51,6 +51,9 @@ function addAllButtons() {
     addButton(constantNames["editTab"]["Undo"], "undoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Redo"], "redoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Grid"], "gridButton", constantNames["editTab"]["tabName"]);
+    addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['editTab']['tabName']);
+    addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['editTab']['tabName']);
+    addButton(constantNames["editTab"]["Edit"], "editButton", constantNames["editTab"]["tabName"]);
     // addButton(constantNames["editTab"]["Panning"], "panningButton", constantNames["editTab"]["tabName"]);
 
     addButton(constantNames["fileTab"]["New"], "newProjectButton", constantNames["fileTab"]["tabName"]);
@@ -63,8 +66,6 @@ function addAllButtons() {
 
     addButton("Import", "loadConfigButton", constantNames['settingsTab']['tabName']);
     addButton("Export", "saveConfigButton", constantNames['settingsTab']['tabName']);
-    addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['editTab']['tabName']);
-    addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['editTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Component"], "configureComponentButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Operation"], "configureOperationButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Link"], "configureLinkButton", constantNames['settingsTab']['tabName']);

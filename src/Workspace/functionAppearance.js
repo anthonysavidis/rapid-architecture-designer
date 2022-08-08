@@ -5,7 +5,7 @@ import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
-import { changeMaxWidth, getSelectedFunctionWidth, measureSelectedView, resetWidthToDefault } from "./selectedOperationsHandler.js";
+import { changeMaxWidth, getSelectedFunctionWidth, measureAllLayersOperations, measureSelectedView, resetWidthToDefault } from "./selectedOperationsHandler.js";
 
 var lastSelected = "";
 
@@ -55,7 +55,6 @@ function showOwner(functionItem) {
     setTimeout(() => { //due to listeners...
         if (!isByComponentChecked() && document.getElementById(functionItem._id))
             document.getElementById(functionItem._id).firstChild.className = "fIconSetted";
-
     }, 50)
 
     return;
@@ -123,8 +122,10 @@ function showSpecificFunctions(id) {
     for (var i in component._functions) {
         document.getElementById(component._functions[i] + 'external').style.display = "block";
         const fWidth = getSelectedFunctionWidth(component._functions[i]);
-        if (fWidth > maxCurrentOperationsWidth)
+        if (fWidth > maxCurrentOperationsWidth) {
+            console.log(component._functions[i]);
             maxCurrentOperationsWidth = fWidth;
+        }
     }
     return;
 }
@@ -142,7 +143,6 @@ function setUpFunctionDisplayListeners() {
             // document.getElementById("byComponent").checked = false;
             showAll();
             toggleSelectedComponents();
-            closeTheTooltip();
         }
         if (isByComponentChecked()) {
             cancelFunctionSelection();
@@ -150,7 +150,6 @@ function setUpFunctionDisplayListeners() {
             showByComponent();
             toggleSelectedComponents();
             updateSelectedList();
-            closeTheTooltip();
 
         }
     });
@@ -163,7 +162,7 @@ function forceActivateAll() {
     showAll();
     if (document.getElementById("currentSelectedArea").style.display !== "none")
         toggleSelectedComponents();
-    closeTheTooltip();
+    // measureAllLayersOperations();
     return;
 }
 
@@ -175,7 +174,7 @@ function forceActivateByComponent() {
     if (document.getElementById("currentSelectedArea").style.display === "none")
         toggleSelectedComponents();
     updateSelectedList();
-    closeTheTooltip();
+    // measureAllLayersOperations();
     return;
 }
 

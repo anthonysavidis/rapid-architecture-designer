@@ -130,16 +130,21 @@ class InstanceCreator {
     // There is no command in CommandHandler for such a basic gesture.
   }
   applyCurrentComponentSettings(lid, nodeData) {
-    const css = getAllCssVars();
-    for (var i in css) {
-      var r = document.querySelector(':root');
-      var rs = getComputedStyle(r);
-      const val = rs.getPropertyValue(css[i]);
-      const varName = css[i];
-      if (css[i].includes("component")) {
-        if (varName === "--componentTextSize" || varName === "--componentFontStyle" || varName === "--componentTextFamily" || varName === "--componentFontWeight") {
+    // const css = getAllCssVars();
+    for (var i in configStyle.configJSON) {
+      // var r = document.querySelector(':root');
+      // var rs = getComputedStyle(r);
+      // const val = rs.getPropertyValue("--"+configStyle.configJSON[i]);
+      const val = configStyle.configJSON[i];
+      const varName = "--" + i;
+      if (varName.includes("component")) {
+        if (varName === "--componentFontStyle" || varName === "--componentTextFamily" || varName === "--componentFontWeight")
+          continue;
+        if (varName === "--componentTextSize") {
           const font = configStyle.configJSON["componentFontStyle"] + " normal " + configStyle.configJSON["componentFontWeight"] + " " + configStyle.configJSON["componentTextSize"] + " " + configStyle.configJSON["componentTextFamily"];
-          this.modifySingleNodeProperty(lid, nodeData, "font", font);
+          console.log(font);
+          // this.diagramMap[layers.selectedLayer._id].findNodeForKey(nodeData.key).font = font;
+          this.modifySingleNodeProperty(lid, nodeData, "componentFont", font);
         } else {
           if (varName.includes("componentBorderWidth")) {
             this.modifySingleNodeProperty(lid, nodeData, "componentBorderWidth", parseInt(val.slice(0, -2), 10)); //<-string
@@ -153,11 +158,11 @@ class InstanceCreator {
           }
           else {
             const finalValue = val.charAt(0) === " " ? val.slice(1) : val;
-            this.modifySingleNodeProperty(lid, nodeData, css[i].slice(2), configStyle.configJSON[varName.slice(2)]);
+            this.modifySingleNodeProperty(lid, nodeData, varName.slice(2), configStyle.configJSON[varName.slice(2)]);
           }
         }
       }
-      if (css[i].includes("subcomponent")) {
+      if (varName.includes("subcomponent")) {
         this.modifyExtensionProperty(varName.slice(2), configStyle.configJSON[varName.slice(2)])
       }
     }

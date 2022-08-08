@@ -2,6 +2,7 @@ import { items } from "../Classes/ItemArray.js";
 import { Item } from "../Classes/Item.js";
 import { isByComponentChecked, showAll, showByComponent } from "../Workspace/functionAppearance.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
+import { measureSelectedLayer } from "../Workspace/selectedOperationsHandler.js";
 
 function createSpecificFunction(actionItems) {
 
@@ -33,7 +34,7 @@ function createMultipleSpecificFunctions(actionItems) {
         if (isByComponentChecked())
             showByComponent();
     }
-
+    measureSelectedLayer();
     return;
 }
 
@@ -44,6 +45,8 @@ function deleteMultipleSpecificFunctions(actionItems) {
     for (var x in itemObjectsToBeDeleted) {
         items.delete(itemObjectsToBeDeleted[x]._id);
     }
+    measureSelectedLayer();
+
     return;
 }
 
@@ -54,6 +57,8 @@ function setSpecificFunction(actionItems) {
     // console.log(items.itemList[0]._functions);
     // console.log('attached');
     // console.log(actionItems.initialItem);
+    measureSelectedLayer();
+
     return;
 }
 
@@ -64,6 +69,8 @@ function resetSpecificFunction(actionItems) {
     // console.log(items.itemList[0]._functions);
     // console.log('detached');
     // console.log(actionItems.initialItem);
+    measureSelectedLayer();
+
     return;
 }
 
@@ -72,6 +79,8 @@ function resetMultipleFunctions(actionItems) {
     for (var x in itemsObject) {
         items.unlinkOwnerFunction(itemsObject[x].owners, itemsObject[x]._id);
     }
+    measureSelectedLayer();
+
     return;
 }
 
@@ -83,6 +92,8 @@ function setMultipleFunctions(actionItems) {
     for (var x in itemsObject) {
         items.setFunctionToItem(itemsObject[x].owners, itemsObject[x]._id);
     }
+    measureSelectedLayer();
+
     return;
 }
 
@@ -123,6 +134,8 @@ function massiveSet(actionItems) {
         console.log('set');
 
     }
+    measureSelectedLayer();
+
 }
 
 function massiveMove(actionItems) {
@@ -136,6 +149,8 @@ function massiveMove(actionItems) {
         showByComponent();
         console.log('move');
     }
+    measureSelectedLayer();
+
 }
 
 function massiveUnparent(actionItems) {
@@ -143,6 +158,8 @@ function massiveUnparent(actionItems) {
     for (var x in initialFunctionList) {
         items.unparentFunction(initialFunctionList[x]._id);
     }
+    measureSelectedLayer();
+
 }
 
 export { createSpecificFunction, createMultipleSpecificFunctions, resetMultipleFunctions, setMultipleFunctions, deleteSpecificFunction, deleteMultipleSpecificFunctions, resetSpecificFunction, setSpecificFunction, standardSplitAction, inverseSplitAction, massiveSet, massiveMove, massiveUnparent };

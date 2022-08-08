@@ -8,7 +8,7 @@ import { addToParentContext, closeContext } from "../HtmlElements/functionsConte
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { cancelSelection, selectAction } from "../Item/selectComponent.js";
 import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
-import { isAllChecked, isByComponentChecked, showAllRefresh, showByComponent, showOwner, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
+import { forceActivateAll, forceActivateByComponent, isAllChecked, isByComponentChecked, showAllRefresh, showByComponent, showOwner, showSpecificFunctions, updateSelectedList } from "../Workspace/functionAppearance.js";
 import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 
 var editFunctionCallBack = (funcId) => {
@@ -45,9 +45,9 @@ const moveCallBack = (compId) => {
 
     actions.saveCommand(massiveSet, massiveMove, initialFuncsStr, JSON.stringify(compId));
     if (isByComponentChecked()) {
-        showByComponent();
+        forceActivateByComponent();
     } else {
-        showAllRefresh();
+        forceActivateAll();
     }
     // closeContext();
 
@@ -114,12 +114,15 @@ const deleteCallBack = () => {
 
 
 function addAllPossibleMovingComponents(funcId, parentDiv) {
+    var count = 0;
     for (var x in items.itemList) {
         if (items.itemList[x]._type === "Component") {
             var child = addToParentContext(funcId, parentDiv, items.itemList[x]._name, moveCallBack, items.itemList[x]._id);
             // child.style.width=;
+            count++;
         }
     }
+    return;
 }
 
 export { addAllPossibleMovingComponents, editFunctionCallBack, splitCallBack, unparentCallBack, deleteCallBack, moveCallBack };

@@ -1,3 +1,4 @@
+import { items } from "../Classes/ItemArray.js";
 import { applyToEachOperation, layers } from "../Classes/LayerHolder.js";
 import { getCustomTextDimensions } from "../Item/resize.js";
 
@@ -40,7 +41,7 @@ function resetWidthToDefault() {
 
 function measureSelectedView(id, oneUpdated) {
     const fWidth = getSelectedFunctionWidth(id);
-
+    console.log(maxSelectedWidthMap[layers.selectedLayer._id]);
     if (!maxSelectedWidthMap[layers.selectedLayer._id] || fWidth > maxSelectedWidthMap[layers.selectedLayer._id]) {
         maxSelectedWidthMap[layers.selectedLayer._id] = fWidth;
         changeMaxWidth(maxSelectedWidthMap[layers.selectedLayer._id]);
@@ -54,9 +55,19 @@ function selectLayersMaxOperationWidth(lid) {
     return;
 }
 
+function measureSelectedLayer() {
+    maxSelectedWidthMap[layers.selectedLayer._id] = 0;
+    for (var x in items.itemList) {
+        if (items.itemList[x]._type === "Function")
+            measureSelectedView(items.itemList[x]._id);
+    }
+
+}
+
 //called on load/copy/move & on their u/r actions.
 function measureAllLayersOperations() {
     // resetWidthToDefault();
+    console.log('measure ls called');
 
     setTimeout(() => {
         const measureCallBack = (operation) => {
@@ -64,7 +75,8 @@ function measureAllLayersOperations() {
         }
         applyToEachOperation(measureCallBack);
         // changeMaxWidth(maxSelectedWidthMap[layers.selectedLayer._id]);
+
     }, 100);
 }
 
-export { measureAllLayersOperations, changeMaxWidth, resetWidthToDefault, measureSelectedView, selectLayersMaxOperationWidth, getSelectedFunctionWidth };
+export { measureAllLayersOperations, changeMaxWidth, measureSelectedLayer, resetWidthToDefault, measureSelectedView, selectLayersMaxOperationWidth, getSelectedFunctionWidth };

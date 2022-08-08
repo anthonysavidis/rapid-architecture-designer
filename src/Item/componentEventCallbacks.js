@@ -7,7 +7,7 @@ import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { moveCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
-import { forceActivateAll } from "../Workspace/functionAppearance.js";
+import { forceActivateAll, forceActivateByComponent, isByComponentChecked } from "../Workspace/functionAppearance.js";
 
 const functionOnDropOnComponent = (event, componentID) => {
   if (!event || !event.preventDefault)

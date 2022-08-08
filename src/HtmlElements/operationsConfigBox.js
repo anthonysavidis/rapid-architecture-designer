@@ -33,12 +33,15 @@ function createFirstRowPickers(box, configGrid) {
     operationColorPicker.className += " item3";
     if (detectBrowser() === "Firefox") {
         operationColorPicker.lastChild.style.float = "right";
-        operationColorPicker.style.width = "228px";
+        operationColorPicker.style.width = "193px";
     }
     configGrid.appendChild(operationColorPicker);
     configGrid.appendChild(operationBorderPicker);
     configGrid.appendChild(selectedOperationBorderPicker);
-    configGrid.appendChild(createWidthSlider());
+    selectedOperationBorderPicker.style.width = "191px";
+    operationBorderPicker.style.width = "152px";
+    operationColorPicker.style.width = "193px";
+    // configGrid.appendChild(createWidthSlider());
     return;
 }
 
@@ -51,9 +54,10 @@ function createSecondRowPickers(box, configGrid) {
         // alterConstantValue("ondrag", finalValue);
     });
     dragOperationPicker.style.float = "left";
-    dragOperationPicker.className += " item7";
+    dragOperationPicker.className += " item6";
     // configGrid.appendChild(settedOperationPicker);
     configGrid.appendChild(dragOperationPicker);
+    dragOperationPicker.style.width = "193px";
 }
 
 function createWidthSlider() {

@@ -131,6 +131,8 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
             confirmationButton.style.marginRight = "20px";
         }
     } else if (type === "updating") {
+        if (document.getElementsByClassName("updatingBox")[0])
+            document.getElementsByClassName("updatingBox")[0].remove();
         const isInfo = callBack;
         var imageTick = document.createElement('div');
         imageTick.style.width = imageTick.style.height = "30px";
