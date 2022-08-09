@@ -35,7 +35,7 @@ function produceLinkContextMenu(linkId, x, y) {
     linkContext.style.left = x + "px";
     linkContext.style.top = y + "px";
 
-    addToParentContext(linkId, linkContext, "Edit", editLinkCallback, linkId);
+    addToParentContext(linkId, linkContext, "Edit Data", editLinkCallback, linkId);
     addToParentContext(linkId, linkContext, "Change Direction", chooseDirectionCallback, linkId);
     // addToParentContext(linkId, linkContext, constantNames["functionsContext"]["delete"], deleteCallBack, "");
     closeContext = () => {

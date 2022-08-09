@@ -60,7 +60,7 @@ function produceContextMenu(funcId, x, y) {
     funcContext.style.left = x + "px";
     funcContext.style.top = y + "px";
     addToParentContext(funcId, funcContext, "New", newFunctionCntx, "");
-    var editOption = addToParentContext(funcId, funcContext, "Edit", editFunctionCallBack, funcId);
+    var editOption = addToParentContext(funcId, funcContext, "Edit Data", editFunctionCallBack, funcId);
     checkToDisableOption(editOption, getSelectedFunctions().length === 1);
     addToParentContext(funcId, funcContext, constantNames["functionsContext"]["delete"], deleteCallBack, "");
 

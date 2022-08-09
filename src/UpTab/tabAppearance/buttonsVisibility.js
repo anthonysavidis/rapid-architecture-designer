@@ -161,6 +161,15 @@ function appearEditButtons() {
     } else {
         document.getElementById("redoButton").style.display = "none";
     }
+    const selectedComponent = (getSelectedItems().length === 1);
+    const selectedFunctions = (getSelectedFunctions().length === 1);
+    //xor: (!a && b) || (a && !b)
+    if ((!selectedComponent && selectedFunctions) || (selectedComponent && !selectedFunctions)) {
+        document.getElementById("editButton").style.display = "inline-block";
+    }
+    else {
+        document.getElementById("editButton").style.display = "none";
+    }
     return;
 }
 

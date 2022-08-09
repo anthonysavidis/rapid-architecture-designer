@@ -2,12 +2,18 @@ import { actions } from "../Classes/Actions.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
+import { editComponentCallBack } from "../HtmlElements/componentContextMenu.js";
+import { editFunctionCallBack } from "../Input/functonsContextMenuCallbacks.js";
+import { getSelectedItems } from "../Item/selectComponent.js";
+import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 import { appearEditButtons } from "./tabAppearance/buttonsVisibility.js";
 
 function initialAppear() {
     document.getElementById("undoButton").style.display = "block";
     document.getElementById("redoButton").style.display = "block";
+    document.getElementById("editButton").style.display = "none";
+
 }
 
 var gridState = "on",
@@ -68,10 +74,13 @@ function addEditTabListeners() {
         gridAction();
         // actions.saveCommand()
     });
-    // document.getElementById("panningButton").addEventListener("click", panningCntx = function() {
-    //     panningAction();
-    //     // actions.saveCommand()
-    // });
+    document.getElementById("editButton").addEventListener("click", panningCntx = function () {
+        // actions.saveCommand()
+        if (getSelectedItems().length === 1)
+            editComponentCallBack(getSelectedItems()[0]._id);
+        else if (getSelectedFunctions().length === 1)
+            editFunctionCallBack(getSelectedFunctions()[0]._id);
+    });
     document.getElementById("undoButton").addEventListener("click", undoCntx = function () {
         if (actions.undoStack.length !== 0)
             actions.undo();

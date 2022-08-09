@@ -45,7 +45,7 @@ function produceOperationRadioButtons() {
     // <label for="html" class="unselectableText">' + constantNames["operationsArea"]["byComponent"] + '</label></div> \
     // <div class="unselectableText" style="float:left;"><input type="radio" id="all" value="CSS" checked> \
     // <label for="css" class="unselectableText">' + constantNames["operationsArea"]["all"] + '</label></div>';
-    var innerStr = '<select class="inputTextClass" id="functionAppearance"><option value="all" selected>All</option><option value="byComponent">By Component</option></select>'
+    var innerStr = '<select class="inputTextClass unselectableText" id="functionAppearance"><option value="all" selected>All</option><option value="byComponent">By Component</option></select>'
 
     var radioButtons = document.createElement('div');
     radioButtons.style.height = '24.33px';

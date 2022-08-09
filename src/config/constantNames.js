@@ -26,7 +26,7 @@ const constantNames = {
         "Copy": "Copy",
         "Paste": "Paste",
         "Redo": "Redo",
-        "Edit": "Details",
+        "Edit": "Data",
         "Panning": "Panning"
     },
     "componentsTab": {

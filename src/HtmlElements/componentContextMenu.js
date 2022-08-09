@@ -10,7 +10,7 @@ import { checkToDisableOption } from "../Workspace/workspaceContextMenu.js";
 import { addToParentContext } from "./functionsContextMenu.js";
 import { produceBox } from "./infoBoxes.js";
 
-var closeContext = () => {};
+var closeContext = () => { };
 var editComponentCallBack = (componentId) => {
     const editingComponent = items.itemList[items.itemList.findIndex(el => el._id === componentId)];
     produceBox("input", "Edit " + editingComponent._name, (name, description) => {
@@ -37,7 +37,7 @@ function produceComponentContextMenu(clickedComponentId, componentIdList, x, y) 
         }, 100);
     }
     const selectedItems = getSelectedItems()
-    var editOption = addToParentContext("", componentContext, "Edit", () => {
+    var editOption = addToParentContext("", componentContext, "Edit Data", () => {
         if (selectedItems.length === 1) {
             editComponentCallBack(selectedItems[0]._id);
             closeContext();

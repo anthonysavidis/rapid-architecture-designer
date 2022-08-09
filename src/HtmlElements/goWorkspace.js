@@ -8,7 +8,7 @@ import { functionOnDropOnComponent, moveActionHandler } from "../Item/componentE
 import { cancelSelection, getSelectedComponentBoundingRec, getSelectedItems, handleByComponent, selectAction, updateSelectedComponentBoundingRec } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { componentContextDispatch } from "../UpTab/componentTab.js";
-import { appearComponentButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { appearComponentButtons, appearEditButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { isByComponentChecked } from "../Workspace/functionAppearance.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 import { deleteMultWithTrashBin, deleteWithTrashBin, hoverBin } from "../Workspace/trashBin.js";
@@ -33,6 +33,8 @@ function getNewWorkspace(lid) {
             cancelFunctionSelection();
             cancelSelection();
             appearFunctionButtons();
+            appearEditButtons();
+            appearComponentButtons();
 
         },
         mouseOver: function (e) {
@@ -202,6 +204,8 @@ function initializeNodeTemplate() {
             selectionChanged: function (node) {
                 appearComponentButtons();
                 appearFunctionButtons();
+                appearEditButtons();
+
                 appearHierarchyButtons();
                 (isByComponentChecked()) ? handleByComponent() : 1;
                 lastSelectedNodeKey = node.key;
