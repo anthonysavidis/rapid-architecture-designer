@@ -167,12 +167,6 @@ function whichElement(e) {
     appearEditButtons();
     appearHierarchyButtons();
     workspaceContextMenuObserver(e);
-    // console.log("TARG:" + targ.className + " NAME:" + tname);
-    // console.log(targ.className)
-    if (document.getElementsByClassName("helper")[0] && targ.className !== "focusName" && !isInsideRec(e.clientX, e.clientY, document.getElementsByClassName("helper")[0].getBoundingClientRect())) {
-        // alert('closingHelper');
-        document.getElementsByClassName("helper")[0].remove();
-    }
 }
 
 

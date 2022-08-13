@@ -12,12 +12,13 @@ function changeLinkSelectState(id) {
 }
 
 function getSelectedLinkIds() {
-    var selected = document.getElementsByClassName("selectedLine");
-    var selectedIds = [];
-    for (var i = 0; i < selected.length; i++) {
-        selectedIds[i] = selected[i].id;
-    }
-    return selectedIds;
+    var keys = [];
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].selection.each(function (n) {
+        if (!(n instanceof go.Link)) return;
+
+        keys.push(n.data.key);
+    });
+    return keys;
 }
 
 function getSelectedLinkItems() {

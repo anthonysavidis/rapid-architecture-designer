@@ -1,5 +1,6 @@
 import { addLayerRodListener, addRightTabRodListener, fixFunctionsWidth, produceRightTabRod, removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
 import { createDraggableSpace, fixMainDiv, fixTrashBinPosition } from "../Workspace/trashBin.js";
+import { detectBrowser } from "../Workspace/browserDetection.js";
 
 
 function fixSideBarsOnZoom() {
@@ -63,6 +64,11 @@ class WindowChangeListener {
 
 
 function windowChangeListeners() {
+    if(detectBrowser()==="Firefox"){
+        document.getElementById('toolBar').style.outline=0;
+        document.getElementById('tabButtons').style.borderBottom="1px solid #ccc"; 
+    }
+
     fixSideBarsOnZoom();
     var wcl = new WindowChangeListener();
 }

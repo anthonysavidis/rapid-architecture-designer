@@ -377,7 +377,19 @@ function initializeLinkTemplate() {
                 $("ToolTip",
                     $(go.TextBlock, { margin: 4 },
                         new go.Binding("text", "key", function (s) { return items.itemList[items.itemList.findIndex(el => el._id === s)]._description; }))
-                )  // end of Adornment
+                ),  // end of Adornment
+            
+                selectionChanged: function (node) {
+                    // appearComponentButtons();
+                    // appearFunctionButtons();
+                    appearEditButtons();
+    
+                    // appearHierarchyButtons();
+                    // (isByComponentChecked()) ? handleByComponent() : 1;
+                    // lastSelectedNodeKey = node.key;
+                    // updateSelectedComponentBoundingRec();
+    
+                },
         }
     );
 }

@@ -12,6 +12,7 @@ import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { autoResizeAutoFit, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { InstanceGenerator } from "./InstanceCreator.js";
+
 class ItemHolder {
 
     constructor(str) {
