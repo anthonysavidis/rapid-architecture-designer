@@ -46,4 +46,4 @@ function produceLinkContextMenu(linkId, x, y) {
     return;
 }
 
-export { produceLinkContextMenu, closeContext };
+export { produceLinkContextMenu, closeContext,editLinkCallback };

@@ -4,6 +4,7 @@ import { getSelectedFunctions, getSelectedFunctionIds } from "../../Item/selectF
 import { actions } from "../../Classes/Actions.js";
 import { areAllCollapsed, areAllExtendable, areAllExtended } from "../../HtmlElements/extendingComponent.js";
 import { checkIfCollapsed, checkIfExtended } from "../../HtmlElements/goExtendedComponents.js";
+import { getSelectedLinkIds } from "../../Item/selectLink.js";
 
 function hasListSubarchitecture(itemList) {
     for (var i in itemList) {
@@ -163,8 +164,9 @@ function appearEditButtons() {
     }
     const selectedComponent = (getSelectedItems().length === 1);
     const selectedFunctions = (getSelectedFunctions().length === 1);
+    const selectedLinks = (getSelectedLinkIds().length === 1);
     //xor: (!a && b) || (a && !b)
-    if ((!selectedComponent && selectedFunctions) || (selectedComponent && !selectedFunctions)) {
+    if ((!selectedComponent && selectedFunctions && !selectedLinks) || (selectedComponent && !selectedFunctions && !selectedLinks) || (!selectedComponent && !selectedFunctions && selectedLinks)) {
         document.getElementById("editButton").style.display = "inline-block";
     }
     else {

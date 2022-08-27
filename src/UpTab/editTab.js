@@ -3,9 +3,11 @@ import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { editComponentCallBack } from "../HtmlElements/componentContextMenu.js";
+import { editLinkCallback } from "../HtmlElements/linkContextMenu.js";
 import { editFunctionCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
+import { getSelectedLinkItems } from "../Item/selectLink.js";
 import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 import { appearEditButtons } from "./tabAppearance/buttonsVisibility.js";
 
@@ -80,6 +82,8 @@ function addEditTabListeners() {
             editComponentCallBack(getSelectedItems()[0]._id);
         else if (getSelectedFunctions().length === 1)
             editFunctionCallBack(getSelectedFunctions()[0]._id);
+        else
+            editLinkCallback(getSelectedLinkItems()[0]._id);
     });
     document.getElementById("undoButton").addEventListener("click", undoCntx = function () {
         if (actions.undoStack.length !== 0)

@@ -1,4 +1,6 @@
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
+import { layers } from "../Classes/LayerHolder.js";
 import { spawnHelper } from "./geometry.js";
 
 function changeLinkSelectState(id) {
@@ -14,8 +16,8 @@ function changeLinkSelectState(id) {
 function getSelectedLinkIds() {
     var keys = [];
     InstanceGenerator.diagramMap[layers.selectedLayer._id].selection.each(function (n) {
-        if (!(n instanceof go.Link)) return;
-
+        if (!(n instanceof go.Link)) 
+            return;
         keys.push(n.data.key);
     });
     return keys;

@@ -1,12 +1,13 @@
 import { actions, redoAction, undoAction } from "../Classes/Actions.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
-import { layers } from "../Classes/LayerHolder.js";
+import { applyToEachComponent, layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { isInsideRec } from "../Input/clickInputObserver.js";
 import { functionOnDropOnComponent, moveActionHandler } from "../Item/componentEventCallbacks.js";
 import { cancelSelection, getSelectedComponentBoundingRec, getSelectedItems, handleByComponent, selectAction, updateSelectedComponentBoundingRec } from "../Item/selectComponent.js";
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
+import { getSelectedLinkIds } from "../Item/selectLink.js";
 import { componentContextDispatch } from "../UpTab/componentTab.js";
 import { appearComponentButtons, appearEditButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { isByComponentChecked } from "../Workspace/functionAppearance.js";
@@ -23,7 +24,12 @@ var lastSelectedNodeKey = null;
 
 function getNewWorkspace(lid) {
     return $(go.Diagram, lid, {
-        padding: new go.Margin(20, -150, -100, 250), //20 extra space when scrolled all the way
+        padding: 20,//new go.Margin(20, -150, -100, 250), //20 extra space when scrolled all the way
+        scrollMode: go.Diagram.InfiniteScroll,
+        initialContentAlignment: go.Spot.Center,
+        // initialAutoScale: go.Diagram.Uniform,
+        // maxScale:1,
+        contentAlignment:go.Spot.Center,
         grid:
             $(go.Panel, "Grid",
                 { gridCellSize: new go.Size(10, 10), visible: false },
@@ -170,7 +176,8 @@ function getNewWorkspace(lid) {
         "undoManager.isEnabled": true,
         "ViewportBoundsChanged": (e) => {
             items.updateAllWorkspaceBoundings();
-        }
+        },
+        layout:  $(go.TreeLayout, { isInitial: false, isOngoing: false })
     });
 }
 
@@ -383,7 +390,7 @@ function initializeLinkTemplate() {
                     // appearComponentButtons();
                     // appearFunctionButtons();
                     appearEditButtons();
-    
+                    console.log(getSelectedLinkIds());
                     // appearHierarchyButtons();
                     // (isByComponentChecked()) ? handleByComponent() : 1;
                     // lastSelectedNodeKey = node.key;
@@ -587,4 +594,22 @@ function keyDownWorkpaceHandler(myDiagram) {
     // go.CommandHandler.prototype.doKeyDown.call(this);
 };
 
-export { initializeNodeTemplate, setWorkspaceDropListeners, addDiagramListener, getNewWorkspace, initializeLinkTemplate, getLinkContext, keyDownWorkpaceHandler, alterFocusedColor }; 
+
+function moveAllComponentsOnLoad(offsetX,offsetY){
+    console.log('moving on load....');
+    const moveComponentCallBack = (component) =>{
+        const finalX = component.boundingRec.left+offsetX;
+        const finalY = component.boundingRec.top+offsetY;
+        console.log(finalX);
+        console.log(finalY);
+        const cId= component._id;
+        // console.log(InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(cId));
+        InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(cId).move(new go.Point(finalX, finalY));
+        return;
+    }
+    applyToEachComponent(moveComponentCallBack);
+    return;
+}
+
+
+export { initializeNodeTemplate, setWorkspaceDropListeners, addDiagramListener, getNewWorkspace, initializeLinkTemplate, getLinkContext, keyDownWorkpaceHandler, alterFocusedColor,moveAllComponentsOnLoad }; 

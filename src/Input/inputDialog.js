@@ -88,7 +88,7 @@ function createDialog(type, callBack) {
     var nameFormDiv = document.createElement('div');
     nameFormDiv.style.marginTop = 15 + "px";
     // nameFormDiv.style.marginLeft = -40 + "px";
-    nameFormDiv.innerHTML = '<input id="dialogInputField" class="inputTextClass" type="text" style="padding:5px;width: 300px;margin-right:18px;" name="firstname">';
+    nameFormDiv.innerHTML = '<input id="dialogInputField" class="inputTextClass" type="text" style="padding:5px;width: 305px;margin-right:18px;" name="firstname">';
     // nameFormDiv.firstChild.style.width = "398px";
     // nameFormDiv.firstChild.style.marginRight = "50px";
     nameFormExternal.appendChild(nameLabelDiv);
