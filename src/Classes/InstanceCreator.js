@@ -15,7 +15,7 @@ class InstanceCreator {
   }
   createComponent(obj) {
     const spawiningPoint = this.diagramMap[layers.selectedLayer._id].transformDocToView(new go.Point(400, 100));
-    var objJSON = { "text": obj._name, "key": obj._id, "loc": 300 + " " + 50 };
+    var objJSON = { "text": obj._name, "key": obj._id, "loc": 500 + " " + 50 };
     this.diagramMap[layers.selectedLayer._id].model.addNodeData(objJSON);
     const nodeData = this.diagramMap[layers.selectedLayer._id].findNodeForKey(obj._id).data;
     this.applyCurrentComponentSettings(layers.selectedLayer._id, nodeData);

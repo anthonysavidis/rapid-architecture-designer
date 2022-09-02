@@ -86,7 +86,7 @@ function loadAction() {
             (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
             measureAllLayersOperations();
             InstanceGenerator.clickWorkspace();
-            // moveAllComponentsOnLoad(1400,1100);
+            moveAllComponentsOnLoad(1400,1100);
 
         };
         reader.readAsText(e.target.files[0]);

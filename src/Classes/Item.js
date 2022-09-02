@@ -161,8 +161,8 @@ class Item {
             document.getElementById(editId).className = "selectedFunction";
         });
         document.getElementById(this._id + "name").addEventListener("dblclick", function () {
-            produceDoubleClickEditingName(editId);
-            closeTooltip(editId);
+            // produceDoubleClickEditingName(editId);
+            // closeTooltip(editId);
         });
         document.getElementById(this._id).addEventListener("contextmenu", function (ev) {
             ev.preventDefault();

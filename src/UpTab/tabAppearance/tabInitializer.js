@@ -14,12 +14,12 @@ import { produceComponentContextMenu } from "../../HtmlElements/componentContext
 var lastPressed;
 
 function selectTabStyle(tablinkId) {
-    // if (lastPressed) {
-    //     // lastPressed.style.backgroundColor = "#557da5";
-    //     // lastPressed.style.fontWeight = "normal";
-    //     // lastPressed.style.color = "white";
-    //     lastPressed.className = "tabButton";
-    // }
+    if (lastPressed) {
+        // lastPressed.style.backgroundColor = "#557da5";
+        // lastPressed.style.fontWeight = "normal";
+        // lastPressed.style.color = "white";
+        // lastPressed.className = "tabButton";
+    }
     // lastPressed = document.getElementById(tablinkId);
     if (document.getElementsByClassName("tabButtonPressed unselectableText")[0])
         document.getElementsByClassName("tabButtonPressed unselectableText")[0].className = "tabButton unselectableText";

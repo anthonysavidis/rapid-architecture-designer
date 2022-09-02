@@ -53,13 +53,10 @@ function getNewWorkspace(lid) {
             updateSelectedComponentBoundingRec();
             // items.updateSelectedBoundings();
             const newRecMap = JSON.stringify(getSelectedComponentBoundingRec());
-            console.log(e.diagram.viewportBounds);
-            if (hoverBin) {
+            console.log(oldRecMap);
+            console.log(newRecMap);
 
-            } else {
-                moveActionHandler(oldRecMap, newRecMap);
-
-            }
+            moveActionHandler(oldRecMap, newRecMap);
         },
         "ExternalObjectsDropped": (e) => {
         },
@@ -177,7 +174,7 @@ function getNewWorkspace(lid) {
         "ViewportBoundsChanged": (e) => {
             items.updateAllWorkspaceBoundings();
         },
-        layout:  $(go.TreeLayout, { isInitial: false, isOngoing: false })
+        // layout:  $(go.TreeLayout, { isInitial: false, isOngoing: false })
     });
 }
 
@@ -596,18 +593,21 @@ function keyDownWorkpaceHandler(myDiagram) {
 
 
 function moveAllComponentsOnLoad(offsetX,offsetY){
-    console.log('moving on load....');
-    const moveComponentCallBack = (component) =>{
-        const finalX = component.boundingRec.left+offsetX;
-        const finalY = component.boundingRec.top+offsetY;
-        console.log(finalX);
-        console.log(finalY);
-        const cId= component._id;
-        // console.log(InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(cId));
-        InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(cId).move(new go.Point(finalX, finalY));
-        return;
+    for(var x in layers.layerList){
+        InstanceGenerator.diagramMap[layers.layerList[x]._id].scroll("pixel","right");
     }
-    applyToEachComponent(moveComponentCallBack);
+    // console.log('moving on load....');
+    // const moveComponentCallBack = (component) =>{
+    //     const finalX = component.boundingRec.left+offsetX;
+    //     const finalY = component.boundingRec.top+offsetY;
+    //     console.log(finalX);
+    //     console.log(finalY);
+    //     const cId= component._id;
+    //     // console.log(InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(cId));
+    //     InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(cId).move(new go.Point(finalX, finalY));
+    //     return;
+    // }
+    // applyToEachComponent(moveComponentCallBack);
     return;
 }
 

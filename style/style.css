@@ -76,7 +76,7 @@
 .tabButtonPressed {
     background-color: rgb(241, 241, 241);
     color: rgb(85, 125, 165);
-    font-weight: normal;
+    font-weight: bold;
     border: none;
     outline: none;
     cursor: pointer;

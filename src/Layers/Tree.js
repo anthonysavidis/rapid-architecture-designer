@@ -11,7 +11,7 @@ var treeData = []; //hold it and write it to json
 
 function createNodeFullPath(data) {
     var path = data.instance.get_path(data.node, '/');
-    console.log('Selected: ' + path);
+    // console.log('Selected: ' + path);
     updateFullPath(path);
 }
 
@@ -64,18 +64,18 @@ function refreshTree() {
         updateFullPath(getCurrentFullPath());
     });
     $('#jstree').bind("dblclick.jstree", function(event) {
-        try {
-            var node = $(event.target).closest("li");
-            const id = node[0].id;
-            const currentId = id.split("branch")[0];
-            const layerObject = layers.layerList[layers.layerList.findIndex(el => el._id === currentId)];
-            const oldName = layerObject._name;
-            const domId = id + "_anchor";
-            const rect = document.getElementById(domId).getBoundingClientRect();
-            produceDoubleClickEditingLayerName(domId, oldName, layerObject, rect);
-        } catch (error) {
+        // try {
+        //     var node = $(event.target).closest("li");
+        //     const id = node[0].id;
+        //     const currentId = id.split("branch")[0];
+        //     const layerObject = layers.layerList[layers.layerList.findIndex(el => el._id === currentId)];
+        //     const oldName = layerObject._name;
+        //     const domId = id + "_anchor";
+        //     const rect = document.getElementById(domId).getBoundingClientRect();
+        //     produceDoubleClickEditingLayerName(domId, oldName, layerObject, rect);
+        // } catch (error) {
 
-        }
+        // }
     });
 }
 
