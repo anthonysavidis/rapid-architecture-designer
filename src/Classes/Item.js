@@ -417,7 +417,7 @@ class Item {
             InstanceGenerator.diagramMap[layers.selectedLayer._id].model.addNodeData(this.diagramNode);
             const nodeData = InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).data;
             InstanceGenerator.applyCurrentComponentSettings(layers.selectedLayer._id, nodeData);
-            InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).move(new go.Point(this.boundingRec.left, this.boundingRec.top));
+            // InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(this._id).move(new go.Point(this.boundingRec.left, this.boundingRec.top));
 
             // nodeData.left 
             // this.linkedItems = JSON.parse(itemObject.linkedItems);
