@@ -35,12 +35,15 @@ function createFirstRowPickers(box, configGrid) {
         operationColorPicker.lastChild.style.float = "right";
         operationColorPicker.style.width = "193px";
     }
+    operationColorPicker.children[1].style.float="left";
+    operationColorPicker.children[1].style.marginLeft="68px";
     configGrid.appendChild(operationColorPicker);
     configGrid.appendChild(operationBorderPicker);
     configGrid.appendChild(selectedOperationBorderPicker);
     selectedOperationBorderPicker.style.width = "191px";
     operationBorderPicker.style.width = "152px";
-    operationColorPicker.style.width = "193px";
+    // operationColorPicker.style.width = "193px";
+    
     // configGrid.appendChild(createWidthSlider());
     return;
 }
@@ -55,9 +58,12 @@ function createSecondRowPickers(box, configGrid) {
     });
     dragOperationPicker.style.float = "left";
     dragOperationPicker.className += " item6";
+    dragOperationPicker.children[1].style.float="left";
+    dragOperationPicker.children[1].style.marginLeft="84px";
+    
     // configGrid.appendChild(settedOperationPicker);
     configGrid.appendChild(dragOperationPicker);
-    dragOperationPicker.style.width = "193px";
+    // dragOperationPicker.style.width = "193px";
 }
 
 function createWidthSlider() {
