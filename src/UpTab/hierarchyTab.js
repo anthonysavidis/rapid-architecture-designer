@@ -110,4 +110,4 @@ function addHierarchyTabListeners() {
     });
 }
 
-export { addHierarchyTabListeners, moveToCntx };
+export { addHierarchyTabListeners, moveToCntx, enableTreeFlag };

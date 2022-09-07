@@ -5,6 +5,7 @@ import { bRecs } from "../Input/boundingRectanglesObserver.js";
 import { getLastClickedClassName } from "../Input/clickInputObserver.js";
 import { copyComponent, pasteComponent } from "../Item/copy.js";
 import { appearComponentButtons, appearEditButtons, appearFunctionButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { deleteFromKey } from "./deleteKey.js";
 
 
 
@@ -29,6 +30,9 @@ function detectMacros(params) {
             else if (e.keyCode == shiftKey) shiftDown = true;
             else if (e.keyCode == enterKey) {
                 e.preventDefault();
+            }
+            if (e.keyCode === deleteKey) {
+                deleteFromKey();
             }
         }).keyup(function (e) {
             if (e.keyCode == ctrlKey) ctrlDown = false;

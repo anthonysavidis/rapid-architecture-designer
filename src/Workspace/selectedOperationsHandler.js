@@ -41,7 +41,7 @@ function resetWidthToDefault() {
 
 function measureSelectedView(id, oneUpdated) {
     const fWidth = getSelectedFunctionWidth(id);
-    console.log(maxSelectedWidthMap[layers.selectedLayer._id]);
+    // console.log(maxSelectedWidthMap[layers.selectedLayer._id]);
     if (!maxSelectedWidthMap[layers.selectedLayer._id] || fWidth > maxSelectedWidthMap[layers.selectedLayer._id]) {
         maxSelectedWidthMap[layers.selectedLayer._id] = fWidth;
         changeMaxWidth(maxSelectedWidthMap[layers.selectedLayer._id]);
@@ -67,7 +67,7 @@ function measureSelectedLayer() {
 //called on load/copy/move & on their u/r actions.
 function measureAllLayersOperations() {
     // resetWidthToDefault();
-    console.log('measure ls called');
+    // console.log('measure ls called');
 
     setTimeout(() => {
         const measureCallBack = (operation) => {

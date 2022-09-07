@@ -10,6 +10,7 @@ import { constantNames } from "../../config/constantNames.js";
 import { produceLayerTabRod, removeLayerTabRod } from "../../HtmlElements/extendingSideTabs.js";
 import { produceWorkspaceContextMenu } from "../../Workspace/workspaceContextMenu.js";
 import { produceComponentContextMenu } from "../../HtmlElements/componentContextMenu.js";
+import { enableTreeFlag } from "../hierarchyTab.js";
 
 var lastPressed;
 
@@ -57,6 +58,7 @@ function changeToLayerTab() {
     updateTree();
     openLayerTree();
     produceLayerTabRod();
+    enableTreeFlag();
     return;
 }
 

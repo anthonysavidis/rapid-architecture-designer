@@ -10,6 +10,7 @@ import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { getSelectedLinkIds } from "../Item/selectLink.js";
 import { componentContextDispatch } from "../UpTab/componentTab.js";
 import { appearComponentButtons, appearEditButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
+import { deleteFromKey } from "../Workspace/deleteKey.js";
 import { isByComponentChecked } from "../Workspace/functionAppearance.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 import { deleteMultWithTrashBin, deleteWithTrashBin, hoverBin } from "../Workspace/trashBin.js";
@@ -29,7 +30,7 @@ function getNewWorkspace(lid) {
         initialContentAlignment: go.Spot.Center,
         // initialAutoScale: go.Diagram.Uniform,
         // maxScale:1,
-        contentAlignment:go.Spot.Center,
+        contentAlignment: go.Spot.Center,
         grid:
             $(go.Panel, "Grid",
                 { gridCellSize: new go.Size(10, 10), visible: false },
@@ -382,18 +383,18 @@ function initializeLinkTemplate() {
                     $(go.TextBlock, { margin: 4 },
                         new go.Binding("text", "key", function (s) { return items.itemList[items.itemList.findIndex(el => el._id === s)]._description; }))
                 ),  // end of Adornment
-            
-                selectionChanged: function (node) {
-                    // appearComponentButtons();
-                    // appearFunctionButtons();
-                    appearEditButtons();
-                    console.log(getSelectedLinkIds());
-                    // appearHierarchyButtons();
-                    // (isByComponentChecked()) ? handleByComponent() : 1;
-                    // lastSelectedNodeKey = node.key;
-                    // updateSelectedComponentBoundingRec();
-    
-                },
+
+            selectionChanged: function (node) {
+                // appearComponentButtons();
+                // appearFunctionButtons();
+                appearEditButtons();
+                console.log(getSelectedLinkIds());
+                // appearHierarchyButtons();
+                // (isByComponentChecked()) ? handleByComponent() : 1;
+                // lastSelectedNodeKey = node.key;
+                // updateSelectedComponentBoundingRec();
+
+            },
         }
     );
 }
@@ -569,6 +570,9 @@ function keyDownWorkpaceHandler(myDiagram) {
     var control = e.control || e.meta;
     var deleteKey = e.delete;
     var key = e.key;
+    if (key === "Del") {
+        deleteFromKey();
+    }
     // Quit on any undo/redo key combination:
     // if ((control && (key === 'Z' || key === 'Y')) || deleteKey)
     //     return;
@@ -585,16 +589,15 @@ function keyDownWorkpaceHandler(myDiagram) {
     if ((control) && (key === 'V')) {
         componentContextDispatch["Paste"]();
     }
-
     // e.control = false;
     // call base method with no arguments (default functionality)
     // go.CommandHandler.prototype.doKeyDown.call(this);
 };
 
 
-function moveAllComponentsOnLoad(offsetX,offsetY){
-    for(var x in layers.layerList){
-        InstanceGenerator.diagramMap[layers.layerList[x]._id].scroll("pixel","right");
+function moveAllComponentsOnLoad(offsetX, offsetY) {
+    for (var x in layers.layerList) {
+        InstanceGenerator.diagramMap[layers.layerList[x]._id].scroll("pixel", "right");
     }
     // console.log('moving on load....');
     // const moveComponentCallBack = (component) =>{
@@ -612,4 +615,4 @@ function moveAllComponentsOnLoad(offsetX,offsetY){
 }
 
 
-export { initializeNodeTemplate, setWorkspaceDropListeners, addDiagramListener, getNewWorkspace, initializeLinkTemplate, getLinkContext, keyDownWorkpaceHandler, alterFocusedColor,moveAllComponentsOnLoad }; 
+export { initializeNodeTemplate, setWorkspaceDropListeners, addDiagramListener, getNewWorkspace, initializeLinkTemplate, getLinkContext, keyDownWorkpaceHandler, alterFocusedColor, moveAllComponentsOnLoad }; 

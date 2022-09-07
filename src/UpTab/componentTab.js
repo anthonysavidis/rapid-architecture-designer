@@ -302,4 +302,4 @@ function initialAppear() {
 
 }
 
-export { addComponentTabListeners, componentContextDispatch, subdivideAction, askForDetails, produceNewLayer, pasteComponentAction };
+export { addComponentTabListeners, deleteComponentAction, componentContextDispatch, subdivideAction, askForDetails, produceNewLayer, pasteComponentAction };

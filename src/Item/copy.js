@@ -36,7 +36,6 @@ function removeLinksFromJSON(itemsToBeCopiedJSON, deleteLinkIds) {
             for (var x in deleteLinkIds) {
                 var linkIndex = itemLinks.findIndex(el => el[0] === deleteLinkIds[x] || el[1] === deleteLinkIds[x]);
                 if (linkIndex !== -1) {
-                    console.log(itemLinks[linkIndex][0]);
                     linkedItems = linkedItems.filter(function (e) {
                         return e !== itemLinks[linkIndex][0];
                     })

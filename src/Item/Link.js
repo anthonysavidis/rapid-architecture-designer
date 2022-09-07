@@ -10,4 +10,9 @@ function unlink() {
     return;
 }
 
-export { unlink };
+function unlinkWithLinkSelection(link) {
+    items.itemList[items.itemList.findIndex(el => el._id === link.idComponent2)].deleteLink(link.idComponent1);
+    items.itemList[items.itemList.findIndex(el => el._id === link.idComponent1)].deleteLink(link.idComponent2);
+}
+
+export { unlink, unlinkWithLinkSelection };
