@@ -68,9 +68,10 @@ class InstanceCreator {
   deleteLink(linkItem) {
     // InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(this.diagramLink);
     const obj = linkItem.diagramLink;
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].startTransaction();
+    // InstanceGenerator.diagramMap[layers.selectedLayer._id].startTransaction();
     InstanceGenerator.diagramMap[layers.selectedLayer._id].model.removeLinkData(obj);
-    InstanceGenerator.diagramMap[layers.selectedLayer._id].commitTransaction("deleted link");
+    // console.log("link deleted")
+    // InstanceGenerator.diagramMap[layers.selectedLayer._id].commitTransaction("deleted link");
   }
   alterLinkDirection(linkItem, linkState, toId) {
 

@@ -21,13 +21,13 @@ function addToParentContext(funcId, parent, childName, callBack, componentId) {
     return child;
 }
 
-function moveContextMenu(funcId, parent) {
+function moveContextMenu(funcId, parent, top) {
     var arrowDiv = document.createElement('div');
     arrowDiv.className = "appendArrow";
     parent.appendChild(arrowDiv);
 
     var moveContext = document.createElement('div');
-    moveContext.style.top = moveContext.style.top + 0 + "px";
+    moveContext.style.top = top + 0 + "px";
     moveContext.style.left = moveContext.style.left + 145 + "px";
     moveContext.className = "context-menu";
     moveContext.style.display = "none";
@@ -67,7 +67,7 @@ function produceContextMenu(funcId, x, y) {
     var moveOption = document.createElement('div');
     moveOption.innerText = constantNames["functionsContext"]["move"];
     moveOption.className = "item";
-    moveContextMenu(funcId, moveOption);
+    moveContextMenu(funcId, moveOption, 3 * 33.66);
     funcContext.appendChild(moveOption);
     if (isByComponentChecked()) {
         addToParentContext(funcId, funcContext, constantNames["functionsContext"]["split"], splitCallBack, "");

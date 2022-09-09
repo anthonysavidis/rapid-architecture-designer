@@ -1,6 +1,7 @@
 import { Item } from "../Classes/Item.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
+import { getCurrentFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { pasteFromStr } from "../Item/copy.js";
 import { moveItemsTo, removeFromCurrentLayer } from "../Layers/moveItem.js";
@@ -15,6 +16,7 @@ function moveToNext(actionItems) {
     layers.changeLayer(nextLayerId);
     pasteFromStr(sendingItem);
     layers.changeLayer(nextLayerId);
+    updateFullPath(getCurrentFullPath());
 
     return;
 }
@@ -39,6 +41,8 @@ function moveToPrev(actionItems) {
                 var it = new Item(JSON.stringify(allLinks[x]));
         }
     }
+    updateFullPath(getCurrentFullPath());
+
     return;
 }
 

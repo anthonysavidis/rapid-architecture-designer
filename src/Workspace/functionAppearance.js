@@ -74,7 +74,10 @@ function showAll() {
     var maxWidth = 0;
     for (var i in allItemList) {
         if (allItemList[i]._type === "Function") {
-            showOwner(allItemList[i]);
+            if (allItemList[i].owners[0])
+                showOwner(allItemList[i]);
+            else
+                document.getElementById(allItemList[i]._id).firstChild.className = "ficon";
             const fWidth = getSelectedFunctionWidth(allItemList[i]._id);
             (maxWidth < fWidth) ? maxWidth = fWidth : 1;
         }

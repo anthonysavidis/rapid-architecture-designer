@@ -12,6 +12,7 @@ import { closeTheTooltip } from "../Input/clickInputObserver.js";
 import { autoResizeAutoFit, passAutoFitRestrictions } from "../Item/autoResize.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { InstanceGenerator } from "./InstanceCreator.js";
+import { getLinkItems } from "../Actions/itemStackFunctions.js";
 
 class ItemHolder {
 
@@ -34,14 +35,17 @@ class ItemHolder {
         //     return; //already deleted? TODO: better check.. this happens only in paste situations undo?
         if (this.itemList[itemListIndex]._type === "Component") {
             InstanceGenerator.deleteNode(this.itemList[itemListIndex].diagramNode);
-            var toBeDeletedLinks = this.itemList[itemListIndex].linkedItems;
+            var linkedComponentsIds = this.itemList[itemListIndex].linkedItems;
             var beingDeletedFromFunctions = this.itemList[itemListIndex]._functions;
             var toBeDeletedLayers = this.itemList[itemListIndex].subLayers;
-            for (var i = 0; i < toBeDeletedLinks.length; i++) {
-                var deleteLinkFun = (element) => element._id == toBeDeletedLinks[i];
+            for (var i = 0; i < linkedComponentsIds.length; i++) {
+                const linkId = this.itemList[this.itemList.findIndex(el => el._id === linkedComponentsIds[i])].links.get(deletingItemId);
+                var deleteLinkFun = (element) => element._id == linkedComponentsIds[i];
                 var deleteLinkIndex = this.itemList.findIndex(deleteLinkFun);
                 InstanceGenerator.deleteLink(this.itemList[deleteLinkIndex]);
                 this.itemList[deleteLinkIndex].deleteLink(deletingItemId);
+                this.delete(linkId);
+                // console.log(linkedComponentsIds[i]);
             }
             for (var i = 0; i < beingDeletedFromFunctions.length; i++) {
                 var deleteOwnerIndex = this.itemList.findIndex((element) => element._id === beingDeletedFromFunctions[i]);

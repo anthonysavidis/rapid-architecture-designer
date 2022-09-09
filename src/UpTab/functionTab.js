@@ -88,4 +88,4 @@ function addFunctionTabListeners() {
     });
 }
 
-export { addFunctionTabListeners, newFunctionAction, newFunctionCntx, deleteOperationWithTrashBin };
+export { addFunctionTabListeners, resetFunctionAction, newFunctionAction, newFunctionCntx, deleteOperationWithTrashBin };

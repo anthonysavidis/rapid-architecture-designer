@@ -7,6 +7,7 @@ import { constantNames } from "../config/constantNames.js";
 import { produceLayerTabRod, removeLayerTabRod } from "../HtmlElements/extendingSideTabs.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { closeInfo, createLayerInfoModal } from "../HtmlElements/layerInfo.js";
+import { getCurrentFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { createSendingItem, moveItemsTo, setUpMoveAction } from "../Layers/moveItem.js";
 import { closeLayerTree, openLayerTree } from "../Layers/Tree.js";
@@ -89,6 +90,7 @@ function addHierarchyTabListeners() {
             setUpMoveAction(layerId, selectedItems, itemLinks, createSendingItem(selectedItems));
             moveItemsTo(layerId, selectedItems);
             layers.changeLayer(layerId);
+            updateFullPath(getCurrentFullPath());
 
         });
         return;

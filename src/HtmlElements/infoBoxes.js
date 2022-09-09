@@ -143,7 +143,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
             box.style.backgroundColor = "#cde6f6";
             box.style.color = "#5c90ab";
             box.style.fontWeight = "bold";
-            box.style.borderColor = "#b4d9f2";
+            box.style.outlineColor = "#c1dbf4";
             imageTick.style.backgroundImage = "url(../images/infoUpdate.png)";
 
         }

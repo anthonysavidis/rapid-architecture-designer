@@ -168,6 +168,7 @@ function addComponentTabListeners() {
         produceBox("confirmation", msg + "@1@Component(s) Deletion", () => {
             const itemObjects = getSelectedItems();
             const links = getLinkItems(itemObjects);
+            const deletedComponentLinks = getLinkItems(itemObjects);
             const str = createSendingItem(itemObjects);
             deleteComponentAction(selectedIds);
             var linkArg;
@@ -201,6 +202,9 @@ function addComponentTabListeners() {
     });
     document.getElementById("splitButton").addEventListener("click", componentContextDispatch["Split"] = function () {
         splitComponentAction();
+        if (isAllChecked()) {
+            showAllRefresh();
+        }
         // actions.saveCommand(splitAction, joinAction, itemToBeSplited, itemParts);
     });
     document.getElementById("joinButton").addEventListener("click", componentContextDispatch["Join"] = function () {

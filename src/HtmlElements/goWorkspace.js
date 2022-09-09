@@ -68,7 +68,7 @@ function getNewWorkspace(lid) {
         //     //     itemNameChangedHandler(lastSelectedNodeKey, delNode.text);
         //     // }, 1200);
         // },
-        "draggingTool.isGridSnapEnabled": true,
+        "draggingTool.isGridSnapEnabled": false,
         handlesDragDropForTopLevelParts: true,
         mouseDrop: (e) => {
             // when the selection is dropped in the diagram's background,

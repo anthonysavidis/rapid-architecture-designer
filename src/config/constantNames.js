@@ -26,7 +26,7 @@ const constantNames = {
         "Copy": "Copy",
         "Paste": "Paste",
         "Redo": "Redo",
-        "Edit": "Data",
+        "Edit": "Elements Data",
         "Panning": "Panning"
     },
     "componentsTab": {
@@ -220,7 +220,8 @@ const buttonTooltips = {
         "Redo": "Redo the latest action.",
         "Panning": "Toggle panning in the workspace.",
         "Fullscreen": "Enter fullscreen mode.",
-        "Exit Fullscreen": "Exit fullscreen mode."
+        "Exit Fullscreen": "Exit fullscreen mode.",
+        "Edit": "Edit element's name and description."
     },
     "Operations": {
         "New": "Create a new operation.",

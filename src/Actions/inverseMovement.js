@@ -76,7 +76,8 @@ function restoreFromTrashBin(actionItems) {
         return;
     var allLinks = JSON.parse(actionItems.initialItem[1]);
     for (var x in allLinks) {
-        var it = new Item(JSON.stringify(allLinks[x]));
+        if (items.itemList.findIndex((el => el._id === allLinks[x]._id)) === -1)
+            var it = new Item(JSON.stringify(allLinks[x]));
     }
 
     // document.getElementById(restoringItems[0]._id).style.top = document.getElementById(restoringItems[0]._id).getBoundingClientRect().top - 100 + "px";

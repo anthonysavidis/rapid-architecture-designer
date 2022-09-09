@@ -17,8 +17,8 @@ function addButton(label, id, tab) {
         buttonHtml = '<div id="' + id + '" class="menubutton"><center><div style=\'background-image: url(./images/' + imgName + '.png);\' class="photo_rectangle"></div></center><div id="' + id + 'tooltiptext" style="padding:3px" class="tooltipText unselectableText">' + buttonTooltips[tab][label] + ' </div><div class="buttonName unselectableText">' + label + '</div></div>';
 
     var buttonTempParent = document.createElement('div');
+    buttonHtml = buttonHtml.includes("Elements Data") ? buttonHtml.replace("Elements Data", "Element's Data") : buttonHtml;
     buttonTempParent.innerHTML = buttonHtml;
-
     document.getElementById(tab).appendChild(buttonTempParent.firstChild);
     document.getElementById(id + 'tooltiptext').style.top = 107 + "px";
     // document.getElementById(id + 'tooltiptext').style.height = 25 + "px";

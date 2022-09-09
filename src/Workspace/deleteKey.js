@@ -1,4 +1,4 @@
-import { createMultipleSpecificFunctions } from "../Actions/inverseFunctionsActions.js";
+import { createMultipleSpecificFunctions, resetMultipleFunctions } from "../Actions/inverseFunctionsActions.js";
 import { restoreFromTrashBin } from "../Actions/inverseMovement.js";
 import { getLinkItems } from "../Actions/itemStackFunctions.js";
 import { actions } from "../Classes/Actions.js";
@@ -6,11 +6,13 @@ import { Item } from "../Classes/Item.js";
 import { itemFromListToObject, items } from "../Classes/ItemArray.js";
 import { deleteFunction } from "../Item/edit.js";
 import { unlinkWithLinkSelection } from "../Item/Link.js";
-import { getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
-import { getSelectedFunctions } from "../Item/selectFunction.js";
+import { cancelSelection, getSelectedIds, getSelectedItems } from "../Item/selectComponent.js";
+import { getSelectedFunctionIds, getSelectedFunctions } from "../Item/selectFunction.js";
 import { getSelectedLinkItems } from "../Item/selectLink.js";
 import { createSendingItem } from "../Layers/moveItem.js";
 import { deleteComponentAction } from "../UpTab/componentTab.js";
+import { resetFunctionAction } from "../UpTab/functionTab.js";
+import { isAllChecked, showAllRefresh } from "./functionAppearance.js";
 
 function handleLinkDeletion(links) {
     for (var x in links) {
@@ -33,24 +35,7 @@ function handleComponentDeletion(components) {
     }
 }
 
-function deleteFromKey() {
-    const components = getSelectedItems();
-    const componentLinks = getLinkItems(components);
-    var linkArg;
-    if (componentLinks.length === 0)
-        linkArg = "";
-    else
-        linkArg = itemFromListToObject(componentLinks);
-
-    const operations = getSelectedFunctions();
-    const links = getSelectedLinkItems();
-    const allElements = [links, operations, components];
-    const allStrElements = [itemFromListToObject(links), itemFromListToObject(operations), [createSendingItem(components), linkArg]];
-    handleLinkDeletion(links);
-    handleFunctionDeletion(operations);
-    handleComponentDeletion(components);
-
-    // setTimeout(() => { console.log(totalElements); }, 1000)
+function deleteKeySaveAction(allElements, allStrElements) {
     actions.saveCommand((actionItems) => {
         console.log(actionItems);
         (actionItems.initialItem[0]) ? handleLinkDeletion(actionItems.initialItem[0]) : 1;
@@ -60,9 +45,15 @@ function deleteFromKey() {
         // ()
         // actions.saveCommand(deleteSpecificItems, restoreFromTrashBin, [str, linkArg], "");
         // console.log(actionItems.updatedItem[2]);
-        console.log(actionItems.updatedItem[2]);
+        // console.log(JSON.parse(actionItems.updatedItem[1]));
+        for (var x in actionItems.initialItem[3]) {
+            items.delete(actionItems.initialItem[3][x]);
+        }
 
         (actionItems.updatedItem[1] !== "}") ? createMultipleSpecificFunctions({ initialItem: actionItems.updatedItem[1] }) : 1;
+        console.log('-------Comps--------');
+        console.log(JSON.parse(actionItems.updatedItem[2][0]));
+
         (actionItems.updatedItem[2][0] !== "}") ? restoreFromTrashBin({ initialItem: actionItems.updatedItem[2] }) : 1;
         if (actionItems.updatedItem[0] !== "}") {
             const allLinks = JSON.parse(actionItems.updatedItem[0]);
@@ -70,8 +61,68 @@ function deleteFromKey() {
                 var l = new Item(allLinks[x]);
             }
         }
-
+        if (isAllChecked())
+            showAllRefresh()
     }, allElements, allStrElements);
+    cancelSelection();
+    if (isAllChecked()) {
+        showAllRefresh();
+    }
+    return;
+}
+
+function getComponentsAttachedOperationIds(components) {
+    const componentsOperationIds = [];
+    for (var i in components) {
+        if (components[i]._functions.length) {
+            components[i]._functions.forEach((el) => { componentsOperationIds.push(el); });
+        }
+    }
+    return componentsOperationIds;
+}
+
+function deleteExtraFunctions(storingJSON, selectedOperationIds, operations) {
+    for (var x in operations) {
+        resetFunctionAction(operations[x]._id, operations[x].owners[0]);
+    }
+
+    for (var x in storingJSON["ItemMap"]["current"]) {
+        if (JSON.parse(storingJSON["ItemMap"]["current"][x])._type !== "Function")
+            continue;
+        if (!selectedOperationIds.includes(JSON.parse(storingJSON["ItemMap"]["current"][x])._id)) {
+            delete storingJSON["ItemMap"]["current"][x];
+        }
+    }
+    return storingJSON;
+}
+
+function deleteFromKey() {
+    const components = getSelectedItems();
+    const componentLinks = getLinkItems(components);
+    var componentLinkIds = [];
+    componentLinks.forEach(el => componentLinkIds.push(el._id));
+    const componentsOperations = getComponentsAttachedOperationIds(components);
+    var linkArg;
+    if (componentLinks.length === 0)
+        linkArg = "";
+    else
+        linkArg = itemFromListToObject(componentLinks);
+    var initialComponentItem = JSON.parse(createSendingItem(components));
+
+
+    const operations = getSelectedFunctions();
+    const selectedOperationIds = getSelectedFunctionIds();
+    const componentNewSendingStr = JSON.stringify(deleteExtraFunctions(initialComponentItem, selectedOperationIds, operations));
+    const links = getSelectedLinkItems();
+    console.log(JSON.parse(componentNewSendingStr));
+    const allElements = [links.filter(el => !componentLinkIds.includes(el._id)), operations, components, componentsOperations];
+    const allStrElements = [itemFromListToObject(links.filter(el => !componentLinkIds.includes(el._id))), itemFromListToObject(operations), [componentNewSendingStr, linkArg]];
+    handleLinkDeletion(links);
+    handleFunctionDeletion(operations);
+    handleComponentDeletion(components);
+
+    // setTimeout(() => { console.log(totalElements); }, 1000)
+    deleteKeySaveAction(allElements, allStrElements);
     return;
 }
 
