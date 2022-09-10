@@ -191,7 +191,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
         select.innerHTML = extraInfo[1];
         select.style.width = "250px";
         selectExternal.appendChild(select);
-        select.style.marginLeft = 27 + "px";
+        select.style.marginLeft = 31 + "px";
         select.style.marginTop = 17 + "px";
         select.style.marginBottom = 22 + "px";
         select.style.padding = 2 + "px";
@@ -213,7 +213,7 @@ function produceBox(type, extraInfo, callBack, cancelCallBack, itemId) {
             closeBox();
         }
         produceGrayLayer(box, extraInfo, "");
-        box.style.height = "129px";
+        box.style.height = "122px";
     } else if (type === "input") {
         closeButton.remove();
         closeButton.style.width = closeButton.style.height = "12px";

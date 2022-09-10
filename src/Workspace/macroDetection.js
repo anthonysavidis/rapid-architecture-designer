@@ -26,12 +26,16 @@ function detectMacros(params) {
             cKey = 67;
 
         $(document).keydown(function (e) {
+            var isModalOpen = document.getElementsByClassName("confirmationBox").length ||
+                document.getElementsByClassName("selectingBox").length ||
+                document.getElementsByClassName("inputBox").length ||
+                document.getElementsByClassName("configurationBox").length
             if (e.keyCode == ctrlKey) ctrlDown = true;
             else if (e.keyCode == shiftKey) shiftDown = true;
             else if (e.keyCode == enterKey) {
                 e.preventDefault();
             }
-            if (e.keyCode === deleteKey) {
+            if (e.keyCode === deleteKey && !isModalOpen) {
                 deleteFromKey();
             }
         }).keyup(function (e) {

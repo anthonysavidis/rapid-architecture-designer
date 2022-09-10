@@ -570,7 +570,12 @@ function keyDownWorkpaceHandler(myDiagram) {
     var control = e.control || e.meta;
     var deleteKey = e.delete;
     var key = e.key;
-    if (key === "Del") {
+    var isModalOpen = document.getElementsByClassName("confirmationBox").length ||
+        document.getElementsByClassName("selectingBox").length ||
+        document.getElementsByClassName("inputBox").length ||
+        document.getElementsByClassName("configurationBox").length
+    if (key === "Del" && !isModalOpen) {
+        console.log(isModalOpen)
         deleteFromKey();
     }
     // Quit on any undo/redo key combination:

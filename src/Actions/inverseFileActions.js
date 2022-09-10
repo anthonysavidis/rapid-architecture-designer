@@ -1,5 +1,6 @@
 import { configStyle } from "../Classes/Config.js";
 import { LayerHolder, layers, refreshAllLinks } from "../Classes/LayerHolder.js";
+import { moveAllComponentsOnLoad } from "../HtmlElements/goWorkspace.js";
 import { createFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan.js";
 import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
@@ -16,10 +17,11 @@ function loadPrev(actionItems) {
         autoResizeAllComponents();
     else
         checkAndResize();
-    (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+    (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
     // updateTree();
     updateFullPath(layers.layerList[0]._name);
     measureAllLayersOperations();
+    moveAllComponentsOnLoad(1400, 1100);
 
 
 }
@@ -34,10 +36,11 @@ function loadNext(actionItems) {
         autoResizeAllComponents();
     else
         checkAndResize();
-    (configStyle.descriptionEnabled) ? refreshAllLinks(): 1;
+    (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
     // updateTree();
     updateFullPath(layers.layerList[0]._name);
     measureAllLayersOperations();
+    moveAllComponentsOnLoad(1400, 1100);
 
 
 }
