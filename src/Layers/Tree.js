@@ -42,7 +42,7 @@ function refreshTree() {
         'core': {
             'data': treeData
         }
-    }).on('changed.jstree', function(e, data) {
+    }).on('changed.jstree', function (e, data) {
         // createNodeFullPath(data);
         closeTheTooltip();
         cancelSelection();
@@ -63,25 +63,20 @@ function refreshTree() {
         actions.saveCommand(changeNextLayer, changePrevLayer, oldLayerId, currentId);
         updateFullPath(getCurrentFullPath());
     });
-    $('#jstree').bind("dblclick.jstree", function(event) {
-        // try {
-        //     var node = $(event.target).closest("li");
-        //     const id = node[0].id;
-        //     const currentId = id.split("branch")[0];
-        //     const layerObject = layers.layerList[layers.layerList.findIndex(el => el._id === currentId)];
-        //     const oldName = layerObject._name;
-        //     const domId = id + "_anchor";
-        //     const rect = document.getElementById(domId).getBoundingClientRect();
-        //     produceDoubleClickEditingLayerName(domId, oldName, layerObject, rect);
-        // } catch (error) {
-
-        // }
+    $('#jstree').bind("loaded.jstree", function (e, data) {
+        $('#tree').jstree("select_node", layers.selectedLayer._id + "branch", true);
     });
+
+
 }
 
 function openLayerTree() {
+
     document.getElementById("fSidebar").style.display = "block";
     document.getElementById("jstree").style.display = "block";
+    $('#jstree').jstree(true).select_node(layers.selectedLayer._id + "branch");
+    // $('#jstree').jstree('select_node', layers.selectedLayer._id + "branch");
+
 }
 
 function closeLayerTree() {

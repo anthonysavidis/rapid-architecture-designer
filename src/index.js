@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
     fixMainDiv()
     fixTrashBinPosition();
     document.getElementById("functionArea").style.height = "84.5%";
-
     document.getElementById("html1").scrollTop = 0; //always scroll on top especially in zoom in/out.
 
     // document.onpaste = function(params) {

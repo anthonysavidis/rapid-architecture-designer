@@ -16,6 +16,7 @@ import {
   showAll,
 } from "../Workspace/functionAppearance.js";
 import { macroURCallBack } from "../Workspace/macroDetection.js";
+import { hideCurrentSlider, showNextSlider } from "../Workspace/zoomSlider.js";
 import { imageStorage } from "./ImageHolder.js";
 import { InstanceGenerator } from "./InstanceCreator.js";
 import { Item } from "./Item.js";
@@ -97,12 +98,14 @@ class LayerHolder {
 
   changeLayer(id) {
     //palia items save ...
+    hideCurrentSlider();
     cancelSelection();
     this.saveItems();
     this.selectLayer(id);
     this.bindItemsToLayer(id);
     actionsOfNextLayer(id);
     InstanceGenerator.clickWorkspace();
+    showNextSlider(id);
   }
   bindItemsToLayer(id) {
     setItems(this.itemMap.get(id));
@@ -162,7 +165,7 @@ class LayerHolder {
       layerObject.layerList[i].setOfItems = layerObject.itemMap[layerObject.layerList[i]._id];
       var l = new Layer("", -1, -1, layerObject.layerList[i]);
       InstanceGenerator.turnOffGrid(l._id);
-
+      InstanceGenerator.diagramMap[l._id].scroll("pixel", "right");
       // console.log('loop1');
     }
 
@@ -198,11 +201,13 @@ class LayerHolder {
     setItems(layers.itemMap.get(layers.layerList[0]._id));
     restorePreviewImages(layerObject["localStorageInstance"]);
     const initialLayerId = this.selectedLayer._id;
-    // for (var x in this.layerList) {
-    //     takeScreenshot(this.layerList[x]._id);
-    //     this.changeLayer(this.layerList[x]._id);
-    // }
-    // this.changeLayer(initialLayerId);
+    for (var x in this.layerList) {
+      // takeScreenshot(this.layerList[x]._id);
+      document.getElementById("main").appendChild(InstanceGenerator.zoomSliderMap[this.layerList[x]._id]._sliderDiv);
+      InstanceGenerator.zoomSliderMap[this.layerList[x]._id]._sliderDiv.style.display = "none";
+      // this.changeLayer(this.layerList[x]._id);
+    }
+    this.changeLayer(initialLayerId);
   }
 }
 

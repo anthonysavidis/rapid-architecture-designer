@@ -74,8 +74,12 @@ function loadAction() {
             var allText = filecontent;
             for (var x in layers.layerList) {
                 document.getElementById(layers.layerList[x]._id).remove();
+                document.getElementById(layers.layerList[x]._id + "zoomSlider").remove();
                 document.getElementById(layers.layerList[x]._id + "functions").remove();
+                InstanceGenerator.zoomSliderMap[layers.layerList[x]._id].remove();
             }
+            InstanceGenerator.diagramMap = {};
+            InstanceGenerator.zoomSliderMap = {};
             var lh = new LayerHolder(allText);
             actions.saveCommand(loadNext, loadPrev, previousLayerHolderStr, lh.toString());
             if (configStyle.autoFit)
@@ -86,7 +90,7 @@ function loadAction() {
             (configStyle.descriptionEnabled) ? refreshAllLinks() : 1;
             measureAllLayersOperations();
             InstanceGenerator.clickWorkspace();
-            moveAllComponentsOnLoad(1400,1100);
+            // moveAllComponentsOnLoad(1400,1100);
 
         };
         reader.readAsText(e.target.files[0]);

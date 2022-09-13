@@ -1,4 +1,5 @@
 import { actions, redoAction, undoAction } from "../Classes/Actions.js";
+import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { bRecs } from "../Input/boundingRectanglesObserver.js";
@@ -68,6 +69,8 @@ function detectMacros(params) {
                 console.log(bRecs);
             } else if (ctrlDown && (e.keyCode == 77)) { //m
                 console.log(actions);
+                console.log(InstanceGenerator.zoomSliderMap);
+                console.log(InstanceGenerator.diagramMap);
             } else if (ctrlDown && (e.keyCode == 66)) { //m
                 console.log(layers);
             }

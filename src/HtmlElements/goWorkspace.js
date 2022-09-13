@@ -24,7 +24,7 @@ const $ = go.GraphObject.make;
 var lastSelectedNodeKey = null;
 
 function getNewWorkspace(lid) {
-    return $(go.Diagram, lid, {
+    const workaspaceTemplate = $(go.Diagram, lid, {
         padding: 20,//new go.Margin(20, -150, -100, 250), //20 extra space when scrolled all the way
         scrollMode: go.Diagram.InfiniteScroll,
         initialContentAlignment: go.Spot.Center,
@@ -177,6 +177,8 @@ function getNewWorkspace(lid) {
         },
         // layout:  $(go.TreeLayout, { isInitial: false, isOngoing: false })
     });
+
+    return workaspaceTemplate;
 }
 
 var r = document.querySelector(':root');

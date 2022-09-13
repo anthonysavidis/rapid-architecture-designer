@@ -6,12 +6,14 @@ import { configStyle } from "./Config.js";
 import { addDiagramListener, getLinkContext, getNewWorkspace, initializeLinkTemplate, initializeNodeTemplate, keyDownWorkpaceHandler, setWorkspaceDropListeners } from "../HtmlElements/goWorkspace.js";
 import { getAllCssVars } from "./ConfigActions.js";
 import { items } from "./ItemArray.js";
+import { produceLayersZoomSlider } from "../Workspace/zoomSlider.js";
 
 
 
 class InstanceCreator {
   constructor() {
     this.diagramMap = {};
+    this.zoomSliderMap = {};
   }
   createComponent(obj) {
     const spawiningPoint = this.diagramMap[layers.selectedLayer._id].transformDocToView(new go.Point(400, 100));
@@ -36,7 +38,7 @@ class InstanceCreator {
     this.diagramMap[lid].linkTemplate.contextMenu = getLinkContext();
     setWorkspaceDropListeners(lid);
     addDiagramListener(this.diagramMap[lid]);
-
+    this.zoomSliderMap[lid] = produceLayersZoomSlider(lid);
 
   }
   deleteNode(obj) {
@@ -143,7 +145,6 @@ class InstanceCreator {
           continue;
         if (varName === "--componentTextSize") {
           const font = configStyle.configJSON["componentFontStyle"] + " normal " + configStyle.configJSON["componentFontWeight"] + " " + configStyle.configJSON["componentTextSize"] + " " + configStyle.configJSON["componentTextFamily"];
-          console.log(font);
           // this.diagramMap[layers.selectedLayer._id].findNodeForKey(nodeData.key).font = font;
           this.modifySingleNodeProperty(lid, nodeData, "componentFont", font);
         } else {
