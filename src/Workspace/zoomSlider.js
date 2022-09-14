@@ -1,18 +1,33 @@
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { layers } from "../Classes/LayerHolder.js";
 
+function handleZoomButtons() {
+
+}
+
 function produceLayersZoomSlider(lid) {
     var zoomSlider = new ZoomSlider(InstanceGenerator.diagramMap[lid],
         {
             //alignment: go.Spot.TopRight, alignmentFocus: go.Spot.BottomRight,
-            size: 150, buttonSize: 20, orientation: 'horizontal'
+            size: 120, buttonSize: 20, orientation: 'horizontal'
         });
     zoomSlider._sliderDiv.id = lid + "zoomSlider";
-    zoomSlider._sliderDiv.style.top = window.innerHeight - 40 + "px";
-    zoomSlider._sliderDiv.style.left = 25 + "px";
+    zoomSlider._sliderDiv.style.top = window.innerHeight - 30 + "px";
+    zoomSlider._sliderDiv.style.left = 15 + "px";
+    zoomSlider._sliderDiv.style.width = "auto";
     zoomSlider._sliderDiv.style.zIndex = "27";
     zoomSlider._sliderDiv.children[1].children[0].min = -30;
     zoomSlider._sliderDiv.children[1].children[0].max = 30;
+    zoomSlider._sliderDiv.children[2].style.marginLeft = 5 + "px";
+    zoomSlider._sliderDiv.children[1].children[0].style.marginLeft = "2.5px";
+    zoomSlider._sliderDiv.children[2].style.border = 0;
+    zoomSlider._sliderDiv.children[2].style.backgroundColor = "transparent";
+    zoomSlider._sliderDiv.children[2].innerHTML = '<img width="15" height="15" src="./images/plus.png">'
+
+    zoomSlider._sliderDiv.children[0].style.border = 0;
+    zoomSlider._sliderDiv.children[0].style.backgroundColor = "transparent";
+    zoomSlider._sliderDiv.children[0].innerHTML = '<img width="15" height="15" src="./images/minus.png">'
+
     if (document.getElementById(lid + "zoomSlider"))
         document.getElementById(lid + "zoomSlider").remove();
     document.getElementById("main").appendChild(zoomSlider._sliderDiv);

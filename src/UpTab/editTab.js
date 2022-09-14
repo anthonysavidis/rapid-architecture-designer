@@ -8,75 +8,68 @@ import { editFunctionCallBack } from "../Input/functonsContextMenuCallbacks.js";
 import { getSelectedItems } from "../Item/selectComponent.js";
 import { getSelectedFunctions } from "../Item/selectFunction.js";
 import { getSelectedLinkItems } from "../Item/selectLink.js";
-import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 import { appearEditButtons } from "./tabAppearance/buttonsVisibility.js";
 
 function initialAppear() {
     document.getElementById("undoButton").style.display = "block";
     document.getElementById("redoButton").style.display = "block";
     document.getElementById("editButton").style.display = "none";
-
 }
 
 var gridState = "on",
-    panningState = "off"
+    snappingState = "on"
 
 function gridTurnOn() {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].grid.visible = true;
     gridState = "on";
-
-    // document.getElementById("gridButton").style.backgroundColor = "#ccc";
 }
 
 function gridTurnOff() {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].grid.visible = false;
     gridState = "off";
-    // document.getElementById("gridButton").style.backgroundColor = "";
-
 }
-
-function panningOn() {
-    panningState = "on";
-    enablePanning();
-    document.getElementById("panningButton").style.backgroundColor = "#ccc";
-}
-
-function panningOff() {
-    panningState = "off";
-    disablePanning();
-    document.getElementById("panningButton").style.backgroundColor = "";
-}
-
 
 function gridAction() {
     if (gridState === "off") {
         gridTurnOn();
-        console.log('on grid');
-        // actions.saveCommand(gridTurnOn, gridTurnOff, "", "");
     } else {
-        console.log('off grid');
         gridTurnOff();
-        // actions.saveCommand(gridTurnOff, gridTurnOn, "", "");
     }
 }
 
-function panningAction() {
-    if (panningState === "off") {
-        panningOn();
-        // actions.saveCommand(panningOn, panningOff, "", "");
+function snappingOn() {
+    for (var x in layers.layerList)
+        InstanceGenerator.diagramMap[layers.layerList[x]._id].toolManager.draggingTool.dragOptions.isGridSnapEnabled = true;
+    snappingState = "on";
+}
+
+function snappingOff() {
+    for (var x in layers.layerList)
+        InstanceGenerator.diagramMap[layers.layerList[x]._id].toolManager.draggingTool.dragOptions.isGridSnapEnabled = false;
+    snappingState = "off";
+
+}
+
+function gridSnapAction() {
+    if (snappingState === "off") {
+        snappingOn();
     } else {
-        panningOff();
-        // actions.saveCommand(panningOff, panningOn, "", "");
+        snappingOff();
     }
 }
-var gridCntx, panningCntx, undoCntx, redoCntx;
+var gridCntx, undoCntx, redoCntx, gridSnpCntx;
 
 function addEditTabListeners() {
     document.getElementById("gridButton").addEventListener("click", gridCntx = function () {
         gridAction();
         // actions.saveCommand()
     });
-    document.getElementById("editButton").addEventListener("click", panningCntx = function () {
+    document.getElementById("gridSnappingButton").addEventListener("click", gridSnpCntx = function () {
+        gridSnapAction();
+        InstanceGenerator.clickWorkspace();
+
+    });
+    document.getElementById("editButton").addEventListener("click", function () {
         // actions.saveCommand()
         if (getSelectedItems().length === 1)
             editComponentCallBack(getSelectedItems()[0]._id);
@@ -99,8 +92,8 @@ function addEditTabListeners() {
     initialAppear();
     setTimeout(() => {
         gridTurnOff();
-
+        snappingOff();
     }, 100);
 }
 
-export { addEditTabListeners, gridCntx, panningCntx, undoCntx, redoCntx, gridState, panningState };
+export { addEditTabListeners, gridCntx, undoCntx, redoCntx, gridTurnOn, snappingOn, gridState, gridSnpCntx, snappingState };

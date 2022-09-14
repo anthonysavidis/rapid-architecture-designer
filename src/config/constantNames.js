@@ -27,7 +27,8 @@ const constantNames = {
         "Paste": "Paste",
         "Redo": "Redo",
         "Edit": "Elements Data",
-        "Panning": "Panning"
+        "Panning": "Panning",
+        "GridSnapping": "Grid Snapping"
     },
     "componentsTab": {
         "tabName": "Components",
@@ -221,7 +222,8 @@ const buttonTooltips = {
         "Panning": "Toggle panning in the workspace.",
         "Fullscreen": "Enter fullscreen mode.",
         "Exit Fullscreen": "Exit fullscreen mode.",
-        "Edit": "Edit element's name and description."
+        "Edit": "Edit element's name and description.",
+        "Grid Snapping": "Toggle grid snapping."
     },
     "Operations": {
         "New": "Create a new operation.",

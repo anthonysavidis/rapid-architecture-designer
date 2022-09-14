@@ -11,6 +11,7 @@ import {
   addToArchitectureList,
   updateTree,
 } from "../Layers/Tree.js";
+import { gridState, gridTurnOn, snappingOn, snappingState } from "../UpTab/editTab.js";
 import {
   setUpFunctionDisplayListeners,
   showAll,
@@ -34,6 +35,10 @@ class LayerHolder {
       this.toObject(str);
       setLayers(this);
       updateLayerInfoBox();
+      if (gridState === "on")
+        gridTurnOn();
+      if (snappingState === "on")
+        snappingOn();
     }
   }
   add(layer) {

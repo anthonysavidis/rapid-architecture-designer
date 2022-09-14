@@ -3,6 +3,7 @@ import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { items } from "../Classes/ItemArray.js";
 import { constantNames } from "../config/constantNames.js";
 import { addMotion } from "../Input/movingModal.js";
+import { cropName } from "./doubleClickEditing.js";
 import { produceGrayLayer, produceMovingBar } from "./infoBoxes.js";
 
 
@@ -117,8 +118,8 @@ function produceLinkDirectionBox(linkId) {
     selectDiv.style.marginLeft = "10px";
     const toValues = [linkItem.idComponent1, linkItem.idComponent2];
     const toNames = [items.itemList[items.itemList.findIndex(el => el._id === toValues[0])]._name, items.itemList[items.itemList.findIndex(el => el._id === toValues[1])]._name];
-    select.innerHTML = '<option value="' + toValues[0] + '">' + toNames[0] + '</option>  \
-    <option value="'+ toValues[1] + '">' + toNames[1] + '</option>';
+    select.innerHTML = '<option value="' + toValues[0] + '">' + cropName(toNames[0], 18) + '</option>  \
+    <option value="'+ toValues[1] + '">' + cropName(toNames[1], 18) + '</option>';
     select.style.margin = 0 + "px";
     select.style.padding = 0;
     select.style.color = "#525252";

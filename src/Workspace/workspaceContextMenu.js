@@ -3,7 +3,7 @@ import { actions } from "../Classes/Actions.js";
 import { items } from "../Classes/ItemArray.js";
 import { addToParentContext } from "../HtmlElements/functionsContextMenu.js";
 import { componentContextDispatch } from "../UpTab/componentTab.js";
-import { gridCntx, gridState, panningCntx, panningState, redoCntx, undoCntx } from "../UpTab/editTab.js";
+import { gridCntx, gridSnpCntx, gridState, redoCntx, snappingState, undoCntx } from "../UpTab/editTab.js";
 import { newFunctionCntx } from "../UpTab/functionTab.js";
 import { moveToCntx } from "../UpTab/hierarchyTab.js";
 import { exitFullscreenCntx, fullscreenCntx } from "../UpTab/settingsTab.js";
@@ -76,6 +76,11 @@ function produceWorkspaceContextMenu(clickedComponentId, componentIdList, x, y) 
         closeContext();
     }, "");
 
+    var snpGridOption = addToParentContext("", workspaceContext, "Grid Snappin", () => {
+        gridSnpCntx();
+        closeContext();
+    }, "");
+
     var fullscreenOption = addToParentContext("", workspaceContext, "Fullscreen", () => {
         if (!isFullScreen)
             fullscreenCntx();
@@ -87,6 +92,8 @@ function produceWorkspaceContextMenu(clickedComponentId, componentIdList, x, y) 
 
     if (gridState === "on")
         addTick(gridOption);
+    if (snappingState === "on")
+        addTick(snpGridOption);
     if (isFullScreen) {
         addTick(fullscreenOption);
     }

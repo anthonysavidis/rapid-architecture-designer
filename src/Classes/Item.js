@@ -32,7 +32,6 @@ import { deleteMultWithTrashBin } from "../Workspace/trashBin.js";
 import { updateLayerInfoBox } from "../Layers/layerInfoFunctions.js";
 import { measureSelectedView } from "../Workspace/selectedOperationsHandler.js";
 import { produceComponentContextMenu } from "../HtmlElements/componentContextMenu.js";
-import { panningState } from "../UpTab/editTab.js";
 import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 import { InstanceGenerator } from "./InstanceCreator.js";
 

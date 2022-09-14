@@ -7,7 +7,6 @@ import { closeTooltip } from "../HtmlElements/infoTooltip.js";
 import { layers } from "../Classes/LayerHolder.js";
 import { configStyle } from "../Classes/Config.js";
 import { canResizeAutofit, passAutoFitRestrictions } from "./autoResize.js";
-import { panningState } from "../UpTab/editTab.js";
 import { disablePanning, enablePanning } from "../Workspace/zoom.js";
 
 function getTextDimensions(str) {
@@ -101,10 +100,7 @@ function addResize(id) {
     }
 
     function doDrag(e) {
-        if (panningState === "on") {
-            panningEnabled = true;
-            disablePanning();
-        }
+
         document.onmouseup = null;
         document.onmousemove = null;
         const possibleWidth = startWidth + e.clientX - startX;

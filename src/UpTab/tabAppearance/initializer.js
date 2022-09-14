@@ -51,6 +51,7 @@ function addAllButtons() {
     addButton(constantNames["editTab"]["Undo"], "undoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Redo"], "redoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Grid"], "gridButton", constantNames["editTab"]["tabName"]);
+    addButton(constantNames["editTab"]["GridSnapping"], "gridSnappingButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['editTab']['tabName']);
     addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['editTab']['tabName']);
     addButton(constantNames["editTab"]["Edit"], "editButton", constantNames["editTab"]["tabName"]);
