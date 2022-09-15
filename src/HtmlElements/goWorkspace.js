@@ -174,6 +174,8 @@ function getNewWorkspace(lid) {
         "undoManager.isEnabled": true,
         "ViewportBoundsChanged": (e) => {
             items.updateAllWorkspaceBoundings();
+            const zoomScale = InstanceGenerator.diagramMap[layers.selectedLayer._id].scale;
+            document.getElementById("zoomPercentageSelection").value = Math.round(zoomScale * 100) + "%";
         },
         // layout:  $(go.TreeLayout, { isInitial: false, isOngoing: false })
     });

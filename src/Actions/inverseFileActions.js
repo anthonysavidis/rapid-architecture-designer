@@ -6,11 +6,14 @@ import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
 import { updateTree } from "../Layers/Tree.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
+import { hideCurrentSlider } from "../Workspace/zoomSlider.js";
 
 function loadPrev(actionItems) {
     for (var x in layers.layerList) {
         document.getElementById(layers.layerList[x]._id).remove();
         document.getElementById(layers.layerList[x]._id + "functions").remove();
+        if (layers.selectedLayer && document.getElementById(layers.layerList[x]._id + "zoomSlider"))
+            document.getElementById(layers.layerList[x]._id + "zoomSlider").remove();
     }
     var lh = new LayerHolder(actionItems.initialItem);
     if (configStyle.autoFit)
@@ -30,6 +33,8 @@ function loadNext(actionItems) {
     for (var x in layers.layerList) {
         document.getElementById(layers.layerList[x]._id).remove();
         document.getElementById(layers.layerList[x]._id + "functions").remove();
+        if (layers.selectedLayer && document.getElementById(layers.layerList[x]._id + "zoomSlider"))
+            document.getElementById(layers.layerList[x]._id + "zoomSlider").remove();
     }
     var lh = new LayerHolder(actionItems.updatedItem);
     if (configStyle.autoFit)

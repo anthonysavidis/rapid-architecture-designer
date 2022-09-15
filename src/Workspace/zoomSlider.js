@@ -26,7 +26,7 @@ function produceLayersZoomSlider(lid) {
     // zoomSlider._sliderDiv.style.top = window.innerHeight - 30 + "px";
     zoomSlider._sliderDiv.style.position = "initial";
     zoomSlider._sliderDiv.style.marginTop = "2.5px";
-    // zoomSlider._sliderDiv.style.left = 15 + "px";
+    zoomSlider._sliderDiv.style.left = zoomSlider._sliderDiv.style.top = 0 + "px";
     zoomSlider._sliderDiv.style.width = "auto";
     zoomSlider._sliderDiv.style.zIndex = "2";
     handleZoomButtons(zoomSlider);
@@ -38,17 +38,18 @@ function produceLayersZoomSlider(lid) {
 }
 
 function hideCurrentSlider() {
-    if (layers && layers.selectedLayer && document.getElementById(layers.selectedLayer._id + "zoomSlider"))
-        document.getElementById(layers.selectedLayer._id + "zoomSlider").style.display = "none";
+    if (layers.selectedLayer && document.getElementById(layers.selectedLayer._id + "zoomSlider"))
+        document.getElementById(layers.selectedLayer._id + "zoomSlider").remove();
     return;
 }
 
 function showNextSlider(id) {
-    if (layers && layers.selectedLayer && document.getElementById(layers.selectedLayer._id + "zoomSlider"))
-        document.getElementById(id + "zoomSlider").style.display = "block";
+    // if (layers && layers.selectedLayer && document.getElementById(layers.selectedLayer._id + "zoomSlider"))
+    //     document.getElementById(id + "zoomSlider").style.display = "block";
     if (!document.getElementById(id + "zoomSlider")) {
         if (InstanceGenerator.zoomSliderMap[id]) {
-            document.getElementById("main").appendChild(InstanceGenerator.zoomSliderMap[id]._sliderDiv);
+            document.getElementById("zoomMenuSliderDiv").appendChild(InstanceGenerator.zoomSliderMap[id]._sliderDiv);
+            InstanceGenerator.zoomSliderMap[id]._sliderDiv.style.display = "inline-block";
         }
     }
     return;
@@ -72,7 +73,8 @@ function createZoomToFitButton() {
 function createZoomSelection() {
     var zoomSelectionDiv = document.createElement('div');
     zoomSelectionDiv.style.display = "inline-block";
-    var innerStr = '<select onchange="this.nextElementSibling.value=this.value">\
+    var innerStr = '<select id="zoomSelectField">\
+                    <option value="23%">23%</option>\
                     <option value="25%">25%</option>\
                     <option value="50%">50%</option>\
                     <option value="75%">75%</option>\
@@ -81,6 +83,8 @@ function createZoomSelection() {
                     <option value="150%">150%</option>\
                     <option value="175%">175%</option>\
                     <option value="200%">200%</option>\
+                    <option value="300%">300%</option>\
+                    <option value="432%">432%</option>\
                     </select>\
                     <input id="zoomPercentageSelection" type="text" name="format" value="" />';
     zoomSelectionDiv.innerHTML = innerStr;
@@ -98,6 +102,62 @@ function createZoomSelection() {
     zoomSelectionDiv.className = "select-editable";
     zoomSelectionDiv.style.width = "80px";
     return zoomSelectionDiv;
+}
+
+function containsAnyLetter(str) {
+    return /[a-zA-Z]/.test(str);
+}
+
+function isNum(str) {
+    return /^\d+$/.test(str);
+}
+
+function restorePreviousScale() {
+    const zoomScale = InstanceGenerator.diagramMap[layers.selectedLayer._id].scale;
+    document.getElementById("zoomPercentageSelection").value = Math.round(zoomScale * 100) + "%";
+    return;
+}
+function setNewScale(numstr) {
+    const num = Math.abs(parseInt(numstr));
+    document.getElementById("zoomPercentageSelection").value = Math.round(num) + "%";
+    InstanceGenerator.diagramMap[layers.selectedLayer._id].scale = num / 100;
+    return;
+}
+function addZoomInputLister() {
+    const form = document.getElementById("zoomPercentageSelection");
+    const inputCompleteCallback = (e) => {
+        const val = form.value;
+        if (containsAnyLetter(val)) {
+            restorePreviousScale();
+        }
+        else {
+            if (val.includes('%')) {
+                const split = val.split('%');
+                if (split.length > 2 || !isNum(split[0]))
+                    restorePreviousScale();
+                else
+                    setNewScale(val);
+            }
+            else if (isNum(val))
+                setNewScale(val);
+        }
+    };
+
+    document.getElementById("zoomPercentageSelection").addEventListener("blur", inputCompleteCallback);
+    $('#' + "zoomPercentageSelection").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            // inputCompleteCallback();
+            document.getElementById("zoomPercentageSelection").blur();
+        }
+    });
+}
+
+function addSelectionListener() {
+    document.getElementById("zoomSelectField").addEventListener("change", (e) => {
+        document.getElementById("zoomPercentageSelection").value = document.getElementById("zoomSelectField").value;
+        document.getElementById("zoomPercentageSelection").focus();
+        document.getElementById("zoomPercentageSelection").blur();
+    })
 }
 
 function addZoomMenu() {
@@ -122,6 +182,8 @@ function addZoomMenu() {
     zoomButtonAndSelection.style.height = "50px";
     zoomMenuDiv.appendChild(zoomButtonAndSelection);
     document.getElementById("Edit").appendChild(zoomMenuDiv);
+    addZoomInputLister();
+    addSelectionListener();
 }
 
 
