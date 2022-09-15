@@ -222,7 +222,7 @@ const buttonTooltips = {
         "Panning": "Toggle panning in the workspace.",
         "Fullscreen": "Enter fullscreen mode.",
         "Exit Fullscreen": "Exit fullscreen mode.",
-        "Edit": "Edit element's name and description.",
+        "Elements Data": "Edit element's name and description.",
         "Grid Snapping": "Toggle grid snapping."
     },
     "Operations": {

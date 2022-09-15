@@ -2,7 +2,7 @@ import { items } from "../Classes/ItemArray.js";
 
 
 function changeFunctionSelectState(id) {
-    document.getElementById(id).addEventListener("mousedown", function(e) {
+    document.getElementById(id).addEventListener("mousedown", function (e) {
         if (e.button !== 2)
             document.getElementById(id).className = "selectedFunction";
         return;
@@ -51,6 +51,7 @@ function cancelFunctionSelection() {
 }
 
 function keepOnlyLastSelectedFunction(id) {
+    console.log('called')
     var y = document.getElementsByClassName("selectedFunction");
     var i = 0;
     while (y.length !== 1) {

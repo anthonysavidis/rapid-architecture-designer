@@ -121,6 +121,7 @@ function selectionHandler(e, targ) {
     const suspectedId = targ.id.match(/\d+/);
     const index = items.itemList.findIndex(el => el._id === suspectedId);
 
+    console.log(isFunction(e.target.id, e.clientX, e.clientY) && e.ctrlKey);
 
     if (hasClickedOnWorkspace(targ.id, e)) {
         document.getElementById("selectedComponentList").innerHTML = "";
@@ -131,6 +132,7 @@ function selectionHandler(e, targ) {
             keepOnlyLastSelectedItem(componentId[0]);
     } else if (isFunction(e.target.id, e.clientX, e.clientY) && !e.ctrlKey) {
         const functionId = targ.id.match(/\d+/);
+        console.log("mpika")
         if (functionId && !targ.id.includes('L') && e.button !== 2)
             keepOnlyLastSelectedFunction(functionId[0]);
     }

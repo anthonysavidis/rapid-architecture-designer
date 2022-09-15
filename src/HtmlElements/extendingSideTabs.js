@@ -11,7 +11,7 @@ function produceRightTabRod() {
     document.getElementById('body').appendChild(rightTabRod);
     document.getElementById('rightTabRod').style.top = document.getElementById("right_tab").getBoundingClientRect().top + "px";
     document.getElementById('rightTabRod').style.height = document.getElementById("right_tab").getBoundingClientRect().height + "px";
-    document.getElementById('rightTabRod').style.left = document.getElementById("right_tab").getBoundingClientRect().left - 10 + "px";
+    document.getElementById('rightTabRod').style.left = document.getElementById("right_tab").getBoundingClientRect().left + "px";
     addRightTabRodListener();
 }
 
@@ -88,7 +88,7 @@ function addRightTabRodListener() {
 
         },
         stop: (e) => { //actionsSave item... apoi to move item
-            document.getElementById('rightTabRod').style.left = document.getElementById('right_tab').getBoundingClientRect().left - 10 + "px";
+            document.getElementById('rightTabRod').style.left = document.getElementById('right_tab').getBoundingClientRect().left + 2 + "px";
             fixFunctionsWidth();
             createDraggableSpace();
             fixTrashBinPosition();

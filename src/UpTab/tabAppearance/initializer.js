@@ -7,6 +7,20 @@ import { getTextWidth } from "../../HtmlElements/doubleClickEditing.js";
 import { addHierarchyTabListeners } from "../hierarchyTab.js";
 import { addSettingsTabListeners } from "../settingsTab.js";
 import { addHelpTabListeners } from "../helpTab.js";
+import { addZoomMenu } from "../../Workspace/zoomSlider.js";
+
+function addButtonSeperatingLine(tab) {
+    var l = document.createElement('div');
+    l.className = "seperativeLine";
+    l.style.backgroundColor = "#ccc";
+    l.style.display = "inline-flex";
+    l.style.height = "56px";
+    l.style.width = "1px";
+    l.style.marginBottom = "-7px";
+    l.style.marginRight = l.style.marginLeft = "2px";
+    document.getElementById(tab).appendChild(l);
+    return l;
+}
 
 function addButton(label, id, tab) {
     const imgName = label.includes(' ') ? label.replace(' ', '') : label;
@@ -50,12 +64,20 @@ function addAllButtons() {
 
     addButton(constantNames["editTab"]["Undo"], "undoButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["Redo"], "redoButton", constantNames["editTab"]["tabName"]);
+    var undoline = addButtonSeperatingLine(constantNames["editTab"]['tabName']);
+    undoline.id = "undoLine";
+    undoline.style.display = "none";
     addButton(constantNames["editTab"]["Grid"], "gridButton", constantNames["editTab"]["tabName"]);
     addButton(constantNames["editTab"]["GridSnapping"], "gridSnappingButton", constantNames["editTab"]["tabName"]);
+    addButtonSeperatingLine(constantNames["editTab"]['tabName']);
     addButton(constantNames['settingsTab']["Fullscreen"], "fullscreenButton", constantNames['editTab']['tabName']);
     addButton(constantNames['settingsTab']["Exit Fullscreen"], "exitFullscreenButton", constantNames['editTab']['tabName']);
+    var editline = addButtonSeperatingLine(constantNames["editTab"]['tabName']);
+    editline.id = "editLine";
+    editline.style.display = "none";
     addButton(constantNames["editTab"]["Edit"], "editButton", constantNames["editTab"]["tabName"]);
-    // addButton(constantNames["editTab"]["Panning"], "panningButton", constantNames["editTab"]["tabName"]);
+    addButtonSeperatingLine(constantNames["editTab"]['tabName']);
+    addZoomMenu();
 
     addButton(constantNames["fileTab"]["New"], "newProjectButton", constantNames["fileTab"]["tabName"]);
     addButton(constantNames["fileTab"]["Save"], "saveButton", constantNames["fileTab"]["tabName"]);
@@ -67,6 +89,8 @@ function addAllButtons() {
 
     addButton("Import", "loadConfigButton", constantNames['settingsTab']['tabName']);
     addButton("Export", "saveConfigButton", constantNames['settingsTab']['tabName']);
+    addButtonSeperatingLine(constantNames['settingsTab']['tabName']);
+
     addButton(constantNames['settingsTab']["Configure Component"], "configureComponentButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Operation"], "configureOperationButton", constantNames['settingsTab']['tabName']);
     addButton(constantNames['settingsTab']["Configure Link"], "configureLinkButton", constantNames['settingsTab']['tabName']);

@@ -155,7 +155,7 @@ class Item {
 
         document.getElementById(this._id + "ficon").addEventListener("click", function (ev) {
             ev.preventDefault();
-            cancelFunctionSelection();
+            // cancelFunctionSelection();
 
             document.getElementById(editId).className = "selectedFunction";
         });

@@ -13,6 +13,7 @@ import { createFullPath } from "./HtmlElements/pathAndLayerSpan.js";
 import { getAllCssVars } from "./Classes/ConfigActions.js";
 import { initZoom } from "./Workspace/zoom.js";
 import { windowChangeListeners } from "./Window/windowSizeHandler.js";
+import { InstanceGenerator } from "./Classes/InstanceCreator.js";
 
 
 
@@ -36,7 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
     fixTrashBinPosition();
     document.getElementById("functionArea").style.height = "84.5%";
     document.getElementById("html1").scrollTop = 0; //always scroll on top especially in zoom in/out.
-
+    document.getElementById("main").style.width = window.innerWidth + "px";
+    document.getElementById("main").style.marginLeft = "-8px";
+    InstanceGenerator.clickWorkspace();
     // document.onpaste = function(params) {
     //     // console.log(params.clipboardData);
     // }

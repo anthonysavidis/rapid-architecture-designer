@@ -44,7 +44,7 @@
     border: none;
     width: 100%;
     height: 3px;
-    background: #e8f5c8;
+    background: #ccc;
 }
 
 .zoomRangeInput::-moz-range-track {
@@ -52,7 +52,7 @@
     border: none;
     width: 100%;
     height: 3px;
-    background: #e8f5c8;
+    background: #ccc;
 }
 
 .zoomRangeInput::-ms-track {
@@ -60,7 +60,7 @@
     border: none;
     width: 100%;
     height: 3px;
-    background: #e8f5c8;
+    background: #ccc;
     color: transparent;
 }
 

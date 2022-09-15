@@ -154,11 +154,13 @@ function appearEditButtons() {
     var showRedo = 1;
     if (actions.undoStack.length !== 0) {
         document.getElementById("undoButton").style.display = "inline-block";
+        document.getElementById("undoLine").style.display = "inline-flex";
     } else {
         document.getElementById("undoButton").style.display = "none";
     }
     if (actions.redoStack.length !== 0) {
         document.getElementById("redoButton").style.display = "inline-block";
+        document.getElementById("undoLine").style.display = "inline-flex";
     } else {
         document.getElementById("redoButton").style.display = "none";
     }
@@ -168,9 +170,11 @@ function appearEditButtons() {
     //xor: (!a && b) || (a && !b)
     if ((!selectedComponent && selectedFunctions && !selectedLinks) || (selectedComponent && !selectedFunctions && !selectedLinks) || (!selectedComponent && !selectedFunctions && selectedLinks)) {
         document.getElementById("editButton").style.display = "inline-block";
+        document.getElementById("editLine").style.display = "inline-flex";
     }
     else {
         document.getElementById("editButton").style.display = "none";
+        document.getElementById("editLine").style.display = "none";
     }
     return;
 }

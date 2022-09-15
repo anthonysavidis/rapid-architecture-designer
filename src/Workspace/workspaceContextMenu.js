@@ -76,7 +76,7 @@ function produceWorkspaceContextMenu(clickedComponentId, componentIdList, x, y) 
         closeContext();
     }, "");
 
-    var snpGridOption = addToParentContext("", workspaceContext, "Grid Snappin", () => {
+    var snpGridOption = addToParentContext("", workspaceContext, "Grid Snapping", () => {
         gridSnpCntx();
         closeContext();
     }, "");
