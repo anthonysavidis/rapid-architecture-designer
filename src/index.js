@@ -19,6 +19,7 @@ import { InstanceGenerator } from "./Classes/InstanceCreator.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     insertUpTabs();
+    document.getElementById("main").style.height = window.innerHeight - document.getElementById("toolBar").getBoundingClientRect().height + "px";
     initializeStyleAndOperations();
     initializeObserver();
     createFirstLayer();

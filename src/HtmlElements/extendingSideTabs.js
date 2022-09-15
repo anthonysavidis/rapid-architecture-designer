@@ -71,7 +71,7 @@ function addRightTabRodListener() {
                 return;
             var dP = tP - initialPosition.left;
             if (rodRec.x > 0.7 * buttonsRec.width && rodRec.x < 0.85 * buttonsRec.width) {
-                (dP > 0) ? dP += 15 : dP -= 10;
+                // (dP > 0) ? dP += 15 : dP -= 0;
 
                 document.getElementById('right_tab').style.left = document.getElementById('rightTabRod').getBoundingClientRect().left + "px";
                 fixFunctionsWidth();

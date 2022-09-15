@@ -13,7 +13,6 @@ function initZoom() {
     // document.createElement()
     addPanning(document.getElementById('main'));
 
-    document.getElementById('main').style.height = "500px";
 }
 
 function moveAllItemsInCurrentLayer(X, Y) {
@@ -64,19 +63,19 @@ function addPanning(elmnt) {
         initY = e.clientY;
     }
     const mouseMoveFunction = (e) => {
-            if (!detectLeftButton(e) || !dragEnabled)
-                return;
-            if (e.target.className.includes("selected") || e.target.className.includes("component")) {
-                return;
-            } else {
-                var Dx = e.clientX - initX;
-                var Dy = e.clientY - initY;
-                moveAllItemsInCurrentLayer(Dx / 50, Dy / 50);
-            }
+        if (!detectLeftButton(e) || !dragEnabled)
+            return;
+        if (e.target.className.includes("selected") || e.target.className.includes("component")) {
+            return;
+        } else {
+            var Dx = e.clientX - initX;
+            var Dy = e.clientY - initY;
+            moveAllItemsInCurrentLayer(Dx / 50, Dy / 50);
         }
-        // elmnt.onmousedown = (e) => {
-        //     elmnt.onmousemove = (e) => {
-        //         console.log(e.button);
+    }
+    // elmnt.onmousedown = (e) => {
+    //     elmnt.onmousemove = (e) => {
+    //         console.log(e.button);
 
     //         if (e.button === 1) {
     //             console.log('dragging');
@@ -96,15 +95,15 @@ function addPanning(elmnt) {
 
     // }
 
-    elmnt.addEventListener("mousedown", function(e) {
+    elmnt.addEventListener("mousedown", function (e) {
         mouseDownFunction(e);
 
-        elmnt.onmousemove = function(e) {
+        elmnt.onmousemove = function (e) {
             mouseMoveFunction(e);
         }
     });
 
-    elmnt.addEventListener("mouseup", function(e) {
+    elmnt.addEventListener("mouseup", function (e) {
         elmnt.onmousemove = null;
         initX = initY = 0;
     });

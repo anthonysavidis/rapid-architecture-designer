@@ -113,8 +113,8 @@ function fixTrashBinPosition() {
 function fixMainDiv() {
     //ean einai mono to operations side i an einai kai ta 2.
     var rightSmallVoid = window.innerWidth - document.getElementById("toolBar").getBoundingClientRect().right;
-    document.getElementById("main").style.width = window.innerWidth - document.getElementById("right_tab").getBoundingClientRect().width - rightSmallVoid - 11 + "px";
-    document.getElementById("main").style.height = document.getElementById("right_tab").getBoundingClientRect().height + "px";
+    // document.getElementById("main").style.width = window.innerWidth - document.getElementById("right_tab").getBoundingClientRect().width - rightSmallVoid - 11 + "px";
+    // document.getElementById("main").style.height = document.getElementById("right_tab").getBoundingClientRect().height + "px";
 
 }
 
