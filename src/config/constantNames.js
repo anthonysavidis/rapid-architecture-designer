@@ -235,7 +235,7 @@ const buttonTooltips = {
     "Hierarchy": {
         "Move To": "Move component to another layer.",
         "Toggle Tree": "Show/Hide hierarchy tree.",
-        "Info": "Layer Info"
+        "Info": "Layer Info."
     },
     "Settings": {
         "Import": "Import settings from a config file.",

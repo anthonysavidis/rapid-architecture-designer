@@ -19,6 +19,7 @@ import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandl
 import { exitFullscreenCntx } from "./settingsTab.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 import { moveAllComponentsOnLoad } from "../HtmlElements/goWorkspace.js";
+import { cancelSelection } from "../Item/selectComponent.js";
 
 function readTextFile(file) {
     var rawFile = new XMLHttpRequest();
@@ -74,7 +75,8 @@ function loadAction() {
             var allText = filecontent;
             for (var x in layers.layerList) {
                 document.getElementById(layers.layerList[x]._id).remove();
-                document.getElementById(layers.layerList[x]._id + "zoomSlider").remove();
+                if (document.getElementById(layers.layerList[x]._id + "zoomSlider"))
+                    document.getElementById(layers.layerList[x]._id + "zoomSlider").remove();
                 document.getElementById(layers.layerList[x]._id + "functions").remove();
                 InstanceGenerator.zoomSliderMap[layers.layerList[x]._id].remove();
             }

@@ -9,6 +9,7 @@ import { cancelSelection, getSelectedComponentBoundingRec, getSelectedItems, han
 import { cancelFunctionSelection } from "../Item/selectFunction.js";
 import { getSelectedLinkIds } from "../Item/selectLink.js";
 import { componentContextDispatch } from "../UpTab/componentTab.js";
+import { exitFullscreenCntx, fullscreenCntx } from "../UpTab/settingsTab.js";
 import { appearComponentButtons, appearEditButtons, appearFunctionButtons, appearHierarchyButtons } from "../UpTab/tabAppearance/buttonsVisibility.js";
 import { deleteFromKey } from "../Workspace/deleteKey.js";
 import { isByComponentChecked } from "../Workspace/functionAppearance.js";
@@ -585,13 +586,19 @@ function keyDownWorkpaceHandler(myDiagram) {
     // Quit on any undo/redo key combination:
     // if ((control && (key === 'Z' || key === 'Y')) || deleteKey)
     //     return;
+    if (myDiagram.lastInput.event.key === 'F11') {
+        if ((window.fullScreen) || (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+            exitFullscreenCntx();
+        } else
+            fullscreenCntx();
+
+    }
     if ((control) && (key === 'Z')) {
         undoAction();
     }
     if ((control) && (key === 'Y')) {
         redoAction();
     }
-
     if ((control) && (key === 'C')) {
         componentContextDispatch["Copy"]();
     }

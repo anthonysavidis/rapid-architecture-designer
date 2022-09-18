@@ -3,7 +3,7 @@ import { constantNames } from "../config/constantNames.js";
 import { alterConstantValue } from "../config/functionStyle.js";
 import { detectBrowser } from "../Workspace/browserDetection.js";
 import { refreshOperationList, showAllRefresh } from "../Workspace/functionAppearance.js";
-import { createPicker, getSliderGroup, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
+import { appendConfigDiv, createPicker, getSliderGroup, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 
 function getFirstRowValues() {
     const operationColorValue = (configStyle.getJSONValue("operationColor")) ? configStyle.getJSONValue("operationColor") : "#FFFFFF";
@@ -28,22 +28,25 @@ function createFirstRowPickers(box, configGrid) {
     operationColorPicker.style.float = "left";
     operationBorderPicker.style.float = "left";
     selectedOperationBorderPicker.style.float = "left";
-    operationBorderPicker.className += " item4";
-    selectedOperationBorderPicker.className += " item5";
-    operationColorPicker.className += " item3";
+    // operationBorderPicker.className += " item4";
+    // selectedOperationBorderPicker.className += " item5";
+    // operationColorPicker.className += " item3";
     if (detectBrowser() === "Firefox") {
         operationColorPicker.lastChild.style.float = "right";
         operationColorPicker.style.width = "193px";
     }
-    operationColorPicker.children[1].style.float="left";
-    operationColorPicker.children[1].style.marginLeft="68px";
-    configGrid.appendChild(operationColorPicker);
-    configGrid.appendChild(operationBorderPicker);
-    configGrid.appendChild(selectedOperationBorderPicker);
+
+    // configGrid.appendChild(operationColorPicker);
+    // configGrid.appendChild(operationBorderPicker);
+    // configGrid.appendChild(selectedOperationBorderPicker);
+    appendConfigDiv(operationColorPicker.firstChild, operationColorPicker.children[1], 1);
+    appendConfigDiv(operationBorderPicker.firstChild, operationBorderPicker.children[1], 2);
+    appendConfigDiv(selectedOperationBorderPicker.firstChild, selectedOperationBorderPicker.children[1], 2);
+
     selectedOperationBorderPicker.style.width = "191px";
     operationBorderPicker.style.width = "152px";
     // operationColorPicker.style.width = "193px";
-    
+
     // configGrid.appendChild(createWidthSlider());
     return;
 }
@@ -58,11 +61,12 @@ function createSecondRowPickers(box, configGrid) {
     });
     dragOperationPicker.style.float = "left";
     dragOperationPicker.className += " item6";
-    dragOperationPicker.children[1].style.float="left";
-    dragOperationPicker.children[1].style.marginLeft="84px";
-    
+    dragOperationPicker.children[1].style.float = "left";
+
     // configGrid.appendChild(settedOperationPicker);
-    configGrid.appendChild(dragOperationPicker);
+    // configGrid.appendChild(dragOperationPicker);
+    appendConfigDiv(dragOperationPicker.firstChild, dragOperationPicker.children[1], 2);
+
     // dragOperationPicker.style.width = "193px";
 }
 
@@ -102,7 +106,6 @@ function produceOperationForm(box, configGrid) {
     sizeStyleContainer.lastChild.style.width = "351px";
     produceTextColor(configGrid, "Operation", callBack);
 
-    sizeStyleContainer.style.marginLeft = "39px";
     box.appendChild(sizeStyleContainer);
     return;
 }

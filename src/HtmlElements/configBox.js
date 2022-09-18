@@ -9,11 +9,10 @@ import { refreshComponentConfigContents } from "./componentConfig.js";
 
 function produceSizeForm(box, className, callBack) {
     var select = document.createElement('select');
-    select.style.width = "150px";
+    select.style.width = "64px";
     select.style.display = "inline-block";
     select.className = "inputTextClass";
 
-    select.style.marginLeft = "30px";
     select.style.float = "left";
     select.style.fontSize = "small";
     var selectStr = "";
@@ -32,7 +31,9 @@ function produceSizeForm(box, className, callBack) {
     select.style.padding = 0;
     select.style.paddingLeft = "8px";
     select.style.height = "30px";
-    select.style.marginTop = "20px";
+    select.style.marginBottom = 0;
+
+    // select.style.marginTop = "20px";
     box.appendChild(select);
 }
 
@@ -40,10 +41,11 @@ function produceSizeForm(box, className, callBack) {
 function produceFontFamilyForms(box, className, callBack) {
     var select = document.createElement('select');
     select.className = "inputTextClass";
+    select.id = "fontFamilyForm";
     select.style.float = "right";
     select.style.width = "350px";
     select.style.display = "inline-block";
-    select.style.marginRight = "25px";
+    // select.style.marginRight = "25px";
     select.style.fontSize = "small";
     select.style.marginLeft = "5px";
     select.innerHTML = ' <option value=\"Georgia\">Georgia</option>   \
@@ -68,11 +70,12 @@ function produceFontFamilyForms(box, className, callBack) {
     select.value = rs.getPropertyValue('--' + className.toLowerCase() + 'TextFamily');
     (!select.value) ? select.value = "Arial, Helvetica, sans-serif" : 1;
     select.style.float = "left";
-    select.style.width = 315 + "px";
+    select.style.width = 190 + "px";
     select.style.padding = 0;
     select.style.paddingLeft = "8px";
     select.style.height = "30px";
-    select.style.marginTop = "20px";
+    // select.style.marginTop = "20px";
+    select.style.marginBottom = 0;
     box.appendChild(select);
 }
 
@@ -134,11 +137,16 @@ function createPicker(txt, selected, callBack) {
     picker.type = "color";
     picker.addEventListener("change", function () {
         callBack(picker.value);
-    })
+    });
     picker.style.display = "inline-block";
     picker.style.marginLeft = "10px";
     picker.style.marginTop = "-6px";
     picker.style.float = "right";
+    picker.style.width = "50px";
+    if (detectBrowser() === "Firefox") {
+        picker.style.marginTop = "2px";
+        picker.style.height = "20px";
+    }
     picker.style.border = picker.style.padding = 0;
     labelDiv.style.width = "100%";
     picker.value = selected.charAt(0) === " " ? selected.slice(1) : selected;
@@ -169,8 +177,10 @@ function produceTextColor(box, className, callBack) {
     textColor.style.float = backgroundColor.style.float = "left";
     textColor.className += " item1";
     backgroundColor.className += " item2";
-    box.appendChild(textColor);
-    box.appendChild(backgroundColor);
+    // box.appendChild(textColor);
+    // box.appendChild(backgroundColor);
+    appendConfigDiv(textColor.firstChild, textColor.children[1], 1);
+    appendConfigDiv(backgroundColor.firstChild, backgroundColor.children[1], 1);
     return;
 }
 //----------------------============================================================================================================----------------------------------------------------------------------
@@ -253,8 +263,30 @@ function getSwitch(id, labelText) {
     return container;
 }
 
+//adds columns.
+function appendConfigDiv(label, element, row) {
+    var tdLabel = document.createElement('td');
+    var tdElement = document.createElement('td');
+    tdElement.className = "tableElementsStyle";
+    tdLabel.className = "tableLabelsStyle";
+    tdLabel.appendChild(label);
+    tdElement.appendChild(element);
+    document.getElementById("cr" + row).appendChild(tdLabel);
+    document.getElementById("cr" + row).appendChild(tdElement);
+    return;
+}
+//pre creates the table, table body & all rows.
+function createConfigTableDiv() {
+    var configTable = document.createElement('table');
+    configTable.innerHTML = '<tbody><tr id="cr1"></tr><tr id="cr2"></tr><tr id="cr3"></tr></tbody>';
+    document.getElementById("body").appendChild(configTable);
+    return configTable;
+}
+
+//label+slider mazi i timi sto element
+function createSliderRows(params) {
+
+}
 
 
-
-
-export { produceSizeForm, createRestoreButton, produceFontFamilyForms, produceStyleButtons, produceTextColor, getSwitch, createPicker, getSliderGroup };
+export { produceSizeForm, createRestoreButton, appendConfigDiv, produceFontFamilyForms, produceStyleButtons, produceTextColor, getSwitch, createPicker, createConfigTableDiv, createSliderRows, getSliderGroup };

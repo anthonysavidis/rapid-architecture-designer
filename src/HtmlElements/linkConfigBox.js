@@ -1,6 +1,6 @@
 import { configStyle } from "../Classes/Config.js";
 import { constantNames } from "../config/constantNames.js";
-import { createPicker, createRestoreButton, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
+import { appendConfigDiv, createConfigTableDiv, createPicker, createRestoreButton, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
 import { createOperationColorPickers, produceOperationForm } from "../HtmlElements/operationsConfigBox.js";
@@ -14,13 +14,12 @@ function produceLinkForm(box, configGrid) {
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
     sizeStyleContainer.style.marginTop = 5 + "px";
+    sizeStyleContainer.style.marginLeft = 0 + "px";
     produceSizeForm(sizeStyleContainer, "Link", callBack);
     produceStyleButtons(sizeStyleContainer, "Link", callBack);
     produceFontFamilyForms(sizeStyleContainer, "Link", callBack);
-    sizeStyleContainer.lastChild.style.width = "363px";
-
+    sizeStyleContainer.lastChild.style.width = "190px";
     produceTextColor(configGrid, "Link", callBack);
-    sizeStyleContainer.style.marginLeft = "11px";
     box.appendChild(sizeStyleContainer);
     return;
 }
@@ -39,8 +38,10 @@ function createFirstRow(box, configGrid) {
     linkColorPicker.style.float = linkArrowColorPicker.style.float = "left";
     linkColorPicker.className += " item3";
     linkArrowColorPicker.className += " item4";
-    configGrid.appendChild(linkColorPicker);
-    configGrid.appendChild(linkArrowColorPicker);
+    // configGrid.appendChild(linkColorPicker);
+    // configGrid.appendChild(linkArrowColorPicker);
+    appendConfigDiv(linkColorPicker.firstChild, linkColorPicker.children[1], 2);
+    appendConfigDiv(linkArrowColorPicker.firstChild, linkArrowColorPicker.children[1], 2);
     return;
 }
 
@@ -99,12 +100,18 @@ function produceAConfigBox(type, refresh) {
     configGrid.className = "configGrid";
     configGrid.style.gap = "25px";
     if (type === "Operation") {
+        // box.style
+        configGrid = createConfigTableDiv();
+        configGrid.style.marginLeft = "5px";
         bar.innerText = constantNames["configBox"]["operation"];
         produceOperationForm(box, configGrid);
         createOperationColorPickers(box, configGrid);
         configStyle.actionDispatch["Operation"].currentOldSettings = configStyle.actionDispatch["Operation"].getCategoryInitialValue("Operation");
 
     } else {
+        configGrid = createConfigTableDiv();
+        configGrid.style.marginLeft = "5px";
+
         bar.innerText = constantNames["configBox"]["link"];
         produceLinkForm(box, configGrid);
         createLinkConfigBox(box, configGrid);
@@ -134,12 +141,12 @@ function produceAConfigBox(type, refresh) {
     var buttonsContainer = document.createElement('div');
     buttonsContainer.style.position = "relative"
     buttonsContainer.style.width = "100%";
-    buttonsContainer.style.height = 40 + "px";
+    buttonsContainer.style.height = 38 + "px";
     buttonsContainer.style.display = "inline-block";
     buttonsContainer.style.marginTop = "20px";
     var restoreButton = createRestoreButton(type, closeBox, () => { produceAConfigBox(type, true); });
-
-    buttonsContainer.style.marginTop = confirmationButton.style.marginLeft = 25 + "px";
+    restoreButton.style.marginLeft = "12px"
+    buttonsContainer.style.marginTop = confirmationButton.style.marginLeft = 12 + "px";
     cancelButton.style.float = restoreButton.style.float = confirmationButton.style.float = "right";
 
     buttonsContainer.appendChild(confirmationButton);
@@ -149,26 +156,21 @@ function produceAConfigBox(type, refresh) {
     document.getElementById('body').appendChild(box);
     addMotion(box);
     if (type === "Operation") {
-        configGrid.style.marginLeft = "64px";
-        confirmationButton.style.marginRight = "62px";
-        document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "152px";
-        document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "191px";
-        // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
-        document.getElementsByClassName("labelDiv unselectableText item3")[0].style.width = "228px";
+        box.style.width = "548px";
+
+        // document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "152px";
+        // document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "191px";
+        document.getElementById("fontFamilyForm").style.width = "312px";
+        // // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
+        // document.getElementsByClassName("labelDiv unselectableText item3")[0].style.width = "228px";
     } else if (type === "Link") {
-        confirmationButton.style.marginRight = "33px";
-
-        document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginRight = "28px";
-        document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "90%";
-        document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "90%";
-        document.getElementsByClassName("labelDiv unselectableText item4")[0].style.width = "90%";
+        confirmationButton.style.marginRight = "21px";
+        box.style.width = "428px";
+        document.getElementById("fontFamilyForm").style.width = "198px";
+        document.getElementById("fontFamilyForm").style.marginRight = "0px";
 
     }
-    for (var i = 1; i <= 8; i++) {
-        if (document.getElementsByClassName("labelDiv unselectableText item" + i)[0]) {
-            document.getElementsByClassName("labelDiv unselectableText item" + i)[0].style.fontSize = "small";
-        }
-    }
+
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
     closeButton.style.top = 5 + "px";
     return;

@@ -156,7 +156,7 @@
 
 select {
     margin: 15px;
-    margin-left: 30px;
+    /* margin-left: 30px; */
     width: 150px;
     padding: 5px 35px 5px 5px;
     font-size: 16px;
@@ -257,7 +257,7 @@ select {
     width: auto;
     height: auto;
     display: inline-block;
-    margin-top: 22px;
+    margin-top: 16px;
     margin-right: 14px;
 }
 
@@ -335,4 +335,20 @@ select {
     width: 100%;
     display: inline-block;
     margin-top: 2.5px;
+}
+
+.tableElementsStyle {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 15px;
+    padding-right: 10px;
+    font-size: small;
+}
+
+.tableLabelsStyle {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 15px;
+    font-size: small;
+
 }
