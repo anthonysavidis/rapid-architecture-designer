@@ -35,6 +35,7 @@ function produceSizeForm(box, className, callBack) {
 
     // select.style.marginTop = "20px";
     box.appendChild(select);
+    return select
 }
 
 
@@ -77,6 +78,7 @@ function produceFontFamilyForms(box, className, callBack) {
     // select.style.marginTop = "20px";
     select.style.marginBottom = 0;
     box.appendChild(select);
+    return select;
 }
 
 function produceStyleButtons(box, className, callBack) {
@@ -161,7 +163,7 @@ function getTransparentCheckBox(label, callBack) {
     /* <label for="vehicle1"> I have a bike</label><br></br> */
 }
 
-function produceTextColor(box, className, callBack) {
+function produceTextColor(className, callBack) {
 
 
     var r = document.querySelector(':root');
@@ -284,9 +286,31 @@ function createConfigTableDiv() {
 }
 
 //label+slider mazi i timi sto element
-function createSliderRows(params) {
-
+function createSliderRows(sliderDiv, value, row, valId) {
+    var labelNSlider = document.createElement('td');
+    var tdValue = document.createElement('td');
+    tdValue.className = "tableElementsStyle";
+    labelNSlider.className = "tableLabelsStyle";
+    labelNSlider.style.float = "left";
+    labelNSlider.style.marginTop = "2px";
+    labelNSlider.innerHTML = '<div style="float:left;margin-top:2px;">' + sliderDiv.firstChild.innerHTML + '</div>';
+    sliderDiv.children[1].style.marginLeft = "15px";
+    sliderDiv.children[1].className = "zoomRangeInput";
+    labelNSlider.appendChild(sliderDiv.children[1]);
+    tdValue.id = valId;
+    tdValue.innerHTML = value + "px";
+    console.log(row);
+    document.getElementById("cr" + row).appendChild(labelNSlider);
+    document.getElementById("cr" + row).appendChild(tdValue);
+    return;
 }
 
+function appendConfigWithSwitch(switcher, row) {
+    var tdLabel = document.createElement('td');
+    tdLabel.className = "tableLabelsStyle";
+    tdLabel.appendChild(switcher);
+    document.getElementById("cr" + row).appendChild(tdLabel);
+    return;
+}
 
-export { produceSizeForm, createRestoreButton, appendConfigDiv, produceFontFamilyForms, produceStyleButtons, produceTextColor, getSwitch, createPicker, createConfigTableDiv, createSliderRows, getSliderGroup };
+export { produceSizeForm, createRestoreButton, appendConfigWithSwitch, appendConfigDiv, produceFontFamilyForms, produceStyleButtons, produceTextColor, getSwitch, createPicker, createConfigTableDiv, createSliderRows, getSliderGroup };

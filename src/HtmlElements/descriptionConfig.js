@@ -22,23 +22,24 @@ function refreshDescriptionLines() {
 function descriptionArea(box) {
     var descriptionGrid = document.createElement('div');
     descriptionGrid.className = "configGrid";
+    descriptionGrid.style.marginLeft = "27px";
+    descriptionGrid.style.padding = "0px";
     var descriptionSwitchContainer = document.createElement('div');
     descriptionSwitchContainer.className = "formContainer";
 
     var switcher = getSwitch("descriptionSwitch", constantNames["configBox"]["descriptionLabel"]);
     switcher.firstChild.style.fontSize = "small";
     switcher.firstChild.style.marginLeft = "0px";
+    switcher.lastChild.style.marginLeft = "5px";
     switcher.firstChild.style.marginRight = "0px";
-    switcher.style.marginTop = "12px";
     switcher.style.width = "152px";
     // switcher.style.marginLeft = "18px";
     switcher.className += " item1";
     descriptionGrid.appendChild(switcher);
-    descriptionGrid.style.marginLeft = "61px";
     var descDiv = document.createElement('div');
     descDiv.id = "descArea";
     descDiv.style.backgroundColor = "rgb(237,237,237)";
-    descDiv.style.marginTop = "17px";
+    descDiv.style.marginTop = "11px";
     descDiv.style.width = "100%";
     descDiv.style.height = "46px";
     descDiv.style.display = "none";
@@ -61,15 +62,17 @@ function descriptionArea(box) {
 
     var descriptionColorPicker = createPicker(constantNames["configBox"]["descriptionColor"], descriptionColor, descriptionColorCallBack);
     descDiv.appendChild(lineNoSlider);
+    lineNoSlider.children[1].className = "zoomRangeInput";
+    lineNoSlider.children[1].style.paddingBottom = "2px";
     lineNoSlider.style.display = "inline-block";
     lineNoSlider.style.float = "left";
     lineNoSlider.firstChild.style.marginLeft = -49 + "px";
     lineNoSlider.style.marginTop = 12 + "px";
-    lineNoSlider.style.marginLeft = 13.5 + "px";
+    lineNoSlider.style.marginLeft = -22 + "px";
     lineNoSlider.style.fontSize = "small";
     lineNoSlider.className += " item4";
     descriptionColorPicker.style.display = "inline-block";
-    descriptionColorPicker.style.float = "right";
+    descriptionColorPicker.style.float = "left";
     descriptionColorPicker.style.fontSize = "small";
     descriptionColorPicker.style.width = "200px";
     // descriptionColorPicker.firstChild.style.marginLeft = "61.7px";

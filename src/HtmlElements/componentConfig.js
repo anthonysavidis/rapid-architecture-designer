@@ -1,7 +1,7 @@
 import { configStyle } from "../Classes/Config.js";
 import { applyToEachComponent, getAllBoundingRectMap, refreshAllLinks, setBoundingRectMap } from "../Classes/LayerHolder.js";
 import { autoResizeAllComponents } from "../Item/autoResize.js";
-import { createPicker, createRestoreButton, getSliderGroup, getSwitch, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
+import { appendConfigDiv, appendConfigWithSwitch, createConfigTableDiv, createPicker, createRestoreButton, createSliderRows, getSliderGroup, getSwitch, produceFontFamilyForms, produceSizeForm, produceStyleButtons, produceTextColor } from "./configBox.js";
 import { constantNames } from "../config/constantNames.js";
 import { produceGrayLayer, produceMovingBar } from "../HtmlElements/infoBoxes.js";
 import { addMotion } from "../Input/movingModal.js";
@@ -16,7 +16,7 @@ import { detectBrowser } from "../Workspace/browserDetection.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
 
 
-function produceComponentForm(box, configGrid) {
+function produceComponentForm(box, table) {
     // var labelDiv = document.createElement('div');
     // labelDiv.style.position = "";
     // labelDiv.className = "tittleDiv unselectableText";
@@ -28,13 +28,17 @@ function produceComponentForm(box, configGrid) {
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
     sizeStyleContainer.style.marginTop = 5 + "px";
+    sizeStyleContainer.style.marginBottom = 5 + "px";
     produceSizeForm(sizeStyleContainer, "Component", callBack);
     produceStyleButtons(sizeStyleContainer, "Component", callBack);
-    produceFontFamilyForms(sizeStyleContainer, "Component", callBack);
-    produceTextColor(configGrid, "Component", callBack);
-    box.appendChild(div);
-    box.appendChild(sizeStyleContainer);
-    sizeStyleContainer.style.marginLeft = "36px";
+    const familyFont = produceFontFamilyForms(sizeStyleContainer, "Component", callBack);
+    produceTextColor("Component", callBack);
+    familyFont.style.width = "200px";
+
+    box.insertBefore(div, table);
+    box.insertBefore(sizeStyleContainer, table);
+
+    // sizeStyleContainer.style.marginLeft = "36px";
     return;
 }
 
@@ -61,26 +65,33 @@ function produceComponentConfigBox(box, configGrid) {
     borderColorPicker.style.float = "left";
     selectedBorderColorPicker.style.float = "left";
     backgroundColorPicker.className += " item3";
-    if (detectBrowser() === "Firefox")
-        backgroundColorPicker.style.width = "195px";
-    else
-        backgroundColorPicker.style.width = "211px";
-    backgroundColorPicker.lastChild.style.float = "right";
+    // if (detectBrowser() === "Firefox")
+    //     backgroundColorPicker.style.width = "195px";
+    // else
+    //     backgroundColorPicker.style.width = "211px";
+    // backgroundColorPicker.lastChild.style.float = "right";
     backgroundColorPicker.lastChild.style.marginLeft = "0px";
-    configGrid.appendChild(backgroundColorPicker);
-    borderContainer = document.createElement('div');
-    borderContainer.className = "formContainer";
-    borderColorPicker.className += " item4";
-    selectedBorderColorPicker.className += " item5";
+    // configGrid.appendChild(backgroundColorPicker);
+    appendConfigDiv(backgroundColorPicker.firstChild, backgroundColorPicker.children[1], 1)
 
-    configGrid.appendChild(borderColorPicker);
-    configGrid.appendChild(selectedBorderColorPicker);
+    // borderContainer = document.createElement('div');
+    // borderContainer.className = "formContainer";
+    // borderColorPicker.className += " item4";
+    // selectedBorderColorPicker.className += " item5";
+
+    // configGrid.appendChild(borderColorPicker);
+    // configGrid.appendChild(selectedBorderColorPicker);
+    appendConfigDiv(borderColorPicker.firstChild, borderColorPicker.children[1], 2);
+    appendConfigDiv(selectedBorderColorPicker.firstChild, selectedBorderColorPicker.children[1], 2);
     // box.appendChild(borderContainer);
     return;
 }
 
 function produceSliders(box, configGrid) {
-    const borderSliderCallBack = (value) => { configStyle.handleChange('Component', "borderWidth", value + "px"); };
+    const borderSliderCallBack = (value) => {
+        configStyle.handleChange('Component', "borderWidth", value + "px");
+        document.getElementById("widthSliderBorderValue").innerText = value + "px";
+    };
     const innerMarginXCallBack = (value) => {
         configStyle.handleChange('Component', "innerMarginX", value + "px");
         // refreshAllLinks();
@@ -93,42 +104,32 @@ function produceSliders(box, configGrid) {
 
     const defaultBorderSliderValue = (parseInt(configStyle.getJSONValue("componentBorderWidth"))) ? parseInt(configStyle.getJSONValue("componentBorderWidth"), 10) : 2;
     var borderWidthSlider = getSliderGroup(constantNames["configBox"]["borderWidth"], 1, 10, defaultBorderSliderValue, borderSliderCallBack);
-    borderWidthSlider.firstChild.style.marginLeft = 0;
-    borderWidthSlider.id = "lol";
-    borderWidthSlider.style.float = "right";
-    borderWidthSlider.style.marginTop = "7px";
-    // borderWidthSlider.style.marginLeft = "-5px";
-    borderWidthSlider.className = "labelDiv unselectableText";
-    // borderWidthSlider.firstChild.style.marginLeft = -72 + "px";
-    borderWidthSlider.children[2].style.position = "absolute";
+
+    borderWidthSlider.children[1].style.width = "96px";
+    borderWidthSlider.children[1].style.margin = "0";
 
     var innerMarginDiv = document.createElement('div');
     var innerMarginX = getSliderGroup("Inner Margin X:", 1, 50, configStyle.getJSONValue("componentInnerMarginX").split("px")[0], innerMarginXCallBack);
     var innerMarginY = getSliderGroup("Inner Margin Y:", 1, 50, configStyle.getJSONValue("componentInnerMarginY").split("px")[0], innerMarginYCallBack);
-    innerMarginY.style.width = innerMarginX.style.width = "140%";
-    innerMarginY.style.display = innerMarginX.style.display = "inline-block";
-    innerMarginX.style.float = innerMarginY.style.float = "left";
+    innerMarginX.style.width = innerMarginY.style.width = "auto";
+    innerMarginX.style.float = "left";
+    innerMarginY.style.float = "right";
+    innerMarginX.style.marginRight = "50px";
+    innerMarginX.style.marginTop = innerMarginY.style.marginTop = "0px";
+    innerMarginX.style.marginLeft = "17px";
     innerMarginX.style.fontSize = innerMarginY.style.fontSize = "small";
-    innerMarginX.style.position = innerMarginY.style.position = "absolute";
-    innerMarginX.style.left = innerMarginY.style.left = -259 + "px";
-    // innerMarginX.style.left = -265 + "px";
-    innerMarginX.style.marginLeft = innerMarginY.style.marginLeft = "20px";
-    innerMarginY.style.marginLeft = "19.2px";
-    innerMarginX.children[2].style.position = innerMarginY.children[2].style.position = "absolute";
-    innerMarginY.style.top = 297 + "px";
+    innerMarginX.children[1].className = innerMarginY.children[1].className = "zoomRangeInput";
     innerMarginDiv.id = "innerMarginSlider";
     innerMarginDiv.style.backgroundColor = "rgb(237,237,237)";
-    innerMarginDiv.style.marginTop = "17px";
+    innerMarginDiv.style.paddingTop = innerMarginDiv.style.paddingBottom = "10px";
     innerMarginDiv.style.width = "100%";
-    innerMarginDiv.style.height = "94px";
     innerMarginDiv.style.display = "none";
     // innerMarginY.style.marginLeft = "8px";
-    borderWidthSlider.style.width = 254 + "px";
-    borderWidthSlider.className += " item6";
-    configGrid.appendChild(borderWidthSlider);
+    createSliderRows(borderWidthSlider, defaultBorderSliderValue, 2, "widthSliderBorderValue");
     innerMarginDiv.appendChild(innerMarginX);
     innerMarginDiv.appendChild(innerMarginY);
     box.appendChild(innerMarginDiv);
+    innerMarginX.children[1].style.paddingBottom = innerMarginY.children[1].style.paddingBottom = "2px";
     return;
 }
 
@@ -144,7 +145,15 @@ function produceSwitches(box, configGrid) {
     else
         switcher.lastChild.style.left = "153.5px";
     switcher.lastChild.style.top = "-7px";
-    configGrid.appendChild(switcher);
+    const label = document.createElement('div');
+    label.style.float = "left";
+    label.innerText = constantNames["configBox"]["autoFitLabel"];
+    // appendConfigDiv(label, switcher, 3);
+    switcher.lastChild.style.left = "202.5px";
+    appendConfigWithSwitch(switcher, 3);
+    console.log(switcher.firstChild);
+    console.log(switcher.lastChild);
+    // configGrid.appendChild(switcher);
     return;
 }
 
@@ -162,11 +171,17 @@ function produceSubcomponentSettings(box, configGrid) {
     var textColorPicker = createPicker(constantNames["configBox"]["subcomponentTextColor"], textColor, textColorCallBack);
     textColorPicker.style.float = "left";
 
+
     backgroundColorPicker.style.float = "left";
     backgroundColorPicker.className += " item7";
     textColorPicker.className += " item8";
-    configGrid.appendChild(backgroundColorPicker);
-    configGrid.appendChild(textColorPicker);
+
+    appendConfigDiv(backgroundColorPicker.firstChild, backgroundColorPicker.children[1], 3);
+    appendConfigDiv(textColorPicker.firstChild, textColorPicker.children[1], 3);
+
+    // configGrid.appendChild(backgroundColorPicker);
+
+    // configGrid.appendChild(textColorPicker);
     return;
 }
 
@@ -205,7 +220,7 @@ function autoFitHandler() {
         document.getElementById('innerMarginSlider').firstChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginX").split("px")[0] + "px";
         document.getElementById('innerMarginSlider').lastChild.children[1].value = configStyle.getJSONValue("componentInnerMarginY").split("px")[0];
         document.getElementById('innerMarginSlider').lastChild.children[2].innerText = configStyle.getJSONValue("componentInnerMarginY").split("px")[0] + "px";
-        document.getElementById('innerMarginSlider').style.display = "inline-block";
+        document.getElementById('innerMarginSlider').style.display = "flex";
         autoResizeAllComponents();
 
     } else {
@@ -241,10 +256,10 @@ function loadInitialSettings() {
 
 
 function createComponentFields(box, configGrid) {
-    produceComponentForm(box, configGrid);
+    box.appendChild(configGrid);
+    // produceComponentForm(box, configGrid);
     produceComponentConfigBox(box, configGrid);
     produceSubcomponentSettings(box, configGrid);
-    box.appendChild(configGrid);
     produceSwitches(box, configGrid);
     produceSliders(box, configGrid);
     descriptionArea(box);
@@ -260,7 +275,7 @@ function addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConf
     cancelButton.innerHTML = constantNames["cancel"];
     cancelButton.onclick = cancelChanges;
     confirmationButton.className = "okButton unselectableText";
-    confirmationButton.style.marginRight = "61px";
+    confirmationButton.style.marginRight = "20px";
     confirmationButton.innerHTML = constantNames["apply"];
     confirmationButton.onclick = function () {
         configStyle.actionDispatch["Component"].clearCurrentOldSettings();
@@ -276,7 +291,7 @@ function addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConf
     var restoreButton = createRestoreButton("Component", closeBox, createComponentConfigBox);
     buttonsContainer.style.marginTop = 25 + "px";
     cancelButton.style.float = restoreButton.style.float = confirmationButton.style.float = "right";
-    confirmationButton.style.marginLeft = "25px";
+    restoreButton.style.marginLeft = confirmationButton.style.marginLeft = "10px";
     buttonsContainer.appendChild(confirmationButton);
     buttonsContainer.appendChild(restoreButton);
     buttonsContainer.appendChild(cancelButton);
@@ -291,6 +306,10 @@ function createComponentConfigBox(refresh) {
     box.className = 'configurationBox';
     var configGrid = document.createElement('div');
     configGrid.className = "configGrid";
+    // configGrid =
+
+    document.getElementById('body').appendChild(box);
+
     var closeBox = function () {
         box.remove();
         if (document.getElementById('grayLayer'))
@@ -326,8 +345,15 @@ function createComponentConfigBox(refresh) {
     var bar = produceMovingBar(box, 0);
     bar.innerText = constantNames["configBox"]["component"];
     bar.appendChild(closeButton);
+    const table = createConfigTableDiv();
+    table.style.display = "flex";
+    table.style.justifyContent = "center";
+    box.appendChild(table);
+    produceComponentForm(box, table);
+
     var fields = document.createElement('div');
     configGrid.style.marginLeft = "61px";
+
     createComponentFields(fields, configGrid);
     box.append(fields);
     refreshComponentConfigContents = () => {
@@ -339,7 +365,6 @@ function createComponentConfigBox(refresh) {
 
 
     addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConfigBox);
-    document.getElementById('body').appendChild(box);
     addMotion(box);
     document.getElementById("autofitSwitch").addEventListener("change", () => {
         autoFitHandler();
@@ -356,15 +381,16 @@ function createComponentConfigBox(refresh) {
         document.getElementById('descArea').style.display = "inline-block";
     }
 
-    document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "right";
+    // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.float = "right";
     // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "80px";
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
     closeButton.style.top = 5 + "px";
-    for (var i = 1; i <= 9; i++) {
-        document.getElementsByClassName("labelDiv unselectableText item" + i)[0].style.fontSize = "small";
-    }
+    // for (var i = 1; i <= 9; i++) {
+    //     document.getElementsByClassName("labelDiv unselectableText item" + i)[0].style.fontSize = "small";
+    // }
     // labelDiv.style.fontSize = "small";
-    configGrid.style.gap = "16px";
+    // configGrid.style.gap = "16px";
+    document.getElementsByClassName("configGrid")[0].remove();
     return;
 }
 

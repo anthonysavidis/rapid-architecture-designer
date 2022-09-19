@@ -233,6 +233,8 @@ select {
 
 .styleButton:hover {
     cursor: pointer;
+    background-color: #ccc;
+
 }
 
 .styleButtonPressed {

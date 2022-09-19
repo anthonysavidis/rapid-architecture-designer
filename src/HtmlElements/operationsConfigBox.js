@@ -100,11 +100,13 @@ function produceOperationForm(box, configGrid) {
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
     sizeStyleContainer.style.marginTop = 5 + "px";
-    produceSizeForm(sizeStyleContainer, "Operation", callBack);
+    sizeStyleContainer.style.marginLeft = 23 + "px";
+    const sizeSel = produceSizeForm(sizeStyleContainer, "Operation", callBack);
+    sizeSel.style.marginLeft = 0;
     produceStyleButtons(sizeStyleContainer, "Operation", callBack);
     produceFontFamilyForms(sizeStyleContainer, "Operation", callBack);
     sizeStyleContainer.lastChild.style.width = "351px";
-    produceTextColor(configGrid, "Operation", callBack);
+    produceTextColor("Operation", callBack);
 
     box.appendChild(sizeStyleContainer);
     return;

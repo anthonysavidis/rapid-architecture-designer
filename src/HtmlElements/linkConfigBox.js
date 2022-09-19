@@ -19,7 +19,7 @@ function produceLinkForm(box, configGrid) {
     produceStyleButtons(sizeStyleContainer, "Link", callBack);
     produceFontFamilyForms(sizeStyleContainer, "Link", callBack);
     sizeStyleContainer.lastChild.style.width = "190px";
-    produceTextColor(configGrid, "Link", callBack);
+    produceTextColor("Link", callBack);
     box.appendChild(sizeStyleContainer);
     return;
 }
@@ -100,7 +100,6 @@ function produceAConfigBox(type, refresh) {
     configGrid.className = "configGrid";
     configGrid.style.gap = "25px";
     if (type === "Operation") {
-        // box.style
         configGrid = createConfigTableDiv();
         configGrid.style.marginLeft = "5px";
         bar.innerText = constantNames["configBox"]["operation"];
@@ -116,8 +115,6 @@ function produceAConfigBox(type, refresh) {
         produceLinkForm(box, configGrid);
         createLinkConfigBox(box, configGrid);
         configStyle.actionDispatch["Link"].currentOldSettings = configStyle.actionDispatch["Link"].getCategoryInitialValue("Link");
-        // closeButton.style.left = 685 + "px";
-        // closeButton.style.top = 10 + "px";
     }
     bar.appendChild(closeButton);
     box.appendChild(configGrid);
@@ -157,12 +154,7 @@ function produceAConfigBox(type, refresh) {
     addMotion(box);
     if (type === "Operation") {
         box.style.width = "548px";
-
-        // document.getElementsByClassName("labelDiv unselectableText item1")[0].style.width = "152px";
-        // document.getElementsByClassName("labelDiv unselectableText item2")[0].style.width = "191px";
         document.getElementById("fontFamilyForm").style.width = "312px";
-        // // document.getElementsByClassName("labelDiv unselectableText item3")[0].lastChild.style.marginLeft = "105px";
-        // document.getElementsByClassName("labelDiv unselectableText item3")[0].style.width = "228px";
     } else if (type === "Link") {
         confirmationButton.style.marginRight = "21px";
         box.style.width = "428px";
