@@ -26,6 +26,7 @@ class Config {
         this.descriptionEnabled = false;
         this.produceActionDispatchMembers();
         this.configJSON["componentInnerMarginX"] = constantValues["initialOffsetWidth"] + "px";
+        this.configJSON["componentBorderWidth"] = "1px";
         this.configJSON["componentInnerMarginY"] = constantValues["initialOffsetHeight"] + "px";
         this.configJSON["descriptionColor"] = "#545454";
         this.configJSON["descriptionLines"] = "3";
@@ -69,6 +70,8 @@ class Config {
                 InstanceGenerator.modifyNodeProperty("componentFont", font);
             } else {
                 if (varName.includes("componentBorderWidth")) {
+                    console.log("pame gia width");
+                    console.log(textType + capitalizeFirstLetter(attributeChanged) + value.slice(0, -2));
                     InstanceGenerator.modifyNodeProperty(textType + capitalizeFirstLetter(attributeChanged), parseInt(value.slice(0, -2), 10)); //<-string
                 }
                 else if (varName.includes("componentTextDecoration")) {
@@ -105,7 +108,6 @@ class Config {
                 InstanceGenerator.modifyLinkProperty("toColor", value);
             }
             else {
-                console.log(type.toLowerCase() + capitalizeFirstLetter(attributeChanged));
                 InstanceGenerator.modifyLinkProperty(type.toLowerCase() + capitalizeFirstLetter(attributeChanged), value);
             }
 
@@ -130,9 +132,7 @@ class Config {
         if (varName.includes("subcomponent")) {
             InstanceGenerator.modifyExtensionProperty("subcomponent" + capitalizeFirstLetter(attributeChanged), value);
         }
-        console.log(varName);
         if (type.includes("desc") && this.descriptionEnabled) {
-            console.log(value);
             InstanceGenerator.modifyDescriptionProperty("", value);
         }
         this.handleLinkChange(type, attributeChanged, value, "");

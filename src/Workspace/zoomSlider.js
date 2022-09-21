@@ -163,6 +163,7 @@ function addSelectionListener() {
 function addZoomMenu() {
     var zoomMenuDiv = document.createElement('div');
     zoomMenuDiv.id = "zoomMenuDiv";
+    zoomMenuDiv.className = "unselectableText";
     zoomMenuDiv.style.height = "48px";
     zoomMenuDiv.style.width = "210px";
     zoomMenuDiv.style.display = "inline-block";

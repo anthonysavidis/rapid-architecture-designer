@@ -5,10 +5,14 @@ import { createFullPath, updateFullPath } from "../HtmlElements/pathAndLayerSpan
 import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
 import { enableLayerDescriptionExtension } from "../Layers/switchActions.js";
 import { updateTree } from "../Layers/Tree.js";
+import { forceActivateAll, isByComponentChecked } from "../Workspace/functionAppearance.js";
 import { measureAllLayersOperations } from "../Workspace/selectedOperationsHandler.js";
 import { hideCurrentSlider } from "../Workspace/zoomSlider.js";
 
 function loadPrev(actionItems) {
+    if (isByComponentChecked()) {
+        forceActivateAll();
+    }
     for (var x in layers.layerList) {
         document.getElementById(layers.layerList[x]._id).remove();
         document.getElementById(layers.layerList[x]._id + "functions").remove();
@@ -30,6 +34,9 @@ function loadPrev(actionItems) {
 }
 
 function loadNext(actionItems) {
+    if (isByComponentChecked()) {
+        forceActivateAll();
+    }
     for (var x in layers.layerList) {
         document.getElementById(layers.layerList[x]._id).remove();
         document.getElementById(layers.layerList[x]._id + "functions").remove();

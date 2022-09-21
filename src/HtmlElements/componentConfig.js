@@ -28,6 +28,9 @@ function produceComponentForm(box, table) {
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
     sizeStyleContainer.style.marginTop = 5 + "px";
+    sizeStyleContainer.style.justifyContent = "center";
+    sizeStyleContainer.style.display = "flex";
+
     sizeStyleContainer.style.marginBottom = 5 + "px";
     produceSizeForm(sizeStyleContainer, "Component", callBack);
     produceStyleButtons(sizeStyleContainer, "Component", callBack);
@@ -288,7 +291,7 @@ function addApplyCancelButtons(box, cancelChanges, closeBox, createComponentConf
     buttonsContainer.style.width = "100%";
     buttonsContainer.style.height = 40 + "px";
     buttonsContainer.style.display = "inline-block";
-    var restoreButton = createRestoreButton("Component", closeBox, createComponentConfigBox);
+    var restoreButton = createRestoreButton("Component", closeBox, createComponentConfigBox, cancelChanges);
     buttonsContainer.style.marginTop = 25 + "px";
     cancelButton.style.float = restoreButton.style.float = confirmationButton.style.float = "right";
     restoreButton.style.marginLeft = confirmationButton.style.marginLeft = "10px";
@@ -320,9 +323,12 @@ function createComponentConfigBox(refresh) {
     if (!refresh)
         storeInitialSettings();
     var cancelChanges = () => {
-        console.log(configStyle.actionDispatch["Component"].currentOldSettings);
         loadInitialSettings();
         closeBox();
+        console.log("--------------------------------------");
+
+        console.log(configStyle.actionDispatch["Component"].currentOldSettings);
+        console.log("--------------------------------------");
         configStyle.actionDispatch["Description"].resetCurrentChanges();
         configStyle.actionDispatch["Subcomponent"].resetCurrentChanges();
         configStyle.actionDispatch["Component"].resetCurrentChanges();
@@ -331,6 +337,8 @@ function createComponentConfigBox(refresh) {
         configStyle.actionDispatch["Description"].clearCurrentOldSettings();
         configStyle.actionDispatch["Subcomponent"].clearCurrentOldSettings();
         // refreshAllLinks();
+        console.log(configStyle.configJSON);
+
     }
     produceGrayLayer(box, "", "", cancelChanges);
 

@@ -7,7 +7,7 @@ import { constantNames } from "../config/constantNames.js";
 import { produceBox } from "../HtmlElements/infoBoxes.js";
 import { copyComponent } from "../Item/copy.js";
 import { toggleSelectedComponents } from "../HtmlElements/upTabCreation.js";
-import { showAll } from "../Workspace/functionAppearance.js";
+import { forceActivateAll, isByComponentChecked, showAll } from "../Workspace/functionAppearance.js";
 import { actions } from "../Classes/Actions.js";
 import { loadNext, loadPrev } from "../Actions/inverseFileActions.js";
 import { autoResizeAllComponents, checkAndResize } from "../Item/autoResize.js";
@@ -65,6 +65,9 @@ function loadAction() {
         var reader = new FileReader();
 
         reader.onload = function (evt) {
+            if (isByComponentChecked()) {
+                forceActivateAll();
+            }
             if (evt.target.readyState != 2) return;
             if (evt.target.error) {
                 alert('Error while reading file');

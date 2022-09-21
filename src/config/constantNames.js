@@ -89,8 +89,8 @@ const constantNames = {
         "DeleteMsgStart": "Do you want to delete ",
         "DeleteMsgEnd": " component(s)?",
         "DeleteMsgFunctionEnd": " operations?",
-        "ResetStart": "Do you want reset this operation from ",
-        "ResetMult": "Do you want reset the selected ",
+        "ResetStart": "Do you want to reset this operation from ",
+        "ResetMult": "Do you want to reset the selected ",
         "ResetEnd": " operation(s)?"
     },
     "linkDirectionBox": {

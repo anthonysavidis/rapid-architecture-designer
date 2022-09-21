@@ -23,14 +23,15 @@ class ConfigActions {
         return initialJSON;
     }
     applyToConfig(changesJSON) {
-
+        console.log("----------------------------");
+        console.log(changesJSON);
+        console.log("----------------------------");
         for (var x in changesJSON) {
             const atributeChanged = x.split(this.category.toLowerCase())[1];
-            console.log(x);
             if (x.includes("_"))
                 continue;
             const value = changesJSON[x].charAt(0) === " " ? changesJSON[x].slice(1) : changesJSON[x];
-            console.log(this.category + " " + makeSmallFirstLetter(atributeChanged) + " " + value);
+            console.log(value);
             configStyle.handleChange(this.category, makeSmallFirstLetter(atributeChanged), value);
             // configStyle.handleChangeVar(x, changesJSON[x]);
         }
@@ -40,14 +41,13 @@ class ConfigActions {
     }
 
     resetCurrentChanges() {
-
         this.applyToConfig(this.currentOldSettings);
         return;
     }
 
     resetToDefault() {
         this.applyToConfig(this.initialSettings);
-        console.log(this.initialSettings);
+
         if (this.category === "Component") {
             configStyle.setInitialMargins();
             document.getElementById('innerMarginSlider').style.display = "none";

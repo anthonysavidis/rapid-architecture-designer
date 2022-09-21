@@ -586,8 +586,10 @@ function keyDownWorkpaceHandler(myDiagram) {
     // Quit on any undo/redo key combination:
     // if ((control && (key === 'Z' || key === 'Y')) || deleteKey)
     //     return;
+    var isFullScreen = (window.fullScreen) ||
+        (window.innerWidth == screen.width && window.innerHeight == screen.height);
     if (myDiagram.lastInput.event.key === 'F11') {
-        if ((window.fullScreen) || (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+        if (isFullScreen) {
             exitFullscreenCntx();
         } else
             fullscreenCntx();

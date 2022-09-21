@@ -319,7 +319,10 @@ function turnOnDescription(component) {
     InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("COMPONENT").resizable = false;
     InstanceGenerator.diagramMap[layers.selectedLayer._id].findNodeForKey(id).findObject("DESCRIPTION_TEXT0").maxLines = lineNo;
     if (descLines.length > 2 && lineNo > 2) {
-        initialNode.findObject("SUB_COMPONENT0").height += (descLines.length - 2) * 18;
+        const descMulFactor = (descLines.length - 2) > 5 ? 5 : (descLines.length - 2);
+        const subHeight = descMulFactor * 18;
+        initialNode.findObject("SUB_COMPONENT0").height += subHeight;
+        initialNode.findObject("COMPONENT").height += subHeight;
     }
 
     var finalStr = "";

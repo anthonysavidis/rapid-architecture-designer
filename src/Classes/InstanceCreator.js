@@ -16,6 +16,7 @@ class InstanceCreator {
     this.zoomSliderMap = {};
   }
   createComponent(obj) {
+    console.log(go.Spot.TopLeft);
     const spawiningPoint = this.diagramMap[layers.selectedLayer._id].transformDocToView(new go.Point(400, 100));
     var objJSON = { "text": obj._name, "key": obj._id, "loc": 500 + " " + 50 };
     this.diagramMap[layers.selectedLayer._id].model.addNodeData(objJSON);

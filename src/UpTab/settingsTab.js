@@ -27,10 +27,10 @@ function addSettingsTabListeners() {
         document.getElementById("exitFullscreenButton").style.display = "none";
         document.getElementById("fullscreenButton").style.display = "inline-block";
     });
-    document.getElementById("saveConfigButton").addEventListener('click', exitFullscreenCntx = (e) => {
+    document.getElementById("saveConfigButton").addEventListener('click', (e) => {
         configStyle.exportConfig();
     });
-    document.getElementById("loadConfigButton").addEventListener('click', exitFullscreenCntx = (e) => {
+    document.getElementById("loadConfigButton").addEventListener('click', (e) => {
         configStyle.importConfig();
     });
     initialAppear();
