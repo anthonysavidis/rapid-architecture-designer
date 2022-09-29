@@ -99,7 +99,7 @@ function produceOperationForm(box, configGrid) {
     const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value) };
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
-    sizeStyleContainer.style.marginTop = 5 + "px";
+    sizeStyleContainer.style.marginTop = -10 + "px";
     sizeStyleContainer.style.marginLeft = 23 + "px";
     const sizeSel = produceSizeForm(sizeStyleContainer, "Operation", callBack);
     sizeSel.style.marginLeft = 0;

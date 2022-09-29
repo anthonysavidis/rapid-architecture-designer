@@ -14,6 +14,7 @@ import { canBeDeleted } from "../Workspace/trashBin.js";
 import { renderLine } from "../Item/createLine.js";
 import { detectBrowser } from "../Workspace/browserDetection.js";
 import { InstanceGenerator } from "../Classes/InstanceCreator.js";
+import { generateConfigSeperativeLine } from "./configSeperative.js";
 
 
 function produceComponentForm(box, table) {
@@ -27,9 +28,7 @@ function produceComponentForm(box, table) {
     const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value); }
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
-    sizeStyleContainer.style.marginTop = 5 + "px";
-    sizeStyleContainer.style.justifyContent = "center";
-    sizeStyleContainer.style.display = "flex";
+    sizeStyleContainer.style.marginTop = -10 + "px";
 
     sizeStyleContainer.style.marginBottom = 5 + "px";
     produceSizeForm(sizeStyleContainer, "Component", callBack);
@@ -120,6 +119,7 @@ function produceSliders(box, configGrid) {
     innerMarginX.style.marginRight = "50px";
     innerMarginX.style.marginTop = innerMarginY.style.marginTop = "0px";
     innerMarginX.style.marginLeft = "17px";
+    innerMarginY.style.marginLeft = "17px";
     innerMarginX.style.fontSize = innerMarginY.style.fontSize = "small";
     innerMarginX.children[1].className = innerMarginY.children[1].className = "zoomRangeInput";
     innerMarginDiv.id = "innerMarginSlider";
@@ -139,24 +139,30 @@ function produceSliders(box, configGrid) {
 function produceSwitches(box, configGrid) {
 
     var switcher = getSwitch("autofitSwitch", constantNames["configBox"]["autoFitLabel"]);
-    switcher.className = "labelDiv unselectableText item9";
-    switcher.style.position = "relative";
+    switcher.className = "labelDiv unselectableText item1";
+    switcher.style.width = "180px";
+    switcher.style.float = "right";
     switcher.firstChild.style.marginLeft = "0px";
     switcher.firstChild.style.marginTop = "0px";
     if (detectBrowser() === "Firefox")
         switcher.lastChild.style.left = "140px";
     else
-        switcher.lastChild.style.left = "153.5px";
-    switcher.lastChild.style.top = "-7px";
+        switcher.lastChild.style.left = "143.5px";
+    switcher.lastChild.style.marginTop = "-6px";
     const label = document.createElement('div');
     label.style.float = "left";
     label.innerText = constantNames["configBox"]["autoFitLabel"];
     // appendConfigDiv(label, switcher, 3);
-    switcher.lastChild.style.left = "202.5px";
-    appendConfigWithSwitch(switcher, 3);
-    console.log(switcher.firstChild);
-    console.log(switcher.lastChild);
+    // appendConfigWithSwitch(switcher, 3);
     // configGrid.appendChild(switcher);
+    var marginSwitch = document.createElement('div');
+    marginSwitch.className = "configGrid";
+    marginSwitch.style.fontSize = "small";
+    marginSwitch.style.marginLeft = "26px";
+    marginSwitch.style.padding = "0px";
+    marginSwitch.appendChild(switcher);
+    box.appendChild(marginSwitch);
+
     return;
 }
 
@@ -263,6 +269,8 @@ function createComponentFields(box, configGrid) {
     // produceComponentForm(box, configGrid);
     produceComponentConfigBox(box, configGrid);
     produceSubcomponentSettings(box, configGrid);
+    const MarginsNDescriptionLine = generateConfigSeperativeLine("Margins");
+    box.appendChild(MarginsNDescriptionLine);
     produceSwitches(box, configGrid);
     produceSliders(box, configGrid);
     descriptionArea(box);
@@ -310,9 +318,9 @@ function createComponentConfigBox(refresh) {
     var configGrid = document.createElement('div');
     configGrid.className = "configGrid";
     // configGrid =
-
+    const styleLine = generateConfigSeperativeLine("Font Style");
+    styleLine.style.marginTop = "10px";
     document.getElementById('body').appendChild(box);
-
     var closeBox = function () {
         box.remove();
         if (document.getElementById('grayLayer'))
@@ -320,8 +328,9 @@ function createComponentConfigBox(refresh) {
 
     };
 
-    if (!refresh)
+    if (!refresh) {
         storeInitialSettings();
+    }
     var cancelChanges = () => {
         loadInitialSettings();
         closeBox();
@@ -353,11 +362,16 @@ function createComponentConfigBox(refresh) {
     var bar = produceMovingBar(box, 0);
     bar.innerText = constantNames["configBox"]["component"];
     bar.appendChild(closeButton);
+    box.appendChild(styleLine);
     const table = createConfigTableDiv();
     table.style.display = "flex";
     table.style.justifyContent = "center";
     box.appendChild(table);
     produceComponentForm(box, table);
+
+    const colorNBorderLine = generateConfigSeperativeLine("Color & Border");
+    box.insertBefore(colorNBorderLine, table);
+
 
     var fields = document.createElement('div');
     configGrid.style.marginLeft = "61px";

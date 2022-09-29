@@ -6,6 +6,7 @@ import { addMotion } from "../Input/movingModal.js";
 import { createOperationColorPickers, produceOperationForm } from "../HtmlElements/operationsConfigBox.js";
 import { alterConstantValue } from "../config/functionStyle.js";
 import { refreshOperationList } from "../Workspace/functionAppearance.js";
+import { generateConfigSeperativeLine } from "./configSeperative.js";
 
 var textContainer;
 
@@ -13,8 +14,8 @@ function produceLinkForm(box, configGrid) {
     const callBack = (type, attributeChanged, value) => { configStyle.handleChange(type, attributeChanged, value); };
     var sizeStyleContainer = document.createElement('div');
     sizeStyleContainer.className = "formContainer";
-    sizeStyleContainer.style.marginTop = 5 + "px";
     sizeStyleContainer.style.marginLeft = 0 + "px";
+    sizeStyleContainer.style.marginTop = -10 + "px";
     produceSizeForm(sizeStyleContainer, "Link", callBack);
     produceStyleButtons(sizeStyleContainer, "Link", callBack);
     produceFontFamilyForms(sizeStyleContainer, "Link", callBack);
@@ -96,9 +97,13 @@ function produceAConfigBox(type, refresh) {
     closeButton.style.float = "right";
     closeButton.style.backgroundImage = 'url("../images/whiteCloseInfo.png")';
     var bar = produceMovingBar(box, 0);
+    const fontStyleLine = generateConfigSeperativeLine("Font Style");
+    fontStyleLine.style.marginTop = "10px";
+    box.appendChild(fontStyleLine);
     var configGrid = document.createElement('div');
     configGrid.className = "configGrid";
     configGrid.style.gap = "25px";
+    var lineMsg = "Color";
     if (type === "Operation") {
         configGrid = createConfigTableDiv();
         configGrid.style.marginLeft = "5px";
@@ -106,7 +111,6 @@ function produceAConfigBox(type, refresh) {
         produceOperationForm(box, configGrid);
         createOperationColorPickers(box, configGrid);
         configStyle.actionDispatch["Operation"].currentOldSettings = configStyle.actionDispatch["Operation"].getCategoryInitialValue("Operation");
-
     } else {
         configGrid = createConfigTableDiv();
         configGrid.style.marginLeft = "5px";
@@ -118,6 +122,8 @@ function produceAConfigBox(type, refresh) {
     }
     bar.appendChild(closeButton);
     box.appendChild(configGrid);
+    const colorLine = generateConfigSeperativeLine(lineMsg);
+    box.insertBefore(colorLine, configGrid);
 
 
     var cancelButton = document.createElement('div'),

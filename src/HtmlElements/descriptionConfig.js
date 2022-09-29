@@ -3,6 +3,7 @@ import { layers } from "../Classes/LayerHolder.js";
 import { constantNames } from "../config/constantNames.js";
 import { detectBrowser } from "../Workspace/browserDetection.js";
 import { getSliderGroup, createPicker, getSwitch } from "./configBox.js";
+import { generateConfigSeperativeLine } from "./configSeperative.js";
 import { turnOffDescription, turnOnDescription } from "./extendingComponent.js";
 
 
@@ -30,7 +31,8 @@ function descriptionArea(box) {
     var switcher = getSwitch("descriptionSwitch", constantNames["configBox"]["descriptionLabel"]);
     switcher.firstChild.style.fontSize = "small";
     switcher.firstChild.style.marginLeft = "0px";
-    switcher.lastChild.style.marginLeft = "5px";
+    // switcher.lastChild.style.marginLeft = "5px";
+    switcher.lastChild.style.left = "142.5px";
     switcher.firstChild.style.marginRight = "0px";
     switcher.style.width = "152px";
     // switcher.style.marginLeft = "18px";
@@ -77,13 +79,18 @@ function descriptionArea(box) {
     descriptionColorPicker.style.width = "200px";
     // descriptionColorPicker.firstChild.style.marginLeft = "61.7px";
     descriptionColorPicker.lastChild.style.marginRight = "-2px";
+    descriptionColorPicker.lastChild.style.float = "left";
+    descriptionColorPicker.lastChild.style.marginLeft = "15px";
     descriptionColorPicker.style.marginTop = 12 + "px";
     descriptionColorPicker.style.marginRight = 50 + "px";
     descriptionColorPicker.style.marginRight = "67.8px";
     descDiv.appendChild(descriptionColorPicker);
-    descriptionColorPicker.style.marginLeft = -50 + "px";
+    descriptionColorPicker.style.marginLeft = -10 + "px";
     if (detectBrowser() === "Firefox")
         descriptionColorPicker.firstChild.style.marginLeft = 6 + "px";
+
+    const descriptionLine = generateConfigSeperativeLine("Description");
+    box.appendChild(descriptionLine);
 
     descriptionColorPicker.className += " item6";
     box.appendChild(descriptionGrid);

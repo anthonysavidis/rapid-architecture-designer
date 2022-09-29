@@ -137,7 +137,7 @@ class Config {
         }
         this.handleLinkChange(type, attributeChanged, value, "");
         // if (!ignoreCurrent)
-        this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
+        // this.actionDispatch[capitalizeFirstLetter(type)].addToCurrentOldSettings(varName, oldValue);
         return;
     }
     getStyleButtonStates(className) {

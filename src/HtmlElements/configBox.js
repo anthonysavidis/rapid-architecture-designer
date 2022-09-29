@@ -145,6 +145,7 @@ function createPicker(txt, selected, callBack) {
     picker.style.marginTop = "-6px";
     picker.style.float = "right";
     picker.style.width = "50px";
+    picker.style.backgroundColor = "transparent";
     if (detectBrowser() === "Firefox") {
         picker.style.marginTop = "2px";
         picker.style.height = "20px";
@@ -154,6 +155,7 @@ function createPicker(txt, selected, callBack) {
     picker.value = selected.charAt(0) === " " ? selected.slice(1) : selected;
     // picker.value= rs.getPropertyValue('--' + className.toLowerCase() + capitalizeFirstLetter(selected));
     labelDiv.appendChild(picker);
+
     // picker.defaultValue = rs.getPropertyValue('--' + className.toLowerCase() + capitalizeFirstLetter(selected));
     return labelDiv;
 }
@@ -280,7 +282,7 @@ function appendConfigDiv(label, element, row) {
 //pre creates the table, table body & all rows.
 function createConfigTableDiv() {
     var configTable = document.createElement('table');
-    configTable.innerHTML = '<tbody><tr id="cr1"></tr><tr id="cr2"></tr><tr id="cr3"></tr></tbody>';
+    configTable.innerHTML = '<tbody class="unselectableText"><tr id="cr1"></tr><tr id="cr2"></tr><tr id="cr3"></tr></tbody>';
     document.getElementById("body").appendChild(configTable);
     return configTable;
 }

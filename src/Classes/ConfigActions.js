@@ -23,9 +23,6 @@ class ConfigActions {
         return initialJSON;
     }
     applyToConfig(changesJSON) {
-        console.log("----------------------------");
-        console.log(changesJSON);
-        console.log("----------------------------");
         for (var x in changesJSON) {
             const atributeChanged = x.split(this.category.toLowerCase())[1];
             if (x.includes("_"))
