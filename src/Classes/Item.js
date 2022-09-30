@@ -186,7 +186,7 @@ class Item {
             // closeTheTooltip();
             // document.getElementById(curId).style.width="100%";
             keepOnlyLastSelectedFunction(curId);
-            initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
+            // initializeTab(constantNames["functionsTab"]["tabName"], "functionTab");
             // console.log("dragStart");
             prevColor = document.getElementById(curId).style.backgroundColor;
             document.getElementById(curId).style.backgroundColor = functionColors["ondrag"];

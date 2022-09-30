@@ -7,6 +7,7 @@ import { createOperationColorPickers, produceOperationForm } from "../HtmlElemen
 import { alterConstantValue } from "../config/functionStyle.js";
 import { refreshOperationList } from "../Workspace/functionAppearance.js";
 import { generateConfigSeperativeLine } from "./configSeperative.js";
+import { detectBrowser } from "../Workspace/browserDetection.js";
 
 var textContainer;
 
@@ -171,6 +172,24 @@ function produceAConfigBox(type, refresh) {
 
     closeButton.style.left = box.getBoundingClientRect().width - 30 + "px";
     closeButton.style.top = 5 + "px";
+    makeFireFoxChanges(type);
+    return;
+}
+
+
+function makeFireFoxChanges(type) {
+    if (detectBrowser() !== "Firefox")
+        return;
+    if (type === "Operation") {
+        for (var i in document.getElementsByClassName("tableLabelsStyle")) {
+            document.getElementsByClassName("tableLabelsStyle")[i].style.paddingLeft = "14.5px";
+        }
+    }
+    else if (type === "Link") {
+        for (var i in document.getElementsByClassName("tableLabelsStyle")) {
+            document.getElementsByClassName("tableLabelsStyle")[i].style.paddingLeft = "13.5px";
+        }
+    }
     return;
 }
 

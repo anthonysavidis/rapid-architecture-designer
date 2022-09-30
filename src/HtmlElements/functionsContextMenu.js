@@ -58,13 +58,10 @@ function produceContextMenu(funcId, x, y) {
     var funcContext = document.createElement('div');
     funcContext.className = "context-menu";
     funcContext.style.left = x + "px";
-    if (y > (window.innerHeight - 250)) {
-        console.log('bottom')
-
+    if (y > (window.innerHeight - 120)) {
         funcContext.style.bottom = 0 + "px";
     }
     else {
-        console.log('top')
         funcContext.style.top = y + 0 + "px";
     }
 

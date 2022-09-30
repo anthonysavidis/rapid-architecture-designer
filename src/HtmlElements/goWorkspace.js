@@ -580,8 +580,11 @@ function keyDownWorkpaceHandler(myDiagram) {
         document.getElementsByClassName("inputBox").length ||
         document.getElementsByClassName("configurationBox").length
     if (key === "Del" && !isModalOpen) {
-        console.log(isModalOpen)
         deleteFromKey();
+        appearComponentButtons();
+        appearFunctionButtons();
+        appearHierarchyButtons();
+        appearEditButtons();
     }
     // Quit on any undo/redo key combination:
     // if ((control && (key === 'Z' || key === 'Y')) || deleteKey)

@@ -27,7 +27,6 @@ class WindowChangeListener {
         $(window).resize(function () {
             document.getElementById("html1").scrollTop = 0; //always scroll on top especially in zoom in/out.
             fixSideBarsOnZoom();
-
             // document.getElementById("right_tab").style.top = document.getElementById("toolBar").getBoundingClientRect().height + "px";
             document.getElementById("rightTabRod").remove();
             removeLayerTabRod();
@@ -64,9 +63,9 @@ class WindowChangeListener {
 
 
 function windowChangeListeners() {
-    if(detectBrowser()==="Firefox"){
-        document.getElementById('toolBar').style.outline=0;
-        document.getElementById('tabButtons').style.borderBottom="1px solid #ccc"; 
+    if (detectBrowser() === "Firefox") {
+        document.getElementById('toolBar').style.outline = 0;
+        document.getElementById('tabButtons').style.borderBottom = "1px solid #ccc";
     }
 
     fixSideBarsOnZoom();
